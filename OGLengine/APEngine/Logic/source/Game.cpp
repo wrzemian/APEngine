@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Triangle.h"
 
 void Game::setup()
 {
@@ -18,6 +19,9 @@ void Game::loop()
     //logic
 
     //draw objects
+    Triangle triangle;
+    triangle.init();
+    triangle.draw();
     
     window.swap();
     window.pollEvents();
