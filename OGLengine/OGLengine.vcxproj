@@ -143,16 +143,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\main.cpp" />
-    <ClCompile Include="APEngine\Logic\source\Game.cpp" />
-    <ClCompile Include="APEngine\Graphics\source\Window.cpp" />
-    <ClCompile Include="APEngine\Graphics\source\Graphics.cpp" />
     <ClCompile Include="Libraries\glad\src\glad.c" />
     <ClCompile Include="Libraries\glad\src\glad_wgl.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="APEngine\Logic\include\Game.h" />
-    <ClInclude Include="APEngine\Graphics\include\Window.h" />
-    <ClInclude Include="APEngine\Graphics\include\Graphics.h" />
     <ClInclude Include="Libraries\glfw\include\glfw3.h" />
   </ItemGroup>
   <ItemGroup>
