@@ -1,35 +1,18 @@
 #include <iostream>
 #include "Window.h"
-
+#include "Game.h"
 
 
 int main()
 {
-    Window window;
-    window.init();
-    // render loop
-    // -----------
-    while (window.isOpen())
-    {
-        // input
-        // -----
-        window.processInput();
+    Game game;
+    game.setup();
 
-        // render
-        // ------
-        window.clear();
-
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
-        
-        window.swap();
-        window.pollEvents();
-        
+    while (game.isOn()) {
+        game.loop();
     }
+    game.close();
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
-    window.terminate();
     return 0;
 }
 

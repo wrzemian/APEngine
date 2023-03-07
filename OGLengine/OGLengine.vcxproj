@@ -142,12 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="APEngine\Logic\source\Game.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Libraries\glad\src\glad.c" />
     <ClCompile Include="Libraries\glad\src\glad_wgl.c" />
     <ClCompile Include="APEngine\Logic\source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="APEngine\Logic\include\Game.h" />
     <ClInclude Include="Libraries\glfw\include\glfw3.h" />
     <ClInclude Include="APEngine\Logic\include\Window.h" />
   </ItemGroup>
