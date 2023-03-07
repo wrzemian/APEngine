@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>OGL3D/vendor/glfw/include;OGL3D/source/;OGL3D/include/;OGL3D/vendor/glad/include;$(IncludePath)</IncludePath>
-    <LibraryPath>OGL3D/vendor/glfw/src;$(LibraryPath)</LibraryPath>
+    <IncludePath>Libraries/glfw/include;APEngine/Logic/source/;APEngine/Graphics/source/;APEngine/Graphics/include/;APEngine/Logic/include/;Libraries/glad/include;$(IncludePath)</IncludePath>
+    <LibraryPath>Libraries/glfw/src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -143,16 +143,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\main.cpp" />
-    <ClCompile Include="OGL3D\source\OGL3D\Game\OGame.cpp" />
-    <ClCompile Include="OGL3D\source\OGL3D\Window\Owindow.cpp" />
-    <ClCompile Include="OGL3D\source\OGL3D\Graphics\OGraphicsEngine.cpp" />
-    <ClCompile Include="OGL3D\vendor\glad\src\glad.c" />
-    <ClCompile Include="OGL3D\vendor\glad\src\glad_wgl.c" />
+    <ClCompile Include="APEngine\Logic\source\Game.cpp" />
+    <ClCompile Include="APEngine\Graphics\source\Window.cpp" />
+    <ClCompile Include="APEngine\Graphics\source\Graphics.cpp" />
+    <ClCompile Include="Libraries\glad\src\glad.c" />
+    <ClCompile Include="Libraries\glad\src\glad_wgl.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OGL3D\include\OGL3D\Game\OGame.h" />
-    <ClInclude Include="OGL3D\include\OGL3D\Window\Owindow.h" />
-    <ClInclude Include="OGL3D\include\OGL3D\Graphics\OGraphicsEngine.h" />
+    <ClInclude Include="APEngine\Logic\include\Game.h" />
+    <ClInclude Include="APEngine\Graphics\include\Window.h" />
+    <ClInclude Include="APEngine\Graphics\include\Graphics.h" />
+    <ClInclude Include="Libraries\glfw\include\glfw3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Libraries\glfw\src\glfw3.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,5 @@
-#include <OGL3D/Window/OWindow.h>
-#include <OGL3D/Game/OGame.h>
+#include <Window.h>
+#include <../../Logic/include/Game.h>
 #include <Windows.h>
 #include <assert.h>
 
