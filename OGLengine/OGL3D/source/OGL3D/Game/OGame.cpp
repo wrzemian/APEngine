@@ -14,7 +14,7 @@ OGame::~OGame()
 void OGame::run()
 {
 
-	while (m_isRunning && m_display->isClosed())
+	while (m_isRunning)
 	{
 		MSG msg = {};
 		if (PeekMessage(&msg, HWND(), NULL, NULL, PM_REMOVE))
