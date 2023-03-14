@@ -142,8 +142,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="APEngine\Graphics\res\shaders\shader.vs" />
-    <ClCompile Include="APEngine\Graphics\res\shaders\shader.fs" />
     <ClCompile Include="APEngine\Logic\source\Game.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Libraries\glad\src\glad.c" />
@@ -160,6 +158,10 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\glfw\src\glfw3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="APEngine\Graphics\res\shaders\shader.fs" />
+    <None Include="APEngine\Graphics\res\shaders\shader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

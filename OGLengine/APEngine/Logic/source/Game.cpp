@@ -1,9 +1,12 @@
 #include "Game.h"
 #include "Triangle.h"
+Triangle triangle;
 
 void Game::setup()
 {
     window.init();
+    
+    triangle.init();
 }
 
 bool Game::isOn()
@@ -19,8 +22,7 @@ void Game::loop()
     //logic
 
     //draw objects
-    Triangle triangle;
-    triangle.init();
+    
     triangle.draw();
     
     window.swap();

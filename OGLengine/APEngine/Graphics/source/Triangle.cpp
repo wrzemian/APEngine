@@ -10,11 +10,11 @@ void Triangle::bindBuffers()
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    // Atrybut pozycji  
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    // Atrybut koloru  
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
@@ -28,11 +28,12 @@ void Triangle::init()
 	shader = &temp; // pewnie tu się zesra access pamieci
 
     bindBuffers();
+    shader->use();
 }
 
 void Triangle::draw()
 {
-    shader->use();
-    glBindVertexArray(_VAO);
+    
+    glBindVertexArray(_VBO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }

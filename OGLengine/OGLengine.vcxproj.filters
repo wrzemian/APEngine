@@ -36,12 +36,6 @@
     <ClCompile Include="APEngine\Graphics\source\Shader.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="APEngine\Graphics\res\shaders\shader.vs">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="APEngine\Graphics\res\shaders\shader.fs">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries\glfw\include\glfw3.h">
@@ -59,5 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\glfw\src\glfw3.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="APEngine\Graphics\res\shaders\shader.fs" />
+    <None Include="APEngine\Graphics\res\shaders\shader.vs" />
   </ItemGroup>
 </Project>
