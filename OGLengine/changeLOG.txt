@@ -1,1 +1,0 @@
-14.03 hello world (vs and fs shader, cleanup in Game.cpp calling Triange methods)
