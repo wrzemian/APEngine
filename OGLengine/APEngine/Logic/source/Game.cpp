@@ -1,9 +1,16 @@
 #include "Game.h"
 #include "Triangle.h"
+#include "GameObject/Component.h"
+#include "GameObject/Renderer.h"
+
 Triangle triangle;
 
 void Game::setup()
 {
+    Renderer rnd;
+
+    rnd.Update();
+
     window.init();
     
     triangle.init();
