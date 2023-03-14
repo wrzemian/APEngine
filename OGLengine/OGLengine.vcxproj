@@ -163,6 +163,9 @@
     <None Include="APEngine\Graphics\res\shaders\shader.fs" />
     <None Include="APEngine\Graphics\res\shaders\shader.vs" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="changeLOG.md" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

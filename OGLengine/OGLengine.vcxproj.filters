@@ -58,4 +58,7 @@
     <None Include="APEngine\Graphics\res\shaders\shader.fs" />
     <None Include="APEngine\Graphics\res\shaders\shader.vs" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="changeLOG.md" />
+  </ItemGroup>
 </Project>
