@@ -12,9 +12,9 @@ private:
        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // dolny lewy
         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // górny 
     };
-    //D:/polibuda/sem6/OGLengine/OGLengine/APEngine/Graphics/res/shaders/shader.vs
-    const char* vertexShaderPath =   "D:/polibuda/sem6/OGLengine/OGLengine/APEngine/Graphics/res/shaders/shader.vs";
-    const char* fragmentShaderPath = "D:/polibuda/sem6/OGLengine/OGLengine/APEngine/Graphics/res/shaders/shader.fs";
+
+    const char* vertexShaderPath =   "../OGLengine/APEngine/Graphics/res/shaders/shader.vs";
+    const char* fragmentShaderPath = "../OGLengine/APEngine/Graphics/res/shaders/shader.fs";
 
     Shader* shader;
 

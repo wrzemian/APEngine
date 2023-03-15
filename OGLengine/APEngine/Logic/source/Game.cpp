@@ -5,11 +5,12 @@
 
 Triangle triangle;
 
+
 void Game::setup()
 {
-    Renderer rnd;
+    //Renderer rnd;
 
-    rnd.Update();
+    //rnd.Update();
 
     window.init();
     
