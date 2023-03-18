@@ -7,7 +7,7 @@ class Game
 public:
 	void setup();
 	bool isOn();
-	void loop();
+	void Update();
 	void close();
 private:
 	Window window;

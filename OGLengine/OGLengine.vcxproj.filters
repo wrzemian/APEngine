@@ -48,6 +48,9 @@
     <ClCompile Include="APEngine\Logic\source\GameObject\Renderer.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="APEngine\Logic\source\HID.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries\glfw\include\glfw3.h">
@@ -77,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\glfw\src\glfw3.lib" />
+    <ClInclude Include="APEngine\Logic\include\HID.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="APEngine\Graphics\res\shaders\shader.fs" />

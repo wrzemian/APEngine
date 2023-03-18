@@ -2,9 +2,11 @@
 #include "Triangle.h"
 #include "GameObject/Component.h"
 #include "GameObject/Renderer.h"
+#include "HID.h"
 
 Triangle triangle;
 
+HID hid;
 
 void Game::setup()
 {
@@ -15,6 +17,7 @@ void Game::setup()
     window.init();
     
     triangle.init();
+    
 }
 
 bool Game::isOn()
@@ -22,11 +25,11 @@ bool Game::isOn()
     return window.isOpen();
 }
 
-void Game::loop()
+void Game::Update()
 {
     window.processInput();
     window.clear();
-    
+
     //logic
 
     //draw objects

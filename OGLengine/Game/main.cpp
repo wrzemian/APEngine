@@ -9,7 +9,7 @@ int main()
     game.setup();
 
     while (game.isOn()) {
-        game.loop();
+        game.Update();
     }
     game.close();
 

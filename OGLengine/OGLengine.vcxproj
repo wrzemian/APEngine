@@ -145,6 +145,7 @@
     <ClCompile Include="APEngine\Logic\source\Game.cpp" />
     <ClCompile Include="APEngine\Logic\source\GameObject\Component.cpp" />
     <ClCompile Include="APEngine\Logic\source\GameObject\GameObject.cpp" />
+    <ClCompile Include="APEngine\Logic\source\HID.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Libraries\glad\src\glad.c" />
     <ClCompile Include="Libraries\glad\src\glad_wgl.c" />
@@ -158,6 +159,7 @@
     <ClInclude Include="APEngine\Logic\include\Game.h" />
     <ClInclude Include="APEngine\Logic\include\GameObject\Component.h" />
     <ClInclude Include="APEngine\Logic\include\GameObject\GameObject.h" />
+    <ClInclude Include="APEngine\Logic\include\HID.h" />
     <ClInclude Include="Libraries\glfw\include\glfw3.h" />
     <ClInclude Include="APEngine\Logic\include\Window.h" />
     <ClInclude Include="APEngine\Graphics\include\Triangle.h" />
