@@ -11,12 +11,10 @@ private:
 	const unsigned int SCR_WIDTH = 800;
 	const unsigned int SCR_HEIGHT = 600;
 
-	
-
 	GLFWwindow* _window;
 
 public:
-	
+
 	int init();
 	void processInput();
 	bool isOpen();
@@ -24,5 +22,7 @@ public:
 	void swap();
 	void pollEvents();
 	void terminate();
+
+	GLFWwindow* getWindow();
 };
 

@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Libraries/glfw/include;APEngine/Logic/source/;APEngine/Graphics/source/;APEngine/Graphics/include/;APEngine/Logic/include/;Libraries/glad/include;Libraires/glm;$(IncludePath)</IncludePath>
+    <IncludePath>Libraries/glfw/include;APEngine/Logic/source/;APEngine/Graphics/source/;APEngine/Graphics/include/;APEngine/Logic/include/;Libraries/glad/include;Libraires/glm;Libraries/imgui;$(IncludePath)</IncludePath>
     <LibraryPath>Libraries/glm;Libraries/glfw/src;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>Libraries/glm;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
@@ -156,18 +156,27 @@
     <ClCompile Include="APEngine\Logic\source\GameObject\Renderer.cpp" />
     <ClCompile Include="APEngine\Logic\source\GameObject\Transform.cpp" />
     <ClCompile Include="Libraries\glm\detail\glm.cpp" />
+    <ClCompile Include="Libraries\imgui\imgui.cpp" />
+    <ClCompile Include="Libraries\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Libraries\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Libraries\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Libraries\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Libraries\imgui\imgui_tables.cpp" />
+    <ClCompile Include="Libraries\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APEngine\Graphics\include\Camera.h" />
     <ClInclude Include="APEngine\Logic\include\Game.h" />
     <ClInclude Include="APEngine\Logic\include\GameObject\Component.h" />
     <ClInclude Include="APEngine\Logic\include\GameObject\GameObject.h" />
+    <ClInclude Include="APEngine\Logic\include\globals.h" />
     <ClInclude Include="APEngine\Logic\include\HID.h" />
     <ClInclude Include="Libraries\glfw\include\glfw3.h" />
     <ClInclude Include="APEngine\Logic\include\Window.h" />
     <ClInclude Include="APEngine\Graphics\include\Triangle.h" />
     <ClInclude Include="APEngine\Logic\include\GameObject\Renderer.h" />
     <ClInclude Include="APEngine\Logic\include\GameObject\Transform.h" />
+    <ClInclude Include="Libraries\glfw\include\glfw3native.h" />
     <ClInclude Include="Libraries\glm\common.hpp" />
     <ClInclude Include="Libraries\glm\detail\compute_common.hpp" />
     <ClInclude Include="Libraries\glm\detail\compute_vector_relational.hpp" />
@@ -412,6 +421,15 @@
     <ClInclude Include="Libraries\glm\vec3.hpp" />
     <ClInclude Include="Libraries\glm\vec4.hpp" />
     <ClInclude Include="Libraries\glm\vector_relational.hpp" />
+    <ClInclude Include="Libraries\imgui\imconfig.h" />
+    <ClInclude Include="Libraries\imgui\imgui.h" />
+    <ClInclude Include="Libraries\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Libraries\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Libraries\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Libraries\imgui\imgui_internal.h" />
+    <ClInclude Include="Libraries\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Libraries\imgui\imstb_textedit.h" />
+    <ClInclude Include="Libraries\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\glfw\src\glfw3.lib" />
@@ -419,6 +437,7 @@
   <ItemGroup>
     <None Include="APEngine\Graphics\res\shaders\shader.fs" />
     <None Include="APEngine\Graphics\res\shaders\shader.vs" />
+    <None Include="Libraries\imgui\imgui.ini" />
     <None Include="Libraries\glm\detail\func_common.inl" />
     <None Include="Libraries\glm\detail\func_common_simd.inl" />
     <None Include="Libraries\glm\detail\func_exponential.inl" />

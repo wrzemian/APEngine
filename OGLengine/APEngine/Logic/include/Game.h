@@ -9,6 +9,8 @@ public:
 	bool isOn();
 	void Update();
 	void close();
+
+	Window* getWindow();
 private:
 	Window window;
 

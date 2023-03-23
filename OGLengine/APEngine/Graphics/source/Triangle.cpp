@@ -40,16 +40,9 @@ void Triangle::init()
 
 void Triangle::draw(Camera camera)
 {
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)800 / (float)600, 0.1f, 100.0f);
-    shader->setMat4("projection", projection);
-
-    // create transformations
-    glm::mat4 view = camera.GetViewMatrix(); // make sure to initialize matrix to identity matrix first
-    shader->setMat4("view", view);
-    // pass transformation matrices to the shader
-
-    glm::mat4 model;
-    shader->setMat4("model", model);
+    
+    /*glm::mat4 model = glm::mat4(1.0f);
+    shader->setMat4("model", model);*/
     glBindVertexArray(_VBO);
     glDrawArrays(GL_TRIANGLES, 0, 12);
 }

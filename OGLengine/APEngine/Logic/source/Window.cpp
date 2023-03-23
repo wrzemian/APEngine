@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "Camera.h"
-
+#include "globals.h"
 #include<iostream>
 
 //GLfloat deltaTime = 0.0f;
@@ -13,6 +13,10 @@ float lastY = 600 / 2.0f;
 bool firstMouse = true;
 bool useMouse = true;
 
+GLfloat xoffset;
+GLfloat yoffset;
+
+
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
@@ -24,13 +28,13 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
         firstMouse = false;
     }
 
-    GLfloat xoffset = xpos - lastX;
-    GLfloat yoffset = lastY - ypos;
+    xoffset = xpos - lastX;
+    yoffset = lastY - ypos;
     lastX = xpos;
     lastY = ypos;
 
     //if (useMouse)
-        //camera.ProcessMouseMovement(xoffset, yoffset);
+    //    camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -111,5 +115,9 @@ void Window::pollEvents()
 void Window::terminate()
 {
     glfwTerminate();
+}
+
+GLFWwindow* Window::getWindow() {
+    return _window;
 }
 
