@@ -1,6 +1,37 @@
 #include "Window.h"
+#include "Camera.h"
 
 #include<iostream>
+
+//GLfloat deltaTime = 0.0f;
+//GLfloat lastFrame = 0.0f;
+
+
+
+float lastX = 800 / 2.0f;
+float lastY = 600 / 2.0f;
+bool firstMouse = true;
+bool useMouse = true;
+
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
+    float xpos = static_cast<float>(xposIn);
+    float ypos = static_cast<float>(yposIn);
+
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    GLfloat xoffset = xpos - lastX;
+    GLfloat yoffset = lastY - ypos;
+    lastX = xpos;
+    lastY = ypos;
+
+    //if (useMouse)
+        //camera.ProcessMouseMovement(xoffset, yoffset);
+}
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
@@ -35,6 +66,7 @@ int Window::init()
     }
     glfwMakeContextCurrent(_window);
     glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(_window, mouse_callback);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
