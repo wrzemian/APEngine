@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Libraries/glfw/include;APEngine/Logic/source/;APEngine/Graphics/source/;APEngine/Graphics/include/;APEngine/Logic/include/;Libraries/glad/include;Libraires/glm;Libraries/imgui;$(IncludePath)</IncludePath>
+    <IncludePath>APEngine/source/;APEngine/include/;Libraries/glad/include;Libraires/glm;Libraries/imgui;Libraries/glfw/include;$(IncludePath)</IncludePath>
     <LibraryPath>Libraries/glm;Libraries/glfw/src;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>Libraries/glm;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
@@ -143,18 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="APEngine\Logic\source\Game.cpp" />
-    <ClCompile Include="APEngine\Logic\source\GameObject\Component.cpp" />
-    <ClCompile Include="APEngine\Logic\source\GameObject\GameObject.cpp" />
-    <ClCompile Include="APEngine\Logic\source\HID.cpp" />
+    <ClCompile Include="APEngine\source\Engine.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Libraries\glad\src\glad.c" />
     <ClCompile Include="Libraries\glad\src\glad_wgl.c" />
-    <ClCompile Include="APEngine\Logic\source\Window.cpp" />
-    <ClCompile Include="APEngine\Graphics\source\Triangle.cpp" />
-    <ClCompile Include="APEngine\Graphics\source\Shader.cpp" />
-    <ClCompile Include="APEngine\Logic\source\GameObject\Renderer.cpp" />
-    <ClCompile Include="APEngine\Logic\source\GameObject\Transform.cpp" />
+    <ClCompile Include="APEngine\source\Window.cpp" />
+    <ClCompile Include="APEngine\source\Triangle.cpp" />
+    <ClCompile Include="APEngine\source\Shader.cpp" />
     <ClCompile Include="Libraries\glm\detail\glm.cpp" />
     <ClCompile Include="Libraries\imgui\imgui.cpp" />
     <ClCompile Include="Libraries\imgui\imgui_demo.cpp" />
@@ -165,17 +160,7 @@
     <ClCompile Include="Libraries\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="APEngine\Graphics\include\Camera.h" />
-    <ClInclude Include="APEngine\Logic\include\Game.h" />
-    <ClInclude Include="APEngine\Logic\include\GameObject\Component.h" />
-    <ClInclude Include="APEngine\Logic\include\GameObject\GameObject.h" />
-    <ClInclude Include="APEngine\Logic\include\globals.h" />
-    <ClInclude Include="APEngine\Logic\include\HID.h" />
     <ClInclude Include="Libraries\glfw\include\glfw3.h" />
-    <ClInclude Include="APEngine\Logic\include\Window.h" />
-    <ClInclude Include="APEngine\Graphics\include\Triangle.h" />
-    <ClInclude Include="APEngine\Logic\include\GameObject\Renderer.h" />
-    <ClInclude Include="APEngine\Logic\include\GameObject\Transform.h" />
     <ClInclude Include="Libraries\glfw\include\glfw3native.h" />
     <ClInclude Include="Libraries\glm\common.hpp" />
     <ClInclude Include="Libraries\glm\detail\compute_common.hpp" />
@@ -435,8 +420,8 @@
     <Library Include="Libraries\glfw\src\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="APEngine\Graphics\res\shaders\shader.fs" />
-    <None Include="APEngine\Graphics\res\shaders\shader.vs" />
+    <None Include="APEngine\res\shaders\shader.fs" />
+    <None Include="APEngine\res\shaders\shader.vs" />
     <None Include="Libraries\imgui\imgui.ini" />
     <None Include="Libraries\glm\detail\func_common.inl" />
     <None Include="Libraries\glm\detail\func_common_simd.inl" />

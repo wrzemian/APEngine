@@ -24,31 +24,16 @@
     <ClCompile Include="Libraries\glad\src\glad_wgl.c">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="APEngine\Logic\source\Window.cpp">
+    <ClCompile Include="APEngine\source\Window.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="APEngine\Logic\source\Game.cpp">
+    <ClCompile Include="APEngine\source\Engine.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="APEngine\Graphics\source\Triangle.cpp">
+    <ClCompile Include="APEngine\source\Triangle.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="APEngine\Graphics\source\Shader.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="APEngine\Logic\source\GameObject\GameObject.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="APEngine\Logic\source\GameObject\Component.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="APEngine\Logic\source\GameObject\Transform.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="APEngine\Logic\source\GameObject\Renderer.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="APEngine\Logic\source\HID.cpp">
+    <ClCompile Include="APEngine\source\Shader.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\glm\detail\glm.cpp">
@@ -78,30 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries\glfw\include\glfw3.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Logic\include\Window.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Logic\include\Game.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Graphics\include\Triangle.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Logic\include\GameObject\GameObject.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Logic\include\GameObject\Component.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Logic\include\GameObject\Transform.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Logic\include\GameObject\Renderer.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="APEngine\Graphics\include\Camera.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\glm\detail\_features.hpp">
@@ -836,9 +797,6 @@
     <ClInclude Include="Libraries\glm\vector_relational.hpp">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="APEngine\Logic\include\globals.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\imgui\imconfig.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
@@ -872,13 +830,10 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libraries\glfw\src\glfw3.lib" />
-    <ClInclude Include="APEngine\Logic\include\HID.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="APEngine\Graphics\res\shaders\shader.fs" />
-    <None Include="APEngine\Graphics\res\shaders\shader.vs" />
+    <None Include="APEngine\res\shaders\shader.fs" />
+    <None Include="APEngine\res\shaders\shader.vs" />
     <None Include="Libraries\glm\detail\func_common.inl">
       <Filter>Pliki nagłówkowe</Filter>
     </None>

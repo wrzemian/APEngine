@@ -1,6 +1,5 @@
 #include <iostream>
-#include "Window.h"
-#include "Game.h"
+#include "Engine.cpp"
 
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
@@ -10,7 +9,7 @@ int main()
 {
     
 
-    Game game;
+    Engine game;
     game.setup();
 
     IMGUI_CHECKVERSION();
