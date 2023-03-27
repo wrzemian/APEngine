@@ -11,11 +11,9 @@
 #include <glm/gtc/type_ptr.hpp>
 
 class Shader {
-private:
+public:
     unsigned int ID;
 
-
-public:
     Shader() {};
     Shader(const char* vertexPath, const char* fragmentPath)
     {

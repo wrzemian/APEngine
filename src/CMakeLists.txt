@@ -9,7 +9,13 @@ file(GLOB_RECURSE HEADER_FILES
 	 *.hpp)
 
 # Define the executable
-add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} Engine.cpp ../include/Engine.h Game.cpp ../include/Game.h Renderer.cpp Shader.cpp Sierpinski.cpp)
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
+		Engine.cpp ../include/Engine.h
+		Game.cpp ../include/Game.h
+		Renderer.cpp
+		Shader.cpp
+		Sierpinski.cpp
+		Mesh.cpp)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
