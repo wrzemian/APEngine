@@ -13,9 +13,9 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		Engine.cpp ../include/Engine.h
 		Game.cpp ../include/Game.h
 		Renderer.cpp
-		Shader.cpp
+		../include/Shader.h
 		Sierpinski.cpp
-		Mesh.cpp)
+		Mesh.cpp ../include/Model.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

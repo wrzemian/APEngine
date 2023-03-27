@@ -47,7 +47,7 @@ namespace Game {
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
         glm::mat4 viewProjection = projection * view;
-        shader.setMat4("projectionView", &viewProjection);
+        shader.setMat4("projectionView", viewProjection);
 
 
         sierpinski.calculateAllTransformations();
@@ -64,13 +64,13 @@ namespace Game {
             rotation = glm::rotate(rotation, glm::radians(rotate.x), glm::vec3(0.0f, 1.0f, 0.0f));
             rotation = glm::rotate(rotation, glm::radians(rotate.y), glm::vec3(1.0f, 0.0f, 0.0f));
 
-            shader.setMat4("rotation", &rotation);
+            shader.setMat4("rotation", rotation);
 
             oldRotate = rotate;
         }
         // send new color vector to shader only when it changed
         if (color != oldColor) {
-            shader.setVec3("uColor", &color);
+            shader.setVec3("uColor", color);
             oldColor = color;
         }
         sierpinski.draw(&shader, depth);

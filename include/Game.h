@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Sierpinski.cpp"
-#include "Shader.cpp"
+#include "Shader.h"
 #include "Renderer.cpp"
 
 namespace Game {

@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include <Shader.cpp>
+#include "../include/Shader.h"
 
 class Sierpinski {
 
@@ -83,7 +83,7 @@ public:
 
     void draw(Shader* shader, unsigned int depth) {
         for (glm::mat4 translation : allTranslations.at(depth)) {
-            shader->setMat4("translation", &translation);
+            shader->setMat4("translation", translation);
             glDrawArrays(GL_TRIANGLES, 0, 12);
         }
     }
