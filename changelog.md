@@ -6,6 +6,7 @@
 ### Added
 - displaying Sierpinski's Tetrahedron instead of Hello World Triangle
 - can change color, rotation and recursion depth
+- class Mesh
 ### Changed
 - moved project to CLion
 
