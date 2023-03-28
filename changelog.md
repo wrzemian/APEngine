@@ -6,6 +6,11 @@ you can install GLSL extension to Clion easily, and it helps a lot
 
 ### Added
 - lights hierarchy
+- loading and rendering 2 obj Models
+
+### Todo
+- fix models' textures
+- add transform to each individual one
 
 ### Changed
 - in Sierpinski.draw() changed 12 to 36

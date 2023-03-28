@@ -10,12 +10,10 @@
 #include <iostream>
 
 #include "../include/Engine.h"
-#include "../src/Renderer.cpp"
 
 namespace Engine {
 
     GLFWwindow* window;
-    Renderer renderer;
 
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
@@ -26,10 +24,7 @@ namespace Engine {
         if (initGLandImGui() == -1) {
             return -1;
         }
-        renderer.print();
-        renderer.loadBuffers();
-        renderer.loadTexture("res/textures/stone.jpg");
-
+        return 0;
     }
 
 
@@ -58,7 +53,7 @@ namespace Engine {
     }
 
     void terminate() {
-        renderer.deleteBuffers();
+        //renderer.deleteBuffers();
 
 
         ImGui_ImplOpenGL3_Shutdown();

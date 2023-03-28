@@ -5,6 +5,9 @@
 
 #include "../include/Engine.h"
 
+#include "../include/Model.h"
+#include "../src/Renderer.cpp"
+
 
 namespace Game {
 
@@ -13,7 +16,6 @@ namespace Game {
     const int SCR_HEIGHT = 800;
 
     // Renderer - loads buffers and textures
-    extern Renderer* renderer;
 
     // ImGui sliders
     int depth = 0;
@@ -28,10 +30,23 @@ namespace Game {
     Sierpinski sierpinski;
     Shader shader;
 
+    Renderer renderer;
 
+    Model character1;
+    Model character2;
 
     void Start() {
         std::cout << Engine::Init();
+
+        Model tempModel1("../../res/models/first_character/first character.obj");
+        character1 = tempModel1;
+
+        Model tempModel2("../../res/models/second_character/second character.obj");
+        character2 = tempModel2;
+
+        renderer.print();
+        renderer.loadBuffers();
+        renderer.loadTexture("res/textures/stone.jpg");
 
         // build and compile our shader zprogram
         // ------------------------------------
@@ -51,6 +66,8 @@ namespace Game {
 
 
         sierpinski.calculateAllTransformations();
+
+
     }
 
     void Update() {
@@ -74,6 +91,9 @@ namespace Game {
             oldColor = color;
         }
         sierpinski.draw(&shader, depth);
+
+        character1.Draw(shader);
+        character2.Draw(shader);
 
         Engine::LoopEnd();
 

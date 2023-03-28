@@ -14,7 +14,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include <Mesh.cpp>
+#include "Mesh.h"
 #include "Shader.h"
 
 #include <string>
@@ -35,6 +35,7 @@ public:
     std::string directory;
     bool gammaCorrection;
 
+    Model(){};
     // constructor, expects a filepath to a 3D model.
     Model(std::string const &path, bool gamma = false) : gammaCorrection(gamma)
     {
@@ -58,7 +59,7 @@ private:
         // check for errors
         if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
-            std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
+            std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
             return;
         }
         // retrieve the directory path of the filepath
@@ -98,19 +99,19 @@ private:
         for(unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
             Vertex vertex;
-            glm::vec3 std::vector; // we declare a placeholder std::vector since assimp uses its own std::vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+            glm::vec3 vector; // we declare a placeholder std::vector since assimp uses its own std::vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
             // positions
-            std::vector.x = mesh->mVertices[i].x;
-            std::vector.y = mesh->mVertices[i].y;
-            std::vector.z = mesh->mVertices[i].z;
-            vertex.Position = std::vector;
+            vector.x = mesh->mVertices[i].x;
+            vector.y = mesh->mVertices[i].y;
+            vector.z = mesh->mVertices[i].z;
+            vertex.Position = vector;
             // normals
             if (mesh->HasNormals())
             {
-                std::vector.x = mesh->mNormals[i].x;
-                std::vector.y = mesh->mNormals[i].y;
-                std::vector.z = mesh->mNormals[i].z;
-                vertex.Normal = std::vector;
+                vector.x = mesh->mNormals[i].x;
+                vector.y = mesh->mNormals[i].y;
+                vector.z = mesh->mNormals[i].z;
+                vertex.Normal = vector;
             }
             // texture coordinates
             if(mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
@@ -122,15 +123,15 @@ private:
                 vec.y = mesh->mTextureCoords[0][i].y;
                 vertex.TexCoords = vec;
                 // tangent
-                std::vector.x = mesh->mTangents[i].x;
-                std::vector.y = mesh->mTangents[i].y;
-                std::vector.z = mesh->mTangents[i].z;
-                vertex.Tangent = std::vector;
+                vector.x = mesh->mTangents[i].x;
+                vector.y = mesh->mTangents[i].y;
+                vector.z = mesh->mTangents[i].z;
+                vertex.Tangent = vector;
                 // bitangent
-                std::vector.x = mesh->mBitangents[i].x;
-                std::vector.y = mesh->mBitangents[i].y;
-                std::vector.z = mesh->mBitangents[i].z;
-                vertex.Bitangent = std::vector;
+                vector.x = mesh->mBitangents[i].x;
+                vector.y = mesh->mBitangents[i].y;
+                vector.z = mesh->mBitangents[i].z;
+                vertex.Bitangent = vector;
             }
             else
                 vertex.TexCoords = glm::vec2(0.0f, 0.0f);
@@ -161,10 +162,10 @@ private:
         std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
         // 3. normal maps
-        std::std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
         textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
         // 4. height maps
-        std::std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
         // return a mesh object created from the extracted mesh data
@@ -239,7 +240,7 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
     }
     else
     {
-        std::std::cout << "Texture failed to load at path: " << path << std::endl;
+        std::cout << "Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
     }
 
