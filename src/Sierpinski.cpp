@@ -84,7 +84,7 @@ public:
     void draw(Shader* shader, unsigned int depth) {
         for (glm::mat4 translation : allTranslations.at(depth)) {
             shader->setMat4("translation", translation);
-            glDrawArrays(GL_TRIANGLES, 0, 12);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
         }
     }
 
