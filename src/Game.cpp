@@ -76,6 +76,8 @@ namespace Game {
         spotLight.setOuterCutOff(outerCutOff);
     }
 
+
+
     void Start() {
         std::cout << Engine::Init();
 
