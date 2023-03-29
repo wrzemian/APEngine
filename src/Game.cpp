@@ -5,15 +5,12 @@
 
 #include "../include/Engine.h"
 
-#include "../include/Model.h"
-#include "../include/Transform.h"
-#include "../include/Scene.h"
+#include "../include/Object3D.h"
 
-#include "../src/Renderer.cpp"
 
 
 namespace Game {
-
+    void ImGui();
 
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
@@ -30,26 +27,26 @@ namespace Game {
     glm::fvec2 oldRotate(1.0f);
 
     // Calculate translations for all pyramids across all depths
-    Sierpinski sierpinski;
     Shader shader;
 
-    Renderer renderer;
+    //Object3D player1;
+    //Object3D player2;
 
-    Model character1;
-    Model character2;
+    Model test;
 
     void Start() {
         std::cout << Engine::Init();
 
-        Model tempModel1("../../res/models/first_character/first character.obj");
-        character1 = tempModel1;
+        //Model tempModel1("../../res/models/first_character/first character.obj");
+        //Model tempModel2("../../res/models/second_character/second character.obj");
 
-        Model tempModel2("../../res/models/second_character/second character.obj");
-        character2 = tempModel2;
+        //player1.loadModel("../../res/models/first_character/first character.obj");
+        //player2.loadModel("../../res/models/second_character/second character.obj");
 
-        renderer.print();
-        renderer.loadBuffers();
-        renderer.loadTexture("res/textures/stone.jpg");
+        //player1._transform.addChild(&player2._transform);
+
+        Model tempM("../../res/models/first_character/first character.obj");
+        test = tempM;
 
         // build and compile our shader zprogram
         // ------------------------------------
@@ -68,14 +65,12 @@ namespace Game {
         shader.setMat4("projectionView", viewProjection);
 
 
-        sierpinski.calculateAllTransformations();
-
 
     }
 
     void Update() {
         Engine::LoopStart();
-        Engine::renderImGuiUI(&depth, &rotate, &color, sierpinski.MAX_DEPTH);
+        ImGui();
 
         // send new rotation matrix to shader only when it changed
         if (rotate != oldRotate) {
@@ -93,15 +88,52 @@ namespace Game {
             shader.setVec3("uColor", color);
             oldColor = color;
         }
-        sierpinski.draw(&shader, depth);
 
-        character1.Draw(shader);
-        character2.Draw(shader);
+        //player1.Draw(shader);
+        //player2.Draw(shader);
+        test.Draw(shader);
 
         Engine::LoopEnd();
 
     }
 
+    void ImGui() {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        {
+//            ImGui::Begin("Scale");
+//            ImGui::SetWindowPos(ImVec2(0, 0));
+//            ImGui::SetWindowSize(ImVec2(250, 100));
+//
+//            ImGui::SliderFloat("sX", &player1._transform._scale.x, 0.0f, 10.0f);
+//            ImGui::SliderFloat("sY", &player1._transform._scale.y, 0.0f, 10.0f);
+//            ImGui::SliderFloat("sZ", &player1._transform._scale.z, 0.0f, 10.0f);
+//            ImGui::End();
+//
+//            ImGui::Begin("Position");
+//            ImGui::SetWindowPos(ImVec2(0, 100));
+//            ImGui::SetWindowSize(ImVec2(250, 100));
+//
+//            ImGui::SliderFloat("pX", &player1._transform._position.x, -10.0f, 10.0f);
+//            ImGui::SliderFloat("pY", &player1._transform._position.y, -10.0f, 10.0f);
+//            ImGui::SliderFloat("pZ", &player1._transform._position.z, -10.0f, 10.0f);
+//
+//            ImGui::End();
+//
+//
+//            ImGui::Begin("Rotation");
+//            ImGui::SetWindowPos(ImVec2(0, 200));
+//            ImGui::SetWindowSize(ImVec2(250, 100));
+//
+//            ImGui::SliderFloat("rX", &player1._transform._rotation.x, -10.0f, 10.0f);
+//            ImGui::SliderFloat("rY", &player1._transform._rotation.y, -10.0f, 10.0f);
+//            ImGui::SliderFloat("rZ", &player1._transform._rotation.z, -10.0f, 10.0f);
+//            ImGui::End();
+        }
+        ImGui::Render();
+    }
 
 
 

@@ -11,6 +11,8 @@
 #include <cmath>
 #include "Model.h"
 
+#include <iostream>
+
 class Transform
 {
 public:
@@ -18,15 +20,17 @@ public:
     glm::vec3 _scale;
     glm::vec3 _rotation;
     glm::mat4 _model;
-    glm::mat4 localTransform;
-
-    bool hasModel = false;
-
-    int windowWidth = 800;
-    int windowHeight = 600;
+    glm::mat4 _localTransform;
 
     Transform* parent;
     std::vector<Transform*> children;
+
+    Transform() {
+        _position = glm::vec3(0,0,0);
+        _scale = glm::vec3(1,1,1);
+        _rotation = glm::vec3(0,0,0);
+        std::cout<<"transform constructor \n";
+    }
 
     Transform( glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) {
         _position = position;
@@ -36,7 +40,6 @@ public:
 
     void setModel(glm::mat4 model) {
         _model = model;
-        hasModel = true;
     }
 
     void setPosition(glm::vec3 newPosition) {
@@ -67,13 +70,18 @@ public:
         transform = glm::rotate(transform, _rotation.x, glm::vec3(1.0, 0.0, 0.0));
         transform = glm::rotate(transform, _rotation.z, glm::vec3(0.0, 0.0, 1.0));
         transform = glm::scale(transform, _scale);
-        localTransform = transform;
+
+//        std::cout<<_position.x <<"\n"
+//                    <<_rotation.x<<"\n"
+//                    <<_scale.x<<"\n\n";
+
+        _localTransform = transform;
     }
 
-    void updateWorldTransform(glm::mat4 modelLok, Shader shader) {
+    void updateWorldTransform(glm::mat4 modelLok, Shader &shader) {
         this->updateLocalTransform();
 
-        this->_model = modelLok * localTransform;
+        this->_model = modelLok * _localTransform;
 
         for (Transform* child : children) {
             child->updateWorldTransform(this->_model, shader);
