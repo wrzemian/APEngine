@@ -42,3 +42,5 @@ void AmbientLight::sendToShader(Shader shader, std::string type) {
     shader.setVec3(type + ".specular", specular);
 }
 
+AmbientLight::AmbientLight() {}
+

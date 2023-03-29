@@ -1,13 +1,18 @@
 # Change Log
 
 ## [0.0.4] - 2023-03-29
-- Added classes Transform and Scene
+### Added
+- classes Transform and Scene
+- directional light
+
+### Changed
+- both shaders
 
 ## [0.0.3] - 2023-03-28
 ### Tip
 you can install GLSL extension to Clion easily, and it helps a lot
 
-### Added
+
 - lights hierarchy
 - loading and rendering 2 obj Models
 

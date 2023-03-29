@@ -17,7 +17,7 @@ namespace Engine {
     //extern GLFWwindow* window;
 
     int initGLandImGui();
-    void renderImGuiUI(int* depth, glm::vec2* rotate, glm::vec3* color, const int MAX_DEPTH);
+    void renderImGuiUI(int* depth, glm::vec2* rotate, glm::vec3* color, const int MAX_DEPTH, glm::fvec3* direction);
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
     void processInput(GLFWwindow* window);
 

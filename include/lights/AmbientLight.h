@@ -18,6 +18,8 @@ private:
 public:
     AmbientLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular);
 
+    AmbientLight();
+
     virtual ~AmbientLight();
 
     const glm::vec3 &getAmbient() const;

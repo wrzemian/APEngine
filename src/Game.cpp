@@ -7,6 +7,7 @@
 
 #include "../include/Model.h"
 #include "../include/Transform.h"
+#include "../include/lights/DirectionalLight.h"
 #include "../include/Scene.h"
 
 #include "../src/Renderer.cpp"
@@ -38,6 +39,11 @@ namespace Game {
     Model character1;
     Model character2;
 
+    DirectionalLight dirLight;
+    glm::fvec3 direction(-0.2f, -1.0f, -0.3f);
+
+
+
     void Start() {
         std::cout << Engine::Init();
 
@@ -60,23 +66,25 @@ namespace Game {
         // View and projection matricies
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
+        glm::mat4 model = glm::mat4 (1.0f);
 
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -22.0f));
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
         glm::mat4 viewProjection = projection * view;
         shader.setMat4("projectionView", viewProjection);
-
+        shader.setMat4("model", model);
 
         sierpinski.calculateAllTransformations();
 
-
+        DirectionalLight tempDirLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), direction);
+        dirLight = tempDirLight;
     }
 
     void Update() {
         Engine::LoopStart();
-        Engine::renderImGuiUI(&depth, &rotate, &color, sierpinski.MAX_DEPTH);
-
+        Engine::renderImGuiUI(&depth, &rotate, &color, sierpinski.MAX_DEPTH, &direction);
+        dirLight.setDirection(direction);
         // send new rotation matrix to shader only when it changed
         if (rotate != oldRotate) {
             glm::mat4 rotation(1.0f);
@@ -95,8 +103,23 @@ namespace Game {
         }
         sierpinski.draw(&shader, depth);
 
-        character1.Draw(shader);
-        character2.Draw(shader);
+        //character1.Draw(shader);
+        //character2.Draw(shader);
+
+        ////REQUIRED FOR LIGHT
+        //should be property of object
+        shader.setInt("material.diffuse", 0);
+        shader.setInt("material.specular", 1);
+        shader.setFloat("material.shininess", 32.0f);
+        //from camera
+        shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
+
+
+//        shader.setVec3("dirLight.direction", direction);
+//        shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+//        shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+//        shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+        dirLight.sendToShader(shader, "dirLight");
 
         Engine::LoopEnd();
 

@@ -25,3 +25,7 @@ DirectionalLight::~DirectionalLight() {
 
 }
 
+DirectionalLight::DirectionalLight() {
+
+}
+

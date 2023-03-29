@@ -41,6 +41,8 @@ namespace Engine {
         // draw pyramids
         glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_LIGHT0);
+        glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     }
 
     void LoopEnd() {
@@ -128,7 +130,7 @@ namespace Engine {
         return 0;
     }
 
-    void renderImGuiUI(int* depth, glm::vec2* rotate, glm::vec3* color, const int MAX_DEPTH) {
+    void renderImGuiUI(int* depth, glm::vec2* rotate, glm::vec3* color, const int MAX_DEPTH, glm::fvec3* direction) {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -158,6 +160,10 @@ namespace Engine {
             ImGui::SliderFloat("R", &color->x, 0.0f, 1.0f);
             ImGui::SliderFloat("G", &color->y, 0.0f, 1.0f);
             ImGui::SliderFloat("B", &color->z, 0.0f, 1.0f);
+            ImGui::End();
+
+            ImGui::Begin("Direction");
+            ImGui::SliderFloat3("DIR", &direction->x, -1.0f, 1.0f);
             ImGui::End();
         }
         ImGui::Render();

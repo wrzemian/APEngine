@@ -23,6 +23,7 @@ public:
 
     void sendToShader(Shader shader, std::string type) override;
 
+    DirectionalLight();
 };
 
 
