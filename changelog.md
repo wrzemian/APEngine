@@ -5,7 +5,7 @@
 - classes Transform and Scene
 - directional light
 - spot light (but i cant locate it on the cube, so i'm not sure if it works tbh)
-
+- rendering 3d object with modifiable transform - scale, rotation and position (all black for now)
 ### Changed
 - both shaders
 
