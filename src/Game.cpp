@@ -86,34 +86,7 @@ namespace Game {
         ImGui::NewFrame();
 
         {
-            ImGui::Begin("Scale");
-            ImGui::SetWindowPos(ImVec2(0, 0));
-            ImGui::SetWindowSize(ImVec2(250, 100));
-
-            ImGui::SliderFloat("sX", &player1._transform._scale.x, 0.0f, 10.0f);
-            ImGui::SliderFloat("sY", &player1._transform._scale.y, 0.0f, 10.0f);
-            ImGui::SliderFloat("sZ", &player1._transform._scale.z, 0.0f, 10.0f);
-            ImGui::End();
-
-            ImGui::Begin("Position");
-            ImGui::SetWindowPos(ImVec2(0, 100));
-            ImGui::SetWindowSize(ImVec2(250, 100));
-
-            ImGui::SliderFloat("pX", &player1._transform._position.x, -10.0f, 10.0f);
-            ImGui::SliderFloat("pY", &player1._transform._position.y, -10.0f, 10.0f);
-            ImGui::SliderFloat("pZ", &player1._transform._position.z, -10.0f, 10.0f);
-
-            ImGui::End();
-
-
-            ImGui::Begin("Rotation");
-            ImGui::SetWindowPos(ImVec2(0, 200));
-            ImGui::SetWindowSize(ImVec2(250, 100));
-
-            ImGui::SliderFloat("rX", &player1._transform._rotation.x, -10.0f, 10.0f);
-            ImGui::SliderFloat("rY", &player1._transform._rotation.y, -10.0f, 10.0f);
-            ImGui::SliderFloat("rZ", &player1._transform._rotation.z, -10.0f, 10.0f);
-            ImGui::End();
+            player1.ImGui();
         }
         ImGui::Render();
     }

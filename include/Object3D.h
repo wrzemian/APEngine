@@ -18,4 +18,5 @@ public:
 
     void Draw(Shader &shader);
     void loadModel(std::string const &path);
+    void ImGui();
 };
