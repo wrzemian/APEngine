@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.0.4] - 2023-03-29
+- Added classes Transform and Scene
+
 ## [0.0.3] - 2023-03-28
 ### Tip
 you can install GLSL extension to Clion easily, and it helps a lot

@@ -6,6 +6,9 @@
 #include "../include/Engine.h"
 
 #include "../include/Model.h"
+#include "../include/Transform.h"
+#include "../include/Scene.h"
+
 #include "../src/Renderer.cpp"
 
 
