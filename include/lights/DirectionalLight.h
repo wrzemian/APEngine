@@ -8,7 +8,7 @@
 #include "AmbientLight.h"
 
 class DirectionalLight : AmbientLight{
-private:
+protected:
     glm::vec3 direction;
 
 public:
@@ -17,9 +17,16 @@ public:
 
     ~DirectionalLight() override;
 
+    void setAmbient(const glm::vec3 &ambient);
+
+    void setDiffuse(const glm::vec3 &diffuse);
+
+    void setSpecular(const glm::vec3 &specular);
+
     const glm::vec3 &getDirection() const;
 
     void setDirection(const glm::vec3 &direction);
+
 
     void sendToShader(Shader shader, std::string type) override;
 

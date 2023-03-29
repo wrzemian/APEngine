@@ -130,7 +130,13 @@ namespace Engine {
         return 0;
     }
 
-    void renderImGuiUI(int* depth, glm::vec2* rotate, glm::vec3* color, const int MAX_DEPTH, glm::fvec3* direction) {
+
+    void renderImGuiUI(int* depth, glm::vec2* rotate, glm::vec3* color, const int MAX_DEPTH,
+                       glm::fvec3* ambient, glm::fvec3* diffuse, glm::fvec3* specular, glm::fvec3* direction,
+                       glm::fvec3* ambientS, glm::fvec3* diffuseS, glm::fvec3* specularS, glm::fvec3* position,
+                       float* constant, float* linear, float* quadratic, glm::fvec3* directionS, float* cutOff,
+                       float* outerCutOff)
+                       {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -162,8 +168,24 @@ namespace Engine {
             ImGui::SliderFloat("B", &color->z, 0.0f, 1.0f);
             ImGui::End();
 
-            ImGui::Begin("Direction");
-            ImGui::SliderFloat3("DIR", &direction->x, -1.0f, 1.0f);
+            ImGui::Begin("dirLight");
+            ImGui::SliderFloat3("ambient", &ambient->x, -1.0f, 1.0f);
+            ImGui::SliderFloat3("diffuse", &diffuse->x, -1.0f, 1.0f);
+            ImGui::SliderFloat3("specular", &specular->x, -1.0f, 1.0f);
+            ImGui::SliderFloat3("direction", &direction->x, -1.0f, 1.0f);
+            ImGui::End();
+
+            ImGui::Begin("spotLight");
+            ImGui::SliderFloat3("ambientS", &ambientS->x, -1.0f, 1.0f);
+            ImGui::SliderFloat3("diffuseS", &diffuseS->x, -1.0f, 1.0f);
+            ImGui::SliderFloat3("specularS", &specularS->x, -1.0f, 1.0f);
+            ImGui::SliderFloat3("position", &position->x, -1.0f, 1.0f);
+            ImGui::SliderFloat("constant", constant, -1.0f, 1.0f);
+            ImGui::SliderFloat("linear", linear, -1.0f, 1.0f);
+            ImGui::SliderFloat("quadratic", quadratic, -1.0f, 1.0f);
+            ImGui::SliderFloat3("directionS", &directionS->x, -1.0f, 1.0f);
+            ImGui::SliderFloat("cutOff", cutOff, -1.0f, 1.0f);
+            ImGui::SliderFloat("outerCutOff", outerCutOff, -1.0f, 1.0f);
             ImGui::End();
         }
         ImGui::Render();

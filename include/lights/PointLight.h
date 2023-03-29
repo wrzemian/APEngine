@@ -10,31 +10,39 @@
 class PointLight : AmbientLight{
 private:
     glm::vec3 position;
-    glm::vec3 constant;
-    glm::vec3 linear;
-    glm::vec3 quadratic;
+    float constant;
+    float linear;
+    float quadratic;
 
 public:
     PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const glm::vec3 &position,
-               const glm::vec3 &constant, const glm::vec3 &linear, const glm::vec3 &quadratic);
+               float constant, float linear, float quadratic);
+
+    PointLight();
 
     ~PointLight() override;
 
     const glm::vec3 &getPosition() const;
 
-    const glm::vec3 &getConstant() const;
+    float getConstant() const;
 
-    const glm::vec3 &getLinear() const;
+    float getLinear() const;
 
-    const glm::vec3 &getQuadratic() const;
+    float getQuadratic() const;
+
+    void setAmbient(const glm::vec3 &ambient);
+
+    void setDiffuse(const glm::vec3 &diffuse);
+
+    void setSpecular(const glm::vec3 &specular);
 
     void setPosition(const glm::vec3 &position);
 
-    void setConstant(const glm::vec3 &constant);
+    void setConstant(float constant);
 
-    void setLinear(const glm::vec3 &linear);
+    void setLinear(float linear);
 
-    void setQuadratic(const glm::vec3 &quadratic);
+    void setQuadratic(float quadratic);
 
     void sendToShader(Shader shader, std::string type) override;
 };

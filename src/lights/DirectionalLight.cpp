@@ -29,3 +29,15 @@ DirectionalLight::DirectionalLight() {
 
 }
 
+void DirectionalLight::setAmbient(const glm::vec3 &ambient) {
+    AmbientLight::setAmbient(ambient);
+}
+
+void DirectionalLight::setDiffuse(const glm::vec3 &diffuse) {
+    AmbientLight::setDiffuse(diffuse);
+}
+
+void DirectionalLight::setSpecular(const glm::vec3 &specular) {
+    AmbientLight::setSpecular(specular);
+}
+

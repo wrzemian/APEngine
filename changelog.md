@@ -4,6 +4,7 @@
 ### Added
 - classes Transform and Scene
 - directional light
+- spot light (but i cant locate it on the cube, so i'm not sure if it works tbh)
 
 ### Changed
 - both shaders

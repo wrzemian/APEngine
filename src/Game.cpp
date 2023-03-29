@@ -8,6 +8,7 @@
 #include "../include/Model.h"
 #include "../include/Transform.h"
 #include "../include/lights/DirectionalLight.h"
+#include "../include/lights/SpotLight.h"
 #include "../include/Scene.h"
 
 #include "../src/Renderer.cpp"
@@ -40,9 +41,40 @@ namespace Game {
     Model character2;
 
     DirectionalLight dirLight;
+    glm::fvec3 ambient(0.05f, 0.05f, 0.05f);
+    glm::fvec3 diffuse(0.4f, 0.4f, 0.4f);
+    glm::fvec3 specular(0.5f, 0.5f, 0.5f);
     glm::fvec3 direction(-0.2f, -1.0f, -0.3f);
 
+    SpotLight spotLight;
+    glm::fvec3 ambientS(0.0f, 0.0f, 0.0f);
+    glm::fvec3 diffuseS(1.0f, 1.0f, 1.0f);
+    glm::fvec3 specularS(1.0f, 1.0f, 1.0f);
+    glm::fvec3 position(0.0f, 0.0f, 1.0f);
+    float constant(1.0f);
+    float linear(0.09f);
+    float quadratic(0.032f);
+    glm::fvec3 directionS(0.0f, 0.0f, -1.0f);
+    float cutOff(glm::cos(glm::radians(12.5f)));
+    float outerCutOff(glm::cos(glm::radians(15.0f)));
 
+    void SetLights(){
+        dirLight.setAmbient(ambient);
+        dirLight.setDiffuse(diffuse);
+        dirLight.setSpecular(specular);
+        dirLight.setDirection(direction);
+
+        spotLight.setAmbient(ambientS);
+        spotLight.setDiffuse(diffuseS);
+        spotLight.setSpecular(specularS);
+        spotLight.setPosition(position);
+        spotLight.setConstant(constant);
+        spotLight.setLinear(linear);
+        spotLight.setQuadratic(quadratic);
+        spotLight.setDirection(directionS);
+        spotLight.setCutOff(cutOff);
+        spotLight.setOuterCutOff(outerCutOff);
+    }
 
     void Start() {
         std::cout << Engine::Init();
@@ -77,14 +109,20 @@ namespace Game {
 
         sierpinski.calculateAllTransformations();
 
-        DirectionalLight tempDirLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), direction);
+        DirectionalLight tempDirLight(ambient, diffuse, specular, direction);
         dirLight = tempDirLight;
+
+        SpotLight tempSpotLight(ambientS, diffuseS, specularS, position, constant, linear, quadratic,
+                                direction, cutOff, outerCutOff);
+        spotLight = tempSpotLight;
     }
 
     void Update() {
         Engine::LoopStart();
-        Engine::renderImGuiUI(&depth, &rotate, &color, sierpinski.MAX_DEPTH, &direction);
-        dirLight.setDirection(direction);
+        Engine::renderImGuiUI(&depth, &rotate, &color, sierpinski.MAX_DEPTH, &ambient, &diffuse, &specular, &direction,
+                              &ambientS, &diffuseS, &specularS, &position, &constant, &linear, &quadratic, &directionS,
+                              &cutOff, &outerCutOff);
+        SetLights();
         // send new rotation matrix to shader only when it changed
         if (rotate != oldRotate) {
             glm::mat4 rotation(1.0f);
@@ -113,17 +151,16 @@ namespace Game {
         shader.setFloat("material.shininess", 32.0f);
         //from camera
         shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
+        ////REQUIRED FOR LIGHT
 
 
-//        shader.setVec3("dirLight.direction", direction);
-//        shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-//        shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-//        shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
         dirLight.sendToShader(shader, "dirLight");
+        spotLight.sendToShader(shader, "spotLight");
 
         Engine::LoopEnd();
 
     }
+
 
 
 

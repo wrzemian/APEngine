@@ -11,30 +11,45 @@
 class SpotLight : PointLight{
 private:
     glm::vec3 direction;
-    glm::vec3 cutOff;
-    glm::vec3 outerCutOff;
+    float cutOff;
+    float outerCutOff;
 
 public:
-    SpotLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
-              const glm::vec3 &position, const glm::vec3 &constant, const glm::vec3 &linear,
-              const glm::vec3 &quadratic, const glm::vec3 &direction, const glm::vec3 &cutOff,
-              const glm::vec3 &outerCutOff);
+    SpotLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular, const glm::vec3 &position,
+              float constant, float linear, float quadratic, const glm::vec3 &direction, float cutOff,
+              float outerCutOff);
 
     virtual ~SpotLight();
 
     const glm::vec3 &getDirection() const;
 
-    const glm::vec3 &getCutOff() const;
+    float getCutOff() const;
 
-    const glm::vec3 &getOuterCutOff() const;
+    float getOuterCutOff() const;
 
     void setDirection(const glm::vec3 &direction);
 
-    void setCutOff(const glm::vec3 &cutOff);
+    void setCutOff(float cutOff);
 
-    void setOuterCutOff(const glm::vec3 &outerCutOff);
+    void setOuterCutOff(float outerCutOff);
+
+    void setAmbient(const glm::vec3 &ambient);
+
+    void setDiffuse(const glm::vec3 &diffuse);
+
+    void setSpecular(const glm::vec3 &specular);
+
+    void setPosition(const glm::vec3 &position);
+
+    void setConstant(float constant);
+
+    void setLinear(float linear);
+
+    void setQuadratic(float quadratic);
 
     void sendToShader(Shader shader, std::string type) override;
+
+    SpotLight();
 };
 
 
