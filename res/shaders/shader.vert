@@ -19,7 +19,7 @@ void main()
     Normal = mat3(transpose(inverse(model))) * aNormal;
     TexCoords = texCoord;
 
-    gl_Position = projectionView * rotation * translation * vec4(position, 1.0f);
+    gl_Position = projectionView * model * vec4(position, 1.0f);
 }
 
 
