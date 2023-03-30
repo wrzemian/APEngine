@@ -55,7 +55,7 @@ public:
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
-        updateCameraVectors();
+//        updateCameraVectors();
     }
     // constructor with scalar values
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
@@ -64,7 +64,8 @@ public:
         WorldUp = glm::vec3(upX, upY, upZ);
         Yaw = yaw;
         Pitch = pitch;
-        updateCameraVectors();
+//        updateCameraPosition();
+//        updateCameraVectors();
     }
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
@@ -105,10 +106,10 @@ private:
         Up = glm::normalize(glm::cross(Right, Front));
     }
 
-    void updateCameraPosition(int x, int y, int z){
-        Position.x = x;
-        Position.y= y;
-        Position.z= z;
+    void updateCameraPosition(){
+//        Position.x = x;
+//        Position.y = y;
+//        Position.z = z;
     }
 
     void setView(){
