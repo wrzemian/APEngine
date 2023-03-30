@@ -133,7 +133,9 @@ namespace Game {
         {
             player1.ImGui();
             camera.Imgui();
-
+            pointLight.ImGui();
+            spotLight.ImGui();
+            dirLight.ImGui();
         }
         ImGui::Render();
     }
