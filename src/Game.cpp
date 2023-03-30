@@ -7,6 +7,7 @@
 
 #include "../include/Object3D.h"
 
+#include "../include/lights/DirectionalLight.h"
 
 
 namespace Game {
@@ -33,6 +34,9 @@ namespace Game {
     //Object3D player2;
 
     Model test;
+
+    DirectionalLight dirLight;
+    glm::fvec3 direction(-0.2f, -1.0f, -0.3f);
 
     void Start() {
         std::cout << Engine::Init();
@@ -64,17 +68,35 @@ namespace Game {
         glm::mat4 viewProjection = projection * view;
         shader.setMat4("projectionView", viewProjection);
 
+        glm::mat4 model = glm::mat4 (1.0f);
+        shader.setMat4("model", model);
 
-
+        DirectionalLight tempDirLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), direction);
+        dirLight = tempDirLight;
     }
 
     void Update() {
         Engine::LoopStart();
         ImGui();
-
+        //sierpinski.draw(&shader, depth);
         player1.Draw(shader);
         //player2.Draw(shader);
         test.Draw(shader);
+
+        ////REQUIRED FOR LIGHT
+        //should be property of object
+        shader.setInt("material.diffuse", 0);
+        shader.setInt("material.specular", 1);
+        shader.setFloat("material.shininess", 32.0f);
+        //from camera
+        shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
+
+
+//        shader.setVec3("dirLight.direction", direction);
+//        shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+//        shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+//        shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+        dirLight.sendToShader(shader, "dirLight");
 
         Engine::LoopEnd();
 
