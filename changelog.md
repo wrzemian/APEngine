@@ -9,7 +9,7 @@
 - lights are working with obj
 
 ### Fixed
-
+- spot light
 
 ## [0.0.4] - 2023-03-29
 ### Added
