@@ -3,6 +3,7 @@
 ## [0.0.5] - 2023-03-30
 ### Added
 - point light
+- camera 
 
 ### Changed
 - frag shader

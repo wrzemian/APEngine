@@ -39,6 +39,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+    glm::vec3 Look;
     // euler Angles
     float Yaw;
     float Pitch;
@@ -77,9 +78,15 @@ public:
         ImGui::Begin("Camera");
         ImGui::SetWindowSize(ImVec2(250, 150));
 
-        ImGui::SliderFloat("R", &Position.x, -200.0f, 100.0f);
-        ImGui::SliderFloat("G", &Position.y, -200.0f, 100.0f);
-        ImGui::SliderFloat("B", &Position.z, -200.0f, 100.f);
+        ImGui::SliderFloat("X", &Position.x, -200.0f, 100.0f);
+        ImGui::SliderFloat("Y", &Position.y, -200.0f, 100.0f);
+        ImGui::SliderFloat("Z", &Position.z, -200.0f, 100.f);
+
+        ImGui::SliderFloat("Kierunek - X", &Look.x, -200.0f, 100.0f);
+        ImGui::SliderFloat("Kierunek - Y", &Look.y, -200.0f, 100.0f);
+        ImGui::SliderFloat("Kierunek - Z", &Look.z, -200.0f, 100.f);
+
+
         ImGui::End();
     }
 
@@ -102,6 +109,12 @@ private:
         Position.x = x;
         Position.y= y;
         Position.z= z;
+    }
+
+    void setView(){
+        glm::mat4 view = glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),  // pozycja kamery
+                                     glm::vec3(Look.x, Look.y, Look.z),  // punkt na który patrzy kamera
+                                     glm::vec3(0.0f, 1.0f, 0.0f)); // wektor wskazujący kierunek "góry"
     }
 
 

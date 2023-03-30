@@ -114,7 +114,7 @@ namespace Game {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = glm::lookAt(glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z),  // pozycja kamery
-                                     glm::vec3(0.0f, 0.0f, 0.0f),  // punkt na który patrzy kamera
+                                     glm::vec3(camera.Look.x, camera.Look.y, camera.Look.z),  // punkt na który patrzy kamera
                                      glm::vec3(0.0f, 1.0f, 0.0f)); // wektor wskazujący kierunek "góry"
 
         shader.setMat4("projectionView", projection * view);
