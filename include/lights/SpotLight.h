@@ -9,7 +9,7 @@
 #include "glm/vec3.hpp"
 
 class SpotLight : PointLight{
-private:
+protected:
     glm::vec3 direction;
     float cutOff;
     float outerCutOff;
@@ -48,6 +48,8 @@ public:
     void setQuadratic(float quadratic);
 
     void sendToShader(Shader shader, std::string type) override;
+
+    void ImGui();
 
     SpotLight();
 };

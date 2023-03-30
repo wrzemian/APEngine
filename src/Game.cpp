@@ -8,7 +8,8 @@
 #include "../include/Object3D.h"
 
 #include "../include/lights/DirectionalLight.h"
-
+#include "../include/lights/SpotLight.h"
+#include "../include/lights/PointLight.h"
 
 namespace Game {
     void ImGui();
@@ -36,7 +37,8 @@ namespace Game {
     Model test;
 
     DirectionalLight dirLight;
-    glm::fvec3 direction(-0.2f, -1.0f, -0.3f);
+    SpotLight spotLight;
+    PointLight pointLight;
 
     void Start() {
         std::cout << Engine::Init();
@@ -71,8 +73,16 @@ namespace Game {
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
 
-        DirectionalLight tempDirLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), direction);
+        DirectionalLight tempDirLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), glm::fvec3(-0.2f, -1.0f, -0.3f));
         dirLight = tempDirLight;
+
+        SpotLight tempSpotLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), glm::fvec3(-3.2f, -3.0f, -3.3f),
+                                1.0f, 0.09f, 0.032f, glm::fvec3(0.0f, 0.0f, 0.0f), glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(15.0f)));
+        spotLight = tempSpotLight;
+
+        PointLight tempPointLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), glm::fvec3(-3.2f, -3.0f, -3.3f),
+                                1.0f, 0.09f, 0.032f);
+        pointLight = tempPointLight;
     }
 
     void Update() {
@@ -91,12 +101,9 @@ namespace Game {
         //from camera
         shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
 
-
-//        shader.setVec3("dirLight.direction", direction);
-//        shader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-//        shader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-//        shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
-        dirLight.sendToShader(shader, "dirLight");
+        //dirLight.sendToShader(shader, "dirLight");
+        //spotLight.sendToShader(shader, "spotLight");
+        pointLight.sendToShader(shader, "pointLight");
 
         Engine::LoopEnd();
 
@@ -109,6 +116,9 @@ namespace Game {
 
         {
             player1.ImGui();
+            dirLight.ImGui();
+            spotLight.ImGui();
+            pointLight.ImGui();
         }
         ImGui::Render();
     }

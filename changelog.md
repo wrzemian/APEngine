@@ -1,5 +1,15 @@
 # Change Log
 
+## [0.0.5] - 2023-03-30
+### Added
+- point light
+
+### Changed
+- frag shader
+
+### Fixed
+
+
 ## [0.0.4] - 2023-03-29
 ### Added
 - classes Transform and Scene
