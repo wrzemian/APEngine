@@ -8,6 +8,7 @@
 #include "../include/Object3D.h"
 
 #include "../include/lights/DirectionalLight.h"
+#include "../include/Camera.h"
 
 
 namespace Game {
@@ -32,6 +33,9 @@ namespace Game {
 
     Object3D player1;
     //Object3D player2;
+
+    Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
+    glm::vec3 position(camera.Position.x, camera.Position.y, camera.Position.z);
 
     Model test;
 
@@ -98,6 +102,16 @@ namespace Game {
 //        shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
         dirLight.sendToShader(shader, "dirLight");
 
+        //camera
+        glm::mat4 projection = glm::mat4(1.0f);
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = glm::lookAt(glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z),  // pozycja kamery
+                                     glm::vec3(0.0f, 0.0f, 0.0f),  // punkt na który patrzy kamera
+                                     glm::vec3(0.0f, 1.0f, 0.0f)); // wektor wskazujący kierunek "góry"
+
+        shader.setMat4("projectionView", projection * view);
+
+
         Engine::LoopEnd();
 
     }
@@ -106,9 +120,9 @@ namespace Game {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
         {
             player1.ImGui();
+            camera.Imgui();
         }
         ImGui::Render();
     }
