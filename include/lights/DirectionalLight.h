@@ -27,10 +27,11 @@ public:
 
     void setDirection(const glm::vec3 &direction);
 
-
     void sendToShader(Shader shader, std::string type) override;
 
     DirectionalLight();
+
+    void ImGui();
 };
 
 

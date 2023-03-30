@@ -7,8 +7,8 @@
 
 #include "AmbientLight.h"
 
-class PointLight : AmbientLight{
-private:
+class PointLight : public AmbientLight{
+protected:
     glm::vec3 position;
     float constant;
     float linear;
@@ -43,6 +43,8 @@ public:
     void setLinear(float linear);
 
     void setQuadratic(float quadratic);
+
+    void ImGui();
 
     void sendToShader(Shader shader, std::string type) override;
 };
