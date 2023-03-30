@@ -6,6 +6,7 @@
 
 ### Changed
 - frag shader
+- lights are working with obj
 
 ### Fixed
 
