@@ -40,6 +40,23 @@ set(magic_enum ${MAGIC_ENUM_DIR} CACHE INTERNAL "")
 add_library(magic_enum INTERFACE ${MAGIC_ENUM_DIR}/magic_enum.hpp)
 target_include_directories(magic_enum INTERFACE ${MAGIC_ENUM_DIR})
 
+# fmt
+set(FMT_DIR ${CMAKE_CURRENT_LIST_DIR}/fmt)
+set(fmt ${FMT_DIR} CACHE INTERNAL "")
+add_library(fmt INTERFACE ${FMT_DIR}/core.h)
+target_include_directories(fmt INTERFACE ${FMT_DIR})
+
+# openal
+set(OPENAL_DIR ${CMAKE_CURRENT_LIST_DIR}/openal)
+set(openal ${OPENAL_DIR} CACHE INTERNAL "")
+add_library(openal INTERFACE ${OPENAL_DIR}/al.h)
+target_include_directories(openal INTERFACE ${OPENAL_DIR})
+
+#set(FMT_DIR ${CMAKE_CURRENT_LIST_DIR}/fmt)
+#set(fmt ${FMT_DIR}/include CACHE INTERNAL "")
+#add_library(fmt STATIC ${FMT_DIR}/src/fmt.cc)
+#target_include_directories(fmt PRIVATE ${FMT_DIR}/include)
+
 # other
 CPMAddPackage("gh:assimp/assimp@5.2.5")
 CPMAddPackage("gh:glfw/glfw#3.3.8")
@@ -65,7 +82,8 @@ set_target_properties(glad
 		              rapidjson
 		random
 		eventpp
-		magic_enum PROPERTIES FOLDER "thirdparty")
+		magic_enum
+		fmt PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "thirdparty")

@@ -18,15 +18,15 @@
 #include "random.hpp"
 #include "eventqueue.h"
 #include "magic_enum.hpp"
-
-rapidjson::Document document;
-using Random = effolkronium::random_static;
-auto val = Random::get(-1, 1);
-eventpp::CallbackList<void (const std::string &, const bool)> callbackList;
-
+#include "spdlog/spdlog.h"
+#include "core.h"
+#include "al.h"
+#include "alc.h"
 ////NEW LIBRAIRES TESTING
 
+
 namespace Game {
+
     void ImGui();
 
     const int SCR_WIDTH = 1000;
@@ -59,6 +59,17 @@ namespace Game {
 
 
     void Start() {
+        ////NEW LIBRAIRES TESTING
+        rapidjson::Document document;
+        using Random = effolkronium::random_static;
+        auto val = Random::get(-1, 1);
+        eventpp::CallbackList<void (const std::string &, const bool)> callbackList;
+        spdlog::info("Welcome to spdlog!");
+        fmt::print("Hello, world!\n");
+        ALCdevice *device;
+
+        device = alcOpenDevice(NULL);
+        ////NEW LIBRAIRES TESTING
 
         std::cout << Engine::Init();
 

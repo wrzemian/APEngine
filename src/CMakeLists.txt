@@ -40,6 +40,8 @@ target_link_libraries(${PROJECT_NAME} rapidjson)
 target_link_libraries(${PROJECT_NAME} random)
 target_link_libraries(${PROJECT_NAME} eventpp)
 target_link_libraries(${PROJECT_NAME} magic_enum)
+target_link_libraries(${PROJECT_NAME} fmt)
+target_link_libraries(${PROJECT_NAME} openal)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 				   COMMAND ${CMAKE_COMMAND} -E create_symlink 
