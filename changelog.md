@@ -9,9 +9,9 @@
 - Neargye/magic_enum lib
 - fmt lib
 
-
 ### Fixed
 - removed openAL lib from cmake and Game.cpp because its fucked
+
 ## [0.0.5] - 2023-03-30
 ### Added
 - point light
