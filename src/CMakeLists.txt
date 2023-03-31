@@ -15,7 +15,10 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		Renderer.cpp
 		../include/Shader.h
 		Sierpinski.cpp
-		../include/Mesh.h ../include/Model.h lights/AmbientLight.cpp ../include/lights/AmbientLight.h lights/DirectionalLight.cpp ../include/lights/DirectionalLight.h lights/PointLight.cpp ../include/lights/PointLight.h lights/SpotLight.cpp ../include/lights/SpotLight.h ../include/Transform.h ../include/Scene.h ../include/Object3D.h Object3D.cpp ../include/Camera.h)
+		../include/Mesh.h ../include/Model.h lights/AmbientLight.cpp ../include/lights/AmbientLight.h
+		lights/DirectionalLight.cpp ../include/lights/DirectionalLight.h lights/PointLight.cpp
+		../include/lights/PointLight.h lights/SpotLight.cpp ../include/lights/SpotLight.h ../include/Transform.h
+		../include/Scene.h ../include/Object3D.h Object3D.cpp ../include/Camera.h)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")
@@ -33,6 +36,7 @@ target_link_libraries(${PROJECT_NAME} glfw)
 target_link_libraries(${PROJECT_NAME} imgui)
 target_link_libraries(${PROJECT_NAME} spdlog)
 target_link_libraries(${PROJECT_NAME} glm::glm)
+target_link_libraries(${PROJECT_NAME} rapidjson)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 				   COMMAND ${CMAKE_COMMAND} -E create_symlink 

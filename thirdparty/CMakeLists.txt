@@ -16,6 +16,12 @@ set(stb_image_SOURCE_DIR ${STB_IMAGE_DIR} CACHE INTERNAL "")
 add_library(stb_image STATIC ${STB_IMAGE_DIR}/stb_image.cpp)
 target_include_directories(stb_image PRIVATE ${STB_IMAGE_DIR})
 
+# rapidjson
+set(RAPIDJSON_DIR ${CMAKE_CURRENT_LIST_DIR}/rapidjson)
+set(rapidjson_SOURCE_DIR ${RAPIDJSON_DIR} CACHE INTERNAL "")
+add_library(rapidjson INTERFACE ${RAPIDJSON_DIR}/rapidjson.h)
+target_include_directories(rapidjson INTERFACE ${RAPIDJSON_DIR})
+
 # other
 CPMAddPackage("gh:assimp/assimp@5.2.5")
 CPMAddPackage("gh:glfw/glfw#3.3.8")
@@ -36,7 +42,8 @@ set_target_properties(glad
                       glfw 
                       glm 
                       imgui 
-                      spdlog PROPERTIES FOLDER "thirdparty")
+                      spdlog
+		              rapidjson PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "thirdparty")

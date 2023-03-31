@@ -12,6 +12,9 @@
 
 #include "../include/lights/SpotLight.h"
 #include "../include/lights/PointLight.h"
+#include "document.h"
+
+rapidjson::Document document;
 
 namespace Game {
     void ImGui();
@@ -44,7 +47,9 @@ namespace Game {
     SpotLight spotLight;
     PointLight pointLight;
 
+
     void Start() {
+
         std::cout << Engine::Init();
 
         //Model tempModel1("../../res/models/first_character/first character.obj");
