@@ -66,9 +66,9 @@ namespace Game {
         eventpp::CallbackList<void (const std::string &, const bool)> callbackList;
         spdlog::info("Welcome to spdlog!");
         fmt::print("Hello, world!\n");
-        ALCdevice *device;
-
-        device = alcOpenDevice(NULL);
+//        ALCenum error;
+//
+//        error = alGetError();
         ////NEW LIBRAIRES TESTING
 
         std::cout << Engine::Init();
