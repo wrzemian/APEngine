@@ -20,8 +20,7 @@
 #include "magic_enum.hpp"
 #include "spdlog/spdlog.h"
 #include "core.h"
-#include "al.h"
-#include "alc.h"
+
 ////NEW LIBRAIRES TESTING
 
 
@@ -66,9 +65,7 @@ namespace Game {
         eventpp::CallbackList<void (const std::string &, const bool)> callbackList;
         spdlog::info("Welcome to spdlog!");
         fmt::print("Hello, world!\n");
-//        ALCenum error;
-//
-//        error = alGetError();
+
         ////NEW LIBRAIRES TESTING
 
         std::cout << Engine::Init();

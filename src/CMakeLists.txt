@@ -41,7 +41,8 @@ target_link_libraries(${PROJECT_NAME} random)
 target_link_libraries(${PROJECT_NAME} eventpp)
 target_link_libraries(${PROJECT_NAME} magic_enum)
 target_link_libraries(${PROJECT_NAME} fmt)
-target_link_libraries(${PROJECT_NAME} openal)
+#target_link_libraries(${PROJECT_NAME} openal)
+#target_link_libraries(${OPENAL_DIR}/resources/openal32.rc)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 				   COMMAND ${CMAKE_COMMAND} -E create_symlink 

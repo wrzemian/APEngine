@@ -47,11 +47,11 @@ add_library(fmt INTERFACE ${FMT_DIR}/core.h)
 target_include_directories(fmt INTERFACE ${FMT_DIR})
 
 # openal
-set(OPENAL_DIR ${CMAKE_CURRENT_LIST_DIR}/openal)
-set(openal ${OPENAL_DIR} CACHE INTERNAL "")
-add_library(openal INTERFACE ${OPENAL_DIR}/al.h)
-target_include_directories(openal INTERFACE ${OPENAL_DIR})
-
+#set(OPENAL_DIR ${CMAKE_CURRENT_LIST_DIR}/openal)
+#set(openal ${OPENAL_DIR} CACHE INTERNAL "")
+#add_library(openal INTERFACE ${OPENAL_DIR}/include/AL/al.h)
+#target_include_directories(openal INTERFACE ${OPENAL_DIR})
+#add_subdirectory(openal)
 #set(FMT_DIR ${CMAKE_CURRENT_LIST_DIR}/fmt)
 #set(fmt ${FMT_DIR}/include CACHE INTERNAL "")
 #add_library(fmt STATIC ${FMT_DIR}/src/fmt.cc)
