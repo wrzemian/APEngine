@@ -13,8 +13,11 @@
 #include "../include/lights/SpotLight.h"
 #include "../include/lights/PointLight.h"
 #include "document.h"
+#include "random.hpp"
 
 rapidjson::Document document;
+using Random = effolkronium::random_static;
+auto val = Random::get(-1, 1);
 
 namespace Game {
     void ImGui();

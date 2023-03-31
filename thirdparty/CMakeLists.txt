@@ -22,12 +22,19 @@ set(rapidjson_SOURCE_DIR ${RAPIDJSON_DIR} CACHE INTERNAL "")
 add_library(rapidjson INTERFACE ${RAPIDJSON_DIR}/rapidjson.h)
 target_include_directories(rapidjson INTERFACE ${RAPIDJSON_DIR})
 
+# effolkronium (random)
+set(EFFOLKRONIUM_DIR ${CMAKE_CURRENT_LIST_DIR}/effolkronium)
+set(effolkronium_SOURCE_DIR ${EFFOLKRONIUM_DIR} CACHE INTERNAL "")
+add_library(random INTERFACE ${EFFOLKRONIUM_DIR}/random.hpp)
+target_include_directories(random INTERFACE ${EFFOLKRONIUM_DIR})
+
 # other
 CPMAddPackage("gh:assimp/assimp@5.2.5")
 CPMAddPackage("gh:glfw/glfw#3.3.8")
 CPMAddPackage("gh:g-truc/glm#0.9.9.8")
 CPMAddPackage("gh:ocornut/imgui@1.88")
 CPMAddPackage("gh:gabime/spdlog@1.10.0")
+
 
 set(imgui_SOURCE_DIR ${imgui_SOURCE_DIR} CACHE INTERNAL "")
 add_library(imgui STATIC ${imgui_SOURCE_DIR}/imgui.cpp
@@ -43,7 +50,8 @@ set_target_properties(glad
                       glm 
                       imgui 
                       spdlog
-		              rapidjson PROPERTIES FOLDER "thirdparty")
+		              rapidjson
+		random PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "thirdparty")
