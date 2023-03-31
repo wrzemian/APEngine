@@ -4,13 +4,14 @@
 
 ### TODO
 - openAL lib
-- wqking/eventpp lib
+
 - Neargye/magic_enum lib
 - fmt lib
 
 ### Added
 - rapidjson lib
 - effolkronium/random lib
+- wqking/eventpp lib
 
 ## [0.0.5] - 2023-03-30
 ### Added

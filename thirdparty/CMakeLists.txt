@@ -28,6 +28,12 @@ set(effolkronium_SOURCE_DIR ${EFFOLKRONIUM_DIR} CACHE INTERNAL "")
 add_library(random INTERFACE ${EFFOLKRONIUM_DIR}/random.hpp)
 target_include_directories(random INTERFACE ${EFFOLKRONIUM_DIR})
 
+# eventpp
+set(EVENTPP_DIR ${CMAKE_CURRENT_LIST_DIR}/eventpp)
+set(eventpp ${EVENTPP_DIR} CACHE INTERNAL "")
+add_library(eventpp INTERFACE ${EVENTPP_DIR}/eventqueue.h)
+target_include_directories(eventpp INTERFACE ${EVENTPP_DIR})
+
 # other
 CPMAddPackage("gh:assimp/assimp@5.2.5")
 CPMAddPackage("gh:glfw/glfw#3.3.8")
@@ -51,7 +57,8 @@ set_target_properties(glad
                       imgui 
                       spdlog
 		              rapidjson
-		random PROPERTIES FOLDER "thirdparty")
+		random
+		eventpp PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "thirdparty")

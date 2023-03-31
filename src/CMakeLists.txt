@@ -38,6 +38,7 @@ target_link_libraries(${PROJECT_NAME} spdlog)
 target_link_libraries(${PROJECT_NAME} glm::glm)
 target_link_libraries(${PROJECT_NAME} rapidjson)
 target_link_libraries(${PROJECT_NAME} random)
+target_link_libraries(${PROJECT_NAME} eventpp)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 				   COMMAND ${CMAKE_COMMAND} -E create_symlink 
