@@ -34,6 +34,12 @@ set(eventpp ${EVENTPP_DIR} CACHE INTERNAL "")
 add_library(eventpp INTERFACE ${EVENTPP_DIR}/eventqueue.h)
 target_include_directories(eventpp INTERFACE ${EVENTPP_DIR})
 
+# magic_enum
+set(MAGIC_ENUM_DIR ${CMAKE_CURRENT_LIST_DIR}/magic_enum)
+set(magic_enum ${MAGIC_ENUM_DIR} CACHE INTERNAL "")
+add_library(magic_enum INTERFACE ${MAGIC_ENUM_DIR}/magic_enum.hpp)
+target_include_directories(magic_enum INTERFACE ${MAGIC_ENUM_DIR})
+
 # other
 CPMAddPackage("gh:assimp/assimp@5.2.5")
 CPMAddPackage("gh:glfw/glfw#3.3.8")
@@ -58,7 +64,8 @@ set_target_properties(glad
                       spdlog
 		              rapidjson
 		random
-		eventpp PROPERTIES FOLDER "thirdparty")
+		eventpp
+		magic_enum PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "thirdparty")

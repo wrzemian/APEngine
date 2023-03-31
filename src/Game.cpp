@@ -17,11 +17,13 @@
 #include "document.h"
 #include "random.hpp"
 #include "eventqueue.h"
+#include "magic_enum.hpp"
 
 rapidjson::Document document;
 using Random = effolkronium::random_static;
 auto val = Random::get(-1, 1);
 eventpp::CallbackList<void (const std::string &, const bool)> callbackList;
+
 ////NEW LIBRAIRES TESTING
 
 namespace Game {
