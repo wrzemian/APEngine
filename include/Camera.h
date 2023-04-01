@@ -39,7 +39,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
-    glm::vec3 Look;
+    glm::vec3 Look = glm::vec3(-6, -6, -6);
     // euler Angles
     float Yaw;
     float Pitch;
@@ -49,7 +49,7 @@ public:
     float Zoom;
 
     // constructor with vectors
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
         Position = position;
         WorldUp = up;
@@ -77,15 +77,15 @@ public:
     void Imgui(){
 
         ImGui::Begin("Camera");
-        ImGui::SetWindowSize(ImVec2(250, 150));
+        ImGui::SetWindowSize(ImVec2(250, 200));
 
-        ImGui::SliderFloat("X", &Position.x, -200.0f, 100.0f);
-        ImGui::SliderFloat("Y", &Position.y, -200.0f, 100.0f);
-        ImGui::SliderFloat("Z", &Position.z, -200.0f, 100.f);
+        ImGui::SliderFloat("X", &Position.x, -50.0f, 50.0f);
+        ImGui::SliderFloat("Y", &Position.y, -50.0f, 50.0f);
+        ImGui::SliderFloat("Z", &Position.z, -50.0f, 50.f);
 
-        ImGui::SliderFloat("Kierunek - X", &Look.x, -200.0f, 100.0f);
-        ImGui::SliderFloat("Kierunek - Y", &Look.y, -200.0f, 100.0f);
-        ImGui::SliderFloat("Kierunek - Z", &Look.z, -200.0f, 100.f);
+        ImGui::SliderFloat("Kierunek - X", &Look.x, -6.0f, 6.0f);
+        ImGui::SliderFloat("Kierunek - Y", &Look.y, -6.0f, 6.0f);
+        ImGui::SliderFloat("Kierunek - Z", &Look.z, -6.0f, 6.f);
 
 
         ImGui::End();
