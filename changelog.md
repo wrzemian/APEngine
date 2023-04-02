@@ -1,5 +1,14 @@
 # Change Log
 
+## [0.0.7] - 2023-04-03
+### Fixed
+- different models can use different shaders each
+
+### Added
+- debug shape - draw cube, arrow or obj on given coordinates (arrow and obj not tested yet)
+
+
+
 ## [0.0.7] - 2023-04-02
 ### Added
 - counting and displaying deltaTime and FramesPerSecond

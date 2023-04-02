@@ -17,6 +17,7 @@ Object3D::~Object3D() {
 }
 
 void Object3D::Draw(Shader &shader) {
+    shader.use();
     _transform.updateWorldTransform(glm::mat4(1.0f), shader);
     // shader.setMat4("model", _transform.getModel());
     _model.Draw(shader);

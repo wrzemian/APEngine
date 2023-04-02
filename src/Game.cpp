@@ -10,6 +10,7 @@
 
 #include "../include/lights/DirectionalLight.h"
 #include "../include/Camera.h"
+#include "../include/DebugShape.h"
 
 #include "../include/lights/SpotLight.h"
 #include "../include/lights/PointLight.h"
@@ -38,9 +39,12 @@ namespace Game {
     SpotLight spotLight;
     PointLight pointLight;
 
+    DebugShape debugShape;
 
     void Start() {
         std::cout << Engine::Init();
+
+        debugShape.Initialize();
 
         //player1.loadModel("../../res/models/first_character/first character.obj");
         movingObject.loadModel("../../res/models/first_character/first character.obj");
@@ -85,6 +89,7 @@ namespace Game {
         ImGui();
 
 
+
         movingObject.Move();
         //player1.Draw(shader);
         movingObject.Draw(shader);
@@ -110,6 +115,9 @@ namespace Game {
 */
 
         glm:: mat4 view = camera.getView();
+
+        debugShape.DrawCube(glm::vec3(0), glm::vec3(5, 5, 5), glm::vec4(0), projection* view);
+
         shader.setMat4("projectionView", projection * view);
 
 
