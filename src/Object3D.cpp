@@ -30,7 +30,7 @@ void Object3D::loadModel(const std::string &path) {
 
 void Object3D::ImGui() {
     ImGui::Begin("3D Object");
-    ImGui::SetWindowSize(ImVec2(250, 300));
+    ImGui::SetWindowSize(ImVec2(300, 310));
 
     ImGui::SliderFloat("scale X", &_transform._scale.x, -10.0f, 10.0f);
     ImGui::SliderFloat("scale Y", &_transform._scale.y, -10.0f, 10.0f);
@@ -44,6 +44,16 @@ void Object3D::ImGui() {
     ImGui::SliderFloat("position Y", &_transform._position.y, -20.0f, 20.0f);
     ImGui::SliderFloat("position Z", &_transform._position.z, -20.0f, 20.0f);
 
+    if (ImGui::Button("Reset Scale")) {
+        _transform._scale = glm::vec3(1,1,1);
+    }
+
+    if (ImGui::Button("Reset Position")) {
+        _transform._position = glm::vec3(0,0,0);
+    }
+    if (ImGui::Button("Reset Rotation")) {
+        _transform._rotation = glm::vec3(0,0,0);
+    }
 
     ImGui::End();
 }

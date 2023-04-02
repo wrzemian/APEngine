@@ -13,7 +13,7 @@
 #include <iostream>
 
 namespace Engine {
-    extern double deltaTime;
+    extern float deltaTime;
 
     void ImGui();
     int Init();

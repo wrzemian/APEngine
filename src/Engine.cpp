@@ -15,9 +15,9 @@
 namespace Engine {
     GLFWwindow* window;
 
-    double frameEnd = 0;
-    double frameStart = 0;
-    double deltaTime = 0;
+    float frameEnd = 0;
+    float frameStart = 0;
+    float deltaTime = 0;
 
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;

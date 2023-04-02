@@ -6,6 +6,7 @@
 #include "../include/Engine.h"
 
 #include "../include/Object3D.h"
+#include "../include/MovingObject.h"
 
 #include "../include/lights/DirectionalLight.h"
 #include "../include/Camera.h"
@@ -22,22 +23,12 @@ namespace Game {
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
 
-    // Renderer - loads buffers and textures
 
-    // ImGui sliders
-    int depth = 0;
 
-    glm::fvec3 color(1.0f, 1.0f, 0.0f);
-    glm::fvec3 oldColor(1.0f, 1.0f, 1.0f);
-
-    glm::fvec2 rotate(0.0f);
-    glm::fvec2 oldRotate(1.0f);
-
-    // Calculate translations for all pyramids across all depths
     Shader shader;
 
     Object3D player1;
-    //Object3D player2;
+    MovingObject movingObject;
 
     Camera camera(glm::vec3(10.0f, 15.0f, 10.0f));
 
@@ -51,13 +42,9 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init();
 
-        //Model tempModel1("../../res/models/first_character/first character.obj");
-        //Model tempModel2("../../res/models/second_character/second character.obj");
+        //player1.loadModel("../../res/models/first_character/first character.obj");
+        movingObject.loadModel("../../res/models/first_character/first character.obj");
 
-        player1.loadModel("../../res/models/first_character/first character.obj");
-        //player2.loadModel("../../res/models/second_character/second character.obj");
-
-        //player1._transform.addChild(&player2._transform);
 
         Model tempM("../../res/models/first_character/first character.obj");
         test = tempM;
@@ -96,10 +83,11 @@ namespace Game {
     void Update() {
         Engine::LoopStart();
         ImGui();
-        //sierpinski.draw(&shader, depth);
-        player1.Draw(shader);
-        //player2.Draw(shader);
-        test.Draw(shader);
+
+
+        movingObject.Move();
+        //player1.Draw(shader);
+        movingObject.Draw(shader);
 
         ////REQUIRED FOR LIGHT
         //should be property of object
@@ -135,12 +123,13 @@ namespace Game {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         {
-            player1.ImGui();
+            //player1.ImGui();
             camera.Imgui();
             pointLight.ImGui();
             spotLight.ImGui();
             dirLight.ImGui();
 
+            movingObject.ImGui();
             Engine::ImGui();
 
         }
