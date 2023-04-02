@@ -14,6 +14,8 @@
 - counting and displaying deltaTime and FramesPerSecond
 - MovingObject class
 - MovingObject has velocity in all axes, its position changes depending on deltaTime 
+- InputSystem class
+- InputSystem has a GetKeyDown method to determine whether key is pressed or not
 
 ## [0.0.6] - 2023-03-31
 

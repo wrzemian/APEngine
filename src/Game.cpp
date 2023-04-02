@@ -82,13 +82,16 @@ namespace Game {
         PointLight tempPointLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), glm::fvec3(-3.2f, -3.0f, -3.3f),
                                 1.0f, 0.09f, 0.032f);
         pointLight = tempPointLight;
+
+
+        while (true) {
+             Update();
+        }
     }
 
     void Update() {
         Engine::LoopStart();
         ImGui();
-
-
 
         movingObject.Move();
         //player1.Draw(shader);
