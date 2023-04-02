@@ -6,13 +6,13 @@
 int main() {
 //    Engine::Init();
     Game::Start();
-    while (true) {
+    /*while (true) {
 //        Engine::LoopStart();
 
         Game::Update();
 
 //        Engine::LoopEnd();
-    }
+    }*/
 
 //    std::cout << "Hello \n";
 }
