@@ -13,6 +13,7 @@
 #include "../include/lights/SpotLight.h"
 #include "../include/lights/PointLight.h"
 
+#include "spdlog/spdlog.h"
 
 namespace Game {
 
@@ -139,6 +140,9 @@ namespace Game {
             pointLight.ImGui();
             spotLight.ImGui();
             dirLight.ImGui();
+
+            Engine::ImGui();
+
         }
         ImGui::Render();
     }

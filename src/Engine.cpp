@@ -5,6 +5,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
+#include "spdlog/spdlog.h"
 
 #include <vector>
 #include <iostream>
@@ -12,24 +13,41 @@
 #include "../include/Engine.h"
 
 namespace Engine {
-
     GLFWwindow* window;
+
+    double frameEnd = 0;
+    double frameStart = 0;
+    double deltaTime = 0;
 
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
 
-    int Init()
-    {
-
+    int Init() {
         if (initGLandImGui() == -1) {
             return -1;
         }
         return 0;
     }
 
+    void ImGui() {
+        ImGui::Begin("Engine");
+        ImGui::SetWindowSize(ImVec2(200, 100));
+        //spdlog::info("deltaTime: ", Engine::deltaTime);
+
+        ImGui::Text("deltaTime: %f", Engine::deltaTime);
+        ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
+
+        ImGui::End();
+    }
 
 
     void LoopStart() {
+        frameEnd = glfwGetTime();
+
+        deltaTime = frameEnd - frameStart;
+
+        frameStart = glfwGetTime();
+
         // render loop
         // -----------
 
@@ -38,7 +56,10 @@ namespace Engine {
         processInput(window);
 
 
-        // draw pyramids
+        //spdlog::info("frameEnd: {:03.20f}", frameEnd);
+        //spdlog::info("frameStart: {:03.20f}", frameStart);
+        //spdlog::critical("deltaTime: {:03.20f}", deltaTime);
+
         glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_LIGHT0);
@@ -55,9 +76,6 @@ namespace Engine {
     }
 
     void terminate() {
-        //renderer.deleteBuffers();
-
-
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
@@ -129,74 +147,5 @@ namespace Engine {
 
         return 0;
     }
-
-
-    void renderImGuiUI(int* depth, glm::vec2* rotate, glm::vec3* color, const int MAX_DEPTH,
-                       glm::fvec3* ambient, glm::fvec3* diffuse, glm::fvec3* specular, glm::fvec3* direction,
-                       glm::fvec3* ambientS, glm::fvec3* diffuseS, glm::fvec3* specularS, glm::fvec3* position,
-                       float* constant, float* linear, float* quadratic, glm::fvec3* directionS, float* cutOff,
-                       float* outerCutOff)
-                       {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        {
-            ImGui::Begin("Recursion");
-            ImGui::SetWindowPos(ImVec2(0, 0));
-            ImGui::SetWindowSize(ImVec2(250, 50));
-
-            ImGui::SliderInt("Depth", depth, 0, MAX_DEPTH);
-            ImGui::End();
-
-
-            ImGui::Begin("Rotation");
-            ImGui::SetWindowPos(ImVec2(0, 50));
-            ImGui::SetWindowSize(ImVec2(250, 70));
-
-            ImGui::SliderFloat("X", &rotate->x, -360.0f, 360.0f);
-            ImGui::SliderFloat("Y", &rotate->y, -360.0f, 360.0f);
-            ImGui::End();
-
-
-            ImGui::Begin("Color");
-            ImGui::SetWindowPos(ImVec2(0, 120));
-            ImGui::SetWindowSize(ImVec2(250, 100));
-
-            ImGui::SliderFloat("R", &color->x, 0.0f, 1.0f);
-            ImGui::SliderFloat("G", &color->y, 0.0f, 1.0f);
-            ImGui::SliderFloat("B", &color->z, 0.0f, 1.0f);
-            ImGui::End();
-
-            ImGui::Begin("dirLight");
-            ImGui::SliderFloat3("ambient", &ambient->x, -1.0f, 1.0f);
-            ImGui::SliderFloat3("diffuse", &diffuse->x, -1.0f, 1.0f);
-            ImGui::SliderFloat3("specular", &specular->x, -1.0f, 1.0f);
-            ImGui::SliderFloat3("direction", &direction->x, -1.0f, 1.0f);
-            ImGui::End();
-
-            ImGui::Begin("spotLight");
-            ImGui::SliderFloat3("ambientS", &ambientS->x, -1.0f, 1.0f);
-            ImGui::SliderFloat3("diffuseS", &diffuseS->x, -1.0f, 1.0f);
-            ImGui::SliderFloat3("specularS", &specularS->x, -1.0f, 1.0f);
-            ImGui::SliderFloat3("position", &position->x, -1.0f, 1.0f);
-            ImGui::SliderFloat("constant", constant, -1.0f, 1.0f);
-            ImGui::SliderFloat("linear", linear, -1.0f, 1.0f);
-            ImGui::SliderFloat("quadratic", quadratic, -1.0f, 1.0f);
-            ImGui::SliderFloat3("directionS", &directionS->x, -1.0f, 1.0f);
-            ImGui::SliderFloat("cutOff", cutOff, -1.0f, 1.0f);
-            ImGui::SliderFloat("outerCutOff", outerCutOff, -1.0f, 1.0f);
-            ImGui::End();
-        }
-        ImGui::Render();
-    }
-
-//    void checkInit() {
-//            if (!gladLoadGL()) {
-//                std::cerr << "Failed to initialize OpenGL context" << std::endl;
-//                exit(EXIT_FAILURE);
-//            }
-//
-//    }
 
 }

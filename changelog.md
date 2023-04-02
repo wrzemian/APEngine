@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.0.7] - 2023-04-02
+### Added
+- counting and displaying deltaTime and FramesPerSecond
+
+
 ## [0.0.6] - 2023-03-31
 
 ### Added
@@ -26,10 +31,12 @@
 
 ## [0.0.4] - 2023-03-29
 ### Added
-- classes Transform and Scene
+- class Transform with Position, Rotation and Scale
+- class Object3D containing Transform and Model
+- rendering 3d object affected by light
+
 - directional light
 - spot light (but i cant locate it on the cube, so i'm not sure if it works tbh)
-- rendering 3d object with modifiable transform - scale, rotation and position (all black for now)
 ### Changed
 - both shaders
 
@@ -55,7 +62,7 @@ you can install GLSL extension to Clion easily, and it helps a lot
 - displaying Sierpinski's Tetrahedron instead of Hello World Triangle
 - can change color, rotation and recursion depth
 - class Mesh
-- class Model
+- class Model loading Meshes and Textures via Assimp
 ### Changed
 - moved project to CLion
 
