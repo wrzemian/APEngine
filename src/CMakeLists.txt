@@ -41,6 +41,7 @@ target_link_libraries(${PROJECT_NAME} random)
 target_link_libraries(${PROJECT_NAME} eventpp)
 target_link_libraries(${PROJECT_NAME} magic_enum)
 target_link_libraries(${PROJECT_NAME} fmt)
+#target_link_libraries(${PROJECT_NAME} glut)
 #target_link_libraries(${PROJECT_NAME} openal)
 #target_link_libraries(${OPENAL_DIR}/resources/openal32.rc)
 

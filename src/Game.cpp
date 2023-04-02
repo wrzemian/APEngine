@@ -30,7 +30,7 @@ namespace Game {
     Object3D player1;
     MovingObject movingObject;
 
-    Camera camera(glm::vec3(10.0f, 15.0f, 10.0f));
+    Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
 
     Model test;
 

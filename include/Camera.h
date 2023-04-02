@@ -39,7 +39,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
-    glm::vec3 Look = glm::vec3(-6, -6, -6);
+    glm::vec3 Look = glm::vec3(0, 0, -6);
     // euler Angles
     float Yaw;
     float Pitch;
@@ -79,9 +79,9 @@ public:
         ImGui::Begin("Camera");
         ImGui::SetWindowSize(ImVec2(250, 200));
 
-        ImGui::SliderFloat("X", &Position.x, -50.0f, 50.0f);
-        ImGui::SliderFloat("Y", &Position.y, -50.0f, 50.0f);
-        ImGui::SliderFloat("Z", &Position.z, -50.0f, 50.f);
+        ImGui::SliderFloat("X", &Position.x, -100.0f, 100.0f);
+        ImGui::SliderFloat("Y", &Position.y, -100.0f, 100.0f);
+        ImGui::SliderFloat("Z", &Position.z, -100.0f, 100.f);
 
         ImGui::SliderFloat("Kierunek - X", &Look.x, -6.0f, 6.0f);
         ImGui::SliderFloat("Kierunek - Y", &Look.y, -6.0f, 6.0f);
