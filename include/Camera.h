@@ -91,6 +91,12 @@ public:
         ImGui::End();
     }
 
+    glm::mat4 getView(){
+        return glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),
+                    glm::vec3(Position.x + Look.x, Position.y + Look.y, Position.z+Look.z),
+                    glm::vec3(0.0f, 1.0f, 0.0f));
+    }
+
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()
@@ -104,18 +110,6 @@ private:
         // also re-calculate the Right and Up vector
         Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
         Up = glm::normalize(glm::cross(Right, Front));
-    }
-
-    void updateCameraPosition(){
-//        Position.x = x;
-//        Position.y = y;
-//        Position.z = z;
-    }
-
-    void setView(){
-        glm::mat4 view = glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),  // pozycja kamery
-                                     glm::vec3(Look.x, Look.y, Look.z),  // punkt na który patrzy kamera
-                                     glm::vec3(0.0f, 1.0f, 0.0f)); // wektor wskazujący kierunek "góry"
     }
 
 
