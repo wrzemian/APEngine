@@ -6,6 +6,11 @@
 #include "filewritestream.h"
 #include <writer.h>
 #include <sstream>
+#include "lights/ILight.h"
+#include "lights/AmbientLight.h"
+#include "lights/DirectionalLight.h"
+#include "lights/PointLight.h"
+#include "lights/SpotLight.h"
 
 class Parser {
 private:
@@ -15,7 +20,13 @@ public:
 
     void saveJSON(rapidjson::Document d, std::string fileName);
 
-    
+    DirectionalLight createFromJSONDir(std::string fileName);
+
+    PointLight createFromJSONPoint(std::string fileName);
+
+    SpotLight createFromJSONSpot(std::string fileName);
+
+    rapidjson::Document openJSON (std::string fileName);
 
 };
 

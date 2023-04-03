@@ -71,6 +71,7 @@ rapidjson::Document DirectionalLight::parseToJSON() {
     d.AddMember("directionY", direction.y, d.GetAllocator());
     d.AddMember("directionZ", direction.z, d.GetAllocator());
 
+
     return d;
 }
 

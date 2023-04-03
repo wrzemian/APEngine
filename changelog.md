@@ -10,6 +10,7 @@
 ### Added
 - debug shape - draw cube, arrow or obj on given coordinates (arrow and obj not tested yet)
 - parsing and saving all light types to .json file
+- very primitive way of loading lights form .json
 
 
 

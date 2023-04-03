@@ -7,7 +7,7 @@
 
 #include "AmbientLight.h"
 
-class DirectionalLight : AmbientLight{
+class DirectionalLight : public AmbientLight{
 protected:
     glm::vec3 direction;
 

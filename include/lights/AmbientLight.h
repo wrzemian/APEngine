@@ -9,9 +9,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "../Shader.h"
 #include "document.h"
+#include "ILight.h"
 
-
-class AmbientLight {
+class AmbientLight : public ILight {
 protected:
     glm::vec3 ambient;
     glm::vec3 diffuse;
