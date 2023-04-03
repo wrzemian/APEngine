@@ -42,6 +42,7 @@ public:
     glm::vec3 Right;
     glm::vec3 WorldUp;
     glm::vec3 Look = glm::vec3(0, 0, -6);
+    bool canBeRotated;
     // euler Angles
     float Yaw;
     float Pitch;
@@ -57,7 +58,7 @@ public:
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
-//        updateCameraVectors();
+        updateCameraVectors();
     }
     // constructor with scalar values
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
@@ -67,7 +68,7 @@ public:
         Yaw = yaw;
         Pitch = pitch;
 //        updateCameraPosition();
-//        updateCameraVectors();
+        updateCameraVectors();
     }
 
 
@@ -114,6 +115,29 @@ public:
             Position.z = kostka._transform._position.z + 20.f;
             Look = glm::vec3(0, 0, -6);
         };
+    }
+
+
+//    void ProcessMouseScroll(float yoffset)
+//    {
+//        Zoom -= (float)yoffset;
+//        if (Zoom < 1.0f)
+//            Zoom = 1.0f;
+//        if (Zoom > 45.0f)
+//            Zoom = 45.0f;
+//    }
+
+    void ProcessKeyboard(Camera_Movement direction, float deltaTime)
+    {
+        float velocity = MovementSpeed * deltaTime;
+        if (direction == FORWARD)
+            Position += Front * velocity;
+        if (direction == BACKWARD)
+            Position -= Front * velocity;
+        if (direction == LEFT)
+            Position -= Right * velocity;
+        if (direction == RIGHT)
+            Position += Right * velocity;
     }
 
 private:

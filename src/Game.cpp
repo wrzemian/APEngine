@@ -17,13 +17,15 @@
 
 #include "../include/Parser.h"
 
+//void processInput(GLFWwindow* window);
+
 namespace Game {
+    void processInput(GLFWwindow* window);
 
     void ImGui();
 
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
-
 
     GLFWwindow* window;
 
@@ -33,6 +35,8 @@ namespace Game {
     MovingObject movingObject;
 
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
+    GLfloat deltaTime = 0.0f;
+    GLfloat lastFrame = 0.0f;
 
     Model test;
 
@@ -45,9 +49,12 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init();
 
+
         debugShape.Initialize();
 
         window = Engine::getWindow();
+//        glfwSetCursorPosCallback(window, mouse_callback); //wywołane gdy mysz się rusza
+//        glfwSetMouseButtonCallback(window, mouse_button_callback);
 
         //player1.loadModel("../../res/models/first_character/first character.obj");
         movingObject.loadModel("../../res/models/first_character/first character.obj");
@@ -98,8 +105,14 @@ namespace Game {
     }
 
     void Update() {
+
         Engine::LoopStart();
         ImGui();
+
+        GLfloat currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
 
         movingObject.Move();
         //player1.Draw(shader);
@@ -117,7 +130,7 @@ namespace Game {
         spotLight.sendToShader(shader, "spotLight");
         pointLight.sendToShader(shader, "pointLight");
 
-
+        processInput(window);
 
         //camera
 
@@ -156,5 +169,20 @@ namespace Game {
     }
 
 
+    void processInput(GLFWwindow* window)
+    {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            camera.ProcessKeyboard(FORWARD, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            camera.ProcessKeyboard(BACKWARD, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            camera.ProcessKeyboard(LEFT, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            camera.ProcessKeyboard(RIGHT, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            camera.Position.y += 0.05;
+        if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+            camera.Position.y -= 0.05;
+    }
 
 };
