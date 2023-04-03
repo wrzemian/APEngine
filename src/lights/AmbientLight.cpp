@@ -47,6 +47,7 @@ AmbientLight::AmbientLight() {}
 rapidjson::Document AmbientLight::parseToJSON() {
     rapidjson::Document d;
     d.SetObject();
+    d.AddMember("type", "ambientLight", d.GetAllocator());
     d.AddMember("ambientX", ambient.x, d.GetAllocator());
     d.AddMember("ambientY", ambient.y, d.GetAllocator());
     d.AddMember("ambientZ", ambient.z, d.GetAllocator());

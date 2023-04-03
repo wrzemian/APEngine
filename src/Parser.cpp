@@ -11,7 +11,7 @@ this->savePath = savePath;
 void Parser::saveJSON(rapidjson::Document d, std::string fileName) {
     std::stringstream fullPath;
     fullPath << savePath << "/" << fileName << ".json";
-    //std::cout << fullPath.str();
+    //
     std::string temp = fullPath.str();
     const char* cstr = temp.c_str();
     FILE* fp = fopen(cstr, "wb");
@@ -23,6 +23,7 @@ void Parser::saveJSON(rapidjson::Document d, std::string fileName) {
     d.Accept(writer);
 
     fclose(fp);
+    std::cout << "\nsaved " << fullPath.str();
 }
 
 

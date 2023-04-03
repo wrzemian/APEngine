@@ -95,6 +95,7 @@ void PointLight::ImGui() {
 rapidjson::Document PointLight::parseToJSON() {
     rapidjson::Document d;
     d.SetObject();
+    d.AddMember("type", "pointLight", d.GetAllocator());
     d.AddMember("ambientX", ambient.x, d.GetAllocator());
     d.AddMember("ambientY", ambient.y, d.GetAllocator());
     d.AddMember("ambientZ", ambient.z, d.GetAllocator());

@@ -107,6 +107,7 @@ void SpotLight::ImGui() {
 rapidjson::Document SpotLight::parseToJSON() {
     rapidjson::Document d;
     d.SetObject();
+    d.AddMember("type", "spotLight", d.GetAllocator());
     d.AddMember("ambientX", ambient.x, d.GetAllocator());
     d.AddMember("ambientY", ambient.y, d.GetAllocator());
     d.AddMember("ambientZ", ambient.z, d.GetAllocator());

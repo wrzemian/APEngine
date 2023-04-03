@@ -57,6 +57,7 @@ void DirectionalLight::ImGui() {
 rapidjson::Document DirectionalLight::parseToJSON() {
     rapidjson::Document d;
     d.SetObject();
+    d.AddMember("type", "dirLight", d.GetAllocator());
     d.AddMember("ambientX", ambient.x, d.GetAllocator());
     d.AddMember("ambientY", ambient.y, d.GetAllocator());
     d.AddMember("ambientZ", ambient.z, d.GetAllocator());
@@ -69,7 +70,6 @@ rapidjson::Document DirectionalLight::parseToJSON() {
     d.AddMember("directionX", direction.x, d.GetAllocator());
     d.AddMember("directionY", direction.y, d.GetAllocator());
     d.AddMember("directionZ", direction.z, d.GetAllocator());
-
 
     return d;
 }
