@@ -85,6 +85,8 @@ namespace Game {
 
         Parser parser("../../res/jsons");
         parser.saveJSON(dirLight.parseToJSON(), "dirLight");
+        parser.saveJSON(spotLight.parseToJSON(), "spotLight");
+        parser.saveJSON(pointLight.parseToJSON(), "pointLight");
 
 
         while (true) {
