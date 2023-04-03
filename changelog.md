@@ -4,6 +4,8 @@
 ## [0.0.8] - 2023-04-03
 ### Fixed
 - different models can use different shaders each
+- closing program with escape
+- closing program with the closing cross
 
 ### Added
 - debug shape - draw cube, arrow or obj on given coordinates (arrow and obj not tested yet)

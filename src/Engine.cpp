@@ -55,6 +55,9 @@ namespace Engine {
         // -----
         processInput(window);
 
+        //if (InputSystem::GetKeyDown(window, GLFW_KEY_ESCAPE))
+        //    std::cout << "escape1" << std::endl;
+
 
         //spdlog::info("frameEnd: {:03.20f}", frameEnd);
         //spdlog::info("frameStart: {:03.20f}", frameStart);
@@ -146,6 +149,11 @@ namespace Engine {
         ImGui::StyleColorsClassic();
 
         return 0;
+    }
+
+    GLFWwindow* getWindow()
+    {
+        return window;
     }
 
 }

@@ -25,6 +25,7 @@ namespace Game {
     const int SCR_HEIGHT = 800;
 
 
+    GLFWwindow* window;
 
     Shader shader;
 
@@ -45,6 +46,8 @@ namespace Game {
         std::cout << Engine::Init();
 
         debugShape.Initialize();
+
+        window = Engine::getWindow();
 
         //player1.loadModel("../../res/models/first_character/first character.obj");
         movingObject.loadModel("../../res/models/first_character/first character.obj");
@@ -89,7 +92,7 @@ namespace Game {
         parser.saveJSON(pointLight.parseToJSON(), "pointLight");
 
 
-        while (true) {
+        while (!glfwWindowShouldClose(window)) {
              Update();
         }
     }
