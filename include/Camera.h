@@ -76,16 +76,19 @@ public:
 
     void Imgui(){
 
-        ImGui::Begin("Camera");
-        ImGui::SetWindowSize(ImVec2(250, 200));
+        ImGui::Begin("pozycja kamery");
+        ImGui::SetWindowSize(ImVec2(250, 100));
 
-        ImGui::SliderFloat("X", &Position.x, -100.0f, 100.0f);
-        ImGui::SliderFloat("Y", &Position.y, -100.0f, 100.0f);
-        ImGui::SliderFloat("Z", &Position.z, -100.0f, 100.f);
+        ImGui::SliderFloat("pozycja kamery - X", &Position.x, -100.0f, 100.0f);
+        ImGui::SliderFloat("pozucja kamery - Y", &Position.y, -100.0f, 100.0f);
+        ImGui::SliderFloat("pozycja kamery - Z", &Position.z, -100.0f, 100.f);
+        ImGui::End();
 
-        ImGui::SliderFloat("Kierunek - X", &Look.x, -6.0f, 6.0f);
-        ImGui::SliderFloat("Kierunek - Y", &Look.y, -6.0f, 6.0f);
-        ImGui::SliderFloat("Kierunek - Z", &Look.z, -6.0f, 6.f);
+        ImGui::Begin("Punkt na ktory patrzy kamera");
+        ImGui::SetWindowSize(ImVec2(300, 100));
+        ImGui::SliderFloat("X", &Look.x, -6.0f, 6.0f);
+        ImGui::SliderFloat("Y", &Look.y, -6.0f, 6.0f);
+        ImGui::SliderFloat("Z", &Look.z, -6.0f, 6.f);
 
 
         ImGui::End();
