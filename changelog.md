@@ -7,7 +7,7 @@
 
 ### Added
 - debug shape - draw cube, arrow or obj on given coordinates (arrow and obj not tested yet)
-- parsing and saving dirLight to .json file
+- parsing and saving all light types to .json file
 
 
 

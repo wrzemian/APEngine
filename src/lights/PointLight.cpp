@@ -92,4 +92,27 @@ void PointLight::ImGui() {
     ImGui::End();
 }
 
+rapidjson::Document PointLight::parseToJSON() {
+    rapidjson::Document d;
+    d.SetObject();
+    d.AddMember("ambientX", ambient.x, d.GetAllocator());
+    d.AddMember("ambientY", ambient.y, d.GetAllocator());
+    d.AddMember("ambientZ", ambient.z, d.GetAllocator());
+    d.AddMember("diffuseX", diffuse.x, d.GetAllocator());
+    d.AddMember("diffuseY", diffuse.y, d.GetAllocator());
+    d.AddMember("diffuseZ", diffuse.z, d.GetAllocator());
+    d.AddMember("specularX", specular.x, d.GetAllocator());
+    d.AddMember("specularY", specular.y, d.GetAllocator());
+    d.AddMember("specularZ", specular.z, d.GetAllocator());
+    d.AddMember("positionX", position.x, d.GetAllocator());
+    d.AddMember("positionY", position.y, d.GetAllocator());
+    d.AddMember("positionZ", position.z, d.GetAllocator());
+    d.AddMember("constant", constant, d.GetAllocator());
+    d.AddMember("linear", linear, d.GetAllocator());
+    d.AddMember("quadratic", quadratic, d.GetAllocator());
+
+
+    return d;
+}
+
 

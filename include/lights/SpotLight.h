@@ -52,6 +52,8 @@ public:
     void ImGui();
 
     SpotLight();
+
+    rapidjson::Document parseToJSON();
 };
 
 

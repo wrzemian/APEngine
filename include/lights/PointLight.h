@@ -47,6 +47,8 @@ public:
     void ImGui();
 
     void sendToShader(Shader shader, std::string type) override;
+
+    rapidjson::Document parseToJSON();
 };
 
 
