@@ -33,9 +33,9 @@ void Object3D::ImGui() {
     ImGui::Begin("3D Object");
     ImGui::SetWindowSize(ImVec2(300, 310));
 
-    ImGui::SliderFloat("scale X", &_transform._scale.x, -10.0f, 10.0f);
-    ImGui::SliderFloat("scale Y", &_transform._scale.y, -10.0f, 10.0f);
-    ImGui::SliderFloat("scale Z", &_transform._scale.z, -10.0f, 10.0f);
+    ImGui::SliderFloat("scale X", &_transform._scale.x, 0.0f, 2.0f);
+    ImGui::SliderFloat("scale Y", &_transform._scale.y, 0.0f, 2.0f);
+    ImGui::SliderFloat("scale Z", &_transform._scale.z, 0.0f, 2.0f);
 
     ImGui::SliderFloat("rotation X", &_transform._rotation.x, -6.5, 6.5f);
     ImGui::SliderFloat("rotation Y", &_transform._rotation.y, -6.5, 6.5f);

@@ -136,10 +136,10 @@ namespace Game {
         glm:: mat4 view = camera.getView(camera.Look, camera.Position);
 
 
-        debugShape.DrawCube(glm::vec3(0), glm::vec3(5, 5, 5), glm::vec4(0), projection* view);
+        debugShape.DrawCube(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec4(0), projection* view);
         shader.use();
         shader.setMat4("projectionView", projection * view);
-        camera.findObject(movingObject);
+        camera.followObject(movingObject);
 
         Engine::LoopEnd();
 
@@ -151,7 +151,7 @@ namespace Game {
         ImGui::NewFrame();
         {
             //player1.ImGui();
-            camera.Imgui();
+            camera.ImGui();
             pointLight.ImGui();
             spotLight.ImGui();
             dirLight.ImGui();

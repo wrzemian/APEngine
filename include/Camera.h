@@ -72,23 +72,22 @@ public:
     }
 
 
-    void Imgui(){
+    void ImGui(){
 
-        ImGui::Begin("pozycja kamery");
-        ImGui::SetWindowSize(ImVec2(250, 100));
+        ImGui::Begin("Camera");
+        ImGui::SetWindowSize(ImVec2(300, 400));
 
-        ImGui::SliderFloat("pozycja kamery - X", &Position.x, -100.0f, 100.0f);
-        ImGui::SliderFloat("pozucja kamery - Y", &Position.y, -100.0f, 100.0f);
-        ImGui::SliderFloat("pozycja kamery - Z", &Position.z, -100.0f, 100.f);
-        ImGui::End();
+        ImGui::SliderFloat("position X", &Position.x, -100.0f, 100.0f);
+        ImGui::SliderFloat("position Y", &Position.y, -100.0f, 100.0f);
+        ImGui::SliderFloat("position Z", &Position.z, -100.0f, 100.f);
 
-        ImGui::Begin("Punkt na ktory patrzy kamera");
-        ImGui::SetWindowSize(ImVec2(300, 150));
-        ImGui::SliderFloat("X", &Look.x, -6.0f, 6.0f);
-        ImGui::SliderFloat("Y", &Look.y, -6.0f, 6.0f);
-        ImGui::SliderFloat("Z", &Look.z, -6.0f, 6.f);
-        ImGui::Checkbox("zablokuj punkt patrzenia", &isBlocked);
-        ImGui::Checkbox("znajdz obiekt", &isFound);
+        ImGui::SliderFloat("target X", &Look.x, -6.0f, 6.0f);
+        ImGui::SliderFloat("target Y", &Look.y, -6.0f, 6.0f);
+        ImGui::SliderFloat("target Z", &Look.z, -6.0f, 6.f);
+        ImGui::Checkbox("Lock target point", &isBlocked);
+
+        ImGui::Checkbox("Follow object", &isFound);
+
         ImGui::End();
     }
 
@@ -99,8 +98,8 @@ public:
         if(isBlocked){
 
             return glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),
-                                         glm::vec3(Look.x, Look.y, Look.z),
-                                         glm::vec3(0.0f, 1.0f, 0.0f));
+                               glm::vec3(Look.x, Look.y, Look.z),
+                               glm::vec3(0.0f, 1.0f, 0.0f));
         }
         else {
             return glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),
@@ -108,7 +107,7 @@ public:
                                glm::vec3(0.0f, 1.0f, 0.0f));
         }
     }
-    void findObject(MovingObject kostka){
+    void followObject(MovingObject kostka){
         if(isFound){
             Position.x = kostka._transform._position.x;
             Position.y = kostka._transform._position.y;
