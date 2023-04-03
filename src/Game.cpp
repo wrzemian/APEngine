@@ -110,19 +110,18 @@ namespace Game {
         pointLight.sendToShader(shader, "pointLight");
 
         //camera
+
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    /*    glm::mat4 view = glm::lookAt(glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z),
-                                     glm::vec3(camera.Look.x, camera.Look.y, camera.Look.z),
-                                     glm::vec3(0.0f, 1.0f, 0.0f));
-*/
 
-        glm:: mat4 view = camera.getView();
+
+        glm:: mat4 view = camera.getView(camera.Look, camera.Position);
+
 
         debugShape.DrawCube(glm::vec3(0), glm::vec3(5, 5, 5), glm::vec4(0), projection* view);
 
         shader.setMat4("projectionView", projection * view);
-
+        camera.findObject(movingObject);
 
         Engine::LoopEnd();
 
