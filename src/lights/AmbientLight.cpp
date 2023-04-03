@@ -44,3 +44,20 @@ void AmbientLight::sendToShader(Shader shader, std::string type) {
 
 AmbientLight::AmbientLight() {}
 
+rapidjson::Document AmbientLight::parseToJSON() {
+    rapidjson::Document d;
+    d.SetObject();
+    d.AddMember("ambientX", ambient.x, d.GetAllocator());
+    d.AddMember("ambientY", ambient.y, d.GetAllocator());
+    d.AddMember("ambientZ", ambient.z, d.GetAllocator());
+    d.AddMember("diffuseX", diffuse.x, d.GetAllocator());
+    d.AddMember("diffuseY", diffuse.y, d.GetAllocator());
+    d.AddMember("diffuseZ", diffuse.z, d.GetAllocator());
+    d.AddMember("specularX", specular.x, d.GetAllocator());
+    d.AddMember("specularY", specular.y, d.GetAllocator());
+    d.AddMember("specularZ", specular.z, d.GetAllocator());
+
+    return d;
+}
+
+

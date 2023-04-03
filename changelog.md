@@ -1,11 +1,13 @@
 # Change Log
 
-## [0.0.7] - 2023-04-03
+
+## [0.0.8] - 2023-04-03
 ### Fixed
 - different models can use different shaders each
 
 ### Added
 - debug shape - draw cube, arrow or obj on given coordinates (arrow and obj not tested yet)
+- parsing and saving dirLight to .json file
 
 
 

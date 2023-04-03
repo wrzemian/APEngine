@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "../Shader.h"
+#include "document.h"
+
 
 class AmbientLight {
 protected:
@@ -35,6 +37,9 @@ public:
     void setSpecular(const glm::vec3 &specular);
 
     virtual void sendToShader(Shader shader, std::string type);
+
+    rapidjson::Document parseToJSON();
+
 };
 
 

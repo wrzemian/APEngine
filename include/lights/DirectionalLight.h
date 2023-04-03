@@ -29,6 +29,9 @@ public:
 
     void sendToShader(Shader shader, std::string type) override;
 
+    rapidjson::Document parseToJSON();
+
+
     DirectionalLight();
 
     void ImGui();

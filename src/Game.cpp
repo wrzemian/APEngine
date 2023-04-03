@@ -15,7 +15,7 @@
 #include "../include/lights/SpotLight.h"
 #include "../include/lights/PointLight.h"
 
-#include "spdlog/spdlog.h"
+#include "../include/Parser.h"
 
 namespace Game {
 
@@ -83,6 +83,9 @@ namespace Game {
                                 1.0f, 0.09f, 0.032f);
         pointLight = tempPointLight;
 
+        Parser parser("../../res/jsons");
+        parser.saveJSON(dirLight.parseToJSON(), "dirLight");
+
 
         while (true) {
              Update();
@@ -108,6 +111,8 @@ namespace Game {
         dirLight.sendToShader(shader, "dirLight");
         spotLight.sendToShader(shader, "spotLight");
         pointLight.sendToShader(shader, "pointLight");
+
+
 
         //camera
 
