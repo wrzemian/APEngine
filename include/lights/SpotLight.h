@@ -47,13 +47,13 @@ public:
 
     void setQuadratic(float quadratic);
 
-    void sendToShader(Shader shader, std::string type) override;
+    void SendToShader(Shader shader, std::string type) override;
 
     void ImGui();
 
     SpotLight();
 
-    rapidjson::Document parseToJSON();
+    rapidjson::Document ParseToJSON();
 };
 
 

@@ -12,7 +12,7 @@ Parser::Parser(std::string savePath) {
 this->savePath = savePath;
 }
 
-void Parser::saveJSON(rapidjson::Document d, std::string fileName) {
+void Parser::SaveJSON(rapidjson::Document d, std::string fileName) {
     std::stringstream fullPath;
     fullPath << savePath << "/" << fileName << ".json";
     //
@@ -30,7 +30,7 @@ void Parser::saveJSON(rapidjson::Document d, std::string fileName) {
     std::cout << "\nsaved " << fullPath.str();
 }
 
-DirectionalLight Parser::createFromJSONDir(std::string fileName) {
+DirectionalLight Parser::CreateFromJSONDir(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();
 
@@ -45,7 +45,7 @@ DirectionalLight Parser::createFromJSONDir(std::string fileName) {
     return {};
 }
 
-PointLight Parser::createFromJSONPoint(std::string fileName) {
+PointLight Parser::CreateFromJSONPoint(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();
 
@@ -63,7 +63,7 @@ PointLight Parser::createFromJSONPoint(std::string fileName) {
     return {};
 }
 
-SpotLight Parser::createFromJSONSpot(std::string fileName) {
+SpotLight Parser::CreateFromJSONSpot(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();
 

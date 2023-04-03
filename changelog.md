@@ -6,6 +6,7 @@
 - different models can use different shaders each
 - closing program with escape
 - closing program with the closing cross
+- object moves with camera
 
 ### Added
 - debug shape - draw cube, arrow or obj on given coordinates (arrow and obj not tested yet)

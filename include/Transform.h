@@ -79,6 +79,7 @@ public:
     }
 
     void updateWorldTransform(glm::mat4 modelLok, Shader &shader) {
+
         this->updateLocalTransform();
 
         this->_model = modelLok * _localTransform;
@@ -86,6 +87,7 @@ public:
         for (Transform* child : children) {
             child->updateWorldTransform(this->_model, shader);
         }
+        shader.use();
         shader.setMat4("model", this->_model);
     }
 };

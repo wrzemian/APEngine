@@ -32,8 +32,8 @@ void PointLight::setPosition(const glm::vec3 &position) {
 
 
 
-void PointLight::sendToShader(Shader shader, std::string type) {
-    AmbientLight::sendToShader(shader, type);
+void PointLight::SendToShader(Shader shader, std::string type) {
+    AmbientLight::SendToShader(shader, type);
     shader.setVec3(type + ".position", position);
     shader.setFloat(type + ".constant", constant);
     shader.setFloat(type + ".linear", linear);
@@ -92,7 +92,7 @@ void PointLight::ImGui() {
     ImGui::End();
 }
 
-rapidjson::Document PointLight::parseToJSON() {
+rapidjson::Document PointLight::ParseToJSON() {
     rapidjson::Document d;
     d.SetObject();
     d.AddMember("type", "pointLight", d.GetAllocator());

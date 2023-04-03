@@ -36,7 +36,7 @@ void AmbientLight::setSpecular(const glm::vec3 &specular) {
     AmbientLight::specular = specular;
 }
 
-void AmbientLight::sendToShader(Shader shader, std::string type) {
+void AmbientLight::SendToShader(Shader shader, std::string type) {
     shader.setVec3(type + ".ambient", ambient);
     shader.setVec3(type + ".diffuse", diffuse);
     shader.setVec3(type + ".specular", specular);
@@ -44,7 +44,7 @@ void AmbientLight::sendToShader(Shader shader, std::string type) {
 
 AmbientLight::AmbientLight() {}
 
-rapidjson::Document AmbientLight::parseToJSON() {
+rapidjson::Document AmbientLight::ParseToJSON() {
     rapidjson::Document d;
     d.SetObject();
     d.AddMember("type", "ambientLight", d.GetAllocator());

@@ -84,14 +84,14 @@ namespace Game {
 
         Parser parser("../../res/jsons");
 
-        dirLight = parser.createFromJSONDir("dirLight");
-        spotLight = parser.createFromJSONSpot("spotLight");
-        pointLight = parser.createFromJSONPoint("pointLight");
+        dirLight = parser.CreateFromJSONDir("dirLight");
+        spotLight = parser.CreateFromJSONSpot("spotLight");
+        pointLight = parser.CreateFromJSONPoint("pointLight");
 
 
-        //parser.saveJSON(dirLight.parseToJSON(), "dirLight");
-//        parser.saveJSON(spotLight.parseToJSON(), "spotLight");
-//        parser.saveJSON(pointLight.parseToJSON(), "pointLight");
+        //parser.SaveJSON(dirLight.ParseToJSON(), "dirLight");
+//        parser.SaveJSON(spotLight.ParseToJSON(), "spotLight");
+//        parser.SaveJSON(pointLight.ParseToJSON(), "pointLight");
 
 
         while (!glfwWindowShouldClose(window)) {
@@ -121,9 +121,9 @@ namespace Game {
         //from camera
         shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
 
-        dirLight.sendToShader(shader, "dirLight");
-        spotLight.sendToShader(shader, "spotLight");
-        pointLight.sendToShader(shader, "pointLight");
+        dirLight.SendToShader(shader, "dirLight");
+        spotLight.SendToShader(shader, "spotLight");
+        pointLight.SendToShader(shader, "pointLight");
 
         processInput(window);
 
@@ -137,7 +137,7 @@ namespace Game {
 
 
         debugShape.DrawCube(glm::vec3(0), glm::vec3(5, 5, 5), glm::vec4(0), projection* view);
-
+        shader.use();
         shader.setMat4("projectionView", projection * view);
         camera.findObject(movingObject);
 

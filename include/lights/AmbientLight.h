@@ -9,9 +9,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "../Shader.h"
 #include "document.h"
-#include "ILight.h"
 
-class AmbientLight : public ILight {
+class AmbientLight {
 protected:
     glm::vec3 ambient;
     glm::vec3 diffuse;
@@ -36,9 +35,9 @@ public:
 
     void setSpecular(const glm::vec3 &specular);
 
-    virtual void sendToShader(Shader shader, std::string type);
+    virtual void SendToShader(Shader shader, std::string type);
 
-    rapidjson::Document parseToJSON();
+    rapidjson::Document ParseToJSON();
 
 };
 

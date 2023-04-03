@@ -32,8 +32,8 @@ void SpotLight::setDirection(const glm::vec3 &direction) {
 
 
 
-void SpotLight::sendToShader(Shader shader, std::string type) {
-    PointLight::sendToShader(shader, type);
+void SpotLight::SendToShader(Shader shader, std::string type) {
+    PointLight::SendToShader(shader, type);
     shader.setVec3(type + ".direction", direction);
     shader.setFloat(type + ".cutOff", cutOff);
     shader.setFloat(type + ".outerCutOff", outerCutOff);
@@ -104,7 +104,7 @@ void SpotLight::ImGui() {
     ImGui::End();
 }
 
-rapidjson::Document SpotLight::parseToJSON() {
+rapidjson::Document SpotLight::ParseToJSON() {
     rapidjson::Document d;
     d.SetObject();
     d.AddMember("type", "spotLight", d.GetAllocator());

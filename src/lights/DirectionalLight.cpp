@@ -17,8 +17,8 @@ void DirectionalLight::setDirection(const glm::vec3 &direction) {
     DirectionalLight::direction = direction;
 }
 
-void DirectionalLight::sendToShader(Shader shader, std::string type) {
-    AmbientLight::sendToShader(shader, type);
+void DirectionalLight::SendToShader(Shader shader, std::string type) {
+    AmbientLight::SendToShader(shader, type);
     shader.setVec3(type + ".direction", direction);
 }
 
@@ -54,7 +54,7 @@ void DirectionalLight::ImGui() {
     ImGui::End();
 }
 
-rapidjson::Document DirectionalLight::parseToJSON() {
+rapidjson::Document DirectionalLight::ParseToJSON() {
     rapidjson::Document d;
     d.SetObject();
     d.AddMember("type", "dirLight", d.GetAllocator());
