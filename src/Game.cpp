@@ -84,15 +84,8 @@ namespace Game {
 
         Parser parser("../../res/jsons");
 
-        //DirectionalLight tempDirLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), glm::fvec3(-0.2f, -1.0f, -0.3f));
         dirLight = parser.createFromJSONDir("dirLight");
-
-        SpotLight tempSpotLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), glm::fvec3(0.0f, 0.0f, 5.0f),
-                                1.0f, 0.09f, 0.032f, glm::fvec3(0.0f, 0.0f, -1.0f), glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(15.0f)));
         spotLight = parser.createFromJSONSpot("spotLight");
-        //spotLight = tempSpotLight;
-//        PointLight tempPointLight(glm::fvec3(0.05f, 0.05f, 0.05f), glm::fvec3(0.4f, 0.4f, 0.4f), glm::fvec3(0.5f, 0.5f, 0.5f), glm::fvec3(-3.2f, -3.0f, -3.3f),
-//                                1.0f, 0.09f, 0.032f);
         pointLight = parser.createFromJSONPoint("pointLight");
 
 

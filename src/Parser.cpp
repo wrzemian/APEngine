@@ -45,41 +45,6 @@ DirectionalLight Parser::createFromJSONDir(std::string fileName) {
     return {};
 }
 
-rapidjson::Document Parser::openJSON(std::string fileName) {
-    std::stringstream fullPath;
-    fullPath << savePath << "/" << fileName << ".json";
-    //
-    std::string temp = fullPath.str();
-    const char* cstr = temp.c_str();
-    std::ifstream ifs { cstr };
-    if ( !ifs.is_open() )
-    {
-        std::cerr << "Could not open file for reading!\n";
-        //return EXIT_FAILURE;
-    }
-
-    rapidjson::IStreamWrapper isw { ifs };
-
-    rapidjson::Document doc {};
-    doc.ParseStream( isw );
-
-    rapidjson::StringBuffer buffer {};
-    rapidjson::Writer<rapidjson::StringBuffer> writer { buffer };
-    doc.Accept( writer );
-
-    if ( doc.HasParseError() )
-    {
-        std::cout << "\n\nError  : " << doc.GetParseError()  << '\n'
-                  << "Offset : " << doc.GetErrorOffset() << '\n';
-        //return EXIT_FAILURE;
-    }
-
-    //const std::string jsonStr { buffer.GetString() };
-
-    ///std::cout << '\n\n' << jsonStr ;
-    return doc;
-}
-
 PointLight Parser::createFromJSONPoint(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();
@@ -119,6 +84,41 @@ SpotLight Parser::createFromJSONSpot(std::string fileName) {
     return {};
 }
 
+
+rapidjson::Document Parser::openJSON(std::string fileName) {
+    std::stringstream fullPath;
+    fullPath << savePath << "/" << fileName << ".json";
+    //
+    std::string temp = fullPath.str();
+    const char* cstr = temp.c_str();
+    std::ifstream ifs { cstr };
+    if ( !ifs.is_open() )
+    {
+        std::cerr << "Could not open file for reading!\n";
+        //return EXIT_FAILURE;
+    }
+
+    rapidjson::IStreamWrapper isw { ifs };
+
+    rapidjson::Document doc {};
+    doc.ParseStream( isw );
+
+    rapidjson::StringBuffer buffer {};
+    rapidjson::Writer<rapidjson::StringBuffer> writer { buffer };
+    doc.Accept( writer );
+
+    if ( doc.HasParseError() )
+    {
+        std::cout << "\n\nError  : " << doc.GetParseError()  << '\n'
+                  << "Offset : " << doc.GetErrorOffset() << '\n';
+        //return EXIT_FAILURE;
+    }
+
+    //const std::string jsonStr { buffer.GetString() };
+
+    ///std::cout << '\n\n' << jsonStr ;
+    return doc;
+}
 
 
 
