@@ -23,6 +23,8 @@ const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 bool isBlocked = false;
 bool isFound = false;
+bool CalculateLook = false;
+glm::vec3 pozycjaO;
 
 
 class vec3;
@@ -42,7 +44,6 @@ public:
     glm::vec3 Right;
     glm::vec3 WorldUp;
     glm::vec3 Look = glm::vec3(0, 0, -6);
-    bool canBeRotated;
     // euler Angles
     float Yaw;
     float Pitch;
@@ -81,24 +82,23 @@ public:
         ImGui::SliderFloat("position Y", &Position.y, -100.0f, 100.0f);
         ImGui::SliderFloat("position Z", &Position.z, -100.0f, 100.f);
 
-        ImGui::SliderFloat("target X", &Look.x, -6.0f, 6.0f);
-        ImGui::SliderFloat("target Y", &Look.y, -6.0f, 6.0f);
-        ImGui::SliderFloat("target Z", &Look.z, -6.0f, 6.f);
+        ImGui::SliderFloat("target X", &Look.x, -20.0f, 20.0f);
+        ImGui::SliderFloat("target Y", &Look.y, -20.0f, 20.0f);
+        ImGui::SliderFloat("target Z", &Look.z, -20.0f, 20.f);
         ImGui::Checkbox("Lock target point", &isBlocked);
-
+        if(ImGui::Button("Calculate Lock target Point")) {
+            Look = Look - Position;
+        }
         ImGui::Checkbox("Follow object", &isFound);
 
         ImGui::End();
     }
 
-    glm::mat4 getView(glm::vec3 oldLook, glm::vec3 oldPos){
-        if(oldLook + oldPos != Look + Position){
-            Look = oldLook + oldPos;
-        }
+    glm::mat4 getView(MovingObject movingObject){
         if(isBlocked){
 
             return glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),
-                               glm::vec3(Look.x, Look.y, Look.z),
+                               glm::vec3(movingObject._transform._position.x, movingObject._transform._position.y, movingObject._transform._position.z),
                                glm::vec3(0.0f, 1.0f, 0.0f));
         }
         else {
@@ -107,15 +107,17 @@ public:
                                glm::vec3(0.0f, 1.0f, 0.0f));
         }
     }
+
+
+
     void followObject(MovingObject kostka){
         if(isFound){
             Position.x = kostka._transform._position.x;
-            Position.y = kostka._transform._position.y;
-            Position.z = kostka._transform._position.z + 20.f;
+            Position.y = kostka._transform._position.y + 5;
+            Position.z = kostka._transform._position.z + 40.f;
             Look = glm::vec3(0, 0, -6);
         };
     }
-
 
 //    void ProcessMouseScroll(float yoffset)
 //    {

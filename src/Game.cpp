@@ -124,7 +124,7 @@ namespace Game {
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
 
-        glm:: mat4 view = camera.getView(camera.Look, camera.Position);
+        glm:: mat4 view = camera.getView(movingObject);
 
         hitbox1.Draw(projection*view);
         //debugShape.DrawCube(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec4(0), projection* view);
