@@ -9,6 +9,9 @@
 
 class InputSystem {
 public:
+    // Window should be initialised once at the beginning,
+    // we dont want to provide it every time we check input
+    // Also, key code as int? Not very convenient for future use
     static bool GetKeyDown(GLFWwindow* window, int key);
 
 };

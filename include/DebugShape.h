@@ -12,13 +12,15 @@ protected:
     static GLuint VAO;
     static GLuint VBO;
     static GLuint EBO;
-    static Shader shader;
     static Model spotModel;
 
 public:
+    static Shader shader;
+
     static glm::mat4 world;
     static void Initialize();
     static void DrawSpot(glm::vec3 position, glm::vec4 color, glm::mat4 proview);
-    static void DrawCube(glm::vec3 position, glm::vec3 size, glm::vec4 color, glm::mat4 proview);
+    static void DrawCube();
     static void DrawArrow(glm::vec3 Start, glm::vec3 End, glm::vec4 Color, glm::mat4 proview);
+
 };

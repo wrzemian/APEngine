@@ -4,6 +4,7 @@
 
 #include "../include/InputSystem.h"
 
+
 bool InputSystem::GetKeyDown(GLFWwindow* window, int key)
 {
     if (glfwGetKey(window, key) == GLFW_PRESS)

@@ -41,26 +41,19 @@ void DebugShape::DrawSpot(glm::vec3 position, glm::vec4 color, glm::mat4 proview
     spotModel.Draw(shader);
 }
 
-void DebugShape::DrawCube(glm::vec3 position, glm::vec3 size, glm::vec4 color, glm::mat4 proview)
+void DebugShape::DrawCube()
 {
     std::vector<GLfloat> vertices = {
-            size.x, size.y, size.z,
-            size.x, -size.y, size.z,
-            size.x, -size.y, -size.z,
-            size.x, size.y, -size.z,
+            1, 1, 1,
+            1, -1, 1,
+            1, -1, -1,
+            1, 1, -1,
 
-            -size.x, size.y, size.z,
-            -size.x, -size.y, size.z,
-            -size.x, -size.y, -size.z,
-            -size.x, size.y, -size.z,
+            -1, 1, 1,
+            -1, -1, 1,
+            -1, -1, -1,
+            -1, 1, -1,
     };
-    for(int i=0; i<vertices.size(); i+=3)
-    {
-        vertices[i] += position.x;
-        vertices[i+1] += position.y;
-        vertices[i+2] += position.z;
-    }
-
     // Don't sue me
     std::vector<GLuint> indices = {
             0, 1, 2,
@@ -88,10 +81,6 @@ void DebugShape::DrawCube(glm::vec3 position, glm::vec3 size, glm::vec4 color, g
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_DYNAMIC_DRAW);
-
-    shader.use();
-    shader.setVec4("model", color);
-    shader.setMat4("projectionView", proview);
 
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 

@@ -16,6 +16,7 @@
 #include "../include/lights/PointLight.h"
 
 #include "../include/Parser.h"
+#include "../include/Hitbox.h"
 
 //void processInput(GLFWwindow* window);
 
@@ -38,32 +39,22 @@ namespace Game {
     GLfloat deltaTime = 0.0f;
     GLfloat lastFrame = 0.0f;
 
-    Model test;
-
     DirectionalLight dirLight;
     SpotLight spotLight;
     PointLight pointLight;
 
-    DebugShape debugShape;
+    Hitbox hitbox1;
+    //DebugShape debugShape;
 
     void Start() {
         std::cout << Engine::Init();
 
-
-        debugShape.Initialize();
-
         window = Engine::getWindow();
-//        glfwSetCursorPosCallback(window, mouse_callback); //wywołane gdy mysz się rusza
-//        glfwSetMouseButtonCallback(window, mouse_button_callback);
 
-        //player1.loadModel("../../res/models/first_character/first character.obj");
         movingObject.loadModel("../../res/models/first_character/first character.obj");
+        hitbox1.Create(&movingObject._transform, glm::vec3(1,3,2));
 
-
-        Model tempM("../../res/models/first_character/first character.obj");
-        test = tempM;
-
-        // build and compile our shader zprogram
+        // build and compile our shader program
         // ------------------------------------
         Shader temp("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         shader = temp;
@@ -135,8 +126,8 @@ namespace Game {
 
         glm:: mat4 view = camera.getView(camera.Look, camera.Position);
 
-
-        debugShape.DrawCube(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec4(0), projection* view);
+        hitbox1.Draw(projection*view);
+        //debugShape.DrawCube(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec4(0), projection* view);
         shader.use();
         shader.setMat4("projectionView", projection * view);
         camera.followObject(movingObject);
@@ -157,6 +148,8 @@ namespace Game {
             dirLight.ImGui();
 
             movingObject.ImGui();
+            hitbox1.ImGui();
+
             Engine::ImGui();
 
         }
