@@ -89,7 +89,7 @@ public:
         if(ImGui::Button("Calculate Lock target Point")) {
             Look = Look - Position;
         }
-        ImGui::Checkbox("Follow object", &isFound);
+        ImGui::Checkbox("Follow object / reset kamery", &isFound);
 
         ImGui::End();
     }
