@@ -17,6 +17,7 @@
 
 #include "../include/Parser.h"
 #include "../include/Hitbox.h"
+#include "../include/InputSystem.h"
 
 //void processInput(GLFWwindow* window);
 
@@ -43,6 +44,8 @@ namespace Game {
     SpotLight spotLight;
     PointLight pointLight;
 
+    InputSystem inputSystem;
+
     Hitbox hitbox1;
     //DebugShape debugShape;
 
@@ -50,6 +53,11 @@ namespace Game {
         std::cout << Engine::Init();
 
         window = Engine::getWindow();
+
+        inputSystem.InputInit();
+        inputSystem.monitorKey(GLFW_KEY_A);
+        inputSystem.monitorKey(GLFW_KEY_SPACE);
+
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
         hitbox1.Create(&movingObject._transform, glm::vec3(1,3,2));
@@ -99,6 +107,12 @@ namespace Game {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        inputSystem.update();
+
+        if (inputSystem.GetKey(GLFW_KEY_A))
+            std::cout << "escape1" << std::endl;
+        if (inputSystem.GetKeyDown(GLFW_KEY_A))
+            std::cout << "aaaa" << std::endl;
 
         movingObject.Move();
         //player1.Draw(shader);

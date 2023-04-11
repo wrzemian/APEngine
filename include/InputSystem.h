@@ -6,14 +6,47 @@
 #define APENGINE_INPUTSYSTEM_H
 
 #include "../include/Engine.h"
+#include <unordered_map>
+#include <vector>
 
 class InputSystem {
 public:
-    // Window should be initialised once at the beginning,
-    // we dont want to provide it every time we check input
-    // Also, key code as int? Not very convenient for future use
-    static bool GetKeyDown(GLFWwindow* window, int key);
+    void InputInit();
 
+    void update();
+
+    void monitorKey(int key);
+
+    bool GetKey(int key);
+
+    bool GetKeyDown(int key);
+
+    bool isGamepadButtonPressed(int button);
+
+    float getJoystickAxis(int axis);
+
+    float GetAxis(int key);
+
+private:
+    GLFWwindow* window;
+
+    std::vector<int> monitoredKeys;
+    std::unordered_map<int, bool> keyStates;
+    std::unordered_map<int, bool> lastKeyStates;
+
+    static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+        }
+    }
+
+    static void joystick_callback(int jid, int event) {
+        if (event == GLFW_CONNECTED) {
+            std::cout << "Joystick " << jid << " connected." << std::endl;
+        } else if (event == GLFW_DISCONNECTED) {
+            std::cout << "Joystick " << jid << " disconnected." << std::endl;
+        }
+    }
 };
 
 
