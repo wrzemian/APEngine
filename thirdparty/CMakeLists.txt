@@ -84,7 +84,9 @@ set_target_properties(glad
 		random
 		eventpp
 		magic_enum
-		fmt PROPERTIES FOLDER "thirdparty")
+		fmt
+		freetype
+		PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "thirdparty")
