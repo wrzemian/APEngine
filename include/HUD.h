@@ -277,7 +277,7 @@ void main()
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
         glm::mat4 model = glm::mat4(1.0f);
-        if(isVisable == true) {
+        if(isVisable == true && time * 2.f < 100.0f) {
             model = glm::translate(model, glm::vec3(2.f, 520.0f, 1.0f));
             model = glm::scale(model, glm::vec3(100.0f - time * 2.f, 30.0f, 1.0f));
         }
