@@ -18,6 +18,7 @@
 #include "../include/Parser.h"
 #include "../include/Hitbox.h"
 #include "../include/InputSystem.h"
+#include "../include/HUD.h"
 
 
 //void processInput(GLFWwindow* window);
@@ -32,7 +33,7 @@ namespace Game {
     const int SCR_HEIGHT = 800;
 
     GLFWwindow* window;
-
+    HUD hud;
     Shader shader;
 
     Object3D player1;
@@ -56,21 +57,29 @@ namespace Game {
         std::cout << Engine::Init();
 
 
+
+
         window = Engine::getWindow();
 
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_SPACE);
 
+        hud.initImage("C:\\Users\\tomek\\Desktop\\APEngine\\res\\textures\\tlo.png");
+//        hud.initText();
+        hud.initAnimation();
+
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
         hitbox1.Create(&movingObject._transform, glm::vec3(1,3,2));
+
 
         // build and compile our shader program
         // ------------------------------------
         Shader temp("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         shader = temp;
         shader.use();
+
 
         // View and projection matricies
         glm::mat4 view = glm::mat4(1.0f);
@@ -111,6 +120,10 @@ namespace Game {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        float time = static_cast<float>(glfwGetTime());
+        hud.renderImage();
+//        hud.renderText();
+        hud.renderAnimation(time);
         inputSystem.update();
 
         if (inputSystem.GetKey(GLFW_KEY_A))
@@ -121,6 +134,10 @@ namespace Game {
         movingObject.Move();
         //player1.Draw(shader);
         movingObject.Draw(shader);
+
+
+
+
 
         ////REQUIRED FOR LIGHT
         //should be property of object
@@ -134,7 +151,9 @@ namespace Game {
         spotLight.SendToShader(shader, "spotLight");
         pointLight.SendToShader(shader, "pointLight");
 
+
         processInput(window);
+
 
         //camera
 
