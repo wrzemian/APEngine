@@ -19,7 +19,9 @@
 #include "../include/Hitbox.h"
 #include "../include/InputSystem.h"
 
+
 //void processInput(GLFWwindow* window);
+
 
 namespace Game {
     void processInput(GLFWwindow* window);
@@ -49,8 +51,10 @@ namespace Game {
     Hitbox hitbox1;
     //DebugShape debugShape;
 
+
     void Start() {
         std::cout << Engine::Init();
+
 
         window = Engine::getWindow();
 
