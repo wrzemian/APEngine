@@ -51,7 +51,8 @@ namespace Game {
 
     Hitbox hitbox1;
     //DebugShape debugShape;
-
+float x = 0;
+float y = 0;
 
     void Start() {
         std::cout << Engine::Init();
@@ -115,15 +116,16 @@ namespace Game {
 
         Engine::LoopStart();
         ImGui();
-
+        x -= 0.5;
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         float time = static_cast<float>(glfwGetTime());
-        hud.renderImage();
+        hud.renderImage(x);
 //        hud.renderText();
         hud.renderAnimation(time);
+        hud.renderConstant();
         inputSystem.update();
 
         if (inputSystem.GetKey(GLFW_KEY_A))
@@ -186,6 +188,7 @@ namespace Game {
 
             movingObject.ImGui();
             hitbox1.ImGui();
+            hud.ImGui();
 
             Engine::ImGui();
 

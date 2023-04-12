@@ -3,9 +3,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-//
-//#include <ft2build.h>
-//#include FT_FREETYPE_H
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -14,6 +11,9 @@
 #include <map>
 #include <string>
 #include <vector>
+
+bool isVisable = false;
+
 
 // Shader utility function
 GLuint compileShader(const GLchar *source, GLenum type) {
@@ -50,13 +50,6 @@ public:
         // Clean up resources here
     }
 
-    // Public methods
-    void render(float deltaTime) {
-        // Render your HUD elements here
-        renderImage();
-        renderText();
-        renderAnimation(deltaTime);
-    }
 
     void updateText(const std::string &newText) {
         text = newText;
@@ -96,16 +89,15 @@ public:
         stbi_image_free(imageData);
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        // Set up vertex data for image
         float imageVertices[] = {
                 // Positions     // Texture coords
-                0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, -1.0f, 0.0f, 1.0f,
+                1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
 
-                0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-                1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                0.0f, 1.0f, -1.0f, 0.0f, 1.0f,
+                1.0f, 1.0f, -1.0f, 1.0f, 1.0f,
+                1.0f, 0.0f, -1.0f, 1.0f, 0.0f
         };
 
         glGenVertexArrays(1, &imageVAO);
@@ -197,31 +189,40 @@ public:
 
         // Set up animation shader
         const char *animationVertexShaderSource = R"(
-            #version 330 core
-            layout (location = 0) in vec3 aPos;
-            layout (location = 1) in vec2 aTexCoord;
-            out vec2 TexCoord;
-            uniform mat4 model;
-            uniform mat4 projection;
-            void main() {
-                gl_Position = projection * model * vec4(aPos, 1.0);
-                TexCoord = aTexCoord;
-            }
+#version 330 core
+
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec2 aTexCoord;
+
+out vec2 TexCoord;
+
+uniform mat4 projection;
+uniform mat4 model;
+
+void main()
+{
+    gl_Position = projection * model * vec4(aPos, 1.0f);
+    TexCoord = aTexCoord;
+}
+
         )";
 
         const char *animationFragmentShaderSource = R"(
 #version 330 core
-        in vec2 TexCoord;
-        out vec4 FragColor;
-        uniform sampler2D animationTexture;
-        uniform float time;
-        void main() {
-            vec4 color = texture(animationTexture, TexCoord);
-            // Apply a simple animation effect using time
-            color.rgb *= (sin(time
-                * 2.0) + 1.0) / 2.0;
-                FragColor = color;
-            }
+
+in vec2 TexCoord;
+
+uniform float time;
+uniform vec4 color;
+
+out vec4 FragColor;
+
+void main()
+{
+    float pulse = abs(sin(time * 2.0f));
+    FragColor = mix(vec4(color.xyz, 0.20), vec4(1.0), pulse);
+}
+
         )";
 
         GLuint animationVertexShader = compileShader(animationVertexShaderSource, GL_VERTEX_SHADER);
@@ -244,14 +245,20 @@ public:
         glDeleteShader(animationFragmentShader);
     }
 
-    void renderImage() {
+    void renderImage(float x) {
         // Render the image here
         glUseProgram(imageShaderProgram);
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::scale(model, glm::vec3(200.0f, 200.0f, 1.0f));
+        if(isVisable == true) {
+            model = glm::translate(model, glm::vec3(x * 1.0f, -100.0f, 1.0f));
+            model = glm::scale(model, glm::vec3(5000.0f, 1000.0f, 1.0f));
+        }
+        else{
+            model = glm::translate(model, glm::vec3(-10000, -100.0f, 4.0f));
+            model = glm::scale(model, glm::vec3(5000.0f, 1000.0f, 1.0f));
+        }
 
         glUniformMatrix4fv(glGetUniformLocation(imageShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(imageShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -270,99 +277,74 @@ public:
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(300.0f, 300.0f, 1.0f));
-        model = glm::scale(model, glm::vec3(1000.0f, 1000.0f, 1.0f));
+        if(isVisable == true) {
+            model = glm::translate(model, glm::vec3(2.f, 520.0f, 1.0f));
+            model = glm::scale(model, glm::vec3(100.0f - time * 2.f, 30.0f, 1.0f));
+        }
+        else{
+            model = glm::translate(model, glm::vec3(-10000, -100.0f, 4.0f));
+            model = glm::scale(model, glm::vec3(5000.0f, 1000.0f, 1.0f));
+        }
+
 
         glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
         glUniform1f(glGetUniformLocation(animationShaderProgram, "time"), time);
+        glUniform4f(glGetUniformLocation(animationShaderProgram, "color"), 1.0f, 0.0f, 0.0f, 1.0f);
 
         glBindVertexArray(animationVAO);
-        glBindTexture(GL_TEXTURE_2D, animationTexture);
         glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindTexture(GL_TEXTURE_2D, 0);
         glBindVertexArray(0);
         glUseProgram(0);
+    }
+
+    void renderConstant() {
+        // Render the animated element here
+        glUseProgram(animationShaderProgram);
+
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
+        glm::mat4 model = glm::mat4(1.0f);
+        if(isVisable == true) {
+            model = glm::translate(model, glm::vec3(2.f, 550.0f, 1.0f));
+            model = glm::scale(model, glm::vec3(100.0f, 30.0f, 1.0f));
+        }
+        else{
+            model = glm::translate(model, glm::vec3(-10000, -100.0f, 4.0f));
+            model = glm::scale(model, glm::vec3(5000.0f, 1000.0f, 1.0f));
+        }
+
+
+        glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1f(glGetUniformLocation(animationShaderProgram, "time"), 0.0);
+        glUniform4f(glGetUniformLocation(animationShaderProgram, "color"), 0.0f, 0.0f, 0.0f, 0.0f);
+
+        glBindVertexArray(animationVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
+        glUseProgram(0);
+    }
+
+
+    void ImGui(){
+
+        ImGui::Begin("hud");
+        ImGui::SetWindowSize(ImVec2(100, 50));
+
+        ImGui::Checkbox("show hud", &isVisable);
+
+        ImGui::End();
     }
 
 private:
     // Private members
     GLFWwindow *window;
     GLuint imageShaderProgram;
-    GLuint textShaderProgram;
     GLuint animationShaderProgram;
     GLuint imageVAO, imageVBO, imageTexture;
-    GLuint textVAO, textVBO;
     GLuint animationVAO, animationVBO, animationTexture;
     float animationTime;
     std::string text;
-
-    // Character structure for FreeType
-    struct Character {
-        GLuint TextureID;
-        glm::ivec2 Size;
-        glm::ivec2 Bearing;
-        GLuint Advance;
-    };
-    std::map<GLchar, Character> characters;
-
-    // Private methods
-//    void init() {
-//        // Initialize HUD components here
-//        initImage();
-//        initText();
-//        initAnimation();
-//    }
-
-
-    void renderText() {
-        // Render the text here
-        glUseProgram(textShaderProgram);
-
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
-        glUniformMatrix4fv(glGetUniformLocation(textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniform3f(glGetUniformLocation(textShaderProgram, "textColor"), 1.0f, 1.0f, 1.0f);
-
-        float x = 50.0f;
-        float y = 500.0f;
-        float scale = 1.0f;
-
-        glBindVertexArray(textVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(glGetUniformLocation(textShaderProgram, "textTexture"), 0);
-
-        for (auto c : text) {
-            Character ch = characters[c];
-
-            float xpos = x + ch.Bearing.x * scale;
-            float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
-            float w = ch.Size.x * scale;
-            float h = ch.Size.y * scale;
-
-            float vertices[6][4] = {
-                    { xpos,     ypos + h, 0.0f, 0.0f },
-                    { xpos,     ypos,     0.0f, 1.0f },
-                    { xpos + w, ypos,     1.0f, 1.0f },
-
-                    { xpos,  ypos + h, 0.0f, 0.0f },
-                    { xpos + w, ypos,     1.0f, 1.0f },
-                    { xpos + w, ypos + h, 1.0f, 0.0f }
-            };
-
-            glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-            glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-
-            x += (ch.Advance >> 6) * scale;
-        }
-
-        glBindVertexArray(0);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glUseProgram(0);
-    }
 
 };
 
