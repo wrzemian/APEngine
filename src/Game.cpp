@@ -20,6 +20,11 @@
 #include "../include/InputSystem.h"
 #include "../include/HUD.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+//#include "al.h"
+//#include "alc.h"
 
 //void processInput(GLFWwindow* window);
 
@@ -56,6 +61,23 @@ float y = 0;
 
     void Start() {
         std::cout << Engine::Init();
+
+        FT_Library ft;
+        if (FT_Init_FreeType(&ft))
+        {
+            std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+
+        }
+
+        FT_Face face;
+        if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
+        {
+            std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+        }
+
+//        ALCdevice *device;
+//
+//        device = alcOpenDevice(NULL);
 
         window = Engine::getWindow();
         inputSystem.InputInit();

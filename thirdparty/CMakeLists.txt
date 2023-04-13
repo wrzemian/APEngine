@@ -63,7 +63,8 @@ CPMAddPackage("gh:glfw/glfw#3.3.8")
 CPMAddPackage("gh:g-truc/glm#0.9.9.8")
 CPMAddPackage("gh:ocornut/imgui@1.88")
 CPMAddPackage("gh:gabime/spdlog@1.10.0")
-#CPMAddPackage("gh:freetype/freetype#VER-2-13-0")
+CPMAddPackage("gh:aseprite/freetype2#VER-2-10-0")
+#CPMAddPackage("gh:kcat/openal-soft#1.23.0")
 
 
 set(imgui_SOURCE_DIR ${imgui_SOURCE_DIR} CACHE INTERNAL "")
@@ -85,7 +86,8 @@ set_target_properties(glad
 		eventpp
 		magic_enum
 		fmt
-
+		freetype
+#		OpenAL
 		PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
