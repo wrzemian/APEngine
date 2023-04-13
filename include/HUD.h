@@ -455,11 +455,28 @@ void main()
         glUseProgram(0);
     }
 
+void imguiText(){
+
+    ImGui::SetNextWindowBgAlpha(0.0f);
+
+    ImGui::Begin("Transparent Window", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize);
+
+    ImVec4 textColor(0.0f, 0.0f, 0.0f, 1.0f);
+    ImGuiCol textColorID = ImGuiCol_Text;
+
+    ImGui::PushStyleColor(textColorID, textColor);
+    ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
+
+    ImGui::PopStyleColor();
+    ImGui::End();
+
+    }
+
 
     void ImGui(){
 
         ImGui::Begin("hud");
-        ImGui::SetWindowSize(ImVec2(100, 50));
+        ImGui::SetWindowSize(ImVec2(130, 50));
 
         ImGui::Checkbox("show hud", &isVisable);
 

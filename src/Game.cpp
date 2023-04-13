@@ -62,11 +62,11 @@ float y = 0;
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_SPACE);
 
-        hud.initImage("D:\\Studia\\3Rok\\WlasnySilnik\\OGLengine\\res\\textures\\tlo.png");
+        hud.initImage("res/textures/tlo.png");
 //      hud.initText();
         hud.initAnimation();
         hud.initCharData();
-        hud.load("D:\\Studia\\3Rok\\WlasnySilnik\\OGLengine\\res\\textures\\ExportedFont.jpg");
+        hud.load("res/textures/ExportedFont.jpg");
 
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
@@ -114,7 +114,7 @@ float y = 0;
 
         Engine::LoopStart();
         ImGui();
-        x -= 0.5;
+        x -= 0.3;
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -126,7 +126,8 @@ float y = 0;
         hud.renderConstant();
         //glm::vec3 color = {0.5,0.1,0.5};
         //hud.renderText("01B",-30,-20,0.4,color);
-        hud.renderText("012345aB", 25.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+//        hud.renderText("012345aB", 25.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
 
 
         inputSystem.update();
@@ -192,6 +193,7 @@ float y = 0;
             movingObject.ImGui();
             hitbox1.ImGui();
             hud.ImGui();
+            hud.imguiText();
 
             Engine::ImGui();
 
