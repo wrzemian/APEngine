@@ -23,8 +23,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-//#include "al.h"
-//#include "alc.h"
+#include "al.h"
+#include "alc.h"
 
 //void processInput(GLFWwindow* window);
 
@@ -75,9 +75,9 @@ float y = 0;
             std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
         }
 
-//        ALCdevice *device;
-//
-//        device = alcOpenDevice(NULL);
+        ALCdevice *device;
+
+        device = alcOpenDevice(NULL);
 
         window = Engine::getWindow();
         inputSystem.InputInit();
