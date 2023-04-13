@@ -57,18 +57,16 @@ float y = 0;
     void Start() {
         std::cout << Engine::Init();
 
-
-
-
         window = Engine::getWindow();
-
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_SPACE);
 
-        hud.initImage("C:\\Users\\tomek\\Desktop\\APEngine\\res\\textures\\tlo.png");
-//        hud.initText();
+        hud.initImage("D:\\Studia\\3Rok\\WlasnySilnik\\OGLengine\\res\\textures\\tlo.png");
+//      hud.initText();
         hud.initAnimation();
+        hud.initCharData();
+        hud.load("D:\\Studia\\3Rok\\WlasnySilnik\\OGLengine\\res\\textures\\ExportedFont.jpg");
 
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
@@ -126,6 +124,11 @@ float y = 0;
 //        hud.renderText();
         hud.renderAnimation(time);
         hud.renderConstant();
+        //glm::vec3 color = {0.5,0.1,0.5};
+        //hud.renderText("01B",-30,-20,0.4,color);
+        hud.renderText("012345aB", 25.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+
+
         inputSystem.update();
 
         if (inputSystem.GetKey(GLFW_KEY_A))
