@@ -24,3 +24,8 @@ wzorca obserwatora, publishera-subscribera, itd.
 - RapidJSON - https://rapidjson.org/ - łatwa, crossplatformowa biblioteka do parsowania 
 
 (#include "document.h")
+
+- aseprite/freetype2 - literki
+
+
+- kcat/openal-soft - dźwięk

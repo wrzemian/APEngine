@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.0.10] - 2023-04-13
+### Added
+- OpenAl lib
+- freetype2 lib
+
 ## [0.0.9] - 2023-04-12
 ### Added
 - HUD
