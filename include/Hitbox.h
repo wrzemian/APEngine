@@ -12,6 +12,8 @@ class Hitbox {
 public:
     bool draw = true;
     Transform* _transform;
+    glm::vec3* _position;
+
     glm::vec3 _dimensions;
     glm::vec3 _offset;
     DebugShape debugShape;

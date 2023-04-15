@@ -9,6 +9,7 @@
 
 void Hitbox::Create(Transform* transform, glm::vec3 dimensions, glm::vec3 offset) {
     _transform = transform;
+    _position = &transform->_position;
     _dimensions = dimensions;
     _offset = offset;
 
@@ -21,7 +22,12 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     }
     debugShape.shader.use();
     debugShape.shader.setVec3("offset", _offset);
-    glm::mat4 model = glm::scale(_transform->_localTransform, _dimensions);
+
+    glm::mat4 model = glm::mat4(1);
+    model = glm::translate(model, *_position);
+    model = glm::scale(model, _dimensions);
+
+    //glm::mat4 model = glm::scale(_transform->_localTransform, _dimensions);
 
     debugShape.shader.setMat4("model", model);
     debugShape.shader.setMat4("projectionView", projectionView);
