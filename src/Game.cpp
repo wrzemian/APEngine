@@ -20,6 +20,8 @@
 #include "../include/InputSystem.h"
 #include "../include/HUD.h"
 
+#include "spdlog/spdlog.h"
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -41,8 +43,8 @@ namespace Game {
     HUD hud;
     Shader shader;
 
-    Object3D floor;
-    Object3D box;
+//    Object3D floor;
+//    Object3D box;
     MovingObject movingObject;
 
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
@@ -56,6 +58,7 @@ namespace Game {
     InputSystem inputSystem;
 
     Hitbox hitbox1;
+    Hitbox floor;
     //DebugShape debugShape;
 float x = 0;
 float y = 0;
@@ -76,6 +79,7 @@ float y = 0;
             std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
         }
 
+
         ALCdevice *device;
 
         device = alcOpenDevice(NULL);
@@ -91,13 +95,20 @@ float y = 0;
         hud.initCharData();
         hud.load("res/textures/ExportedFont.jpg");
 
-        floor.loadModel("../../res/models/first box/skrzynia.obj");
-        floor._transform._scale = glm::vec3(50, 1, 50);
-        box.loadModel("../../res/models/second box/skrzynia2.obj");
+//        floor.loadModel("../../res/models/first box/skrzynia.obj");
+//        floor._transform._scale = glm::vec3(50, 1, 50);
+//        box.loadModel("../../res/models/second box/skrzynia2.obj");
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
         hitbox1.Create(&movingObject._transform, glm::vec3(1,3,2));
+        hitbox1._min = glm::vec3(-1, -1, -1);
+        hitbox1._max = glm::vec3(1, 1, 1);
 
+        Transform f;
+        floor.Create(&f);
+        floor._min = glm::vec3(-20, -5, -20);
+        floor._max = glm::vec3(20, 0, 20);
+        floor._color = glm::vec3(1,1,0);
 
         // build and compile our shader program
         // ------------------------------------
@@ -159,16 +170,16 @@ float y = 0;
         inputSystem.update();
 
         if (inputSystem.GetKey(GLFW_KEY_A))
-            std::cout << "escape1" << std::endl;
+            std::cout << "escape1" << std::endl; // we have library for logging...
         if (inputSystem.GetKeyDown(GLFW_KEY_A))
             std::cout << "aaaa" << std::endl;
 
         //movingObject.Move();
         //player1.Draw(shader);
-        floor.Draw(shader);
+        //floor.Draw(shader);
         movingObject.Draw(shader);
 
-        box.Draw(shader);
+        //box.Draw(shader);
 
 
 
@@ -198,6 +209,10 @@ float y = 0;
         glm:: mat4 view = camera.getView(movingObject);
 
         hitbox1.Draw(projection*view);
+        floor.Draw(projection*view);
+
+        hitbox1.TestForIntersection(floor);
+
         //debugShape.DrawCube(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec4(0), projection* view);
         shader.use();
         shader.setMat4("projectionView", projection * view);
@@ -220,10 +235,11 @@ float y = 0;
 
             movingObject.ImGui();
 
-            floor.ImGui("Floor");
-            box.ImGui("Box");
+//            floor.ImGui("Floor");
+//            box.ImGui("Box");
 
-            hitbox1.ImGui();
+            hitbox1.ImGui("Player hitbox");
+            floor.ImGui("Floor hitbox");
             hud.ImGui();
             hud.imguiText();
 

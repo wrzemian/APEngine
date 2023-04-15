@@ -7,13 +7,13 @@
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
 
-void Hitbox::Create(Transform* transform, glm::vec3 dimensions, glm::vec3 offset) {
+void Hitbox::Create(Transform* transform, glm::vec3 offset) {
     _transform = transform;
     _position = &transform->_position;
-    _dimensions = dimensions;
     _min = glm::vec3(-1, -1, -1);
     _max = glm::vec3(1, 1, 1);
     _offset = offset;
+    _color = glm::vec3(1,1,0);
 
     debugShape.Initialize();
 }
@@ -24,6 +24,7 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     }
     debugShape.shader.use();
     debugShape.shader.setVec3("offset", _offset);
+    debugShape.shader.setVec3("color", _color);
 
     glm::mat4 model = glm::mat4(1);
     model = glm::translate(model, *_position);
@@ -37,9 +38,9 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     debugShape.DrawCube(_min, _max);
 }
 
-void Hitbox::ImGui() {
-    ImGui::Begin("Hitbox");
-    ImGui::SetWindowSize(ImVec2(300, 280));
+void Hitbox::ImGui(std::string name) {
+    ImGui::Begin(name.c_str());
+    ImGui::SetWindowSize(ImVec2(300, 380));
 
     ImGui::SliderFloat("min X", &_min.x, -5.0f, 5.0f);
     ImGui::SliderFloat("min Y", &_min.y, -5.0f, 5.0f);
@@ -53,12 +54,33 @@ void Hitbox::ImGui() {
     ImGui::SliderFloat("offset Y", &_offset.y, -5, 5);
     ImGui::SliderFloat("offset Z", &_offset.z, -5, 5);
 
+    ImGui::SliderFloat("R", &_color.x, 0, 1);
+    ImGui::SliderFloat("G", &_color.y, 0, 1);
+    ImGui::SliderFloat("B", &_color.z, 0, 1);
+
     if (ImGui::Button("Reset Offset")) {
         _offset = glm::vec3(0,0,0);
     }
     ImGui::Checkbox("Draw: ", &draw);
     ImGui::End();
 
+}
+
+bool Hitbox::TestForIntersection(Hitbox &other) {
+    bool intersects = _transform->_position.x + _offset.x + _min.x <= other._transform->_position.x + other._offset.x + other._max.x &&
+                      _transform->_position.x + _offset.x + _max.x >= other._transform->_position.x + other._offset.x + other._min.x &&
+                      _transform->_position.y + _offset.y + _min.y <= other._transform->_position.y + other._offset.y + other._max.y &&
+                      _transform->_position.y + _offset.y + _max.y >= other._transform->_position.y + other._offset.y + other._min.y &&
+                      _transform->_position.z + _offset.z + _min.z <= other._transform->_position.z + other._offset.z + other._max.z &&
+                      _transform->_position.z + _offset.z + _max.z >= other._transform->_position.z + other._offset.z + other._min.z;
+    if(intersects) {
+        _color.x = 1;
+        _color.y = 0;
+    } else {
+        _color.x = 0;
+        _color.y = 1;
+    }
+    return intersects;
 }
 
 
