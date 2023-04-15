@@ -41,7 +41,8 @@ namespace Game {
     HUD hud;
     Shader shader;
 
-    Object3D player1;
+    Object3D floor;
+    Object3D box;
     MovingObject movingObject;
 
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
@@ -90,6 +91,8 @@ float y = 0;
         hud.initCharData();
         hud.load("res/textures/ExportedFont.jpg");
 
+        floor.loadModel("../../res/models/first box/first box.obj");
+        box.loadModel("../../res/models/second box/second box.obj");
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
         hitbox1.Create(&movingObject._transform, glm::vec3(1,3,2));
@@ -162,7 +165,8 @@ float y = 0;
         movingObject.Move();
         //player1.Draw(shader);
         movingObject.Draw(shader);
-
+        floor.Draw(shader);
+        box.Draw(shader);
 
 
 
