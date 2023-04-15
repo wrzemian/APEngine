@@ -19,8 +19,7 @@ public:
 
     static glm::mat4 world;
     static void Initialize();
-    static void DrawSpot(glm::vec3 position, glm::vec4 color, glm::mat4 proview);
-    static void DrawCube();
+    static void DrawCube(glm::vec3 min, glm::vec3 max);
     static void DrawArrow(glm::vec3 Start, glm::vec3 End, glm::vec4 Color, glm::mat4 proview);
 
 };

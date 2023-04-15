@@ -19,5 +19,5 @@ public:
     void Draw(Shader &shader);
     void loadModel(std::string const &path);
 
-    virtual void ImGui();
+    virtual void ImGui(std::string name = "Object3D");
 };

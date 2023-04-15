@@ -15,6 +15,9 @@ public:
     glm::vec3* _position;
 
     glm::vec3 _dimensions;
+    glm::vec3 _min;
+    glm::vec3 _max;
+
     glm::vec3 _offset;
     DebugShape debugShape;
 

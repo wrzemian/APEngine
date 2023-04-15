@@ -91,8 +91,9 @@ float y = 0;
         hud.initCharData();
         hud.load("res/textures/ExportedFont.jpg");
 
-        floor.loadModel("../../res/models/first box/first box.obj");
-        box.loadModel("../../res/models/second box/second box.obj");
+        floor.loadModel("../../res/models/first box/skrzynia.obj");
+        floor._transform._scale = glm::vec3(50, 1, 50);
+        box.loadModel("../../res/models/second box/skrzynia2.obj");
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
         hitbox1.Create(&movingObject._transform, glm::vec3(1,3,2));
@@ -162,10 +163,11 @@ float y = 0;
         if (inputSystem.GetKeyDown(GLFW_KEY_A))
             std::cout << "aaaa" << std::endl;
 
-        movingObject.Move();
+        //movingObject.Move();
         //player1.Draw(shader);
-        movingObject.Draw(shader);
         floor.Draw(shader);
+        movingObject.Draw(shader);
+
         box.Draw(shader);
 
 
@@ -217,6 +219,10 @@ float y = 0;
             dirLight.ImGui();
 
             movingObject.ImGui();
+
+            floor.ImGui("Floor");
+            box.ImGui("Box");
+
             hitbox1.ImGui();
             hud.ImGui();
             hud.imguiText();

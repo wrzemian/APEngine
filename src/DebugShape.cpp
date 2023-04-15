@@ -33,26 +33,18 @@ void DebugShape::Initialize()
     spotModel = Model((char *)"../../res/models/spot/spot.obj");
 }
 
-void DebugShape::DrawSpot(glm::vec3 position, glm::vec4 color, glm::mat4 proview)
-{
-    shader.use();
-    shader.setVec4("model", color);
-    shader.setMat4("projectionView", proview);
-    spotModel.Draw(shader);
-}
-
-void DebugShape::DrawCube()
+void DebugShape::DrawCube(glm::vec3 min, glm::vec3 max)
 {
     std::vector<GLfloat> vertices = {
-            1, 1, 1,
-            1, -1, 1,
-            1, -1, -1,
-            1, 1, -1,
+            max.x, max.y, max.z,
+            max.x, min.y, max.z,
+            max.x, min.y, min.z,
+            max.x, max.y, min.z,
 
-            -1, 1, 1,
-            -1, -1, 1,
-            -1, -1, -1,
-            -1, 1, -1,
+            min.x,  max.y, max.z,
+            min.x,  min.y, max.z,
+            min.x,  min.y, min.z,
+            min.x,  max.y, min.z,
     };
     // Don't sue me
     std::vector<GLuint> indices = {
