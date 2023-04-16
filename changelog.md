@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.11] - 2023-04-17
+### Added
+- text rendering using freetype2 lib
+
 ## [0.0.10] - 2023-04-13
 ### Added
 - OpenAl lib

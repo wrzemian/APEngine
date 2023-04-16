@@ -66,19 +66,6 @@ float y = 0;
     void Start() {
         std::cout << Engine::Init();
 
-        FT_Library ft;
-        if (FT_Init_FreeType(&ft))
-        {
-            std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
-
-        }
-
-        FT_Face face;
-        if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
-        {
-            std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-        }
-
 
         ALCdevice *device;
 
@@ -90,11 +77,8 @@ float y = 0;
         inputSystem.monitorKey(GLFW_KEY_SPACE);
 
         hud.initImage("res/textures/tlo.png");
-//      hud.initText();
         hud.initAnimation();
-        hud.initCharData();
-        hud.load("res/textures/ExportedFont.jpg");
-
+        hud.initText("res/fonts/Arialn.ttf");
 //        floor.loadModel("../../res/models/first box/skrzynia.obj");
 //        floor._transform._scale = glm::vec3(50, 1, 50);
 //        box.loadModel("../../res/models/second box/skrzynia2.obj");
@@ -161,6 +145,7 @@ float y = 0;
 //        hud.renderText();
         hud.renderAnimation(time);
         hud.renderConstant();
+        hud.renderText("jd",250,250,2,glm::vec3(1, 0.1f, 1));
         //glm::vec3 color = {0.5,0.1,0.5};
         //hud.renderText("01B",-30,-20,0.4,color);
 //        hud.renderText("012345aB", 25.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));

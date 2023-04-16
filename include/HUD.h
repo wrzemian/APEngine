@@ -7,6 +7,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
 #include <iostream>
 #include <map>
 #include <string>
@@ -36,6 +38,13 @@ GLuint compileShader(const GLchar *source, GLenum type) {
 
 class HUD {
 public:
+    struct Character {
+        GLuint textureID;
+        glm::ivec2 size;
+        glm::ivec2 bearing;
+        GLuint advance;
+    };
+
     HUD() {
 
     }
@@ -58,7 +67,7 @@ public:
     void updateText(const std::string &newText) {
         text = newText;
     }
-
+/*
     void initCharData() {
         const int gridSize =16;
         const int charWidth = 32;
@@ -73,7 +82,8 @@ public:
             }
         }
     }
-
+    */
+/*
     void load(const std::string& fontTexturePath) {
         initCharData();
         projectionMatrix = glm::ortho(0.0f, static_cast<float>(1000), 0.0f, static_cast<float>(800));
@@ -142,8 +152,8 @@ public:
         glDeleteShader(textVertexShader);
         glDeleteShader(textFragmentShader);
     }
-
-    void renderText(const std::string& text, float x, float y, float scale, const glm::vec3& color) {
+*/
+   /* void renderText(const std::string& text, float x, float y, float scale, const glm::vec3& color) {
         glUseProgram(textShaderProgram);
         glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -184,7 +194,7 @@ public:
         glBindVertexArray(0);
         glUseProgram(0);
     }
-
+*/
     void initImage(const char* path) {
         // Load image using stb_image
         int width, height, channels;
@@ -455,7 +465,7 @@ void main()
         glUseProgram(0);
     }
 
-void imguiText(){
+    void imguiText(){
 
     ImGui::SetNextWindowBgAlpha(0.0f);
 
@@ -483,6 +493,68 @@ void imguiText(){
         ImGui::End();
     }
 
+    void initText(const std::string &fontPath) {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glGenVertexArrays(1, &vao);
+        glGenBuffers(1, &vbo);
+        glBindVertexArray(vao);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), nullptr);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+        if (FT_Init_FreeType(&library)) {
+            std::cerr << "Error: Could not initialize FreeType library" << std::endl;
+            return;
+        }
+
+        if (FT_New_Face(library, fontPath.c_str(), 0, &face)) {
+            std::cerr << "Error: Failed to load font: here " << fontPath << std::endl;
+            return;
+        }
+
+        FT_Set_Pixel_Sizes(face, 0, 48);
+
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        loadCharacters();
+        createShaderProgram();
+    }
+
+    void renderText(const std::string &text, GLfloat x, GLfloat y, GLfloat scale, const glm::vec3 &color) {
+        glUseProgram(shaderProgram);
+        glUniform3f(glGetUniformLocation(shaderProgram, "textColor"), color.x, color.y, color.z);
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glBindVertexArray(vao);
+
+        for (const char &c : text) {
+            Character ch = characters[c];
+            GLfloat xpos = x + ch.bearing.x * scale;
+            GLfloat ypos = y - (ch.size.y - ch.bearing.y) * scale;
+            GLfloat w = ch.size.x * scale;
+            GLfloat h = ch.size.y * scale;
+            GLfloat vertices[6][4] = {
+                    { xpos,     ypos + h,   0.0, 0.0 },
+                    { xpos,     ypos,       0.0, 1.0 },
+                    { xpos + w, ypos,       1.0, 1.0 },
+                    { xpos,     ypos + h,   0.0, 0.0 },
+                    { xpos + w, ypos,       1.0, 1.0 },
+                    { xpos + w, ypos + h,   1.0, 0.0 }
+            };
+            glBindTexture(GL_TEXTURE_2D, ch.textureID);
+            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            x += (ch.advance >> 6) * scale;
+        }
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glUseProgram(0);
+    }
+
 private:
     // Private members
     GLFWwindow *window;
@@ -495,12 +567,89 @@ private:
 
     GLuint textShaderProgram;
     GLuint fontTexture;
-    GLuint vao, vbo;
+    //GLuint vao, vbo;
     GLint projectionUniformLocation;
     GLint textColorUniformLocation;
     glm::mat4 projectionMatrix;
     std::map<char, glm::ivec4> charData;
+    void loadCharacters() {
+        for (GLubyte c = 0; c < 128; c++) {
+            if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
+                std::cerr << "Error: Failed to load glyph for character: " << c << std::endl;
+                continue;
+            }
+            GLuint texture;
+            glGenTextures(1, &texture);
+            glBindTexture(GL_TEXTURE_2D, texture);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            Character character = {
+                    texture,
+                    glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                    glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                    static_cast<GLuint>(face->glyph->advance.x)
+            };
+            characters.insert(std::pair<char, Character>(c, character));
+        }
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+    void createShaderProgram() {
+        const GLchar *vertexShaderSource = R"(
+        #version 330 core
+        layout (location = 0) in vec4 vertex;
+        out vec2 TexCoords;
+        uniform mat4 projection;
+        void main() {
+            gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
+            TexCoords = vertex.zw;
+        }
+    )";
 
+        const GLchar *fragmentShaderSource = R"(
+        #version 330 core
+        in vec2 TexCoords;
+        out vec4 color;
+        uniform sampler2D text;
+        uniform vec3 textColor;
+        void main() {
+            vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
+            color = vec4(textColor, 1.0) * sampled;
+        }
+    )";
+
+        GLuint vertexShader = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
+        GLuint fragmentShader = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+        shaderProgram = glCreateProgram();
+        glAttachShader(shaderProgram, vertexShader);
+        glAttachShader(shaderProgram, fragmentShader);
+        glLinkProgram(shaderProgram);
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+    }
+
+    GLuint compileShader(const char *source, GLenum shaderType) {
+        GLuint shader = glCreateShader(shaderType);
+        glShaderSource(shader, 1, &source, nullptr);
+        glCompileShader(shader);
+        GLint success;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success) {
+            GLchar infoLog[512];
+            glGetShaderInfoLog(shader, 512, nullptr, infoLog);
+            std::cerr << "Error: Shader compilation failed\n" << infoLog << std::endl;
+        }
+        return shader;
+    }
+
+    FT_Library library;
+    FT_Face face;
+    GLuint shaderProgram;
+    GLuint vao, vbo;
+    std::map<char, Character> characters;
+    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
 };
 
 
