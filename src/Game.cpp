@@ -78,7 +78,7 @@ float y = 0;
 
         hud.initImage("res/textures/tlo.png");
         hud.initAnimation();
-        hud.initText("res/fonts/Arialn.ttf");
+//        hud.initText("res/fonts/Arialn.ttf");
 //        floor.loadModel("../../res/models/first box/skrzynia.obj");
 //        floor._transform._scale = glm::vec3(50, 1, 50);
 //        box.loadModel("../../res/models/second box/skrzynia2.obj");
@@ -141,11 +141,11 @@ float y = 0;
         lastFrame = currentFrame;
 
         float time = static_cast<float>(glfwGetTime());
-        hud.renderImage(x);
+//        hud.renderImage(x);
 //        hud.renderText();
-        hud.renderAnimation(time);
-        hud.renderConstant();
-        hud.renderText("jd",250,250,2,glm::vec3(1, 0.1f, 1));
+//        hud.renderAnimation(time);
+//        hud.renderConstant();
+//        hud.renderText("jd",250,250,2,glm::vec3(1, 0.1f, 1));
         //glm::vec3 color = {0.5,0.1,0.5};
         //hud.renderText("01B",-30,-20,0.4,color);
 //        hud.renderText("012345aB", 25.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
