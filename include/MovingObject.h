@@ -24,6 +24,7 @@ public:
     void Move();
 
     void ImGui();
+    void onCollision(Object3D* other) override;
 };
 
 

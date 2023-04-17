@@ -8,29 +8,33 @@
 #include "Transform.h"
 #include "DebugShape.h"
 #include "IHitbox.h"
+#include "IGui.h"
+#include "Object3D.h"
 
-class Hitbox : public IHitbox {
+class Hitbox : public IGui {
 
 enum Axis {
     X, Y, Z, NONE
 };
 
 public:
+    Hitbox();
+
     bool draw = true;
-    Transform* _transform;
-    glm::vec3* _position;
+    Object3D* _object{};
+    glm::vec3* _position{};
 
-    glm::vec3 _min;
-    glm::vec3 _max;
+    glm::vec3 _min{};
+    glm::vec3 _max{};
 
-    glm::vec3 _color;
+    glm::vec3 _color{};
 
-    glm::vec3 _offset;
+    glm::vec3 _offset{};
     DebugShape debugShape;
 
-    void Create(Transform* transform, glm::vec3 offset = glm::vec3(0));
+    void Create(Object3D* object, glm::vec3 offset = glm::vec3(0));
     void Draw(glm::mat4 projectionView);
-    void ImGui(std::string name = "Hitbox");
+    void ImGui() override;
 
     bool TestForIntersection(Hitbox& other);
 };

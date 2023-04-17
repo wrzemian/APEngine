@@ -14,6 +14,7 @@
 
 #include "IHitbox.h"
 #include "IGui.h"
+#include "Hitbox.h"
 
 namespace Engine {
     extern float deltaTime;
@@ -26,11 +27,13 @@ namespace Engine {
     int getHitboxIndex();
     int getImguiIndex();
 
-    void addHitbox(IHitbox* hitbox);
+    void addHitbox(Hitbox* hitbox);
     void addImgui(IGui* imgui);
     void renderImgui();
 
     void terminate();
+    void resolveCollisions();
+
 
     int initGLandImGui();
 

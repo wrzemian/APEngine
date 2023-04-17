@@ -62,3 +62,7 @@ void Object3D::ImGui() {
 
     ImGui::End();
 }
+
+void Object3D::onCollision(Object3D *other) {
+    spdlog::warn("Object3D empty onCollision");
+}

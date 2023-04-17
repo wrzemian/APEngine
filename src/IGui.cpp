@@ -7,5 +7,7 @@
 
 
 IGui::IGui() {
+    Engine::addImgui(this);
     windowName = std::to_string(Engine::getImguiIndex());
+
 }

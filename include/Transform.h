@@ -29,7 +29,7 @@ public:
         _position = glm::vec3(0,0,0);
         _scale = glm::vec3(1,1,1);
         _rotation = glm::vec3(0,0,0);
-        std::cout<<"transform constructor \n";
+        //std::cout<<"transform constructor \n";
     }
 
     Transform( glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) {

@@ -10,9 +10,8 @@
 MovingObject::MovingObject() {
     //windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
     IGui::setWindowName("moving object");
-    spdlog::warn("Moving Object window name = {}\n", windowName);
 
-    Engine::addImgui(this);
+    //Engine::addImgui(this);
 }
 
 MovingObject::~MovingObject() {
@@ -53,4 +52,11 @@ void MovingObject::ImGui() {
 void MovingObject::Move() {
     _transform._position += _velocity * Engine::deltaTime;
 }
+
+void MovingObject::onCollision(Object3D *other) {
+    _velocity.x = 0;
+    _velocity.y = 0;
+    _velocity.z = 0;
+}
+
 

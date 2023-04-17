@@ -84,11 +84,11 @@ float y = 0;
 //        box.loadModel("../../res/models/second box/skrzynia2.obj");
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
-        hitbox1.Create(&movingObject._transform, glm::vec3(1,3,2));
+        hitbox1.Create(&movingObject, glm::vec3(1,3,2));
         hitbox1._min = glm::vec3(-1, -1, -1);
         hitbox1._max = glm::vec3(1, 1, 1);
 
-        Transform f;
+        Object3D f;
         floor.Create(&f);
         floor._min = glm::vec3(-20, -5, -20);
         floor._max = glm::vec3(20, 0, 20);
@@ -196,13 +196,14 @@ float y = 0;
         hitbox1.Draw(projection*view);
         floor.Draw(projection*view);
 
-        hitbox1.TestForIntersection(floor);
+        //hitbox1.TestForIntersection(floor);
 
         //debugShape.DrawCube(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec4(0), projection* view);
         shader.use();
         shader.setMat4("projectionView", projection * view);
         camera.followObject(movingObject);
 
+        Engine::resolveCollisions();
         Engine::LoopEnd();
 
     }

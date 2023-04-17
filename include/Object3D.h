@@ -20,5 +20,7 @@ public:
     void Draw(Shader &shader);
     void loadModel(std::string const &path);
 
+    virtual void onCollision(Object3D* other);
+
     virtual void ImGui();
 };

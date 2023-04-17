@@ -6,10 +6,11 @@
 
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
+#include "../include/Engine.h"
 
-void Hitbox::Create(Transform* transform, glm::vec3 offset) {
-    _transform = transform;
-    _position = &transform->_position;
+void Hitbox::Create(Object3D* object, glm::vec3 offset) {
+    _object = object;
+    _position = &object->_transform._position;
     _min = glm::vec3(-1, -1, -1);
     _max = glm::vec3(1, 1, 1);
     _offset = offset;
@@ -38,8 +39,8 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     debugShape.DrawCube(_min, _max);
 }
 
-void Hitbox::ImGui(std::string name) {
-    ImGui::Begin(name.c_str());
+void Hitbox::ImGui()  {
+    ImGui::Begin(windowName.c_str());
     ImGui::SetWindowSize(ImVec2(300, 380));
 
     ImGui::SliderFloat("min X", &_min.x, -5.0f, 5.0f);
@@ -67,21 +68,32 @@ void Hitbox::ImGui(std::string name) {
 }
 
 bool Hitbox::TestForIntersection(Hitbox &other) {
-    bool intersects = _transform->_position.x + _offset.x + _min.x <= other._transform->_position.x + other._offset.x + other._max.x &&
-                      _transform->_position.x + _offset.x + _max.x >= other._transform->_position.x + other._offset.x + other._min.x &&
-                      _transform->_position.y + _offset.y + _min.y <= other._transform->_position.y + other._offset.y + other._max.y &&
-                      _transform->_position.y + _offset.y + _max.y >= other._transform->_position.y + other._offset.y + other._min.y &&
-                      _transform->_position.z + _offset.z + _min.z <= other._transform->_position.z + other._offset.z + other._max.z &&
-                      _transform->_position.z + _offset.z + _max.z >= other._transform->_position.z + other._offset.z + other._min.z;
+    bool intersects = _position->x + _offset.x + _min.x <= other._position->x + other._offset.x + other._max.x &&
+                      _position->x + _offset.x + _max.x >= other._position->x + other._offset.x + other._min.x &&
+                      _position->y + _offset.y + _min.y <= other._position->y + other._offset.y + other._max.y &&
+                      _position->y + _offset.y + _max.y >= other._position->y + other._offset.y + other._min.y &&
+                      _position->z + _offset.z + _min.z <= other._position->z + other._offset.z + other._max.z &&
+                      _position->z + _offset.z + _max.z >= other._position->z + other._offset.z + other._min.z;
     if(intersects) {
+        _object->onCollision(other._object);
+
         _color.x = 1;
         _color.y = 0;
     } else {
         _color.x = 0;
         _color.y = 1;
     }
+
+
     return intersects;
 }
+
+Hitbox::Hitbox() {
+    IGui::setWindowName("hitbox");
+    Engine::addHitbox(this);
+    //Engine::addImgui(this);
+}
+
 
 
 

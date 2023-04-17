@@ -12,6 +12,7 @@
 
 #include "../include/Engine.h"
 #include "../include/InputSystem.h"
+#include "../include/Hitbox.h"
 
 
 namespace Engine {
@@ -24,7 +25,7 @@ namespace Engine {
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
 
-    std::vector<IHitbox*> allHitboxes;
+    std::vector<Hitbox*> allHitboxes;
     std::vector<IGui*> allImgui;
 
     int Init() {
@@ -34,17 +35,14 @@ namespace Engine {
         return 0;
     }
 
-    void addHitbox(IHitbox* hitbox) {
+    void addHitbox(Hitbox* hitbox) {
+        spdlog::info("Hitbox added");
         allHitboxes.push_back(hitbox);
     }
 
     void addImgui(IGui* imgui) {
         spdlog::info("imgui object added, {}", imgui->windowName);
         allImgui.push_back(imgui);
-        for(IGui* gui: allImgui) {
-            std::cout << imgui << "\n";
-
-        }
     }
 
     int getHitboxIndex() {
@@ -95,6 +93,14 @@ namespace Engine {
     void renderImgui() {
         for(IGui* gui: allImgui) {
             gui->ImGui();
+        }
+    }
+
+    void resolveCollisions() {
+        for(size_t i=0; i<allHitboxes.size(); i++) {
+            for (size_t j = i+1; j < allHitboxes.size(); j++) {
+                allHitboxes.at(i)->TestForIntersection(*allHitboxes.at(j));
+            }
         }
     }
 
