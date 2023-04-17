@@ -14,7 +14,7 @@
 #include "glm/vec3.hpp"
 #include "glm/fwd.hpp"
 #include "glm/detail/type_vec2.hpp"
-#include "Image.h"
+#include "../include/Image.h"
 #include "stb_image.h"
 
 GLuint compileShader(const char *source, GLenum shaderType) {
