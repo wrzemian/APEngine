@@ -12,6 +12,9 @@
 #include <vector>
 #include <iostream>
 
+#include "IHitbox.h"
+#include "IGui.h"
+
 namespace Engine {
     extern float deltaTime;
 
@@ -19,6 +22,13 @@ namespace Engine {
     int Init();
     void LoopStart();
     void LoopEnd();
+
+    int getHitboxIndex();
+    int getImguiIndex();
+
+    void addHitbox(IHitbox* hitbox);
+    void addImgui(IGui* imgui);
+    void renderImgui();
 
     void terminate();
 

@@ -7,8 +7,9 @@
 
 #include "Transform.h"
 #include "DebugShape.h"
+#include "IHitbox.h"
 
-class Hitbox {
+class Hitbox : public IHitbox {
 
 enum Axis {
     X, Y, Z, NONE

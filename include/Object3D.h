@@ -6,8 +6,9 @@
 #include "Transform.h"
 #include "Model.h"
 #include "Shader.h"
+#include "IGui.h"
 
-class Object3D {
+class Object3D : public IGui {
 
 public:
     Object3D();
@@ -19,5 +20,5 @@ public:
     void Draw(Shader &shader);
     void loadModel(std::string const &path);
 
-    virtual void ImGui(std::string name = "Object3D");
+    virtual void ImGui();
 };

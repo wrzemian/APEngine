@@ -6,7 +6,7 @@
 
 #include "Object3D.h"
 
-class MovingObject : public Object3D{
+class MovingObject : public Object3D {
 
 private:
     typedef Object3D super;

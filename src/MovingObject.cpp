@@ -7,7 +7,13 @@
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
 
-MovingObject::MovingObject() {}
+MovingObject::MovingObject() {
+    //windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
+    IGui::setWindowName("moving object");
+    spdlog::warn("Moving Object window name = {}\n", windowName);
+
+    Engine::addImgui(this);
+}
 
 MovingObject::~MovingObject() {
 
@@ -30,8 +36,8 @@ void MovingObject::StopMoving() {
 void MovingObject::ImGui() {
     super::ImGui();
 
-    ImGui::Begin("MovingObject");
-    ImGui::SetWindowSize(ImVec2(300, 120));
+    ImGui::Begin(windowName.c_str());
+    ImGui::SetWindowSize(ImVec2(300, 440));
 
     ImGui::SliderFloat("velocity X", &_velocity.x, -10.0f, 10.0f);
     ImGui::SliderFloat("velocity Y", &_velocity.y, -10.0f, 10.0f);

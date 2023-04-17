@@ -4,17 +4,20 @@
 
 #include "../include/Object3D.h"
 #include "../include/Transform.h"
+#include "../include/Engine.h"
 
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
 
 Object3D::Object3D() {
     _transform = Transform();
+//    windowName = fmt::format("Object3D #{}", Engine::getImguiIndex());
+//    spdlog::warn("Object3d window name = {}", windowName);
+//
+//    Engine::addImgui(this);
 }
 
-Object3D::~Object3D() {
-
-}
+Object3D::~Object3D() = default;
 
 void Object3D::Draw(Shader &shader) {
     //shader.use();
@@ -29,8 +32,9 @@ void Object3D::loadModel(const std::string &path) {
     _model = temp;
 }
 
-void Object3D::ImGui(std::string name) {
-    ImGui::Begin(name.c_str());
+void Object3D::ImGui() {
+    ImGui::Begin(windowName.c_str());
+
     ImGui::SetWindowSize(ImVec2(300, 310));
 
     ImGui::SliderFloat("scale X", &_transform._scale.x, 0.0f, 2.0f);

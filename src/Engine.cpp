@@ -12,6 +12,8 @@
 
 #include "../include/Engine.h"
 #include "../include/InputSystem.h"
+
+
 namespace Engine {
     GLFWwindow* window;
 
@@ -22,11 +24,35 @@ namespace Engine {
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
 
+    std::vector<IHitbox*> allHitboxes;
+    std::vector<IGui*> allImgui;
+
     int Init() {
         if (initGLandImGui() == -1) {
             return -1;
         }
         return 0;
+    }
+
+    void addHitbox(IHitbox* hitbox) {
+        allHitboxes.push_back(hitbox);
+    }
+
+    void addImgui(IGui* imgui) {
+        spdlog::info("imgui object added, {}", imgui->windowName);
+        allImgui.push_back(imgui);
+        for(IGui* gui: allImgui) {
+            std::cout << imgui << "\n";
+
+        }
+    }
+
+    int getHitboxIndex() {
+        return allHitboxes.size();
+    }
+
+    int getImguiIndex() {
+        return allImgui.size();
     }
 
     void ImGui() {
@@ -64,6 +90,12 @@ namespace Engine {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_LIGHT0);
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    }
+
+    void renderImgui() {
+        for(IGui* gui: allImgui) {
+            gui->ImGui();
+        }
     }
 
     void LoopEnd() {

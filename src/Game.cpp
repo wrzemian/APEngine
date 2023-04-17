@@ -159,7 +159,7 @@ float y = 0;
         if (inputSystem.GetKeyDown(GLFW_KEY_A))
             std::cout << "aaaa" << std::endl;
 
-        //movingObject.Move();
+        movingObject.Move();
         //player1.Draw(shader);
         //floor.Draw(shader);
         movingObject.Draw(shader);
@@ -213,21 +213,21 @@ float y = 0;
         ImGui::NewFrame();
         {
             //player1.ImGui();
-            camera.ImGui();
-            pointLight.ImGui();
-            spotLight.ImGui();
-            dirLight.ImGui();
-
-            movingObject.ImGui();
-
-//            floor.ImGui("Floor");
-//            box.ImGui("Box");
-
-            hitbox1.ImGui("Player hitbox");
-            floor.ImGui("Floor hitbox");
-            hud.ImGui();
-            hud.imguiText();
-
+//            camera.ImGui();
+//            pointLight.ImGui();
+//            spotLight.ImGui();
+//            dirLight.ImGui();
+//
+//            movingObject.ImGui();
+//
+////            floor.ImGui("Floor");
+////            box.ImGui("Box");
+//
+//            hitbox1.ImGui("Player hitbox");
+//            floor.ImGui("Floor hitbox");
+//            hud.ImGui();
+//            hud.imguiText();
+            Engine::renderImgui();
             Engine::ImGui();
 
         }
