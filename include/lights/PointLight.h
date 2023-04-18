@@ -6,7 +6,7 @@
 #define APENGINE_POINTLIGHT_H
 
 #include "AmbientLight.h"
-
+#include "../IGui.h"
 class PointLight : public AmbientLight{
 protected:
     glm::vec3 position;
