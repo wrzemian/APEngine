@@ -47,6 +47,8 @@ namespace Game {
 //    Object3D box;
     MovingObject movingObject;
 
+    Object3D walls;
+
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
     GLfloat deltaTime = 0.0f;
     GLfloat lastFrame = 0.0f;
@@ -84,6 +86,9 @@ float y = 0;
 //        box.loadModel("../../res/models/second box/skrzynia2.obj");
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
+        movingObject._transform._scale = glm::vec3(0.2f);
+        walls.loadModel("../../res/models/walls/walls.obj");
+
         hitbox1.Create(&movingObject, glm::vec3(1,3,2));
         hitbox1._min = glm::vec3(-1, -1, -1);
         hitbox1._max = glm::vec3(1, 1, 1);
@@ -100,6 +105,8 @@ float y = 0;
         shader = temp;
         shader.use();
 
+        movingObject.setShader(&shader);
+        walls.setShader(&shader);
 
         // View and projection matricies
         glm::mat4 view = glm::mat4(1.0f);
@@ -162,8 +169,8 @@ float y = 0;
         movingObject.Move();
         //player1.Draw(shader);
         //floor.Draw(shader);
-        movingObject.Draw(shader);
-
+        movingObject.Draw();
+        walls.Draw();
         //box.Draw(shader);
 
 

@@ -14,10 +14,13 @@ public:
     Object3D();
     virtual ~Object3D();
 
+    Shader* _shader;
+
     Model _model;
     Transform _transform;
 
-    void Draw(Shader &shader);
+    void Draw();
+    void setShader(Shader* shader);
     void loadModel(std::string const &path);
 
     virtual void onCollision(Object3D* other);
