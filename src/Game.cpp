@@ -165,7 +165,7 @@ float y = 0;
             std::cout << "escape1" << std::endl; // we have library for logging...
         if (inputSystem.GetKeyDown(GLFW_KEY_A))
             std::cout << "aaaa" << std::endl;
-
+/*
         float xAxisGamepad1 = inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X);
         float yAxisGamepad1 = inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y);
         std::cout << "Gamepad 1 X-axis: " << xAxisGamepad1 << ", Y-axis: " << yAxisGamepad1 << std::endl;
@@ -173,7 +173,14 @@ float y = 0;
         float xAxisGamepad2 = inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X);
         float yAxisGamepad2 = inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y);
         std::cout << "Gamepad 2 X-axis: " << xAxisGamepad2 << ", Y-axis: " << yAxisGamepad2 << std::endl;
+*/
+        if (inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
+            std::cout << "Gamepad 1 A button just got pressed." << std::endl;
+        }
 
+        if (inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
+            std::cout << "Gamepad 2 A button just got pressed." << std::endl;
+        }
 
         movingObject.Move();
         //player1.Draw(shader);

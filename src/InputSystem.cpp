@@ -21,6 +21,21 @@ void InputSystem::update() {
         int state = glfwGetKey(window, key);
         keyStates[key] = state == GLFW_PRESS || state == GLFW_REPEAT;
     }
+
+    for (int gamepadIndex = 0; gamepadIndex < 2; ++gamepadIndex) {
+        int joystickId = gamepadIndex == 1 ? GLFW_JOYSTICK_2 : GLFW_JOYSTICK_1;
+        lastGamepadButtonStates[gamepadIndex] = gamepadButtonStates[gamepadIndex];
+        gamepadButtonStates[gamepadIndex].clear();
+
+        int present = glfwJoystickPresent(joystickId);
+        if (present) {
+            int count;
+            const unsigned char* buttons = glfwGetJoystickButtons(joystickId, &count);
+            for (int button = 0; button < count; ++button) {
+                gamepadButtonStates[gamepadIndex][button] = buttons[button] == GLFW_PRESS;
+            }
+        }
+    }
 }
 
 void InputSystem::monitorKey(int key) {
@@ -37,14 +52,11 @@ bool InputSystem::GetKeyDown(int key) {
 }
 
 bool InputSystem::isGamepadButtonPressed(int gamepadIndex, int button) {
-    int joystickId = gamepadIndex == 1 ? GLFW_JOYSTICK_2 : GLFW_JOYSTICK_1;
-    int present = glfwJoystickPresent(joystickId);
-    if (present) {
-        int count;
-        const unsigned char* buttons = glfwGetJoystickButtons(joystickId, &count);
-        return buttons[button] == GLFW_PRESS;
-    }
-    return false;
+    return gamepadButtonStates[gamepadIndex][button];
+}
+
+bool InputSystem::GetGamepadButtonDown(int gamepadIndex, int button) {
+    return gamepadButtonStates[gamepadIndex][button] && !lastGamepadButtonStates[gamepadIndex][button];
 }
 
 float InputSystem::getJoystickAxis(int gamepadIndex,int axis) {

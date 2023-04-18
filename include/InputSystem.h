@@ -23,6 +23,8 @@ public:
 
     bool isGamepadButtonPressed(int gamepadIndex, int button);
 
+    bool GetGamepadButtonDown(int gamepadIndex, int button);
+
     float getJoystickAxis(int gamepadIndex, int axis);
 
     float GetAxis(int key);
@@ -33,6 +35,10 @@ private:
     std::vector<int> monitoredKeys;
     std::unordered_map<int, bool> keyStates;
     std::unordered_map<int, bool> lastKeyStates;
+
+    std::vector<std::unordered_map<int, bool>> gamepadButtonStates = std::vector<std::unordered_map<int, bool>>(2);
+    std::vector<std::unordered_map<int, bool>> lastGamepadButtonStates = std::vector<std::unordered_map<int, bool>>(2);
+
 
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
         if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
