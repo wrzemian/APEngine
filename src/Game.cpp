@@ -159,6 +159,15 @@ float y = 0;
         if (inputSystem.GetKeyDown(GLFW_KEY_A))
             std::cout << "aaaa" << std::endl;
 
+        float xAxisGamepad1 = inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X);
+        float yAxisGamepad1 = inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y);
+        std::cout << "Gamepad 1 X-axis: " << xAxisGamepad1 << ", Y-axis: " << yAxisGamepad1 << std::endl;
+
+        float xAxisGamepad2 = inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X);
+        float yAxisGamepad2 = inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y);
+        std::cout << "Gamepad 2 X-axis: " << xAxisGamepad2 << ", Y-axis: " << yAxisGamepad2 << std::endl;
+
+
         movingObject.Move();
         //player1.Draw(shader);
         //floor.Draw(shader);

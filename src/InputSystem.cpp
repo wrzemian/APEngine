@@ -36,21 +36,23 @@ bool InputSystem::GetKeyDown(int key) {
     return keyStates[key] && !lastKeyStates[key];
 }
 
-bool InputSystem::isGamepadButtonPressed(int button) {
-    int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+bool InputSystem::isGamepadButtonPressed(int gamepadIndex, int button) {
+    int joystickId = gamepadIndex == 1 ? GLFW_JOYSTICK_2 : GLFW_JOYSTICK_1;
+    int present = glfwJoystickPresent(joystickId);
     if (present) {
         int count;
-        const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &count);
+        const unsigned char* buttons = glfwGetJoystickButtons(joystickId, &count);
         return buttons[button] == GLFW_PRESS;
     }
     return false;
 }
 
-float InputSystem::getJoystickAxis(int axis) {
-    int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+float InputSystem::getJoystickAxis(int gamepadIndex,int axis) {
+    int joystickId = gamepadIndex == 1 ? GLFW_JOYSTICK_2 : GLFW_JOYSTICK_1;
+    int present = glfwJoystickPresent(joystickId);
     if (present) {
         int count;
-        const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
+        const float* axes = glfwGetJoystickAxes(joystickId, &count);
         return axes[axis];
     }
     return 0.0f;

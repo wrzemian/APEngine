@@ -21,9 +21,9 @@ public:
 
     bool GetKeyDown(int key);
 
-    bool isGamepadButtonPressed(int button);
+    bool isGamepadButtonPressed(int gamepadIndex, int button);
 
-    float getJoystickAxis(int axis);
+    float getJoystickAxis(int gamepadIndex, int axis);
 
     float GetAxis(int key);
 
