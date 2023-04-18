@@ -65,6 +65,7 @@ CPMAddPackage("gh:ocornut/imgui@1.88")
 CPMAddPackage("gh:gabime/spdlog@1.10.0")
 CPMAddPackage("gh:aseprite/freetype2#VER-2-10-0")
 CPMAddPackage("gh:kcat/openal-soft#1.23.1")
+CPMAddPackage("gh:adamstark/AudioFile#1.1.1")
 
 
 set(imgui_SOURCE_DIR ${imgui_SOURCE_DIR} CACHE INTERNAL "")
@@ -88,6 +89,7 @@ set_target_properties(glad
 		fmt
 		freetype
 		OpenAL
+		AudioFile
 		PROPERTIES FOLDER "thirdparty")
 
 if (TARGET zlibstatic)
