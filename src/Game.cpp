@@ -85,7 +85,7 @@ float y = 0;
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
         movingObject._transform._scale = glm::vec3(0.2f);
-        walls.loadModel("../../res/models/walls/walls.obj");
+    //    walls.loadModel("../../res/models/walls/walls.obj");
 
         hitbox1.Create(&movingObject, glm::vec3(1,3,2));
         hitbox1._min = glm::vec3(-1, -1, -1);

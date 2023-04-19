@@ -112,6 +112,7 @@ namespace Engine {
 
     void drawObjects() {
         for(Object3D* object: allObjects) {
+            std::cout<<"DRAW\n";
             object->Draw();
         }
     }

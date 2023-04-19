@@ -15,6 +15,7 @@
 #include "IHitbox.h"
 #include "IGui.h"
 #include "Hitbox.h"
+#include "MovingObject.h"
 
 namespace Engine {
     extern float deltaTime;
@@ -28,6 +29,9 @@ namespace Engine {
 
     void addHitbox(Hitbox* hitbox);
     void addImgui(IGui* imgui);
+    void addObject(Object3D* object);
+    void addMovingObject(MovingObject* object);
+
     void renderImgui();
     void framerate();
 

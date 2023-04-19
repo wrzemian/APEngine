@@ -9,7 +9,8 @@
 #include "IGui.h"
 
 class Object3D : public IGui {
-
+private:
+    bool loadedModel;
 public:
     Object3D();
     virtual ~Object3D();
