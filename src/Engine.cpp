@@ -14,6 +14,8 @@
 #include "../include/InputSystem.h"
 #include "../include/Hitbox.h"
 
+#include "../include/MovingObject.h"
+#include "../include/Object3D.h"
 
 namespace Engine {
     GLFWwindow* window;
@@ -27,6 +29,8 @@ namespace Engine {
 
     std::vector<Hitbox*> allHitboxes;
     std::vector<IGui*> allImgui;
+    std::vector<Object3D*> allObjects;
+    std::vector<MovingObject*> allMovingObjects;
 
     int Init() {
         if (initGLandImGui() == -1) {
@@ -45,25 +49,19 @@ namespace Engine {
         allImgui.push_back(imgui);
     }
 
-    int getHitboxIndex() {
-        return allHitboxes.size();
+    void addObject(Object3D* object) {
+        spdlog::info("Object added");
+        allObjects.push_back(object);
+    }
+
+    void addMovingObject(MovingObject* object) {
+        spdlog::info("Moving Object added");
+        allMovingObjects.push_back(object);
     }
 
     int getImguiIndex() {
         return allImgui.size();
     }
-
-    void ImGui() {
-        ImGui::Begin("Engine");
-        ImGui::SetWindowSize(ImVec2(200, 100));
-        //spdlog::info("deltaTime: ", Engine::deltaTime);
-
-        ImGui::Text("deltaTime: %f", Engine::deltaTime);
-        ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
-
-        ImGui::End();
-    }
-
 
     void LoopStart() {
         frameEnd = glfwGetTime();
@@ -72,28 +70,12 @@ namespace Engine {
 
         frameStart = glfwGetTime();
 
-        // render loop
-        // -----------
-
-        // input
-        // -----
         processInput(window);
-
-
-        //spdlog::info("frameEnd: {:03.20f}", frameEnd);
-        //spdlog::info("frameStart: {:03.20f}", frameStart);
-        //spdlog::critical("deltaTime: {:03.20f}", deltaTime);
 
         glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_LIGHT0);
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    }
-
-    void renderImgui() {
-        for(IGui* gui: allImgui) {
-            gui->ImGui();
-        }
     }
 
     void resolveCollisions() {
@@ -105,12 +87,61 @@ namespace Engine {
     }
 
     void LoopEnd() {
+        std::cout<<"imgui przed \n";
+       // TODO: uncomment
+       //  ImGui();
+        std::cout<<"imgui po \n";
+        moveObjects();
+        resolveCollisions();
+        drawObjects();
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+       // TODO: uncomment
+       //  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+    }
+
+    void moveObjects() {
+        for(MovingObject* object: allMovingObjects) {
+            object->Move(deltaTime);
+        }
+    }
+
+    void drawObjects() {
+        for(Object3D* object: allObjects) {
+            object->Draw();
+        }
+    }
+
+    void ImGui() {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        {
+            renderImgui();
+            framerate();
+        }
+        ImGui::Render();
+    }
+
+    void framerate() {
+        ImGui::Begin("Engine");
+        ImGui::SetWindowSize(ImVec2(200, 100));
+        //spdlog::info("deltaTime: ", Engine::deltaTime);
+
+        ImGui::Text("deltaTime: %f", Engine::deltaTime);
+        ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
+
+        ImGui::End();
+    }
+
+    void renderImgui() {
+        for(IGui* gui: allImgui) {
+            gui->ImGui();
+        }
     }
 
     void terminate() {

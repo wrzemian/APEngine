@@ -2,7 +2,7 @@
 // Created by micha on 02.04.2023.
 //
 
-#include "../include/Engine.h"
+//#include "../include/Engine.h"
 #include "../include/MovingObject.h"
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
@@ -49,8 +49,8 @@ void MovingObject::ImGui() {
     ImGui::End();
 }
 
-void MovingObject::Move() {
-    _transform._position += _velocity * Engine::deltaTime;
+void MovingObject::Move(float deltaTime) {
+    _transform._position += _velocity * deltaTime/** Engine::deltaTime*/;
 }
 
 void MovingObject::onCollision(Object3D *other) {

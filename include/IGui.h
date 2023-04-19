@@ -21,7 +21,7 @@ public:
     std::string windowName;
 
     virtual void ImGui() {
-        spdlog::warn("default IGui");
+        //spdlog::warn("default IGui");
     }
 
 };
