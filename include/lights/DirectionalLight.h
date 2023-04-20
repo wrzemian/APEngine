@@ -6,7 +6,7 @@
 #define APENGINE_DIRECTIONALLIGHT_H
 
 #include "AmbientLight.h"
-#include "../IGui.h"
+
 class DirectionalLight : public AmbientLight{
 protected:
     glm::vec3 direction;

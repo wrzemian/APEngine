@@ -7,7 +7,7 @@
 
 #include "PointLight.h"
 #include "glm/vec3.hpp"
-#include "../IGui.h"
+
 class SpotLight : PointLight{
 protected:
     glm::vec3 direction;
