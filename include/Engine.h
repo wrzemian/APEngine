@@ -24,15 +24,12 @@ namespace Engine {
     void LoopStart();
     void LoopEnd();
 
+    int getHitboxIndex();
     int getImguiIndex();
 
     void addHitbox(Hitbox* hitbox);
     void addImgui(IGui* imgui);
     void renderImgui();
-    void framerate();
-
-    void drawObjects();
-    void moveObjects();
 
     void terminate();
     void resolveCollisions();

@@ -34,6 +34,8 @@
 namespace Game {
     void processInput(GLFWwindow* window);
 
+    void ImGui();
+
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
 
@@ -64,8 +66,8 @@ float x = 0;
 float y = 0;
 
     void Start() {
-       // std::cout << Engine::Init();
-        std::cout<<"AAAAAAAAAAAAAA";
+        std::cout << Engine::Init();
+
 
         ALCdevice *device;
 
@@ -131,14 +133,15 @@ float y = 0;
 //        parser.SaveJSON(pointLight.ParseToJSON(), "pointLight");
 
 
-//        while (!glfwWindowShouldClose(window)) {
-//             Update();
-//        }
+        while (!glfwWindowShouldClose(window)) {
+             Update();
+        }
     }
 
     void Update() {
 
-        //Engine::LoopStart();
+        Engine::LoopStart();
+        ImGui();
         x -= 0.3;
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
@@ -179,11 +182,11 @@ float y = 0;
             std::cout << "Gamepad 2 A button just got pressed." << std::endl;
         }
 
-        //movingObject.Move();
+        movingObject.Move();
         //player1.Draw(shader);
         //floor.Draw(shader);
-       // movingObject.Draw();
-      //  walls.Draw();
+        movingObject.Draw();
+        walls.Draw();
         //box.Draw(shader);
 
 
@@ -223,10 +226,38 @@ float y = 0;
         shader.setMat4("projectionView", projection * view);
         camera.followObject(movingObject);
 
-       // Engine::resolveCollisions();
-       // Engine::LoopEnd();
+        Engine::resolveCollisions();
+        Engine::LoopEnd();
 
     }
+
+    void ImGui() {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        {
+            //player1.ImGui();
+//            camera.ImGui();
+//            pointLight.ImGui();
+//            spotLight.ImGui();
+//            dirLight.ImGui();
+//
+//            movingObject.ImGui();
+//
+////            floor.ImGui("Floor");
+////            box.ImGui("Box");
+//
+//            hitbox1.ImGui("Player hitbox");
+//            floor.ImGui("Floor hitbox");
+//            hud.ImGui();
+//            hud.imguiText();
+            Engine::renderImgui();
+            Engine::ImGui();
+
+        }
+        ImGui::Render();
+    }
+
 
     void processInput(GLFWwindow* window)
     {
