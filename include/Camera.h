@@ -8,6 +8,10 @@
 #include <vector>
 
 
+const int SCR_WIDTH = 1000;
+const int SCR_HEIGHT = 800;
+
+
 enum Camera_Movement {
     FORWARD,
     BACKWARD,
@@ -23,6 +27,10 @@ const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 bool isBlocked = false;
 bool isFound = false;
+
+
+//glm::mat4 viewProjection = projection * view;
+
 bool CalculateLook = false;
 glm::vec3 pozycjaO;
 
@@ -34,9 +42,10 @@ class vec3;
 class vec3;
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
-class Camera
+class Camera : public IGui
 {
 public:
+    glm::mat4 viewProjection = projection * view;
     // camera Attributes
     glm::vec3 Position;
     glm::vec3 Front;
@@ -52,6 +61,9 @@ public:
     float MouseSensitivity;
     float Zoom;
 
+    glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 projection = glm::mat4(1.0f);
+
     // constructor with vectors
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
@@ -59,6 +71,8 @@ public:
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
+
+
         updateCameraVectors();
     }
     // constructor with scalar values
@@ -73,7 +87,7 @@ public:
     }
 
 
-    void ImGui(){
+     void ImGui(){
 
         ImGui::Begin("Camera");
         ImGui::SetWindowSize(ImVec2(300, 400));
@@ -92,6 +106,11 @@ public:
         ImGui::Checkbox("Follow object / reset kamery", &isFound);
 
         ImGui::End();
+    }
+
+
+    glm::mat4 getViewProjection(){
+        return projection * view;
     }
 
     glm::mat4 getView(MovingObject movingObject){
@@ -154,7 +173,10 @@ private:
         // also re-calculate the Right and Up vector
         Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
         Up = glm::normalize(glm::cross(Right, Front));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -22.0f));
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     }
+
 
 
 };

@@ -108,15 +108,7 @@ float y = 0;
         movingObject.setShader(&shader);
         walls.setShader(&shader);
 
-        // View and projection matricies
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 projection = glm::mat4(1.0f);
-
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -22.0f));
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
-        glm::mat4 viewProjection = projection * view;
-        shader.setMat4("projectionView", viewProjection);
+        shader.setMat4("projectionView", camera.viewProjection);
 
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
@@ -143,20 +135,6 @@ float y = 0;
         Engine::LoopStart();
         ImGui();
         x -= 0.3;
-        GLfloat currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-
-        float time = static_cast<float>(glfwGetTime());
-        hud.renderImage(x);
-//        hud.renderText();
-        hud.renderAnimation(time);
-        hud.renderConstant();
-        hud.renderText("jd",250,250,2,glm::vec3(1, 0.1f, 1));
-        //glm::vec3 color = {0.5,0.1,0.5};
-        //hud.renderText("01B",-30,-20,0.4,color);
-//        hud.renderText("012345aB", 25.0f, 500.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-
 
 
         inputSystem.update();
@@ -262,13 +240,13 @@ float y = 0;
     void processInput(GLFWwindow* window)
     {
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            camera.ProcessKeyboard(FORWARD, deltaTime);
+            camera.ProcessKeyboard(FORWARD, Engine::deltaTime);
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            camera.ProcessKeyboard(BACKWARD, deltaTime);
+            camera.ProcessKeyboard(BACKWARD, Engine::deltaTime);
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            camera.ProcessKeyboard(LEFT, deltaTime);
+            camera.ProcessKeyboard(LEFT, Engine::deltaTime);
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            camera.ProcessKeyboard(RIGHT, deltaTime);
+            camera.ProcessKeyboard(RIGHT, Engine::deltaTime);
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
             camera.Position.y += 0.05;
         if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
