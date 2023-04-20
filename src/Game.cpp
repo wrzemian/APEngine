@@ -78,7 +78,7 @@ float y = 0;
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_SPACE);
 
-        hud.initImage("res/textures/tlo.png");
+//        hud.initImage("res/textures/tlo.png");
         hud.initAnimation();
         hud.initText("res/fonts/Arialn.ttf");
 //        floor.loadModel("../../res/models/first box/skrzynia.obj");
