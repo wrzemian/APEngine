@@ -37,6 +37,8 @@ public:
 
     virtual void SendToShader(Shader shader, std::string type);
 
+    void ImGui();
+
     rapidjson::Document ParseToJSON();
 
 };

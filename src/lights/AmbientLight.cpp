@@ -3,6 +3,7 @@
 //
 
 #include "../../include/lights/AmbientLight.h"
+#include "imgui.h"
 
 AmbientLight::AmbientLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular) : ambient(ambient),
                                                                                               diffuse(diffuse),
@@ -59,6 +60,16 @@ rapidjson::Document AmbientLight::ParseToJSON() {
     d.AddMember("specularZ", specular.z, d.GetAllocator());
 
     return d;
+}
+
+void AmbientLight::ImGui() {
+    ImGui::Begin("AL (i dont want it here)");
+    ImGui::SetWindowSize(ImVec2(250, 300));
+
+    ImGui::SliderFloat3("ambient", &ambient.x, -1.0f, 1.0f);
+    ImGui::SliderFloat3("diffuse", &diffuse.x, -1.0f, 1.0f);
+    ImGui::SliderFloat3("specular", &specular.x, -1.0f, 1.0f);
+    ImGui::End();
 }
 
 
