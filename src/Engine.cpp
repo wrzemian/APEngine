@@ -76,6 +76,9 @@ namespace Engine {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_LIGHT0);
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+
+
+
     }
 
     void resolveCollisions() {
@@ -87,9 +90,23 @@ namespace Engine {
     }
 
     void LoopEnd() {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        {
+            ImGui::Begin("Engine");
+            ImGui::SetWindowSize(ImVec2(200, 100));
+            //spdlog::info("deltaTime: ", Engine::deltaTime);
+
+            ImGui::Text("deltaTime: %f", Engine::deltaTime);
+            ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
+
+            ImGui::End();
+        }
+        ImGui::Render();
+
         std::cout<<"imgui przed \n";
        // TODO: uncomment
-       //  ImGui();
         std::cout<<"imgui po \n";
         moveObjects();
         resolveCollisions();
@@ -102,6 +119,7 @@ namespace Engine {
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+
     }
 
     void moveObjects() {
