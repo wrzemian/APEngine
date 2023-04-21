@@ -20,6 +20,8 @@ enum Axis {
 public:
     Hitbox();
 
+    virtual ~Hitbox();
+
     bool draw = true;
     Object3D* _object{};
     glm::vec3* _position{};

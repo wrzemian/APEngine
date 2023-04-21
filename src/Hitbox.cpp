@@ -11,8 +11,6 @@
 void Hitbox::Create(Object3D* object, glm::vec3 offset) {
     _object = object;
     _position = &object->_transform._position;
-    _min = glm::vec3(-1, -1, -1);
-    _max = glm::vec3(1, 1, 1);
     _offset = offset;
     _color = glm::vec3(1,1,0);
 
@@ -89,9 +87,16 @@ bool Hitbox::TestForIntersection(Hitbox &other) {
 }
 
 Hitbox::Hitbox() {
+    _min = glm::vec3(-1, -1, -1);
+    _max = glm::vec3(1, 1, 1);
+
     IGui::setWindowName("hitbox");
     Engine::addHitbox(this);
     //Engine::addImgui(this);
+}
+
+Hitbox::~Hitbox() {
+
 }
 
 

@@ -19,6 +19,7 @@
 #include "../include/Hitbox.h"
 #include "../include/InputSystem.h"
 #include "../include/HUD.h"
+#include "../include/Walls.h"
 
 #include "spdlog/spdlog.h"
 
@@ -37,7 +38,7 @@ namespace Game {
     Shader shader;
 
     MovingObject movingObject;
-    Object3D wagon;
+    Walls wagon;
 
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
     GLfloat deltaTime = 0.0f;
@@ -65,9 +66,10 @@ namespace Game {
         movingObject.loadModel("../../res/models/first_character/first character.obj");
 
         wagon.loadModel("../../res/models/1level/1level.obj");
-        for(auto m: wagon._model.meshes) {
-            spdlog::info("loaded mesh with {} vertices", m.vertices.size());
-        }
+        wagon.calculateHitboxes();
+//        for(auto m: wagon._model.meshes) {
+//            spdlog::info("loaded mesh with {} vertices", m.vertices.size());
+//        }
 
         // build and compile our shader program
         // ------------------------------------

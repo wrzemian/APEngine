@@ -1,0 +1,25 @@
+//
+// Created by micha on 21.04.2023.
+//
+
+#pragma once
+#include "../include/Mesh.h"
+#include "../include/Object3D.h"
+#include "../include/Model.h"
+#include "../include/Hitbox.h"
+#include <memory>
+
+#include <vector>
+
+class Walls : public Object3D {
+
+public:
+    //std::vector<std::unique_ptr<Hitbox>> hitboxes;
+    //std::vector<Hitbox*> hitboxes;
+
+    void calculateHitboxes();
+
+    void ImGui() override;
+};
+
+

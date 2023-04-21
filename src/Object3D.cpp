@@ -6,9 +6,6 @@
 #include "../include/Transform.h"
 #include "../include/Engine.h"
 
-#include "imgui_impl/imgui_impl_glfw.h"
-#include "imgui_impl/imgui_impl_opengl3.h"
-
 Object3D::Object3D() {
     _transform = Transform();
 //    windowName = fmt::format("Object3D #{}", Engine::getImguiIndex());
