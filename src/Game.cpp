@@ -47,7 +47,7 @@ namespace Game {
 //    Object3D box;
     MovingObject movingObject;
 
-    Object3D walls;
+//    Object3D walls;
     Object3D wagon;
 
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
@@ -60,8 +60,8 @@ namespace Game {
 
     InputSystem inputSystem;
 
-    Hitbox hitbox1;
-    Hitbox floor;
+//    Hitbox hitbox1;
+//    Hitbox floor;
     //DebugShape debugShape;
 float x = 0;
 float y = 0;
@@ -87,19 +87,21 @@ float y = 0;
 //        box.loadModel("../../res/models/second box/skrzynia2.obj");
 
         movingObject.loadModel("../../res/models/first_character/first character.obj");
-        movingObject._transform._scale = glm::vec3(0.2f);
-        walls.loadModel("../../res/models/walls/walls.obj");
+//        movingObject._transform._scale = glm::vec3(0.2f);
+//        walls.loadModel("../../res/models/walls/walls.obj");
         wagon.loadModel("../../res/models/1level/1level.obj");
+        for(auto m: wagon._model.meshes) {
+            spdlog::info("loaded mesh with {} vertices", m.vertices.size());
+        }
+//        hitbox1.Create(&movingObject, glm::vec3(1,3,2));
+//        hitbox1._min = glm::vec3(-1, -1, -1);
+//        hitbox1._max = glm::vec3(1, 1, 1);
 
-        hitbox1.Create(&movingObject, glm::vec3(1,3,2));
-        hitbox1._min = glm::vec3(-1, -1, -1);
-        hitbox1._max = glm::vec3(1, 1, 1);
-
-        Object3D f;
-        floor.Create(&f);
-        floor._min = glm::vec3(-20, -5, -20);
-        floor._max = glm::vec3(20, 0, 20);
-        floor._color = glm::vec3(1,1,0);
+//        Object3D f;
+//        floor.Create(&f);
+//        floor._min = glm::vec3(-20, -5, -20);
+//        floor._max = glm::vec3(20, 0, 20);
+//        floor._color = glm::vec3(1,1,0);
 
         // build and compile our shader program
         // ------------------------------------
@@ -108,7 +110,7 @@ float y = 0;
         shader.use();
 
         movingObject.setShader(&shader);
-        walls.setShader(&shader);
+//        walls.setShader(&shader);
         wagon.setShader(&shader);
 
         shader.setMat4("projectionView", camera.viewProjection);
@@ -123,7 +125,7 @@ float y = 0;
         pointLight = parser.CreateFromJSONPoint("pointLight");
 
 
-        //parser.SaveJSON(dirLight.ParseToJSON(), "dirLight");
+        parser.SaveJSON(dirLight.ParseToJSON(), "dirLight");
 //        parser.SaveJSON(spotLight.ParseToJSON(), "spotLight");
 //        parser.SaveJSON(pointLight.ParseToJSON(), "pointLight");
 
@@ -168,11 +170,9 @@ float y = 0;
         //floor.Draw(shader);
         movingObject.Draw();
         wagon.Draw();
-        for(auto m: wagon._model.meshes) {
-                spdlog::info(m.vertices.size());
-        }
 
-        walls.Draw();
+
+//        walls.Draw();
         //box.Draw(shader);
 
 
@@ -202,8 +202,8 @@ float y = 0;
 
         glm:: mat4 view = camera.getView(movingObject);
 
-        hitbox1.Draw(projection*view);
-        floor.Draw(projection*view);
+//        hitbox1.Draw(projection*view);
+//        floor.Draw(projection*view);
 
         //hitbox1.TestForIntersection(floor);
 
