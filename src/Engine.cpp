@@ -13,6 +13,9 @@
 #include "../include/Engine.h"
 #include "../include/InputSystem.h"
 #include "../include/Hitbox.h"
+#include "../include/Object3D.h"
+#include "../include/MovingObject.h"
+
 
 
 namespace Engine {
@@ -27,6 +30,8 @@ namespace Engine {
 
     std::vector<Hitbox*> allHitboxes;
     std::vector<IGui*> allImgui;
+    std::vector<Object3D*> allObjects;
+    std::vector<MovingObject*> allMovingObjects;
 
     int Init() {
         if (initGLandImGui() == -1) {
@@ -55,12 +60,40 @@ namespace Engine {
         std::erase(allImgui, igui);
     }
 
-    int getHitboxIndex() {
-        return allHitboxes.size();
+    void addMovingObject(MovingObject* object) {
+        spdlog::warn("moving object added, {}", object->windowName);
+        allMovingObjects.push_back(object);
+    }
+
+    void removeMovingObject(MovingObject* object) {
+        spdlog::warn("removing moving object");
+        std::erase(allMovingObjects, object);
+    }
+
+    void addObject(Object3D* object) {
+        spdlog::warn("object added, {}", object->windowName);
+        allObjects.push_back(object);
+    }
+
+    void removeObject(Object3D* object) {
+        spdlog::warn("moving object");
+        std::erase(allObjects, object);
     }
 
     int getImguiIndex() {
         return allImgui.size();
+    }
+
+    void moveObjects(){
+        for(MovingObject* object: allMovingObjects) {
+            object->Move();
+        }
+    }
+
+    void drawObjects() {
+        for(Object3D* object: allObjects) {
+            object->Draw();
+        }
     }
 
     void ImGui() {

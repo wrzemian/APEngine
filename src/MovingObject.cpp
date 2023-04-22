@@ -11,11 +11,11 @@ MovingObject::MovingObject() {
     //windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
     IGui::setWindowName("moving object");
 
-    //Engine::addImgui(this);
+    Engine::addMovingObject(this);
 }
 
 MovingObject::~MovingObject() {
-
+    Engine::removeMovingObject(this);
 }
 
 void MovingObject::SetVelocity(glm::vec3 velocity) {

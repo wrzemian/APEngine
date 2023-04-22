@@ -12,6 +12,7 @@ class Object3D : public IGui {
 
 public:
     Object3D();
+
     virtual ~Object3D();
 
     Shader* _shader;

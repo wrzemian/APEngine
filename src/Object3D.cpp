@@ -11,10 +11,8 @@ Object3D::Object3D() {
 //    windowName = fmt::format("Object3D #{}", Engine::getImguiIndex());
 //    spdlog::warn("Object3d window name = {}", windowName);
 //
-//    Engine::addImgui(this);
+    Engine::addObject(this);
 }
-
-Object3D::~Object3D() = default;
 
 void Object3D::Draw() {
     //shader.use();
@@ -66,4 +64,8 @@ void Object3D::onCollision(Object3D *other) {
 
 void Object3D::setShader(Shader *shader) {
     _shader = shader;
+}
+
+Object3D::~Object3D() {
+    Engine::removeObject(this);
 }

@@ -111,10 +111,14 @@ namespace Game {
 
 
 
-        movingObject.Move();
+        //movingObject.Move();
 
-        movingObject.Draw();
-        wagon.Draw();
+        Engine::moveObjects();
+        Engine::drawObjects();
+
+
+        //movingObject.Draw();
+        //wagon.Draw();
 
         //box.Draw(shader);
 
