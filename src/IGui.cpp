@@ -11,3 +11,8 @@ IGui::IGui() {
     windowName = std::to_string(Engine::getImguiIndex());
 
 }
+
+IGui::~IGui() {
+    Engine::removeImgui(this);
+
+}

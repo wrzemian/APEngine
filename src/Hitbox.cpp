@@ -21,6 +21,8 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     if(!draw) {
         return;
     }
+    //spdlog::info("drawing hitbox {}", windowName);
+
     debugShape.shader.use();
     debugShape.shader.setVec3("offset", _offset);
     debugShape.shader.setVec3("color", _color);
@@ -66,6 +68,7 @@ void Hitbox::ImGui()  {
 }
 
 bool Hitbox::TestForIntersection(Hitbox &other) {
+    //spdlog::info("1st hitbox: ({}, {}) ({}, {})");
     bool intersects = _position->x + _offset.x + _min.x <= other._position->x + other._offset.x + other._max.x &&
                       _position->x + _offset.x + _max.x >= other._position->x + other._offset.x + other._min.x &&
                       _position->y + _offset.y + _min.y <= other._position->y + other._offset.y + other._max.y &&
@@ -96,7 +99,7 @@ Hitbox::Hitbox() {
 }
 
 Hitbox::~Hitbox() {
-
+    Engine::removeHitbox(this);
 }
 
 

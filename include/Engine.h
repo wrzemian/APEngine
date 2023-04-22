@@ -29,6 +29,11 @@ namespace Engine {
 
     void addHitbox(Hitbox* hitbox);
     void addImgui(IGui* imgui);
+
+    void removeHitbox(Hitbox* hitbox);
+    void removeImgui(IGui* igui);
+
+    void renderHitboxes(const glm::mat4& projectionView);
     void renderImgui();
 
     void terminate();

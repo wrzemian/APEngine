@@ -67,6 +67,7 @@ namespace Game {
 
         wagon.loadModel("../../res/models/1level/1level.obj");
         wagon.calculateHitboxes();
+        wagon.logHitboxes();
 //        for(auto m: wagon._model.meshes) {
 //            spdlog::info("loaded mesh with {} vertices", m.vertices.size());
 //        }
@@ -91,6 +92,11 @@ namespace Game {
         spotLight = parser.CreateFromJSONSpot("spotLight");
         pointLight = parser.CreateFromJSONPoint("pointLight");
 
+        spdlog::info("ImGui");
+        ImGui();
+        spdlog::info("ResolveCollisions");
+        Engine::resolveCollisions();
+        spdlog::info("loop");
 
         while (!glfwWindowShouldClose(Engine::getWindow())) {
              Update();
@@ -137,6 +143,9 @@ namespace Game {
 
         shader.use();
         shader.setMat4("projectionView", projection * view);
+
+        Engine::renderHitboxes(projection * view);
+
         camera.followObject(movingObject);
 
         Engine::resolveCollisions();

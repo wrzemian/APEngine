@@ -113,7 +113,7 @@ public:
         return projection * view;
     }
 
-    glm::mat4 getView(MovingObject movingObject){
+    glm::mat4 getView(MovingObject& movingObject){
         if(isBlocked){
 
             return glm::lookAt(glm::vec3(Position.x, Position.y, Position.z),
@@ -129,7 +129,7 @@ public:
 
 
 
-    void followObject(MovingObject kostka){
+    void followObject(MovingObject& kostka){
         if(isFound){
             Position.x = kostka._transform._position.x;
             Position.y = kostka._transform._position.y + 5;

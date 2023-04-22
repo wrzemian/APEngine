@@ -14,6 +14,8 @@ class IGui {
 public:
     IGui();
 
+    virtual ~IGui();
+
     void setWindowName(std::string name) {
         windowName = name + " #" + windowName;
         spdlog::info("set window name to: {}", windowName);

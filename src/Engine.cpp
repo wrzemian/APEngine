@@ -36,13 +36,23 @@ namespace Engine {
     }
 
     void addHitbox(Hitbox* hitbox) {
-        spdlog::info("Hitbox added");
+        spdlog::warn("Hitbox added");
         allHitboxes.push_back(hitbox);
     }
 
     void addImgui(IGui* imgui) {
-        spdlog::info("imgui object added, {}", imgui->windowName);
+        spdlog::warn("imgui object added, {}", imgui->windowName);
         allImgui.push_back(imgui);
+    }
+
+    void removeHitbox(Hitbox* hitbox) {
+        spdlog::error("removing hitbox");
+        std::erase(allHitboxes, hitbox);
+    }
+
+    void removeImgui(IGui* igui) {
+        spdlog::error("removing igui, windowName = {}", igui->windowName);
+        std::erase(allImgui, igui);
     }
 
     int getHitboxIndex() {
@@ -96,7 +106,14 @@ namespace Engine {
         }
     }
 
+    void renderHitboxes(const glm::mat4& projectionView) {
+        for(Hitbox* hitbox: allHitboxes) {
+            hitbox->Draw(projectionView);
+        }
+    }
+
     void resolveCollisions() {
+
         for(size_t i=0; i<allHitboxes.size(); i++) {
             for (size_t j = i+1; j < allHitboxes.size(); j++) {
                 allHitboxes.at(i)->TestForIntersection(*allHitboxes.at(j));
