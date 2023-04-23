@@ -16,6 +16,9 @@ void Walls::calculateHitboxes() {
         float minY = mesh.vertices.at(0).Position.y;
         float maxY = mesh.vertices.at(0).Position.y;
 
+        float minZ = mesh.vertices.at(0).Position.z;
+        float maxZ = mesh.vertices.at(0).Position.z;
+
         for(auto vertex: mesh.vertices) {
             if(vertex.Position.x > maxX) {
                 maxX = vertex.Position.x;
@@ -30,18 +33,29 @@ void Walls::calculateHitboxes() {
             if(vertex.Position.y < minY) {
                 minY = vertex.Position.y;
             }
+
+            if(vertex.Position.z > maxZ) {
+                maxZ = vertex.Position.z;
+            }
+            if(vertex.Position.z < minZ) {
+                minZ = vertex.Position.z;
+            }
         }
 
 //        std::unique_ptr<Hitbox> hitbox = std::make_unique<Hitbox>();
  //      Hitbox hitbox; //TODO: create hitbox and save it to list
         Hitbox* hitbox = new Hitbox();
         hitbox->Create(this);
-        hitbox->_min.x = minX;
-        hitbox->_max.x = maxX;
-        hitbox->_min.y = minY;
-        hitbox->_max.y = maxY;
 
-        spdlog::info("Hitbox from ({}, {}) to ({}, {})", minX, minY, maxX, maxY);
+        hitbox->_min.x = minX;
+        hitbox->_min.y = minY;
+        hitbox->_min.z = minZ;
+
+        hitbox->_max.x = maxX;
+        hitbox->_max.y = maxY;
+        hitbox->_max.z = maxZ;
+
+        spdlog::info("Hitbox from ({}, {}, {}) to ({}, {}, {})", minX, minY, minZ, maxX, maxY, maxZ);
 
         hitboxes.push_back(hitbox);
     }
