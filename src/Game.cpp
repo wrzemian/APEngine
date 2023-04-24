@@ -86,11 +86,10 @@ namespace Game {
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
 
-        Parser parser("../../res/jsons");
 
-        dirLight = parser.CreateFromJSONDir("dirLight");
-        spotLight = parser.CreateFromJSONSpot("spotLight");
-        pointLight = parser.CreateFromJSONPoint("pointLight");
+        dirLight = Engine::parser.CreateFromJSONDir("dirLight");
+        spotLight = Engine::parser.CreateFromJSONSpot("spotLight");
+        pointLight = Engine::parser.CreateFromJSONPoint("pointLight");
 
         spdlog::info("ImGui");
         ImGui();

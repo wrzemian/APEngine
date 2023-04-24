@@ -5,6 +5,7 @@
 #include "../../include/lights/DirectionalLight.h"
 #include "imgui_impl/imgui_impl_glfw.h"
 
+
 DirectionalLight::DirectionalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
                                    const glm::vec3 &direction) : AmbientLight(ambient, diffuse, specular),
                                                                  direction(direction) {}
@@ -50,6 +51,10 @@ void DirectionalLight::ImGui() {
     ImGui::SliderFloat3("diffuse", &diffuse.x, -1.0f, 1.0f);
     ImGui::SliderFloat3("specular", &specular.x, -1.0f, 1.0f);
     ImGui::SliderFloat3("direction", &direction.x, -1.0f, 1.0f);
+
+//    if (ImGui::Button("SAVE")) {
+//        Engine::parser.SaveJSON(this->ParseToJSON(), "dirLight");
+//    }
 
     ImGui::End();
 }

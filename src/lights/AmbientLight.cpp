@@ -69,6 +69,7 @@ void AmbientLight::ImGui() {
     ImGui::SliderFloat3("ambient", &ambient.x, -1.0f, 1.0f);
     ImGui::SliderFloat3("diffuse", &diffuse.x, -1.0f, 1.0f);
     ImGui::SliderFloat3("specular", &specular.x, -1.0f, 1.0f);
+
     ImGui::End();
 }
 

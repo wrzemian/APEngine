@@ -10,6 +10,7 @@
 #include "../Shader.h"
 #include "document.h"
 #include "../IGui.h"
+
 class AmbientLight : public IGui {
 protected:
     glm::vec3 ambient;

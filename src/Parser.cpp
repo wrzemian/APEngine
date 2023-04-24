@@ -12,6 +12,8 @@ Parser::Parser(std::string savePath) {
 this->savePath = savePath;
 }
 
+Parser::Parser() {}
+
 void Parser::SaveJSON(rapidjson::Document d, std::string fileName) {
     std::stringstream fullPath;
     fullPath << savePath << "/" << fileName << ".json";
