@@ -5,6 +5,7 @@
 #include "../../include/lights/PointLight.h"
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
+#include "../include/Engine.h"
 
 PointLight::PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
                        const glm::vec3 &position, float constant, float linear, float quadratic) : AmbientLight(ambient,
@@ -89,6 +90,10 @@ void PointLight::ImGui() {
     ImGui::SliderFloat("constant", &constant, -1.0f, 1.0f);
     ImGui::SliderFloat("linear", &linear, -1.0f, 1.0f);
     ImGui::SliderFloat("quadratic", &quadratic, -1.0f, 1.0f);
+
+    if (ImGui::Button("SAVE")) {
+        Engine::parser.SaveJSON(this->ParseToJSON(), "pointLight");
+    }
     ImGui::End();
 }
 

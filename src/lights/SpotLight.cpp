@@ -5,6 +5,7 @@
 #include "../../include/lights/SpotLight.h"
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
+#include "../../include/Engine.h"
 
 SpotLight::SpotLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
                      const glm::vec3 &position, float constant, float linear, float quadratic,
@@ -101,6 +102,10 @@ void SpotLight::ImGui() {
     ImGui::SliderFloat3("direction", &direction.x, -1.0f, 1.0f);
     ImGui::SliderFloat("cutOff", &cutOff, -1.0f, 1.0f);
     ImGui::SliderFloat("outerCutOff", &outerCutOff, -1.0f, 1.0f);
+
+    if (ImGui::Button("SAVE")) {
+        Engine::parser.SaveJSON(this->ParseToJSON(), "spotLight");
+    }
     ImGui::End();
 }
 

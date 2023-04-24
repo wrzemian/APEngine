@@ -7,7 +7,7 @@
 
 #include "AmbientLight.h"
 #include "../IGui.h"
-#include "../Engine.h"
+
 
 class DirectionalLight : public AmbientLight{
 protected:
