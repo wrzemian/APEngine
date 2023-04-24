@@ -7,14 +7,16 @@
 
 #include <iostream>
 #include "glad/glad.h"
+#include "Shader.h"
 
-class Animation {
+class Animation{
 public:
+    Animation();
     void initAnimation();
 
     void renderAnimation(float time);
 private:
-    GLuint animationShaderProgram;
+   GLuint animationShaderProgram;
     GLuint animationVAO, animationVBO, animationTexture;
     float animationTime;
 

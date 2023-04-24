@@ -13,7 +13,7 @@ private:
 
 
 public:
-    void initAnimation();
+    void initConstant();
     void renderConstant();
 
 };

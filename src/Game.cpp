@@ -18,15 +18,16 @@
 #include "../include/Parser.h"
 #include "../include/Hitbox.h"
 #include "../include/InputSystem.h"
-#include "../include/HUD.h"
+//#include "../include/HUD.h"
 
 #include "spdlog/spdlog.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
+//#include <ft2build.h>
+//#include FT_FREETYPE_H
 
 #include "al.h"
 #include "alc.h"
+#include "../include/Animation.h"
 
 //void processInput(GLFWwindow* window);
 
@@ -35,12 +36,12 @@ namespace Game {
     void processInput(GLFWwindow* window);
 
     void ImGui();
-
+    Animation animation;
     const int SCR_WIDTH = 1000;
     const int SCR_HEIGHT = 800;
 
     GLFWwindow* window;
-    HUD hud;
+//    HUD hud;
     Shader shader;
 
 //    Object3D floor;
@@ -75,9 +76,10 @@ float y = 0;
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_SPACE);
+        animation.initAnimation();
 
-        hud.initImage("res/textures/tlo.png");
-        hud.initAnimation();
+//        hud.initImage("res/textures/tlo.png");
+//        hud.initAnimation();
 //        hud.initText("res/fonts/Arialn.ttf");
 //        floor.loadModel("../../res/models/first box/skrzynia.obj");
 //        floor._transform._scale = glm::vec3(50, 1, 50);
@@ -99,6 +101,7 @@ float y = 0;
         Shader temp("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         shader = temp;
         shader.use();
+
 
 
         // View and projection matricies
@@ -133,6 +136,7 @@ float y = 0;
 
     void Update() {
 
+
         Engine::LoopStart();
         ImGui();
         x -= 0.3;
@@ -141,6 +145,7 @@ float y = 0;
         lastFrame = currentFrame;
 
         float time = static_cast<float>(glfwGetTime());
+        animation.renderAnimation(time);
 //        hud.renderImage(x);
 //        hud.renderText();
 //        hud.renderAnimation(time);
@@ -225,8 +230,8 @@ float y = 0;
 
             hitbox1.ImGui("Player hitbox");
             floor.ImGui("Floor hitbox");
-            hud.ImGui();
-            hud.imguiText();
+//            hud.ImGui();
+//            hud.imguiText();
 
             Engine::ImGui();
 
