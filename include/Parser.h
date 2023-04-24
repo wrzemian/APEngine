@@ -17,6 +17,8 @@ private:
 public:
     Parser(std::string savePath);
 
+    Parser();
+
     void SaveJSON(rapidjson::Document d, std::string fileName);
 
     DirectionalLight CreateFromJSONDir(std::string fileName);

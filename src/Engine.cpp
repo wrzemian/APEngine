@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "../include/Engine.h"
+
 #include "../include/InputSystem.h"
 #include "../include/Hitbox.h"
 #include "../include/Object3D.h"
@@ -20,6 +21,8 @@
 
 namespace Engine {
     GLFWwindow* window;
+
+    Parser parser("../../res/jsons");
 
     float frameEnd = 0;
     float frameStart = 0;
@@ -37,6 +40,7 @@ namespace Engine {
         if (initGLandImGui() == -1) {
             return -1;
         }
+
         return 0;
     }
 

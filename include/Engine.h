@@ -17,10 +17,12 @@
 #include "Hitbox.h"
 #include "MovingObject.h"
 #include "Object3D.h"
+#include "Parser.h"
 
 
 namespace Engine {
     extern float deltaTime;
+    extern Parser parser;
 
     void ImGui();
     int Init();
