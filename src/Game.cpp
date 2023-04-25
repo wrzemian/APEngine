@@ -28,15 +28,13 @@
 
 #include "al.h"
 #include "alc.h"
-#include "../include/Animation.h"
 
 namespace Game {
     void processInput(GLFWwindow* window);
 
     void ImGui();
 
-//    HUD hud;
-
+    HUD hud;
     Shader shader;
 
     MovingObject movingObject;
@@ -53,9 +51,6 @@ namespace Game {
     InputSystem inputSystem;
 
 
-
-
-
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
@@ -66,14 +61,8 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_SPACE);
 
-
-//        hud.initText("res/fonts/Arialn.ttf");
-
-
-
-//        animation.initAnimation();
-
-
+        hud.initAnimation();
+        hud.initText("res/fonts/Arialn.ttf");
         movingObject.loadModel("../../res/models/first_character/first character.obj");
 
         wagon.loadModel("../../res/models/1level/1level.obj");
@@ -85,17 +74,9 @@ namespace Game {
 
         // build and compile our shader program
         // ------------------------------------
-
-
-
-
         Shader temp("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         shader = temp;
         shader.use();
-
-        Shader animationShader("../../res/shaders/animationsShader.vert", "../../res/shaders/animationsShader.frag");
-        Animation animation(animationShader);
-
 
         movingObject.setShader(&shader);
         wagon.setShader(&shader);
@@ -104,8 +85,6 @@ namespace Game {
 
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
-
-
 
 
         dirLight = Engine::parser.CreateFromJSONDir("dirLight");
@@ -167,8 +146,6 @@ namespace Game {
 
         shader.use();
         shader.setMat4("projectionView", projection * view);
-
-//        animation.renderAnimation(Engine::deltaTime);
 
         Engine::renderHitboxes(projection * view);
 
