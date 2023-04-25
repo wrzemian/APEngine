@@ -4,6 +4,7 @@
 ### Added
 - player2 as movableObject
 - control over players by inputSystem
+- rendering lights form engine
 
 ## [0.0.11] - 2023-04-17
 ### Added

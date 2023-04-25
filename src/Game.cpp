@@ -147,9 +147,8 @@ namespace Game {
         //from camera
         shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
 
-        dirLight.SendToShader(shader, "dirLight");
-        spotLight.SendToShader(shader, "spotLight");
-        pointLight.SendToShader(shader, "pointLight");
+        Engine::renderLights(shader);
+
 
 
 
