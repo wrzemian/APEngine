@@ -1,7 +1,3 @@
-//
-// Created by wrzos on 28.03.2023.
-//
-
 #include "../../include/lights/SpotLight.h"
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
@@ -15,10 +11,16 @@ SpotLight::SpotLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const g
                                                                                                quadratic),
                                                                                     direction(direction),
                                                                                     cutOff(cutOff),
-                                                                                    outerCutOff(outerCutOff) {}
+                                                                                    outerCutOff(outerCutOff) {
+    Engine::addSpotLight(this);
+}
+
+SpotLight::SpotLight() {
+    Engine::addSpotLight(this);
+}
 
 SpotLight::~SpotLight() {
-
+    Engine::removeSpotLight(this);
 }
 
 const glm::vec3 &SpotLight::getDirection() const {
@@ -40,9 +42,7 @@ void SpotLight::SendToShader(Shader shader, std::string type) {
     shader.setFloat(type + ".outerCutOff", outerCutOff);
 }
 
-SpotLight::SpotLight() {
 
-}
 
 float SpotLight::getCutOff() const {
     return cutOff;
@@ -137,5 +137,3 @@ rapidjson::Document SpotLight::ParseToJSON() {
 
     return d;
 }
-
-

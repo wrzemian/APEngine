@@ -30,19 +30,23 @@
 #include "alc.h"
 
 namespace Game {
-    void processInput(GLFWwindow* window);
+    void processInput();
 
     void ImGui();
 
     HUD hud;
     Shader shader;
 
-    MovingObject movingObject;
+    MovingObject player1;
+    MovingObject player2;
     Walls wagon;
 
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
     GLfloat deltaTime = 0.0f;
     GLfloat lastFrame = 0.0f;
+
+    GLfloat movementSpeed = 1.0f;
+
 
     DirectionalLight dirLight;
     SpotLight spotLight;
@@ -58,12 +62,23 @@ namespace Game {
         device = alcOpenDevice(NULL);
 
         inputSystem.InputInit();
+        inputSystem.monitorKey(GLFW_KEY_W);
         inputSystem.monitorKey(GLFW_KEY_A);
+        inputSystem.monitorKey(GLFW_KEY_S);
+        inputSystem.monitorKey(GLFW_KEY_D);
+        inputSystem.monitorKey(GLFW_KEY_UP);
+        inputSystem.monitorKey(GLFW_KEY_LEFT);
+        inputSystem.monitorKey(GLFW_KEY_RIGHT);
+        inputSystem.monitorKey(GLFW_KEY_DOWN);
         inputSystem.monitorKey(GLFW_KEY_SPACE);
+        inputSystem.monitorKey(GLFW_KEY_KP_1);
+
 
         hud.initAnimation();
+        //hud.initImage("res/textures/tlo.png");
         hud.initText("res/fonts/Arialn.ttf");
-        movingObject.loadModel("../../res/models/first_character/first character.obj");
+        player1.loadModel("../../res/models/first_character/first character.obj");
+        player2.loadModel("../../res/models/second_character/second character.obj");
 
         wagon.loadModel("../../res/models/1level/1level.obj");
         wagon.calculateHitboxes();
@@ -78,7 +93,8 @@ namespace Game {
         shader = temp;
         shader.use();
 
-        movingObject.setShader(&shader);
+        player1.setShader(&shader);
+        player2.setShader(&shader);
         wagon.setShader(&shader);
 
         shader.setMat4("projectionView", camera.viewProjection);
@@ -98,7 +114,7 @@ namespace Game {
         spdlog::info("loop");
 
         while (!glfwWindowShouldClose(Engine::getWindow())) {
-             Update();
+            Update();
         }
     }
 
@@ -107,16 +123,18 @@ namespace Game {
         ImGui();
 
         inputSystem.update();
+        processInput();
 
-
-
-        //movingObject.Move();
+        //player1.Move();
 
         Engine::moveObjects();
         Engine::drawObjects();
 
 
-        //movingObject.Draw();
+
+
+
+        //player1.Draw();
         //wagon.Draw();
 
         //box.Draw(shader);
@@ -129,14 +147,11 @@ namespace Game {
         //from camera
         shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
 
-        dirLight.SendToShader(shader, "dirLight");
-        spotLight.SendToShader(shader, "spotLight");
-        pointLight.SendToShader(shader, "pointLight");
+        Engine::renderLights(shader);
 
 
-        processInput(Engine::getWindow());
 
-        
+
 
 
         //camera
@@ -144,16 +159,19 @@ namespace Game {
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
-        glm:: mat4 view = camera.getView(movingObject);
+        glm:: mat4 view = camera.getView(player1);
 
         shader.use();
         shader.setMat4("projectionView", projection * view);
 
         Engine::renderHitboxes(projection * view);
 
-        camera.followObject(movingObject);
+        camera.followObject(player1);
 
         Engine::resolveCollisions();
+
+        hud.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
+
         Engine::LoopEnd();
 
     }
@@ -171,20 +189,31 @@ namespace Game {
     }
 
 
-    void processInput(GLFWwindow* window)
+    void processInput()
     {
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            camera.ProcessKeyboard(FORWARD, Engine::deltaTime);
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            camera.ProcessKeyboard(BACKWARD, Engine::deltaTime);
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            camera.ProcessKeyboard(LEFT, Engine::deltaTime);
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            camera.ProcessKeyboard(RIGHT, Engine::deltaTime);
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-            camera.Position.y += 0.05;
-        if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-            camera.Position.y -= 0.05;
+        if (inputSystem.GetKey(GLFW_KEY_W))
+            player1._transform._position.z += -movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_A))
+            player1._transform._position.x += -movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_S))
+            player1._transform._position.z += movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_D))
+            player1._transform._position.x += movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_SPACE))
+            player1.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
+        if (inputSystem.GetKey(GLFW_KEY_UP))
+            player2._transform._position.z += -movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_LEFT))
+            player2._transform._position.x += -movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_DOWN))
+            player2._transform._position.z += movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_RIGHT))
+            player2._transform._position.x += movementSpeed;
+        if (inputSystem.GetKey(GLFW_KEY_KP_1))
+            player2.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
+
+        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
+        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
     }
 
 };

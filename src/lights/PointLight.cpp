@@ -1,7 +1,3 @@
-//
-// Created by wrzos on 28.03.2023.
-//
-
 #include "../../include/lights/PointLight.h"
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
@@ -15,10 +11,16 @@ PointLight::PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const
                                                                                                    constant(constant),
                                                                                                    linear(linear),
                                                                                                    quadratic(
-                                                                                                           quadratic) {}
+                                                                                                           quadratic) {
+    Engine::addPointLight(this);
+}
+
+PointLight::PointLight() {
+    Engine::addPointLight(this);
+}
 
 PointLight::~PointLight() {
-
+    Engine::removePointLight(this);
 }
 
 const glm::vec3 &PointLight::getPosition() const {
@@ -41,7 +43,7 @@ void PointLight::SendToShader(Shader shader, std::string type) {
     shader.setFloat(type + ".quadratic", quadratic);
 }
 
-PointLight::PointLight() {}
+
 
 float PointLight::getConstant() const {
     return constant;
@@ -120,5 +122,3 @@ rapidjson::Document PointLight::ParseToJSON() {
 
     return d;
 }
-
-
