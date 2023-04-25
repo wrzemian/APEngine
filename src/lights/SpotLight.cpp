@@ -15,10 +15,16 @@ SpotLight::SpotLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const g
                                                                                                quadratic),
                                                                                     direction(direction),
                                                                                     cutOff(cutOff),
-                                                                                    outerCutOff(outerCutOff) {}
+                                                                                    outerCutOff(outerCutOff) {
+    Engine::addSpotLight(this);
+}
+
+SpotLight::SpotLight() {
+    Engine::addSpotLight(this);
+}
 
 SpotLight::~SpotLight() {
-
+    Engine::removeSpotLight(this);
 }
 
 const glm::vec3 &SpotLight::getDirection() const {
@@ -40,9 +46,7 @@ void SpotLight::SendToShader(Shader shader, std::string type) {
     shader.setFloat(type + ".outerCutOff", outerCutOff);
 }
 
-SpotLight::SpotLight() {
 
-}
 
 float SpotLight::getCutOff() const {
     return cutOff;
