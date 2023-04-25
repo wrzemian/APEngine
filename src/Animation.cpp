@@ -66,4 +66,5 @@ Animation::Animation(Shader _animationShader) {
 animationShader = _animationShader;
 }
 
+Animation::Animation() {};
 

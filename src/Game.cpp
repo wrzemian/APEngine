@@ -38,7 +38,7 @@ namespace Game {
 //    HUD hud;
 
     Shader shader;
-
+    Animation animation;
     MovingObject movingObject;
     Walls wagon;
 
@@ -94,7 +94,9 @@ namespace Game {
         shader.use();
 
         Shader animationShader("../../res/shaders/animationsShader.vert", "../../res/shaders/animationsShader.frag");
-        Animation animation(animationShader);
+        Animation animation1(animationShader);
+        animation = animation1;
+        animation.initAnimation();
 
 
         movingObject.setShader(&shader);
@@ -168,7 +170,12 @@ namespace Game {
         shader.use();
         shader.setMat4("projectionView", projection * view);
 
-//        animation.renderAnimation(Engine::deltaTime);
+
+
+        float time = static_cast<float>(glfwGetTime());
+        animation.renderAnimation(time);
+
+
 
         Engine::renderHitboxes(projection * view);
 
