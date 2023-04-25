@@ -8,17 +8,7 @@
 
 DirectionalLight::DirectionalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
                                    const glm::vec3 &direction) : AmbientLight(ambient, diffuse, specular),
-                                                                 direction(direction) {
-    Engine::addDirLight(this);
-}
-
-DirectionalLight::DirectionalLight() {
-    Engine::addDirLight(this);
-}
-
-DirectionalLight::~DirectionalLight() {
-    Engine::removeDirLight(this);
-}
+                                                                 direction(direction) {}
 
 const glm::vec3 &DirectionalLight::getDirection() const {
     return direction;
@@ -33,9 +23,13 @@ void DirectionalLight::SendToShader(Shader shader, std::string type) {
     shader.setVec3(type + ".direction", direction);
 }
 
+DirectionalLight::~DirectionalLight() {
 
+}
 
+DirectionalLight::DirectionalLight() {
 
+}
 
 void DirectionalLight::setAmbient(const glm::vec3 &ambient) {
     AmbientLight::setAmbient(ambient);

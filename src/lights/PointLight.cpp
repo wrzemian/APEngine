@@ -15,16 +15,10 @@ PointLight::PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const
                                                                                                    constant(constant),
                                                                                                    linear(linear),
                                                                                                    quadratic(
-                                                                                                           quadratic) {
-    Engine::addPointLight(this);
-}
-
-PointLight::PointLight() {
-    Engine::addPointLight(this);
-}
+                                                                                                           quadratic) {}
 
 PointLight::~PointLight() {
-    Engine::removePointLight(this);
+
 }
 
 const glm::vec3 &PointLight::getPosition() const {
@@ -47,7 +41,7 @@ void PointLight::SendToShader(Shader shader, std::string type) {
     shader.setFloat(type + ".quadratic", quadratic);
 }
 
-
+PointLight::PointLight() {}
 
 float PointLight::getConstant() const {
     return constant;

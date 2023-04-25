@@ -35,9 +35,6 @@ namespace Engine {
     std::vector<IGui*> allImgui;
     std::vector<Object3D*> allObjects;
     std::vector<MovingObject*> allMovingObjects;
-    std::vector<DirectionalLight*> allDirLights;
-    std::vector<PointLight*> allPointLights;
-    std::vector<SpotLight*> allSpotLights;
 
     int Init() {
         if (initGLandImGui() == -1) {
@@ -85,48 +82,6 @@ namespace Engine {
     void removeObject(Object3D* object) {
         spdlog::warn("moving object");
         std::erase(allObjects, object);
-    }
-
-    void addDirLight(DirectionalLight* dirLight) {
-        spdlog::warn("adding dirLight");
-        allDirLights.push_back(dirLight);
-    }
-
-    void removeDirLight(DirectionalLight* dirLight) {
-        spdlog::warn("removing dirLight");
-        std::erase(allDirLights, dirLight);
-    }
-
-    void addPointLight(PointLight* pointLight) {
-        spdlog::warn("adding pointLight");
-        allPointLights.push_back(pointLight);
-    }
-
-    void removePointLight(PointLight* pointLight) {
-        spdlog::warn("removing pointLight");
-        std::erase(allPointLights, pointLight);
-    }
-
-    void addSpotLight(SpotLight* spotLight) {
-        spdlog::warn("adding spotLight");
-        allSpotLights.push_back(spotLight);
-    }
-
-    void removeSpotLight(SpotLight* spotLight) {
-        spdlog::warn("removing spotLight");
-        std::erase(allSpotLights, spotLight);
-    }
-
-    void renderLights(Shader shader) {
-        for(DirectionalLight* dirLight: allDirLights) {
-            dirLight->SendToShader(shader, "dirLight");
-        }
-        for(PointLight* pointLight: allPointLights) {
-            pointLight->SendToShader(shader, "pointLight");
-        }
-        for(SpotLight* spotLight: allSpotLights) {
-            spotLight->SendToShader(shader, "spotLight");
-        }
     }
 
     int getImguiIndex() {

@@ -1,11 +1,5 @@
 # Change Log
 
-## [0.0.12] - 2023-04-25
-### Added
-- player2 as movableObject
-- control over players by inputSystem
-- rendering lights form engine
-
 ## [0.0.11] - 2023-04-17
 ### Added
 - text rendering using freetype2 lib
