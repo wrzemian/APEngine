@@ -29,6 +29,7 @@
 #include "al.h"
 #include "alc.h"
 #include "../include/Animation.h"
+#include "../include/Constant.h"
 
 namespace Game {
     void processInput(GLFWwindow* window);
@@ -36,9 +37,10 @@ namespace Game {
     void ImGui();
 
 //    HUD hud;
+    Animation animation;
+    Constant constant;
 
     Shader shader;
-    Animation animation;
     MovingObject movingObject;
     Walls wagon;
 
@@ -96,7 +98,11 @@ namespace Game {
         Shader animationShader("../../res/shaders/animationsShader.vert", "../../res/shaders/animationsShader.frag");
         Animation animation1(animationShader);
         animation = animation1;
+        Constant constant1(animationShader);
+        constant = constant1;
+        constant.initConstant();
         animation.initAnimation();
+
 
 
         movingObject.setShader(&shader);
@@ -170,10 +176,11 @@ namespace Game {
         shader.use();
         shader.setMat4("projectionView", projection * view);
 
-
+        //HUD
 
         float time = static_cast<float>(glfwGetTime());
         animation.renderAnimation(time);
+        constant.renderConstant();
 
 
 
