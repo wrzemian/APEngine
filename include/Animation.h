@@ -9,13 +9,9 @@
 #include "glad/glad.h"
 #include "Shader.h"
 
-
-
 class Animation{
 public:
     Animation(Shader _animationShader);
-
-    Animation();
 
     void initAnimation();
 
@@ -25,7 +21,6 @@ private:
     GLuint animationShaderProgram;
     GLuint animationVAO, animationVBO, animationTexture;
     float animationTime;
-
 
 };
 
