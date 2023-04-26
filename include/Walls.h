@@ -28,6 +28,10 @@ public:
     void ImGui() override;
 
     void onCollision(Object3D *other) override;
+
+    rapidjson::Document ParseToJSON();
+
+    void loadFromJSON(Walls temp);
 };
 
 

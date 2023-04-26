@@ -132,6 +132,27 @@ MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
     return {};
 }
 
+Walls Parser::CreateFromJSONWalls(std::string fileName) {
+    rapidjson::Document d = Parser::openJSON(fileName);
+    std::string type = d["type"].GetString();
+
+    if(type == "object3D") {
+        glm::vec3 tempScale(d["scaleX"].GetFloat(), d["scaleY"].GetFloat(), d["scaleZ"].GetFloat());
+        glm::vec3 tempRotation(d["rotationX"].GetFloat(), d["rotationY"].GetFloat(), d["rotationZ"].GetFloat());
+        glm::vec3 tempPosition(d["positionX"].GetFloat(), d["positionY"].GetFloat(), d["positionZ"].GetFloat());
+        std::string tempModel = d["model"].GetString();
+
+        Walls temp;
+//        temp._model = tempModel;
+        temp.loadModel(tempModel);
+        temp._transform._scale = tempScale;
+        temp._transform._rotation = tempRotation;
+        temp._transform._position = tempPosition;
+        return temp;
+    }
+    std::cerr << "No type matches!\n";
+    return {};
+}
 
 rapidjson::Document Parser::openJSON(std::string fileName) {
     std::stringstream fullPath;

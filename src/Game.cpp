@@ -90,8 +90,8 @@ namespace Game {
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
 
-
-        wagon.loadModel("../../res/models/1level/1level.obj");
+        wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
+//        wagon.loadModel("../../res/models/1level/1level.obj");
 //        wagon.calculateHitboxes();
 //        wagon.logHitboxes();
 //        for(auto m: wagon._model.meshes) {

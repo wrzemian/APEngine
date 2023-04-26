@@ -6,6 +6,7 @@
 #include "../include/Hitbox.h"
 
 #include "spdlog/spdlog.h"
+#include "../include/Engine.h"
 
 
 void Walls::calculateHitboxes() {
@@ -81,6 +82,11 @@ void Walls::ImGui() {
         }
     }
 
+    if (ImGui::Button("SAVE WALLS")) {
+
+        Engine::parser.SaveJSON(this->ParseToJSON(), "walls");
+    }
+
 //    if (ImGui::Button("Show hitboxes")) {
 //        spdlog::warn("showing hitboxes");
 //        for(Hitbox& hitbox: hitboxes) {
@@ -121,4 +127,31 @@ Walls::~Walls() {
     }
     spdlog::info("deleted all hitboxes");
     hitboxes.clear();
+}
+
+rapidjson::Document Walls::ParseToJSON() {
+    rapidjson::Document d;
+    d.SetObject();
+    d.AddMember("type", "object3D", d.GetAllocator());
+    d.AddMember("scaleX", _transform._scale.x, d.GetAllocator());
+    d.AddMember("scaleY", _transform._scale.y, d.GetAllocator());
+    d.AddMember("scaleZ", _transform._scale.z, d.GetAllocator());
+    d.AddMember("rotationX", _transform._rotation.x, d.GetAllocator());
+    d.AddMember("rotationY", _transform._rotation.y, d.GetAllocator());
+    d.AddMember("rotationZ", _transform._rotation.z, d.GetAllocator());
+    d.AddMember("positionX", _transform._position.x, d.GetAllocator());
+    d.AddMember("positionY", _transform._position.y, d.GetAllocator());
+    d.AddMember("positionZ", _transform._position.z, d.GetAllocator());
+    rapidjson::Value n(_path.c_str(), d.GetAllocator());
+    d.AddMember("model", n, d.GetAllocator());
+
+    return d;
+}
+
+void Walls::loadFromJSON(Walls temp) {
+    this->loadModel(temp._path);
+    this->_transform._scale = temp._transform._scale;
+    this->_transform._rotation = temp._transform._rotation;
+    this->_transform._position = temp._transform._position;
+    this->calculateHitboxes();
 }
