@@ -28,6 +28,7 @@
 
 #include "al.h"
 #include "alc.h"
+#include "../include/Animation.h"
 
 namespace Game {
     void processInput();
@@ -36,6 +37,7 @@ namespace Game {
 
     HUD hud;
     Shader shader;
+    Animation animation;
 
     MovingObject player1;
     MovingObject player2;
@@ -115,6 +117,12 @@ namespace Game {
         Engine::resolveCollisions();
         spdlog::info("loop");
 
+
+        Shader animationShader("../../res/shaders/animationsShader.vert", "../../res/shaders/animationsShader.frag");
+        Animation animation1(animationShader);
+        animation = animation1;
+        animation.initAnimation();
+
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
@@ -127,11 +135,12 @@ namespace Game {
         inputSystem.update();
         processInput();
 
+        float time = static_cast<float>(glfwGetTime());
+        animation.renderAnimation(time);
         //player1.Move();
 
         Engine::moveObjects();
         Engine::drawObjects();
-
 
 
 
