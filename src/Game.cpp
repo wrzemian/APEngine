@@ -20,6 +20,8 @@
 #include "../include/InputSystem.h"
 #include "../include/HUD.h"
 #include "../include/Walls.h"
+#include "../include/Animation.h"
+#include "../include/Constant.h"
 
 #include "spdlog/spdlog.h"
 
@@ -28,7 +30,7 @@
 
 #include "al.h"
 #include "alc.h"
-#include "../include/Animation.h"
+
 
 namespace Game {
     void processInput();
@@ -38,6 +40,7 @@ namespace Game {
     HUD hud;
     Shader shader;
     Animation animation;
+    Constant constant;
 
     MovingObject player1;
     MovingObject player2;
@@ -123,6 +126,10 @@ namespace Game {
         animation = animation1;
         animation.initAnimation();
 
+        Constant constant1(animationShader);
+        constant = constant1;
+        constant.initConstant();
+
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
@@ -137,6 +144,7 @@ namespace Game {
 
         float time = static_cast<float>(glfwGetTime());
         animation.renderAnimation(time);
+        constant.renderConstant();
         //player1.Move();
 
         Engine::moveObjects();
