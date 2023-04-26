@@ -9,10 +9,10 @@
 #include <iostream>
 #include "stb_image.h"
 #include "glad/glad.h"
-#include "glm/ext/matrix_clip_space.hpp"
+//#include "glm/ext/matrix_clip_space.hpp"
 #include "glm/fwd.hpp"
-#include "glm/detail/type_mat3x2.hpp"
-#include "glm/gtc/type_ptr.hpp"
+//#include "glm/detail/type_mat3x2.hpp"
+//#include "glm/gtc/type_ptr.hpp"
 #include "Shader.h"
 
 class Image {

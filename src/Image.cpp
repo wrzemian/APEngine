@@ -3,8 +3,8 @@
 //
 
 #include "../include/Image.h"
-
-#include "../include/Image.h"
+#include "glm/ext/matrix_clip_space.hpp"
+#include "glm/ext/matrix_transform.hpp"
 
 void Image::initImage(const char *path) {
     // Load image using stb_image

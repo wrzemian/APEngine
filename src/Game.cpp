@@ -22,6 +22,7 @@
 #include "../include/Walls.h"
 #include "../include/Animation.h"
 #include "../include/Constant.h"
+//#include "../include/Image.h"
 
 #include "spdlog/spdlog.h"
 
@@ -37,11 +38,12 @@ namespace Game {
     void processInput();
 
     void ImGui();
-
+    float movImage = 0;
     HUD hud;
     Shader shader;
     Animation animation;
     Constant constant;
+//    Image image;
 
 
     MovingObject player1;
@@ -133,6 +135,12 @@ namespace Game {
         constant.initConstant();
 
 
+//        Shader imageShader("../../res/shaders/imageShader.vert", "../../res/shaders/imageShader.frag");
+//        Image image1(imageShader);
+//        image = image1;
+//        image.initImage("res/textures/tlo.png");
+
+
 
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
@@ -145,11 +153,12 @@ namespace Game {
 
         inputSystem.update();
         processInput();
-
+        movImage -= 0.1;
 
         float time = static_cast<float>(glfwGetTime());
         animation.renderAnimation(time);
         constant.renderConstant();
+//        image.renderImage(movImage);
 
         //player1.Move();
 
