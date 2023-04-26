@@ -160,6 +160,11 @@ public:
             Position += Right * velocity;
     }
 
+    glm::mat4 GetViewMatrix()
+    {
+        return glm::lookAt(Position, Position + Front, Up);
+    }
+
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()

@@ -38,22 +38,25 @@ namespace Engine {
     void addImgui(IGui* imgui);
     void addMovingObject(MovingObject* object);
     void addObject(Object3D* object);
+    void addDirLight(DirectionalLight* dirLight);
+    void addPointLight(PointLight* pointLight);
+    void addSpotLight(SpotLight* spotLight);
 
     void removeHitbox(Hitbox* hitbox);
     void removeImgui(IGui* igui);
     void removeMovingObject(MovingObject* object);
     void removeObject(Object3D* object);
-
-    void addDirLight(DirectionalLight* dirLight);
-    void addPointLight(PointLight* pointLight);
-    void addSpotLight(SpotLight* spotLight);
     void removeDirLight(DirectionalLight* dirLight);
     void removePointLight(PointLight* pointLight);
     void removeSpotLight(SpotLight* spotLight);
-    void renderLights(Shader shader);
+
 
     void renderHitboxes(const glm::mat4& projectionView);
     void renderImgui();
+    void renderLights(Shader shader);
+    void renderDirLights(Shader shader);
+    void renderPointLights(Shader shader);
+    void renderSpotLights(Shader shader);
 
     void moveObjects();
     void drawObjects();

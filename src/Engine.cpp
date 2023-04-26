@@ -141,16 +141,28 @@ namespace Engine {
         std::erase(allSpotLights, spotLight);
     }
 
-    void renderLights(Shader shader) {
+    void renderDirLights(Shader shader){
         for(DirectionalLight* dirLight: allDirLights) {
             dirLight->SendToShader(shader, "dirLight");
         }
+    }
+
+    void renderPointLights(Shader shader){
         for(PointLight* pointLight: allPointLights) {
             pointLight->SendToShader(shader, "pointLight");
         }
+    }
+    void renderSpotLights(Shader shader){
         for(SpotLight* spotLight: allSpotLights) {
             spotLight->SendToShader(shader, "spotLight");
         }
+    }
+
+
+    void renderLights(Shader shader) {
+        renderDirLights(shader);
+        renderPointLights(shader);
+        renderSpotLights(shader);
     }
 
     int getImguiIndex() {
