@@ -27,6 +27,8 @@ public:
     void onCollision(Object3D* other) override;
 
     rapidjson::Document ParseToJSON();
+
+    void loadFromJSON(MovingObject temp);
 };
 
 

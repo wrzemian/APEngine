@@ -14,6 +14,8 @@ MovingObject::MovingObject() {
     Engine::addMovingObject(this);
 }
 
+
+
 MovingObject::~MovingObject() {
     Engine::removeMovingObject(this);
 }
@@ -84,6 +86,14 @@ rapidjson::Document MovingObject::ParseToJSON() {
 
 
     return d;
+}
+
+void MovingObject::loadFromJSON(MovingObject temp) {
+    this->loadModel(temp._path);
+    this->_transform._scale = temp._transform._scale;
+    this->_transform._rotation = temp._transform._rotation;
+    this->_transform._position = temp._transform._position;
+    this->_velocity = temp._velocity;
 }
 
 

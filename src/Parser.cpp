@@ -6,6 +6,7 @@
 #include <fstream>
 #include "../include/Parser.h"
 #include "istreamwrapper.h"
+#include "../include/Engine.h"
 
 
 Parser::Parser(std::string savePath) {
@@ -119,6 +120,7 @@ MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
         std::string tempModel = d["model"].GetString();
 
         MovingObject temp;
+//        temp._model = tempModel;
         temp.loadModel(tempModel);
         temp._transform._scale = tempScale;
         temp._transform._rotation = tempRotation;
