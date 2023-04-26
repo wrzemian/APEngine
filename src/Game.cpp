@@ -265,7 +265,7 @@ namespace Game {
 //        shader.setFloat("material.shininess", 32.0f);
 //        //from camera
 //        shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
-
+//
 //        Engine::renderLights(shader);
 
 
