@@ -10,6 +10,9 @@
 #include "lights/DirectionalLight.h"
 #include "lights/PointLight.h"
 #include "lights/SpotLight.h"
+#include "Object3D.h"
+#include "MovingObject.h"
+
 
 class Parser {
 private:
@@ -26,6 +29,10 @@ public:
     PointLight CreateFromJSONPoint(std::string fileName);
 
     SpotLight CreateFromJSONSpot(std::string fileName);
+
+    Object3D CreateFromJSONObj3D(std::string fileName);
+
+    MovingObject CreateFromJSONMovingObject(std::string fileName);
 
 private:
     rapidjson::Document openJSON (std::string fileName);

@@ -77,12 +77,14 @@ namespace Game {
         hud.initAnimation();
         //hud.initImage("res/textures/tlo.png");
         hud.initText("res/fonts/Arialn.ttf");
-        player1.loadModel("../../res/models/first_character/first character.obj");
-        player2.loadModel("../../res/models/second_character/second character.obj");
+//        player1.loadModel("../../res/models/first_character/first character.obj");
+//        player2.loadModel("../../res/models/second_character/second character.obj");
+        player1 = Engine::parser.CreateFromJSONMovingObject("movingObj_0");
+        player2 = Engine::parser.CreateFromJSONMovingObject("movingObj_1");
 
         wagon.loadModel("../../res/models/1level/1level.obj");
-        wagon.calculateHitboxes();
-        wagon.logHitboxes();
+//        wagon.calculateHitboxes();
+//        wagon.logHitboxes();
 //        for(auto m: wagon._model.meshes) {
 //            spdlog::info("loaded mesh with {} vertices", m.vertices.size());
 //        }

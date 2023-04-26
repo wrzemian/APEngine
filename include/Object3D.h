@@ -7,6 +7,7 @@
 #include "Model.h"
 #include "Shader.h"
 #include "IGui.h"
+#include "document.h"
 
 class Object3D : public IGui {
 
@@ -19,6 +20,7 @@ public:
 
     Model _model;
     Transform _transform;
+    std::string _path;
 
     void Draw();
     void setShader(Shader* shader);
@@ -27,4 +29,6 @@ public:
     virtual void onCollision(Object3D* other);
 
     virtual void ImGui();
+
+    virtual rapidjson::Document ParseToJSON();
 };

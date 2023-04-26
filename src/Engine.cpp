@@ -47,6 +47,30 @@ namespace Engine {
         return 0;
     }
 
+    int getObject3DIndex(Object3D* obj) {
+        auto it = find(allObjects.begin(), allObjects.end(), obj);
+        if (it != allObjects.end())
+        {
+            return it - allObjects.begin();
+
+        }
+        else {
+            return -1;
+        }
+    }
+
+    int getMovingObjectIndex(MovingObject* obj) {
+        auto it = find(allMovingObjects.begin(), allMovingObjects.end(), obj);
+        if (it != allMovingObjects.end())
+        {
+            return it - allMovingObjects.begin();
+
+        }
+        else {
+            return -1;
+        }
+    }
+
     void addHitbox(Hitbox* hitbox) {
         spdlog::warn("Hitbox added");
         allHitboxes.push_back(hitbox);

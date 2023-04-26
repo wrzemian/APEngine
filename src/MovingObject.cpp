@@ -46,6 +46,10 @@ void MovingObject::ImGui() {
         this->StopMoving();
     }
 
+    if (ImGui::Button("SAVE MOV OBJ")) {
+
+        Engine::parser.SaveJSON(this->ParseToJSON(), "movingObj_" + std::to_string(Engine::getMovingObjectIndex(this)));
+    }
     ImGui::End();
 }
 
@@ -58,5 +62,30 @@ void MovingObject::onCollision(Object3D *other) {
     _velocity.y = 0;
     _velocity.z = 0;
 }
+
+rapidjson::Document MovingObject::ParseToJSON() {
+    rapidjson::Document d;
+    d.SetObject();
+    d.AddMember("type", "object3D", d.GetAllocator());
+    d.AddMember("scaleX", _transform._scale.x, d.GetAllocator());
+    d.AddMember("scaleY", _transform._scale.y, d.GetAllocator());
+    d.AddMember("scaleZ", _transform._scale.z, d.GetAllocator());
+    d.AddMember("rotationX", _transform._rotation.x, d.GetAllocator());
+    d.AddMember("rotationY", _transform._rotation.y, d.GetAllocator());
+    d.AddMember("rotationZ", _transform._rotation.z, d.GetAllocator());
+    d.AddMember("positionX", _transform._position.x, d.GetAllocator());
+    d.AddMember("positionY", _transform._position.y, d.GetAllocator());
+    d.AddMember("positionZ", _transform._position.z, d.GetAllocator());
+    d.AddMember("velocityX", _velocity.x, d.GetAllocator());
+    d.AddMember("velocityY", _velocity.y, d.GetAllocator());
+    d.AddMember("velocityZ", _velocity.z, d.GetAllocator());
+    rapidjson::Value n(_path.c_str(), d.GetAllocator());
+    d.AddMember("model", n, d.GetAllocator());
+
+
+    return d;
+}
+
+
 
 

@@ -23,6 +23,7 @@ void Object3D::Draw() {
 }
 
 void Object3D::loadModel(const std::string &path) {
+    _path = path;
     Model temp(path);
     _model = temp;
 }
@@ -54,8 +55,32 @@ void Object3D::ImGui() {
     if (ImGui::Button("Reset Rotation")) {
         _transform._rotation = glm::vec3(0,0,0);
     }
+    if (ImGui::Button("SAVE OBJ3D")) {
+
+        Engine::parser.SaveJSON(this->ParseToJSON(), "object3D_" + std::to_string(Engine::getObject3DIndex(this)));
+    }
 
     ImGui::End();
+}
+
+rapidjson::Document Object3D::ParseToJSON() {
+    rapidjson::Document d;
+    d.SetObject();
+    d.AddMember("type", "object3D", d.GetAllocator());
+    d.AddMember("scaleX", _transform._scale.x, d.GetAllocator());
+    d.AddMember("scaleY", _transform._scale.y, d.GetAllocator());
+    d.AddMember("scaleZ", _transform._scale.z, d.GetAllocator());
+    d.AddMember("rotationX", _transform._rotation.x, d.GetAllocator());
+    d.AddMember("rotationY", _transform._rotation.y, d.GetAllocator());
+    d.AddMember("rotationZ", _transform._rotation.z, d.GetAllocator());
+    d.AddMember("positionX", _transform._position.x, d.GetAllocator());
+    d.AddMember("positionY", _transform._position.y, d.GetAllocator());
+    d.AddMember("positionZ", _transform._position.z, d.GetAllocator());
+    rapidjson::Value n(_path.c_str(), d.GetAllocator());
+    d.AddMember("model", n, d.GetAllocator());
+
+
+    return d;
 }
 
 void Object3D::onCollision(Object3D *other) {

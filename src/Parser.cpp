@@ -86,6 +86,50 @@ SpotLight Parser::CreateFromJSONSpot(std::string fileName) {
     return {};
 }
 
+Object3D Parser::CreateFromJSONObj3D(std::string fileName) {
+    rapidjson::Document d = Parser::openJSON(fileName);
+    std::string type = d["type"].GetString();
+
+    if(type == "object3D") {
+        glm::vec3 tempScale(d["scaleX"].GetFloat(), d["scaleY"].GetFloat(), d["scaleZ"].GetFloat());
+        glm::vec3 tempRotation(d["rotationX"].GetFloat(), d["rotationY"].GetFloat(), d["rotationZ"].GetFloat());
+        glm::vec3 tempPosition(d["positionX"].GetFloat(), d["positionY"].GetFloat(), d["positionZ"].GetFloat());
+        std::string tempModel = d["model"].GetString();
+
+        Object3D temp;
+        temp.loadModel(tempModel);
+        temp._transform._scale = tempScale;
+        temp._transform._rotation = tempRotation;
+        temp._transform._position = tempPosition;
+        return temp;
+    }
+    std::cerr << "No type matches!\n";
+    return {};
+}
+
+MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
+    rapidjson::Document d = Parser::openJSON(fileName);
+    std::string type = d["type"].GetString();
+
+    if(type == "object3D") {
+        glm::vec3 tempScale(d["scaleX"].GetFloat(), d["scaleY"].GetFloat(), d["scaleZ"].GetFloat());
+        glm::vec3 tempRotation(d["rotationX"].GetFloat(), d["rotationY"].GetFloat(), d["rotationZ"].GetFloat());
+        glm::vec3 tempPosition(d["positionX"].GetFloat(), d["positionY"].GetFloat(), d["positionZ"].GetFloat());
+        glm::vec3 tempVelocity(d["velocityX"].GetFloat(), d["velocityY"].GetFloat(), d["velocityZ"].GetFloat());
+        std::string tempModel = d["model"].GetString();
+
+        MovingObject temp;
+        temp.loadModel(tempModel);
+        temp._transform._scale = tempScale;
+        temp._transform._rotation = tempRotation;
+        temp._transform._position = tempPosition;
+        temp._velocity = tempVelocity;
+        return temp;
+    }
+    std::cerr << "No type matches!\n";
+    return {};
+}
+
 
 rapidjson::Document Parser::openJSON(std::string fileName) {
     std::stringstream fullPath;
@@ -121,6 +165,8 @@ rapidjson::Document Parser::openJSON(std::string fileName) {
     ///std::cout << '\n\n' << jsonStr ;
     return doc;
 }
+
+
 
 
 

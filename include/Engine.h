@@ -31,6 +31,8 @@ namespace Engine {
 
     int getHitboxIndex();
     int getImguiIndex();
+    int getObject3DIndex(Object3D* obj);
+    int getMovingObjectIndex(MovingObject* obj);
 
     void addHitbox(Hitbox* hitbox);
     void addImgui(IGui* imgui);
