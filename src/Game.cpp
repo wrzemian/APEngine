@@ -32,6 +32,7 @@
 #include "alc.h"
 
 
+
 namespace Game {
     void processInput();
 
@@ -41,6 +42,7 @@ namespace Game {
     Shader shader;
     Animation animation;
     Constant constant;
+
 
     MovingObject player1;
     MovingObject player2;
@@ -79,7 +81,7 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
 
-        hud.initAnimation();
+//        hud.initAnimation();
         //hud.initImage("res/textures/tlo.png");
         hud.initText("res/fonts/Arialn.ttf");
 
@@ -130,6 +132,8 @@ namespace Game {
         constant = constant1;
         constant.initConstant();
 
+
+
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
@@ -142,15 +146,15 @@ namespace Game {
         inputSystem.update();
         processInput();
 
+
         float time = static_cast<float>(glfwGetTime());
         animation.renderAnimation(time);
         constant.renderConstant();
+
         //player1.Move();
 
         Engine::moveObjects();
         Engine::drawObjects();
-
-
 
 
         //player1.Draw();
