@@ -50,8 +50,9 @@ namespace Game {
     float lightZ = 9.0f;
     glm::vec3 lightPos(lightX, lightY, lightZ);
     void renderQuad();
-    unsigned int woodTexture;
-    unsigned int loadTexture(char const * path);
+//    unsigned int woodTexture;
+//    unsigned int loadTexture(char const * path);
+    float near_plane = 0.1f, far_plane = 7.5f;
 
     float movImage = 0;
     HUD hud;
@@ -118,7 +119,7 @@ namespace Game {
         Shader temp("../../res/shaders/shadowShader.vert", "../../res/shaders/shadowShader.frag");
         shader = temp;
 
-        woodTexture = loadTexture(FileSystem::getPath("resources/textures/tlo.png").c_str());
+//        woodTexture = loadTexture(FileSystem::getPath("resources/textures/tlo.png").c_str());
 
 
         shader.setMat4("projectionView", camera.viewProjection);
@@ -205,7 +206,7 @@ namespace Game {
         // --------------------------------------------------------------
         glm::mat4 lightProjection, lightView;
         glm::mat4 lightSpaceMatrix;
-        float near_plane = 1.0f, far_plane = 7.5f;
+
         lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
         lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
         lightSpaceMatrix = lightProjection * lightView;
@@ -216,8 +217,8 @@ namespace Game {
         glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
         glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
         glClear(GL_DEPTH_BUFFER_BIT);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, woodTexture);
+//        glActiveTexture(GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, woodTexture);
         renderScene(simpleDepthShader);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -236,20 +237,20 @@ namespace Game {
         shader.setVec3("viewPos", camera.Position);
         shader.setVec3("lightPos", lightPos);
         shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, woodTexture);
+//        glActiveTexture(GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, woodTexture);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, depthMap);
         renderScene(shader);
 
         // render Depth map to quad for visual debugging
         // ---------------------------------------------
-        debugDepthQuad.use();
-        debugDepthQuad.setFloat("near_plane", near_plane);
-        debugDepthQuad.setFloat("far_plane", far_plane);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
-        //renderQuad();
+//        debugDepthQuad.use();
+//        debugDepthQuad.setFloat("near_plane", near_plane);
+//        debugDepthQuad.setFloat("far_plane", far_plane);
+//        glActiveTexture(GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, depthMap);
+//        renderQuad();
 
 
         //player1.Draw();
@@ -259,13 +260,13 @@ namespace Game {
 
         ////REQUIRED FOR LIGHT
         //should be property of object
-        shader.setInt("material.diffuse", 0);
-        shader.setInt("material.specular", 1);
-        shader.setFloat("material.shininess", 32.0f);
-        //from camera
-        shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
+//        shader.setInt("material.diffuse", 0);
+//        shader.setInt("material.specular", 1);
+//        shader.setFloat("material.shininess", 32.0f);
+//        //from camera
+//        shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
 
-        Engine::renderLights(shader);
+//        Engine::renderLights(shader);
 
 
 
@@ -279,8 +280,8 @@ namespace Game {
 //
 //        glm:: mat4 view = camera.getView(player1);
 
-        shader.use();
-        shader.setMat4("projectionView", projection * view);
+//        shader.use();
+//        shader.setMat4("projectionView", projection * view);
 
         Engine::renderHitboxes(projection * view);
 
