@@ -35,7 +35,7 @@
 
 namespace Game {
     void processInput();
-
+    float imgMOv=0;
     void ImGui();
     float movImage = 0;
     HUD hud;
@@ -133,8 +133,10 @@ namespace Game {
         constant = constant1;
         constant.initConstant();
 
-
-
+        Shader imageShader("../../res/shaders/imageShader.vert", "../../res/shaders/imageShader.frag");
+        HUD hud1(imageShader);
+        hud = hud1;
+        hud.initImage("res/textures/tlo.png");
 
 
 
@@ -144,9 +146,10 @@ namespace Game {
     }
 
     void Update() {
+
         Engine::LoopStart();
         ImGui();
-
+        imgMOv -= 0.1;
         inputSystem.update();
         processInput();
         movImage -= 0.1;
@@ -154,6 +157,7 @@ namespace Game {
         float time = static_cast<float>(glfwGetTime());
         animation.renderAnimation(time);
         constant.renderConstant();
+//        hud.renderImage(imgMOv);
 
         //player1.Move();
 

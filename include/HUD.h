@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-bool isVisable = true;
+bool isVisable = false;
 
 
 // Shader utility function
@@ -36,7 +36,7 @@ GLuint compileShader(const GLchar *source, GLenum type) {
     return shader;
 }
 
-class HUD {
+class HUD : public IGui{
 public:
     struct Character {
         GLuint textureID;
@@ -67,145 +67,8 @@ public:
     void updateText(const std::string &newText) {
         text = newText;
     }
-/*
-    void initCharData() {
-        const int gridSize =16;
-        const int charWidth = 32;
-        const int charHeight = 32;
 
-        for (int i = 0; i < gridSize; ++i) {
-            for (int j = 0; j < gridSize; ++j) {
-                char c = static_cast<char>(32 + i * gridSize + j);
-                int x = j * charWidth;
-                int y = i * charHeight;
-                charData[c] = glm::ivec4(x, y, charWidth, charHeight);
-            }
-        }
-    }
-    */
-/*
-    void load(const std::string& fontTexturePath) {
-        initCharData();
-        projectionMatrix = glm::ortho(0.0f, static_cast<float>(1000), 0.0f, static_cast<float>(800));
-        glGenVertexArrays(1, &vao);
-        glGenBuffers(1, &vbo);
-        glGenTextures(1, &fontTexture);
-        glBindTexture(GL_TEXTURE_2D, fontTexture);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        int width, height, channels;
-        stbi_set_flip_vertically_on_load(true);
-        unsigned char* data = stbi_load(fontTexturePath.c_str(), &width, &height, &channels, 0);
-        if (data) {
-            if (channels == 3) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            } else if (channels == 4) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-            }
-            glGenerateMipmap(GL_TEXTURE_2D);
-        } else {
-            std::cout << "Failed to load font texture: " << fontTexturePath << std::endl;
-        }
-        stbi_image_free(data);
-
-        // Set up image shader
-        const char *textVertexShaderSource = R"(
-        #version 330 core
-        layout (location = 0) in vec4 vertex;
-        out vec2 TexCoords;
-        uniform mat4 projection;
-        void main() {
-            gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
-            TexCoords = vertex.zw;
-        }
-        )";
-
-        const char *textFragmentShaderSource = R"(
-            #version 330 core
-            in vec2 TexCoords;
-            out vec4 color;
-            uniform sampler2D text;
-            uniform vec3 textColor;
-            void main() {
-                vec4 sampled = texture(text, TexCoords);
-                color = vec4(textColor, 1.0) * sampled;
-            }
-        )";
-
-        GLuint textVertexShader = compileShader(textVertexShaderSource, GL_VERTEX_SHADER);
-        GLuint textFragmentShader = compileShader(textFragmentShaderSource, GL_FRAGMENT_SHADER);
-
-        textShaderProgram = glCreateProgram();
-        glAttachShader(textShaderProgram, textVertexShader);
-        glAttachShader(textShaderProgram, textFragmentShader);
-        glLinkProgram(textShaderProgram);
-
-        textColorUniformLocation = glGetUniformLocation(textShaderProgram, "textColor");
-        projectionUniformLocation = glGetUniformLocation(textShaderProgram, "projection");
-
-        GLint success;
-        glGetProgramiv(textShaderProgram, GL_LINK_STATUS, &success);
-
-        glDeleteShader(textVertexShader);
-        glDeleteShader(textFragmentShader);
-    }
-*/
-   /* void renderText(const std::string& text, float x, float y, float scale, const glm::vec3& color) {
-        glUseProgram(textShaderProgram);
-        glBindVertexArray(vao);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, fontTexture);
-
-        glUniformMatrix4fv(projectionUniformLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-        glUniform3f(textColorUniformLocation, color.x, color.y, color.z);
-
-        std::string::const_iterator c;
-        for (c = text.begin(); c != text.end(); c++) {
-            glm::ivec4 ch = charData[*c];
-
-            GLfloat xpos = x + ch.z * scale;
-            GLfloat ypos = y - (ch.w - ch.y) * scale;
-
-            GLfloat w = ch.z * scale;
-            GLfloat h = ch.w * scale;
-
-            GLfloat vertices[] = {
-                    xpos, ypos + h, (float)ch.x, (float)ch.y,
-                    xpos + w, ypos, (float)ch.x + (float)ch.z, (float)ch.y + (float)ch.w,
-                    xpos, ypos, (float)ch.x, (float)ch.y + (float)ch.w,
-
-                    xpos, ypos + h, (float)ch.x, (float)ch.y,
-                    xpos + w, ypos + h, (float)ch.x + (float)ch.z, (float)ch.y,
-                    xpos + w, ypos, (float)ch.x + (float)ch.z, (float)ch.y + (float)ch.w
-            };
-
-            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-            glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (void *) 0);
-            glEnableVertexAttribArray(0);
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-
-            x += (ch.z + 1) * scale; // Advance the cursor to the next glyph
-        }
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
-        glUseProgram(0);
-    }
-*/
-
-
-
-
-
-
-
-
-
-
-   void initImage(const char* path) {
+   void initImage(const char *path) {
        // Load image using stb_image
        int width, height, channels;
        stbi_set_flip_vertically_on_load(true);
@@ -264,172 +127,28 @@ public:
 
        glBindBuffer(GL_ARRAY_BUFFER, 0);
        glBindVertexArray(0);
-
-       // Set up image shader
-       const char *imageVertexShaderSource = R"(
-            #version 330 core
-            layout (location = 0) in vec3 aPos;
-            layout (location = 1) in vec2 aTexCoord;
-            out vec2 TexCoord;
-            uniform mat4 model;
-            uniform mat4 projection;
-            void main() {
-                gl_Position = projection * model * vec4(aPos, 1.0);
-                TexCoord = aTexCoord;
-            }
-        )";
-
-       const char *imageFragmentShaderSource = R"(
-            #version 330 core
-            in vec2 TexCoord;
-            out vec4 FragColor;
-            uniform sampler2D imageTexture;
-            void main() {
-                FragColor = texture(imageTexture, TexCoord);
-            }
-        )";
-
-       GLuint imageVertexShader = compileShader(imageVertexShaderSource, GL_VERTEX_SHADER);
-       GLuint imageFragmentShader = compileShader(imageFragmentShaderSource, GL_FRAGMENT_SHADER);
-
-       imageShaderProgram = glCreateProgram();
-       glAttachShader(imageShaderProgram, imageVertexShader);
-       glAttachShader(imageShaderProgram, imageFragmentShader);
-       glLinkProgram(imageShaderProgram);
-
-       GLint success;
-       glGetProgramiv(imageShaderProgram, GL_LINK_STATUS, &success);
-//        if (!success) {
-//
-//            glGetProgramInfoLog(imageShaderProgram, 512, nullptr, infoLog);
-//            std::cerr << "Image shader program linking failed:\n" << infoLog << std::endl;
-//        }
-
-       glDeleteShader(imageVertexShader);
-       glDeleteShader(imageFragmentShader);
    }
 
     void renderImage(float x) {
         // Render the image here
-        glUseProgram(imageShaderProgram);
+        shader.use();
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
         glm::mat4 model = glm::mat4(1.0f);
+        if(isVisable == true) {
             model = glm::translate(model, glm::vec3(x * 1.0f, -100.0f, 1.0f));
             model = glm::scale(model, glm::vec3(5000.0f, 1000.0f, 1.0f));
-
-        glUniformMatrix4fv(glGetUniformLocation(imageShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(imageShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        }
+        else;
+        shader.setMat4("projection", projection);
+        shader.setMat4("model", model);
 
         glBindVertexArray(imageVAO);
         glBindTexture(GL_TEXTURE_2D, imageTexture);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindTexture(GL_TEXTURE_2D, 0);
         glBindVertexArray(0);
-        glUseProgram(0);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    void renderAnimation(float time) {
-        // Render the animated element here
-        glUseProgram(animationShaderProgram);
-
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
-        glm::mat4 model = glm::mat4(1.0f);
-        if(isVisable == true && time * 2.f < 100.0f) {
-            model = glm::translate(model, glm::vec3(2.f, 520.0f, 1.0f));
-            model = glm::scale(model, glm::vec3(100.0f - time * 2.f, 30.0f, 1.0f));
-        }
-        else{
-            model = glm::translate(model, glm::vec3(-10000, -100.0f, 4.0f));
-            model = glm::scale(model, glm::vec3(5000.0f, 1000.0f, 1.0f));
-        }
-
-
-        glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1f(glGetUniformLocation(animationShaderProgram, "time"), time);
-        glUniform4f(glGetUniformLocation(animationShaderProgram, "color"), 1.0f, 0.0f, 0.0f, 1.0f);
-
-        glBindVertexArray(animationVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
-        glUseProgram(0);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    void renderConstant() {
-        // Render the animated element here
-        glUseProgram(animationShaderProgram);
-
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
-        glm::mat4 model = glm::mat4(1.0f);
-        if(isVisable == true) {
-            model = glm::translate(model, glm::vec3(2.f, 550.0f, 1.0f));
-            model = glm::scale(model, glm::vec3(100.0f, 30.0f, 1.0f));
-        }
-        else{
-            model = glm::translate(model, glm::vec3(-10000, -100.0f, 4.0f));
-            model = glm::scale(model, glm::vec3(5000.0f, 1000.0f, 1.0f));
-        }
-
-
-        glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(animationShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1f(glGetUniformLocation(animationShaderProgram, "time"), 0.0);
-        glUniform4f(glGetUniformLocation(animationShaderProgram, "color"), 0.0f, 0.0f, 0.0f, 0.0f);
-
-        glBindVertexArray(animationVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
-        glUseProgram(0);
-    }
-
-    void imguiText(){
-
-    ImGui::SetNextWindowBgAlpha(0.0f);
-
-    ImGui::Begin("Transparent Window", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize);
-
-    ImVec4 textColor(0.0f, 0.0f, 0.0f, 1.0f);
-    ImGuiCol textColorID = ImGuiCol_Text;
-
-    ImGui::PushStyleColor(textColorID, textColor);
-    ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
-
-    ImGui::PopStyleColor();
-    ImGui::End();
-
-    }
-
 
     void ImGui(){
 
@@ -504,7 +223,14 @@ public:
     }
 
 private:
+public:
+    explicit HUD(Shader shader) : shader(shader) {
+       this->shader = shader;
+   }
+
+private:
     // Private members
+    Shader shader,textShader;
     GLFWwindow *window;
     GLuint animationShaderProgram;
 
@@ -521,6 +247,8 @@ private:
     GLint textColorUniformLocation;
     glm::mat4 projectionMatrix;
     std::map<char, glm::ivec4> charData;
+
+
     void loadCharacters() {
         for (GLubyte c = 0; c < 128; c++) {
             if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
