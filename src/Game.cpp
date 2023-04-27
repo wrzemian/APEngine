@@ -39,6 +39,7 @@ namespace Game {
     void ImGui();
     float movImage = 0;
     HUD hud;
+    HUD hud2;
     Shader shader;
     Animation animation;
     Constant constant;
@@ -83,8 +84,8 @@ namespace Game {
 
 
 //        hud.initAnimation();
-        //hud.initImage("res/textures/tlo.png");
-        hud.initText("res/fonts/Arialn.ttf");
+//        hud.initImage("res/textures/tlo.png");
+        hud2.initText("res/fonts/Arialn.ttf");
 
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
@@ -157,7 +158,7 @@ namespace Game {
         float time = static_cast<float>(glfwGetTime());
         animation.renderAnimation(time);
         constant.renderConstant();
-//        hud.renderImage(imgMOv);
+        hud.renderImage(imgMOv);
 
         //player1.Move();
 
@@ -201,7 +202,7 @@ namespace Game {
 
         Engine::resolveCollisions();
 
-        hud.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
+        hud2.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
 
         Engine::LoopEnd();
 
