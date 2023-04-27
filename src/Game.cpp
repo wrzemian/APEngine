@@ -52,7 +52,7 @@ namespace Game {
     void renderQuad();
 //    unsigned int woodTexture;
 //    unsigned int loadTexture(char const * path);
-    float near_plane = 0.1f, far_plane = 7.5f;
+    float near_plane = 0.1f, far_plane = 15.5f;
 
     float movImage = 0;
     HUD hud;
@@ -116,7 +116,7 @@ namespace Game {
 
         // build and compile our shader program
         // ------------------------------------
-        Shader temp("../../res/shaders/shadowShader.vert", "../../res/shaders/shadowShader.frag");
+        Shader temp("../../res/shaders/shadows/shadowShader.vert", "../../res/shaders/shadows/shadowShader.frag");
         shader = temp;
 
 //        woodTexture = loadTexture(FileSystem::getPath("resources/textures/tlo.png").c_str());
@@ -150,10 +150,10 @@ namespace Game {
 
 
 
-        Shader tempSimpleDepthShader("../../res/shaders/depthShader.vert", "../../res/shaders/depthShader.frag");
+        Shader tempSimpleDepthShader("../../res/shaders/shadows/depthShader.vert", "../../res/shaders/shadows/depthShader.frag");
         simpleDepthShader = tempSimpleDepthShader;
 
-        Shader tempDebugDepthQuad("../../res/shaders/debugShadow.vert", "../../res/shaders/debugShadow.frag");
+        Shader tempDebugDepthQuad("../../res/shaders/shadows/debugShadow.vert", "../../res/shaders/shadows/debugShadow.frag");
         debugDepthQuad = tempDebugDepthQuad;
 
 
