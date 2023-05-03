@@ -18,11 +18,14 @@
 #include "MovingObject.h"
 #include "Object3D.h"
 #include "Parser.h"
+#include "Camera.h"
 
 
 namespace Engine {
     extern float deltaTime;
     extern Parser parser;
+    extern int SCR_WIDTH;
+    extern int SCR_HEIGHT;
 
     void ImGui();
     int Init();
@@ -59,7 +62,7 @@ namespace Engine {
     void renderSpotLights(Shader shader);
 
     void moveObjects();
-    void drawObjects();
+    void drawObjects(Camera camera);
 
     void terminate();
     void resolveCollisions();
@@ -82,4 +85,5 @@ namespace Engine {
     int initGLandImGui();
 
     GLFWwindow* getWindow();
+
 }

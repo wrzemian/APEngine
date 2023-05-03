@@ -5,11 +5,12 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "imgui.h"
+#include "MovingObject.h"
 #include <vector>
 
 
-const int SCR_WIDTH = 1000;
-const int SCR_HEIGHT = 800;
+extern int SCR_WIDTH;
+extern int SCR_HEIGHT;
 
 
 enum Camera_Movement {
@@ -20,31 +21,21 @@ enum Camera_Movement {
 };
 
 // Default camera values
-const float YAW = -90.0f;
-const float PITCH = 0.0f;
-const float SPEED = 2.5f;
-const float SENSITIVITY = 0.1f;
-const float ZOOM = 45.0f;
-bool isBlocked = false;
-bool isFound = false;
-
-
-//glm::mat4 viewProjection = projection * view;
-
-bool CalculateLook = false;
-glm::vec3 pozycjaO;
-
-
-class vec3;
-
-class vec3;
-
-class vec3;
+extern float YAW;
+extern float PITCH;
+extern float SPEED;
+extern float SENSITIVITY;
+extern float ZOOM;
+extern bool isBlocked;
+extern bool isFound;
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 class Camera : public IGui
 {
+
+
 public:
+
     glm::mat4 viewProjection = projection * view;
     // camera Attributes
     glm::vec3 Position;
@@ -96,9 +87,10 @@ public:
         ImGui::SliderFloat("position Y", &Position.y, -100.0f, 100.0f);
         ImGui::SliderFloat("position Z", &Position.z, -100.0f, 100.f);
 
-        ImGui::SliderFloat("target X", &Look.x, -20.0f, 20.0f);
-        ImGui::SliderFloat("target Y", &Look.y, -20.0f, 20.0f);
-        ImGui::SliderFloat("target Z", &Look.z, -20.0f, 20.f);
+        ImGui::SliderFloat("target X", &Front.x, -1.0f, 1.0f);
+        ImGui::SliderFloat("target Y", &Front.y, -1.0f, 1.0f);
+        ImGui::SliderFloat("target Z", &Front.z, -1.0f, 1.f);
+         ImGui::SliderFloat("zoom", &Zoom, 0.0f, 100.f);
         ImGui::Checkbox("Lock target point", &isBlocked);
         if(ImGui::Button("Calculate Lock target Point")) {
             Look = Look - Position;

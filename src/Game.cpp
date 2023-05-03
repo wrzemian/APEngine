@@ -32,7 +32,6 @@
 #include "alc.h"
 
 
-
 namespace Game {
     void processInput();
     float imgMOv=0;
@@ -163,7 +162,7 @@ namespace Game {
         //player1.Move();
 
         Engine::moveObjects();
-        Engine::drawObjects();
+        Engine::drawObjects(camera);
 
 
         //player1.Draw();
@@ -189,9 +188,9 @@ namespace Game {
         //camera
 
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
-        glm:: mat4 view = camera.getView(player1);
+        glm:: mat4 view = camera.GetViewMatrix();
 
         shader.use();
         shader.setMat4("projectionView", projection * view);

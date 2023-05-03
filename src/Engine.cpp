@@ -16,7 +16,7 @@
 #include "../include/Hitbox.h"
 #include "../include/Object3D.h"
 #include "../include/MovingObject.h"
-
+#include "../include/FrustumOpitmizer.h"
 
 
 namespace Engine {
@@ -28,8 +28,11 @@ namespace Engine {
     float frameStart = 0;
     float deltaTime = 0;
 
-    const int SCR_WIDTH = 1000;
-    const int SCR_HEIGHT = 800;
+    unsigned int displayCounter = 0;
+    unsigned int totalCounter = 0;
+
+    int SCR_WIDTH = 1000;
+    int SCR_HEIGHT = 800;
 
     std::vector<Hitbox*> allHitboxes;
     std::vector<IGui*> allImgui;
@@ -175,9 +178,22 @@ namespace Engine {
         }
     }
 
-    void drawObjects() {
+    void drawObjects(Camera camera) {
+        displayCounter = 0;
+        totalCounter = 0;
+        const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
-            object->Draw();
+//                object->Draw();
+            Entity test(object->_model);
+            test.transform.setLocalPosition({0, 0, 0});
+            test.transform.setLocalScale({1.0f, 1.0f, 1.0f});
+
+            if (test.boundingVolume->isOnFrustum(camFrustum, test.transform))
+            {
+                object->Draw();
+                displayCounter++;
+            }
+            totalCounter++;
         }
     }
 
@@ -188,7 +204,8 @@ namespace Engine {
 
         ImGui::Text("deltaTime: %f", Engine::deltaTime);
         ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
-
+        ImGui::Text("displayed: %d", displayCounter);
+        ImGui::Text("total: %d", totalCounter);
         ImGui::End();
     }
 
