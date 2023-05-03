@@ -184,11 +184,13 @@ namespace Engine {
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
 //                object->Draw();
+            object->_transform.computeModelMatrix();
             Entity test(object->_model);
-            test.transform.setLocalPosition({0, 0, 0});
-            test.transform.setLocalScale({1.0f, 1.0f, 1.0f});
+//            test.transform.setLocalPosition(object->_transform._position );
+//            test.transform.setLocalScale(object->_transform._scale);
+//            test.transform.setLocalRotation(object->_transform._rotation);
 
-            if (test.boundingVolume->isOnFrustum(camFrustum, test.transform))
+            if (test.boundingVolume->isOnFrustum(camFrustum, object->_transform))
             {
                 object->Draw();
                 displayCounter++;

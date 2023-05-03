@@ -41,9 +41,9 @@ void Object3D::ImGui() {
     ImGui::SliderFloat("rotation Y", &_transform._rotation.y, -6.5, 6.5f);
     ImGui::SliderFloat("rotation Z", &_transform._rotation.z, -6.5, 6.5f);
 
-    ImGui::SliderFloat("position X", &_transform._position.x, -20.0f, 20.0f);
-    ImGui::SliderFloat("position Y", &_transform._position.y, -20.0f, 20.0f);
-    ImGui::SliderFloat("position Z", &_transform._position.z, -20.0f, 20.0f);
+    ImGui::SliderFloat("position X", &_transform._position.x, -30.0f, 30.0f);
+    ImGui::SliderFloat("position Y", &_transform._position.y, -30.0f, 30.0f);
+    ImGui::SliderFloat("position Z", &_transform._position.z, -30.0f, 30.0f);
 
     if (ImGui::Button("Reset Scale")) {
         _transform._scale = glm::vec3(1,1,1);
