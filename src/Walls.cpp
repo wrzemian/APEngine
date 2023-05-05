@@ -58,6 +58,8 @@ void Walls::calculateHitboxes() {
 
         spdlog::info("Hitbox from ({}, {}, {}) to ({}, {}, {})", minX, minY, minZ, maxX, maxY, maxZ);
 
+        hitbox->isRendered = false;
+
         hitboxes.push_back(hitbox);
     }
 }

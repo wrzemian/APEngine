@@ -239,7 +239,9 @@ namespace Engine {
 
     void renderImgui() {
         for(IGui* gui: allImgui) {
-            gui->ImGui();
+            if(gui->isRendered) {
+                gui->ImGui();
+            }
         }
     }
 

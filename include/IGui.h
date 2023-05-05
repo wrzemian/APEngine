@@ -12,6 +12,8 @@
 class IGui {
 
 public:
+    bool isRendered;
+
     IGui();
 
     virtual ~IGui();
