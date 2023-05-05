@@ -93,6 +93,8 @@ Hitbox::Hitbox() {
     _min = glm::vec3(-1, -1, -1);
     _max = glm::vec3(1, 1, 1);
 
+    spdlog::warn("hitbox constructor");
+
     IGui::setWindowName("hitbox");
     Engine::addHitbox(this);
     //Engine::addImgui(this);

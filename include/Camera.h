@@ -58,6 +58,8 @@ public:
     // constructor with vectors
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
+        spdlog::warn("camera constructor");
+
         Position = position;
         WorldUp = up;
         Yaw = yaw;
@@ -69,6 +71,8 @@ public:
     // constructor with scalar values
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
+        spdlog::warn("camera constructor");
+
         Position = glm::vec3(posX, posY, posZ);
         WorldUp = glm::vec3(upX, upY, upZ);
         Yaw = yaw;
@@ -77,6 +81,9 @@ public:
         updateCameraVectors();
     }
 
+    ~Camera() {
+        spdlog::warn("camera destructor");
+    }
 
      void ImGui(){
 

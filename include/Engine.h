@@ -62,7 +62,7 @@ namespace Engine {
     void renderSpotLights(Shader shader);
 
     void moveObjects();
-    void drawObjects(Camera camera);
+    void drawObjects(const Camera& camera);
 
     void terminate();
     void resolveCollisions();

@@ -110,7 +110,7 @@ namespace Engine {
     }
 
     void removeObject(Object3D* object) {
-        spdlog::warn("moving object");
+        spdlog::warn("removing object");
         std::erase(allObjects, object);
     }
 
@@ -178,7 +178,7 @@ namespace Engine {
         }
     }
 
-    void drawObjects(Camera camera) {
+    void drawObjects(const Camera& camera) {
         displayCounter = 0;
         totalCounter = 0;
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
