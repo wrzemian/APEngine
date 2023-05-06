@@ -53,7 +53,7 @@ namespace Game {
     GLfloat deltaTime = 0.0f;
     GLfloat lastFrame = 0.0f;
 
-    GLfloat movementSpeed = 1.0f;
+    GLfloat movementSpeed = 10.0f;
 
 
     DirectionalLight dirLight;
@@ -66,8 +66,12 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
-        ALCdevice *device;
+        ALCdevice const *device;
         device = alcOpenDevice(NULL);
+
+        camera.Position = glm::vec3(21, 5, 11);
+        camera.Front = glm::vec3(-0.6, -0.02f, -0.02f);
+        camera.Zoom = 46;
 
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_W);
@@ -88,6 +92,7 @@ namespace Game {
 
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
+
 
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
 //        wagon.loadModel("../../res/models/1level/1level.obj");
@@ -223,13 +228,20 @@ namespace Game {
     void processInput()
     {
         if (inputSystem.GetKey(GLFW_KEY_W))
-            player1._transform._position.z += -movementSpeed;
+            player1._velocity.z = -movementSpeed;
+        else if (inputSystem.GetKey(GLFW_KEY_S))
+            player1._velocity.z = movementSpeed;
+        else
+            player1._velocity.z = 0;
+
+
         if (inputSystem.GetKey(GLFW_KEY_A))
-            player1._transform._position.x += -movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_S))
-            player1._transform._position.z += movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_D))
-            player1._transform._position.x += movementSpeed;
+            player1._velocity.x = -movementSpeed;
+        else if (inputSystem.GetKey(GLFW_KEY_D))
+            player1._velocity.x = movementSpeed;
+        else
+            player1._velocity.x = 0;
+
         if (inputSystem.GetKey(GLFW_KEY_SPACE))
             player1.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
         if (inputSystem.GetKey(GLFW_KEY_UP))
@@ -243,8 +255,8 @@ namespace Game {
         if (inputSystem.GetKey(GLFW_KEY_KP_1))
             player2.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
 
-        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
-        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
+//        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
+//        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
     }
 
 };

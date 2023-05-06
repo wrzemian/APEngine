@@ -97,7 +97,7 @@ public:
         ImGui::SliderFloat("target X", &Front.x, -1.0f, 1.0f);
         ImGui::SliderFloat("target Y", &Front.y, -1.0f, 1.0f);
         ImGui::SliderFloat("target Z", &Front.z, -1.0f, 1.f);
-         ImGui::SliderFloat("zoom", &Zoom, 0.0f, 100.f);
+        ImGui::SliderFloat("zoom", &Zoom, 0.0f, 100.f);
         ImGui::Checkbox("Lock target point", &isBlocked);
         if(ImGui::Button("Calculate Lock target Point")) {
             Look = Look - Position;
@@ -128,7 +128,7 @@ public:
 
 
 
-    void followObject(MovingObject& kostka){
+    void followObject(MovingObject const& kostka){
         if(isFound){
             Position.x = kostka._transform._position.x;
             Position.y = kostka._transform._position.y + 5;

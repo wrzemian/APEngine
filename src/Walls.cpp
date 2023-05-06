@@ -45,7 +45,7 @@ void Walls::calculateHitboxes() {
 
 //        std::unique_ptr<Hitbox> hitbox = std::make_unique<Hitbox>();
  //      Hitbox hitbox; //TODO: create hitbox and save it to list
-        Hitbox* hitbox = new Hitbox();
+        auto* hitbox = new Hitbox();
         hitbox->Create(this);
 
         hitbox->_min.x = minX;
@@ -56,7 +56,13 @@ void Walls::calculateHitboxes() {
         hitbox->_max.y = maxY;
         hitbox->_max.z = maxZ;
 
-        spdlog::info("Hitbox from ({}, {}, {}) to ({}, {}, {})", minX, minY, minZ, maxX, maxY, maxZ);
+        if(hitbox->windowName == "hitbox #11") {
+            hitbox->_min.z = -11;
+            hitbox->_max.z = -10;
+        }
+
+        spdlog::info("{} from ({}, {}, {}) to ({}, {}, {})", hitbox->windowName, minX, minY, minZ, maxX, maxY, maxZ);
+
 
         hitbox->isRendered = false;
 

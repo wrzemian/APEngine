@@ -43,13 +43,13 @@ void Hitbox::ImGui()  {
     ImGui::Begin(windowName.c_str());
     ImGui::SetWindowSize(ImVec2(300, 380));
 
-    ImGui::SliderFloat("min X", &_min.x, -5.0f, 5.0f);
-    ImGui::SliderFloat("min Y", &_min.y, -5.0f, 5.0f);
-    ImGui::SliderFloat("min Z", &_min.z, -5.0f, 5.0f);
+    ImGui::SliderFloat("min X", &_min.x, -20.0f, 20.0f);
+    ImGui::SliderFloat("min Y", &_min.y, -20.0f, 20.0f);
+    ImGui::SliderFloat("min Z", &_min.z, -20.0f, 20.0f);
 
-    ImGui::SliderFloat("max X", &_max.x, -5.0f, 5.0f);
-    ImGui::SliderFloat("max Y", &_max.y, -5.0f, 5.0f);
-    ImGui::SliderFloat("max Z", &_max.z, -5.0f, 5.0f);
+    ImGui::SliderFloat("max X", &_max.x, -20.0f, 20.0f);
+    ImGui::SliderFloat("max Y", &_max.y, -20.0f, 20.0f);
+    ImGui::SliderFloat("max Z", &_max.z, -20.0f, 20.0f);
 
     ImGui::SliderFloat("offset X", &_offset.x, -5, 5);
     ImGui::SliderFloat("offset Y", &_offset.y, -5, 5);

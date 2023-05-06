@@ -81,14 +81,14 @@ public:
         return model;
     }
 
-    void draw(Shader* shader, unsigned int depth) {
+    void draw(Shader const* shader, unsigned int depth) {
         for (glm::mat4 translation : allTranslations.at(depth)) {
             shader->setMat4("translation", translation);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
     }
 
-    const unsigned int getMAX_DEPTH() {
+    unsigned int getMAX_DEPTH() {
         return MAX_DEPTH;
     }
 
