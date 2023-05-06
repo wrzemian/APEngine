@@ -38,6 +38,8 @@ public:
     void Draw(glm::mat4 projectionView);
     void ImGui() override;
 
+    void calculateFromMesh(const Mesh& mesh);
+
     bool TestForIntersection(Hitbox& other);
 };
 

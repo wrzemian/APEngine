@@ -23,20 +23,20 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     }
     //spdlog::info("drawing hitbox {}", windowName);
 
-    debugShape.shader.use();
-    debugShape.shader.setVec3("offset", _offset);
-    debugShape.shader.setVec3("color", _color);
+    DebugShape::shader.use();
+    DebugShape::shader.setVec3("offset", _offset);
+    DebugShape::shader.setVec3("color", _color);
 
-    glm::mat4 model = glm::mat4(1);
+    auto model = glm::mat4(1);
     model = glm::translate(model, *_position);
     //model = glm::scale(model, _dimensions);
 
     //glm::mat4 model = glm::scale(_transform->_localTransform, _dimensions);
 
-    debugShape.shader.setMat4("model", model);
-    debugShape.shader.setMat4("projectionView", projectionView);
+    DebugShape::shader.setMat4("model", model);
+    DebugShape::shader.setMat4("projectionView", projectionView);
 
-    debugShape.DrawCube(_min, _max);
+    DebugShape::DrawCube(_min, _max);
 }
 
 void Hitbox::ImGui()  {
@@ -102,6 +102,48 @@ Hitbox::Hitbox() {
 
 Hitbox::~Hitbox() {
     Engine::removeHitbox(this);
+}
+
+void Hitbox::calculateFromMesh(const Mesh &mesh) {
+    float minX = mesh.vertices.at(0).Position.x;
+    float maxX = mesh.vertices.at(0).Position.x;
+
+    float minY = mesh.vertices.at(0).Position.y;
+    float maxY = mesh.vertices.at(0).Position.y;
+
+    float minZ = mesh.vertices.at(0).Position.z;
+    float maxZ = mesh.vertices.at(0).Position.z;
+
+    for(auto const& vertex: mesh.vertices) {
+        if(vertex.Position.x > maxX) {
+            maxX = vertex.Position.x;
+        }
+        if(vertex.Position.x < minX) {
+            minX = vertex.Position.x;
+        }
+
+        if(vertex.Position.y > maxY) {
+            maxY = vertex.Position.y;
+        }
+        if(vertex.Position.y < minY) {
+            minY = vertex.Position.y;
+        }
+
+        if(vertex.Position.z > maxZ) {
+            maxZ = vertex.Position.z;
+        }
+        if(vertex.Position.z < minZ) {
+            minZ = vertex.Position.z;
+        }
+    }
+
+    _min.x = minX;
+    _min.y = minY;
+    _min.z = minZ;
+
+    _max.x = maxX;
+    _max.y = maxY;
+    _max.z = maxZ;
 }
 
 

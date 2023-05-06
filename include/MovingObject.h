@@ -9,7 +9,7 @@
 class MovingObject : public Object3D {
 
 private:
-    typedef Object3D super;
+    using super = Object3D;
 
 public:
     MovingObject();

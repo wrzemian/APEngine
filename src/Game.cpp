@@ -47,6 +47,9 @@ namespace Game {
 
     MovingObject player1;
     MovingObject player2;
+    Hitbox p1Hitbox;
+    Hitbox p2Hitbox;
+
     Walls wagon;
 
     Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
@@ -93,6 +96,11 @@ namespace Game {
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
 
+        p1Hitbox.Create(&player1);
+        p2Hitbox.Create(&player2);
+
+        p1Hitbox.calculateFromMesh(player1._model.meshes[0]);
+        p2Hitbox.calculateFromMesh(player2._model.meshes[0]);
 
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
 //        wagon.loadModel("../../res/models/1level/1level.obj");
