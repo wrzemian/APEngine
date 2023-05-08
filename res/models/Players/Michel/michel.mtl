@@ -1,0 +1,30 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Kapelusz
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\kapelusz_Kapelusz_Normal.png
+map_Kd E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\kapelusz_Kapelusz_BaseColor.png
+map_Ns E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\kapelusz_Kapelusz_Roughness.png
+refl E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\kapelusz_Kapelusz_Metallic.png
+
+newmtl robot.001
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\first character_DefaultMaterial_Normal.png
+map_Kd E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\first character_DefaultMaterial_BaseColor.png
+map_Ns E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\first character_DefaultMaterial_Roughness.png
+refl E:\\POLITECHNIKA\\Semestr_6\\PBLrepo\\APEngine\\res\\models\\Players\\Mich3l\\first character_DefaultMaterial_Metallic.png
