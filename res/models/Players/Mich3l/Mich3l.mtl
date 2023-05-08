@@ -8,10 +8,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/Users/Kamil/Desktop/STUDIA/SEMESTR 5/Modelowanie i animacja/ZADANIE 3/tekstury/kapelusz_Kapelusz_BaseColor.png
-map_Ns C:/Users/Kamil/Desktop/STUDIA/SEMESTR 5/Modelowanie i animacja/ZADANIE 3/tekstury/kapelusz_Kapelusz_Roughness.png
-map_refl C:/Users/Kamil/Desktop/STUDIA/SEMESTR 5/Modelowanie i animacja/ZADANIE 3/tekstury/kapelusz_Kapelusz_Metallic.png
-map_Bump -bm 1.000000 C:/Users/Kamil/Desktop/STUDIA/SEMESTR 5/Modelowanie i animacja/ZADANIE 3/tekstury/kapelusz_Kapelusz_Normal.png
+map_Kd kapelusz_Kapelusz_BaseColor.png
+map_Ns kapelusz_Kapelusz_Roughness.png
+map_refl kapelusz_Kapelusz_Metallic.png
+map_Bump -bm 1.000000 kapelusz_Kapelusz_Normal.png
 
 newmtl robot.001
 Ka 1.000000 1.000000 1.000000
@@ -20,7 +20,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/postaci/first character/proba 3/first character_DefaultMaterial_BaseColor.png
-map_Ns C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/postaci/first character/proba 3/first character_DefaultMaterial_Roughness.png
-map_refl C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/postaci/first character/proba 3/first character_DefaultMaterial_Metallic.png
-map_Bump -bm 1.000000 C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/postaci/first character/proba 3/first character_DefaultMaterial_Normal.png
+map_Kd first character_DefaultMaterial_BaseColor.png
+map_Ns first character_DefaultMaterial_Roughness.png
+map_refl first character_DefaultMaterial_Metallic.png
+map_Bump -bm first character_DefaultMaterial_Normal.png

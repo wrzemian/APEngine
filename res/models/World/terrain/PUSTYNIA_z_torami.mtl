@@ -6,24 +6,24 @@ Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.003_BaseColor.png
-map_Ns C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.003_Roughness.png
-map_refl C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.003_Metallic.png
-map_Ke C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.003_Emission.png
-map_d C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.003_Alpha.png
-map_Bump -bm 1.000000 C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.003_Normal.png
+map_Kd Material.003_BaseColor.png
+map_Ns Material.003_Roughness.png
+map_refl Material.003_Metallic.png
+map_Ke Material.003_Emission.png
+map_d Material.003_Alpha.png
+map_Bump -bm 1.000000 Material.003_Normal.png
 
 newmtl Material.012
 Ka 1.000000 1.000000 1.000000
 Ks 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 1
-map_Kd C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.005_BaseColor.png
-map_Ns C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.005_Roughness.png
-map_refl C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.005_Metallic.png
-map_Ke C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.005_Emission.png
-map_d C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.005_Alpha.png
-map_Bump -bm 1.000000 C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/Material.005_Normal.png
+map_Kd Material.005_BaseColor.png
+map_Ns Material.005_Roughness.png
+map_refl Material.005_Metallic.png
+map_Ke Material.005_Emission.png
+map_d Material.005_Alpha.png
+map_Bump -bm 1.000000 Material.005_Normal.png
 
 newmtl background-01
 Ns 250.000000
@@ -40,9 +40,9 @@ Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
 illum 2
-map_Kd C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/chest_BaseColor.png
-map_Ns C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/chest_Roughness.png
-map_refl C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/chest_Metallic.png
-map_Ke C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/chest_Emission.png
-map_d C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/chest_Alpha.png
-map_Bump -bm 1.000000 C:/Users/Kamil/Desktop/STUDIA/SEMESTR 6/Modul sumatywny/świat/chest_Normal.png
+map_Kd chest_BaseColor.png
+map_Ns chest_Roughness.png
+map_refl chest_Metallic.png
+map_Ke chest_Emission.png
+map_d chest_Alpha.png
+map_Bump -bm 1.000000 chest_Normal.png
