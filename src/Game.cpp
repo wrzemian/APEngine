@@ -69,12 +69,10 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
-        ALCdevice const *device;
-        device = alcOpenDevice(NULL);
 
-        camera.Position = glm::vec3(21, 5, 11);
-        camera.Front = glm::vec3(-0.6, -0.02f, -0.02f);
-        camera.Zoom = 46;
+//        camera.Position = glm::vec3(21, 5, 11);
+//        camera.Front = glm::vec3(-0.6, -0.02f, -0.02f);
+//        camera.Zoom = 46;
 
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_W);
@@ -120,7 +118,7 @@ namespace Game {
         player2.setShader(&shader);
         wagon.setShader(&shader);
 
-        shader.setMat4("projectionView", camera.viewProjection);
+        shader.setMat4("projectionView", camera.getViewProjection());
 
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
@@ -189,7 +187,7 @@ namespace Game {
         shader.setInt("material.specular", 1);
         shader.setFloat("material.shininess", 32.0f);
         //from camera
-        shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
+        shader.setVec3("viewPos", camera.Position);
 
         Engine::renderLights(shader);
 
@@ -200,17 +198,16 @@ namespace Game {
 
         //camera
 
-        glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
-        glm:: mat4 view = camera.GetViewMatrix();
+        //glm::mat4 projection = glm::mat4(1.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = camera.GetViewMatrix();
 
         shader.use();
         shader.setMat4("projectionView", projection * view);
 
         Engine::renderHitboxes(projection * view);
 
-        camera.followObject(player1);
+//        camera.followObject(player1);
 
         Engine::resolveCollisions();
 
