@@ -110,7 +110,7 @@ namespace Engine {
     }
 
     void removeObject(Object3D* object) {
-        spdlog::warn("moving object");
+        spdlog::warn("removing object");
         std::erase(allObjects, object);
     }
 
@@ -178,19 +178,20 @@ namespace Engine {
         }
     }
 
-    void drawObjects(Camera camera) {
+    void drawObjects(const Camera& camera) {
         displayCounter = 0;
         totalCounter = 0;
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
 //                object->Draw();
-            object->_transform.computeModelMatrix();
+//            object->_transform.computeModelMatrix();
             Entity test(object->_model);
-//            test.transform.setLocalPosition(object->_transform._position );
-//            test.transform.setLocalScale(object->_transform._scale);
-//            test.transform.setLocalRotation(object->_transform._rotation);
-
-            if (test.boundingVolume->isOnFrustum(camFrustum, object->_transform))
+            test.transform.setLocalPosition(object->_transform._position);
+            test.transform.setLocalScale(object->_transform._scale);
+            test.transform.setLocalRotation(object->_transform._rotation);
+            test.transform.computeModelMatrix();
+//            if (test.boundingVolume->isOnFrustum(camFrustum, object->_transform))
+            if (test.boundingVolume->isOnFrustum(camFrustum, test.transform))
             {
                 object->Draw();
                 displayCounter++;
@@ -239,7 +240,9 @@ namespace Engine {
 
     void renderImgui() {
         for(IGui* gui: allImgui) {
-            gui->ImGui();
+            if(gui->isRendered) {
+                gui->ImGui();
+            }
         }
     }
 

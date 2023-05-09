@@ -10,7 +10,6 @@
 #include <string>
 #include <cmath>
 #include "Model.h"
-//#include "Camera.h"
 
 #include <iostream>
 

@@ -10,10 +10,15 @@
 
 
 Parser::Parser(std::string savePath) {
-this->savePath = savePath;
+    spdlog::warn("parser constructor");
+
+    this->savePath = savePath;
 }
 
-Parser::Parser() {}
+Parser::Parser() {
+    spdlog::warn("parser constructor");
+
+}
 
 void Parser::SaveJSON(rapidjson::Document d, std::string fileName) {
     std::stringstream fullPath;

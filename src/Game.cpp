@@ -53,12 +53,16 @@ namespace Game {
 
     MovingObject player1;
     MovingObject player2;
-    //Walls wagon;
 
     Camera camera(glm::vec3(0.f, 35.0f, 40.0f));
 
+    Hitbox p1Hitbox;
+    Hitbox p2Hitbox;
 
-    GLfloat movementSpeed = 1.0f;
+    Walls wagon;
+
+
+    GLfloat movementSpeed = 10.0f;
 
 
     DirectionalLight dirLight;
@@ -75,8 +79,10 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
-        ALCdevice *device;
-        device = alcOpenDevice(NULL);
+
+//        camera.Position = glm::vec3(21, 5, 11);
+//        camera.Front = glm::vec3(-0.6, -0.02f, -0.02f);
+//        camera.Zoom = 46;
 
 
         inputSystem.InputInit();
@@ -104,7 +110,14 @@ namespace Game {
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
 
-        //wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
+
+        p1Hitbox.Create(&player1);
+        p2Hitbox.Create(&player2);
+
+        p1Hitbox.calculateFromMesh(player1._model.meshes[0]);
+        p2Hitbox.calculateFromMesh(player2._model.meshes[0]);
+
+        wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
 //        wagon.loadModel("../../res/models/1level/1level.obj");
 //        wagon.calculateHitboxes();
 //        wagon.logHitboxes();
@@ -131,7 +144,7 @@ namespace Game {
         backgroundTile.GenerateRandomObjects();*/
         background.initBackground(2,-1500,1250,&shader);
 
-        shader.setMat4("projectionView", camera.viewProjection);
+        shader.setMat4("projectionView", camera.getViewProjection());
 
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
@@ -200,7 +213,7 @@ namespace Game {
         shader.setInt("material.specular", 1);
         shader.setFloat("material.shininess", 32.0f);
         //from camera
-        shader.setVec3("viewPos", glm::vec3(0.0f, 0.0f, 1.0f));
+        shader.setVec3("viewPos", camera.Position);
 
         Engine::renderLights(shader);
 
@@ -211,17 +224,16 @@ namespace Game {
 
         //camera
 
-        glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-
-        glm:: mat4 view = camera.GetViewMatrix();
+        //glm::mat4 projection = glm::mat4(1.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = camera.GetViewMatrix();
 
         shader.use();
         shader.setMat4("projectionView", projection * view);
 
         Engine::renderHitboxes(projection * view);
 
-        camera.followObject(player1);
+//        camera.followObject(player1);
 
         Engine::resolveCollisions();
 
@@ -247,13 +259,20 @@ namespace Game {
     void processInput()
     {
         if (inputSystem.GetKey(GLFW_KEY_W))
-            player1._transform._position.z += -movementSpeed;
+            player1._velocity.z = -movementSpeed;
+        else if (inputSystem.GetKey(GLFW_KEY_S))
+            player1._velocity.z = movementSpeed;
+        else
+            player1._velocity.z = 0;
+
+
         if (inputSystem.GetKey(GLFW_KEY_A))
-            player1._transform._position.x += -movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_S))
-            player1._transform._position.z += movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_D))
-            player1._transform._position.x += movementSpeed;
+            player1._velocity.x = -movementSpeed;
+        else if (inputSystem.GetKey(GLFW_KEY_D))
+            player1._velocity.x = movementSpeed;
+        else
+            player1._velocity.x = 0;
+
         if (inputSystem.GetKey(GLFW_KEY_SPACE))
             player1.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
         if (inputSystem.GetKey(GLFW_KEY_UP))
@@ -267,8 +286,8 @@ namespace Game {
         if (inputSystem.GetKey(GLFW_KEY_KP_1))
             player2.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
 
-        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
-        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
+//        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
+//        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
     }
 
 };

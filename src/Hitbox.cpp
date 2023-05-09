@@ -23,33 +23,33 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     }
     //spdlog::info("drawing hitbox {}", windowName);
 
-    debugShape.shader.use();
-    debugShape.shader.setVec3("offset", _offset);
-    debugShape.shader.setVec3("color", _color);
+    DebugShape::shader.use();
+    DebugShape::shader.setVec3("offset", _offset);
+    DebugShape::shader.setVec3("color", _color);
 
-    glm::mat4 model = glm::mat4(1);
+    auto model = glm::mat4(1);
     model = glm::translate(model, *_position);
     //model = glm::scale(model, _dimensions);
 
     //glm::mat4 model = glm::scale(_transform->_localTransform, _dimensions);
 
-    debugShape.shader.setMat4("model", model);
-    debugShape.shader.setMat4("projectionView", projectionView);
+    DebugShape::shader.setMat4("model", model);
+    DebugShape::shader.setMat4("projectionView", projectionView);
 
-    debugShape.DrawCube(_min, _max);
+    DebugShape::DrawCube(_min, _max);
 }
 
 void Hitbox::ImGui()  {
     ImGui::Begin(windowName.c_str());
     ImGui::SetWindowSize(ImVec2(300, 380));
 
-    ImGui::SliderFloat("min X", &_min.x, -5.0f, 5.0f);
-    ImGui::SliderFloat("min Y", &_min.y, -5.0f, 5.0f);
-    ImGui::SliderFloat("min Z", &_min.z, -5.0f, 5.0f);
+    ImGui::SliderFloat("min X", &_min.x, -20.0f, 20.0f);
+    ImGui::SliderFloat("min Y", &_min.y, -20.0f, 20.0f);
+    ImGui::SliderFloat("min Z", &_min.z, -20.0f, 20.0f);
 
-    ImGui::SliderFloat("max X", &_max.x, -5.0f, 5.0f);
-    ImGui::SliderFloat("max Y", &_max.y, -5.0f, 5.0f);
-    ImGui::SliderFloat("max Z", &_max.z, -5.0f, 5.0f);
+    ImGui::SliderFloat("max X", &_max.x, -20.0f, 20.0f);
+    ImGui::SliderFloat("max Y", &_max.y, -20.0f, 20.0f);
+    ImGui::SliderFloat("max Z", &_max.z, -20.0f, 20.0f);
 
     ImGui::SliderFloat("offset X", &_offset.x, -5, 5);
     ImGui::SliderFloat("offset Y", &_offset.y, -5, 5);
@@ -93,6 +93,8 @@ Hitbox::Hitbox() {
     _min = glm::vec3(-1, -1, -1);
     _max = glm::vec3(1, 1, 1);
 
+    spdlog::warn("hitbox constructor");
+
     IGui::setWindowName("hitbox");
     Engine::addHitbox(this);
     //Engine::addImgui(this);
@@ -100,6 +102,48 @@ Hitbox::Hitbox() {
 
 Hitbox::~Hitbox() {
     Engine::removeHitbox(this);
+}
+
+void Hitbox::calculateFromMesh(const Mesh &mesh) {
+    float minX = mesh.vertices.at(0).Position.x;
+    float maxX = mesh.vertices.at(0).Position.x;
+
+    float minY = mesh.vertices.at(0).Position.y;
+    float maxY = mesh.vertices.at(0).Position.y;
+
+    float minZ = mesh.vertices.at(0).Position.z;
+    float maxZ = mesh.vertices.at(0).Position.z;
+
+    for(auto const& vertex: mesh.vertices) {
+        if(vertex.Position.x > maxX) {
+            maxX = vertex.Position.x;
+        }
+        if(vertex.Position.x < minX) {
+            minX = vertex.Position.x;
+        }
+
+        if(vertex.Position.y > maxY) {
+            maxY = vertex.Position.y;
+        }
+        if(vertex.Position.y < minY) {
+            minY = vertex.Position.y;
+        }
+
+        if(vertex.Position.z > maxZ) {
+            maxZ = vertex.Position.z;
+        }
+        if(vertex.Position.z < minZ) {
+            minZ = vertex.Position.z;
+        }
+    }
+
+    _min.x = minX;
+    _min.y = minY;
+    _min.z = minZ;
+
+    _max.x = maxX;
+    _max.y = maxY;
+    _max.z = maxZ;
 }
 
 

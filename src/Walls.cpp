@@ -11,52 +11,22 @@
 
 void Walls::calculateHitboxes() {
     for(Mesh mesh: _model.meshes) {
-        float minX = mesh.vertices.at(0).Position.x;
-        float maxX = mesh.vertices.at(0).Position.x;
-
-        float minY = mesh.vertices.at(0).Position.y;
-        float maxY = mesh.vertices.at(0).Position.y;
-
-        float minZ = mesh.vertices.at(0).Position.z;
-        float maxZ = mesh.vertices.at(0).Position.z;
-
-        for(auto vertex: mesh.vertices) {
-            if(vertex.Position.x > maxX) {
-                maxX = vertex.Position.x;
-            }
-            if(vertex.Position.x < minX) {
-                minX = vertex.Position.x;
-            }
-
-            if(vertex.Position.y > maxY) {
-                maxY = vertex.Position.y;
-            }
-            if(vertex.Position.y < minY) {
-                minY = vertex.Position.y;
-            }
-
-            if(vertex.Position.z > maxZ) {
-                maxZ = vertex.Position.z;
-            }
-            if(vertex.Position.z < minZ) {
-                minZ = vertex.Position.z;
-            }
-        }
-
-//        std::unique_ptr<Hitbox> hitbox = std::make_unique<Hitbox>();
- //      Hitbox hitbox; //TODO: create hitbox and save it to list
-        Hitbox* hitbox = new Hitbox();
+        //        std::unique_ptr<Hitbox> hitbox = std::make_unique<Hitbox>();
+        auto* hitbox = new Hitbox();
+        hitbox->calculateFromMesh(mesh);
         hitbox->Create(this);
 
-        hitbox->_min.x = minX;
-        hitbox->_min.y = minY;
-        hitbox->_min.z = minZ;
 
-        hitbox->_max.x = maxX;
-        hitbox->_max.y = maxY;
-        hitbox->_max.z = maxZ;
 
-        spdlog::info("Hitbox from ({}, {}, {}) to ({}, {}, {})", minX, minY, minZ, maxX, maxY, maxZ);
+        if(hitbox->windowName == "hitbox #13") {
+            hitbox->_min.z = -11;
+            hitbox->_max.z = -10;
+        }
+
+        spdlog::info("{} from ({}, {}, {}) to ({}, {}, {})", hitbox->windowName, hitbox->_min.x, hitbox->_min.y, hitbox->_min.z,hitbox->_max.x, hitbox->_max.y, hitbox->_max.z );
+
+
+        hitbox->isRendered = false;
 
         hitboxes.push_back(hitbox);
     }

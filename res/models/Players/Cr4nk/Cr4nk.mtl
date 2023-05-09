@@ -1,0 +1,120 @@
+# Blender 3.5.1 MTL File: 'wagonfajniutki.blend'
+# www.blender.org
+
+newmtl Material.009
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+illum 2
+map_Kd DefaultMaterial_BaseColor.png
+map_Ns DefaultMaterial_Roughness.png
+map_refl DefaultMaterial_Metallic.png
+map_Ke DefaultMaterial_Emission.png
+map_d DefaultMaterial_Alpha.png
+map_Bump -bm 1.000000 DefaultMaterial_Normal.png
+
+newmtl antena.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_antena_BaseColor.png
+map_Ns crank_antena_Roughness.png
+map_refl crank_antena_Metallic.png
+map_Ke crank_antena_Emissive.png
+map_Bump -bm 1.000000 crank_antena_Normal.png
+
+newmtl cialo
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_cialo_BaseColor.png
+map_Ns crank_cialo_Roughness.png
+map_refl crank_cialo_Metallic.png
+map_Ke crank_cialo_Emissive.png
+map_Bump -bm 1.000000 crank_cialo_Normal.png
+
+newmtl glowa.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_glowa_BaseColor.png
+map_Ns crank_glowa_Roughness.png
+map_refl crank_glowa_Metallic.png
+map_Ke crank_glowa_Emissive.png
+map_Bump -bm 1.000000 crank_glowa_Normal.png
+
+newmtl kola
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_kola_BaseColor.png
+map_Ns crank_kola_Roughness.png
+map_refl crank_kola_Metallic.png
+map_Ke crank_kola_Emissive.png
+map_Bump -bm 1.000000 crank_kola_Normal.png
+
+newmtl ramiona
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_ramiona_BaseColor.png
+map_Ns crank_ramiona_Roughness.png
+map_refl crank_ramiona_Metallic.png
+map_Ke crank_ramiona_Emissive.png
+map_Bump -bm 1.000000 crank_ramiona_Normal.png
+
+newmtl rece.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_rece_BaseColor.png
+map_Ns crank_rece_Roughness.png
+map_refl crank_rece_Metallic.png
+map_Ke crank_rece_Emissive.png
+map_Bump -bm 1.000000 crank_rece_Normal.png
+
+newmtl robot.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl tracks
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_tracks_BaseColor.png
+map_Ns crank_tracks_Roughness.png
+map_refl crank_tracks_Metallic.png
+map_Ke crank_tracks_Emissive.png
+map_Bump -bm 1.000000 crank_tracks_Normal.png
+
+newmtl wewnatrzkol
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd crank_wewnatrzkol_BaseColor.png
+map_Ns crank_wewnatrzkol_Roughness.png
+map_refl crank_wewnatrzkol_Metallic.png
+map_Ke crank_wewnatrzkol_Emissive.png
+map_Bump -bm 1.000000 crank_wewnatrzkol_Normal.png
