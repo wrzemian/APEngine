@@ -118,6 +118,7 @@ namespace Game {
         p2Hitbox.calculateFromMesh(player2._model.meshes[0]);
 
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
+        wagon.setShader(&shader);
 //        wagon.loadModel("../../res/models/1level/1level.obj");
 //        wagon.calculateHitboxes();
 //        wagon.logHitboxes();
