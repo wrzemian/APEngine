@@ -17,6 +17,8 @@ class Walls : public Object3D {
 public:
     Walls() {IGui::setWindowName("Walls");}
 
+    //void setShader(const Shader& shader);
+
     virtual ~Walls();
 
     //std::vector<std::unique_ptr<Hitbox>> hitboxes;

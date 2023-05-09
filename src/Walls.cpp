@@ -125,3 +125,9 @@ void Walls::loadFromJSON(Walls temp) {
     this->_transform._position = temp._transform._position;
     this->calculateHitboxes();
 }
+
+//void Walls::setShader(const Shader &shader) {
+//    for(auto hitbox: hitboxes) {
+//       // hitbox->setShader(shader);
+//    }
+//}
