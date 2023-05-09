@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.12] - 2023-05-02
+### Added
+- added random scrolling background
+
 ## [0.0.11] - 2023-04-17
 ### Added
 - text rendering using freetype2 lib
@@ -12,6 +16,8 @@
 ## [0.0.9] - 2023-04-12
 ### Added
 - HUD
+- second player
+- players controlled by InputSystem
 
 ## [0.0.8] - 2023-04-03
 ### Fixed
