@@ -1,74 +1,92 @@
-# Blender 3.5.1 MTL File: 'wagonfajniutki.blend'
-# www.blender.org
+# Blender MTL File: 'wagonfajniutki.blend'
+# Material Count: 6
 
 newmtl drzwi
+Ns 0.000000
 Ka 1.000000 1.000000 1.000000
+Kd 0.632204 0.800000 0.559470
 Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd drzwi_drzwi_BaseColor.png
-map_Ns drzwi_drzwi_Roughness.png
-map_refl drzwi_drzwi_Metallic.png
-map_Ke drzwi_drzwi_Emissive.png
-map_Bump -bm 1.000000 drzwi_drzwi_Normal.png
+map_Bump wagonikfajny/wagonikfajny/drzwi_drzwi_Normal.png
+map_Kd wagonikfajny/wagonikfajny/drzwi_drzwi_BaseColor.png
+map_Ke wagonikfajny/wagonikfajny/drzwi_drzwi_Emissive.png
+map_Ns wagonikfajny/wagonikfajny/drzwi_drzwi_Roughness.png
+refl wagonikfajny/wagonikfajny/drzwi_drzwi_Metallic.png
 
 newmtl platforma
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
+Kd 0.787911 0.800000 0.436190
 Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd wagonfajniutki2_platforma_BaseColor.png
-map_Ns wagonfajniutki2_platforma_Roughness.png
-map_refl wagonfajniutki2_platforma_Metallic.png
-map_Ke wagonfajniutki2_platforma_Emissive.png
-map_Bump -bm 1.000000 wagonfajniutki2_platforma_Normal.png
+map_Bump wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Normal.png
+map_Kd wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_BaseColor.png
+map_Ke wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Emissive.png
+map_Ns wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Roughness.png
+refl wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Metallic.png
 
 newmtl platforma2
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
 Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd wagonfajniutki2_platforma2_BaseColor.png
-map_Ns wagonfajniutki2_platforma_Roughness.png
-map_refl wagonfajniutki2_platforma_Metallic.png
-map_Ke wagonfajniutki2_platforma_Emissive.png
-map_Bump -bm 1.000000 wagonfajniutki2_platforma_Normal.png
+map_Bump wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Normal.png
+map_Kd wagonikfajny/wagonikfajny/wagonfajniutki2_platforma2_BaseColor.png
+map_Ke wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Emissive.png
+map_Ns wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Roughness.png
+refl wagonikfajny/wagonikfajny/wagonfajniutki2_platforma_Metallic.png
 
 newmtl plytka
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
+Kd 0.329891 0.329891 0.329891
 Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd wagonfajniutki2_plytka_BaseColor.png
-map_Ns wagonfajniutki2_plytka_Roughness.png
-map_refl wagonfajniutki2_plytka_Metallic.png
-map_Ke wagonfajniutki2_plytka_Emissive.png
-map_Bump -bm 1.000000 wagonfajniutki2_plytka_Normal.png
+map_Bump wagonikfajny/wagonikfajny/wagonfajniutki2_plytka_Normal.png
+map_Kd wagonikfajny/wagonikfajny/wagonfajniutki2_plytka_BaseColor.png
+map_Ke wagonikfajny/wagonikfajny/wagonfajniutki2_plytka_Emissive.png
+map_Ns wagonikfajny/wagonikfajny/wagonfajniutki2_plytka_Roughness.png
+refl wagonikfajny/wagonikfajny/wagonfajniutki2_plytka_Metallic.png
 
 newmtl przycisk
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.009732 0.000000
 Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd wagonfajniutki2_przycisk_BaseColor.png
-map_Ns wagonfajniutki2_przycisk_Roughness.png
-map_refl wagonfajniutki2_przycisk_Metallic.png
-map_Ke wagonfajniutki2_przycisk_Emissive.png
-map_Bump -bm 1.000000 wagonfajniutki2_przycisk_Normal.png
+map_Bump wagonikfajny/wagonikfajny/wagonfajniutki2_przycisk_Normal.png
+map_Kd wagonikfajny/wagonikfajny/wagonfajniutki2_przycisk_BaseColor.png
+map_Ke wagonikfajny/wagonikfajny/wagonfajniutki2_przycisk_Emissive.png
+map_Ns wagonikfajny/wagonikfajny/wagonfajniutki2_przycisk_Roughness.png
+refl wagonikfajny/wagonikfajny/wagonfajniutki2_przycisk_Metallic.png
 
 newmtl samwagon
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
 Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd wagonfajniutki2_samwagon_BaseColor.png
-map_Ns wagonfajniutki2_samwagon_Roughness.png
-map_refl wagonfajniutki2_samwagon_Metallic.png
-map_Ke wagonfajniutki2_samwagon_Emissive.png
-map_Bump -bm 1.000000 wagonfajniutki2_samwagon_Normal.png
+map_Bump wagonikfajny/wagonikfajny/wagonfajniutki2_samwagon_Normal.png
+map_Kd wagonikfajny/wagonikfajny/wagonfajniutki2_samwagon_BaseColor.png
+map_Ke wagonikfajny/wagonikfajny/wagonfajniutki2_samwagon_Emissive.png
+map_Ns wagonikfajny/wagonikfajny/wagonfajniutki2_samwagon_Roughness.png
+refl wagonikfajny/wagonikfajny/wagonfajniutki2_samwagon_Metallic.png
