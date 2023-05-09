@@ -115,8 +115,8 @@ public:
         ImGui::SliderFloat("position Y", &Position.y, -100.0f, 100.0f);
         ImGui::SliderFloat("position Z", &Position.z, -100.0f, 100.f);
 
-        ImGui::SliderFloat("rotate X", &degX, -89.0f, 89.0f);
-        ImGui::SliderFloat("rotate Y", &degY, -89.0f, 89.0f);
+        ImGui::SliderFloat("rotate X", &degX, -180.0f, 180.0f);
+        ImGui::SliderFloat("rotate Y", &degY, -180.0f, 180.0f);
         rotate(degX, degY);
         ImGui::Checkbox("Lock target point", &isBlocked);
         if(ImGui::Button("Calculate Lock target Point")) {
