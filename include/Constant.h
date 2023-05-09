@@ -18,7 +18,7 @@ public:
 
 
     void initConstant();
-    void renderConstant();
+    void renderConstant(double x, double y, double z);
 
     Constant();
 };

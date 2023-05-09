@@ -15,7 +15,7 @@ public:
 
     void initAnimation();
 
-    void renderAnimation(float time);
+    void renderAnimation(float time, float x, float y, float z);
 private:
     Shader animationShader;
     GLuint animationShaderProgram;

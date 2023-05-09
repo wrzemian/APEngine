@@ -192,8 +192,8 @@ namespace Game {
         movImage -= 0.1;
 
         float time = static_cast<float>(glfwGetTime());
-        animation.renderAnimation(time);
-        constant.renderConstant();
+        animation.renderAnimation(time,2,520,1);
+        constant.renderConstant(2,550,1);
         hud.renderImage(imgMOv);
 
         //player1.Move();

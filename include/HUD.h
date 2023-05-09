@@ -17,25 +17,6 @@
 bool isVisable = false;
 
 
-// Shader utility function
-GLuint compileShader(const GLchar *source, GLenum type) {
-    GLuint shader = glCreateShader(type);
-    glShaderSource(shader, 1, &source, nullptr);
-    glCompileShader(shader);
-
-    GLint success;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        GLchar infoLog[512];
-        glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-        std::cerr << "Shader compilation failed:\n" << infoLog << std::endl;
-        glDeleteShader(shader);
-        return 0;
-    }
-
-    return shader;
-}
-
 class HUD : public IGui{
 public:
     struct Character {
@@ -160,6 +141,67 @@ public:
         ImGui::End();
     }
 
+
+//    void initText(const std::string& fontPath) {
+//        glEnable(GL_BLEND);
+//        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//        glGenVertexArrays(1, &vao);
+//        glGenBuffers(1, &vbo);
+//        glBindVertexArray(vao);
+//        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+//        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+//        glEnableVertexAttribArray(0);
+//        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), nullptr);
+//        glBindBuffer(GL_ARRAY_BUFFER, 0);
+//        glBindVertexArray(0);
+//
+//        if (FT_Init_FreeType(&library)) {
+//            std::cerr << "Error: Could not initialize FreeType library" << std::endl;
+//            return;
+//        }
+//
+//        if (FT_New_Face(library, fontPath.c_str(), 0, &face)) {
+//            std::cerr << "Error: Failed to load font: here " << fontPath << std::endl;
+//            return;
+//        }
+//
+//        FT_Set_Pixel_Sizes(face, 0, 48);
+//
+//        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+//        loadCharacters();
+//    }
+//
+//    void renderText(const std::string& text, GLfloat x, GLfloat y, GLfloat scale, const glm::vec3& color) {
+//        textShader.use();
+//        textShader.setVec3("textColor", color.x, color.y, color.z);
+//        textShader.setMat4("projection", projection);
+//        glBindVertexArray(vao);
+//
+//        for (const char& c : text) {
+//            Character ch = characters[c];
+//            GLfloat xpos = x + ch.bearing.x * scale;
+//            GLfloat ypos = y - (ch.size.y - ch.bearing.y) * scale;
+//            GLfloat w = ch.size.x * scale;
+//            GLfloat h = ch.size.y * scale;
+//            GLfloat vertices[6][4] = {
+//                    {xpos,     ypos + h,   0.0, 0.0},
+//                    {xpos,     ypos,       0.0, 1.0},
+//                    {xpos + w, ypos,       1.0, 1.0},
+//                    {xpos,     ypos + h,   0.0, 0.0},
+//                    {xpos + w, ypos,       1.0, 1.0},
+//                    {xpos + w, ypos + h,   1.0, 0.0}
+//            };
+//            glBindTexture(GL_TEXTURE_2D, ch.textureID);
+//            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+//            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+//            glBindBuffer(GL_ARRAY_BUFFER, 0);
+//            glDrawArrays(GL_TRIANGLES, 0, 6);
+//            x += (ch.advance >> 6) * scale;
+//        }
+//        glBindVertexArray(0);
+//        glBindTexture(GL_TEXTURE_2D, 0);
+//    }
+
     void initText(const std::string &fontPath) {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -224,13 +266,18 @@ public:
 
 private:
 public:
-    explicit HUD(Shader shader) : shader(shader) {
+    explicit HUD(Shader shader, Shader textShader) : shader(shader), textShader(textShader) {
        this->shader = shader;
+       this -> textShader = textShader;
    }
+
+    explicit HUD(Shader shader) : shader(shader) {
+        this->shader = shader;
+    }
 
 private:
     // Private members
-    Shader shader,textShader;
+    Shader shader, textShader;
     GLFWwindow *window;
     GLuint animationShaderProgram;
 
@@ -273,6 +320,7 @@ private:
         }
         glBindTexture(GL_TEXTURE_2D, 0);
     }
+
     void createShaderProgram() {
         const GLchar *vertexShaderSource = R"(
         #version 330 core
