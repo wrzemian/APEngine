@@ -51,6 +51,8 @@ public:
     float MovementSpeed;
     float MouseSensitivity;
     float Zoom;
+    float degX;
+    float degY;
 
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
@@ -85,7 +87,26 @@ public:
         spdlog::warn("camera destructor");
     }
 
-     void ImGui(){
+    void rotate(float xdeg, float ydeg, GLboolean constrainPitch = true)
+    {
+
+        Yaw   = xdeg;
+        Pitch = ydeg;
+
+        // make sure that when pitch is out of bounds, screen doesn't get flipped
+        if (constrainPitch)
+        {
+            if (Pitch > 89.0f)
+                Pitch = 89.0f;
+            if (Pitch < -89.0f)
+                Pitch = -89.0f;
+        }
+
+        // update Front, Right and Up Vectors using the updated Euler angles
+        updateCameraVectors();
+    }
+
+    void ImGui(){
 
         ImGui::Begin("Camera");
         ImGui::SetWindowSize(ImVec2(300, 400));
@@ -94,10 +115,9 @@ public:
         ImGui::SliderFloat("position Y", &Position.y, -100.0f, 100.0f);
         ImGui::SliderFloat("position Z", &Position.z, -100.0f, 100.f);
 
-        ImGui::SliderFloat("target X", &Front.x, -1.0f, 1.0f);
-        ImGui::SliderFloat("target Y", &Front.y, -1.0f, 1.0f);
-        ImGui::SliderFloat("target Z", &Front.z, -1.0f, 1.f);
-        ImGui::SliderFloat("zoom", &Zoom, 0.0f, 100.f);
+        ImGui::SliderFloat("rotate X", &degX, -89.0f, 89.0f);
+        ImGui::SliderFloat("rotate Y", &degY, -89.0f, 89.0f);
+        rotate(degX, degY);
         ImGui::Checkbox("Lock target point", &isBlocked);
         if(ImGui::Button("Calculate Lock target Point")) {
             Look = Look - Position;
@@ -176,9 +196,7 @@ private:
         Front = glm::normalize(front);
         // also re-calculate the Right and Up vector
         Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-        Up = glm::normalize(glm::cross(Right, Front));
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -22.0f));
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        Up    = glm::normalize(glm::cross(Right, Front));
     }
 
 
