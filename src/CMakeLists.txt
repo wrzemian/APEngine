@@ -18,7 +18,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		../include/Mesh.h ../include/Model.h lights/AmbientLight.cpp ../include/lights/AmbientLight.h
 		lights/DirectionalLight.cpp ../include/lights/DirectionalLight.h lights/PointLight.cpp
 		../include/lights/PointLight.h lights/SpotLight.cpp ../include/lights/SpotLight.h ../include/Transform.h
-		../include/Scene.h ../include/Object3D.h Object3D.cpp ../include/Camera.h MovingObject.cpp ../include/MovingObject.h Hitbox.cpp ../include/Hitbox.h ../include/DebugShape.h DebugShape.cpp InputSystem.cpp ../include/InputSystem.h Parser.cpp ../include/Parser.h ../include/HUD.h ../include/IHitbox.h ../include/IGui.h IGui.cpp IHitbox.cpp Walls.cpp ../include/Walls.h ../typedef.h Animation.cpp ../include/Animation.h Constant.cpp ../include/Constant.h ../include/FrustumOpitmizer.h FrustumOptimizer.cpp Camera.cpp)
+		../include/Scene.h ../include/Object3D.h Object3D.cpp ../include/Camera.h MovingObject.cpp ../include/MovingObject.h Hitbox.cpp ../include/Hitbox.h ../include/DebugShape.h DebugShape.cpp InputSystem.cpp ../include/InputSystem.h Parser.cpp ../include/Parser.h ../include/HUD.h ../include/IHitbox.h ../include/IGui.h IGui.cpp IHitbox.cpp Walls.cpp ../include/Walls.h ../typedef.h Animation.cpp ../include/Animation.h Constant.cpp ../include/Constant.h ../include/FrustumOpitmizer.h FrustumOptimizer.cpp Camera.cpp Rock.cpp ../include/Rock.h ../include/Rock.h Rock.cpp Background.cpp ../include/Background.h ../include/Background.h BackgroundTile.cpp ../include/BackgroundTile.h ../include/BackgroundTile.h Cactus.cpp ../include/Cactus.h ../include/Cactus.h BackgroundTile.cpp)
+
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE LIBRARY_SUFFIX="")

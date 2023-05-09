@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Object3D.h"
+#include "random"
 
 class MovingObject : public Object3D {
 

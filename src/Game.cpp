@@ -23,6 +23,12 @@
 #include "../include/Animation.h"
 #include "../include/Constant.h"
 
+//temporary
+#include "../include/Rock.h"
+#include "../include/Cactus.h"
+#include "../include/BackgroundTile.h"
+#include "../include/Background.h"
+
 #include "spdlog/spdlog.h"
 
 #include <ft2build.h>
@@ -47,11 +53,10 @@ namespace Game {
 
     MovingObject player1;
     MovingObject player2;
-    Walls wagon;
+    //Walls wagon;
 
-    Camera camera(glm::vec3(0.f, 5.0f, 30.0f));
-    GLfloat deltaTime = 0.0f;
-    GLfloat lastFrame = 0.0f;
+    Camera camera(glm::vec3(0.f, 35.0f, 40.0f));
+
 
     GLfloat movementSpeed = 1.0f;
 
@@ -62,12 +67,17 @@ namespace Game {
 
     InputSystem inputSystem;
 
+    //Rock rock;
+    //Cactus cactus;
+    //BackgroundTile backgroundTile;
+    Background background;
 
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
         ALCdevice *device;
         device = alcOpenDevice(NULL);
+
 
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_W);
@@ -81,6 +91,11 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
+        //rock.initRock();
+       // rock.randomizeRotation();
+        //rock.randomizeSize(1,3);
+        //cactus.initCactus();
+        //cactus.randomizeSize(1,3);
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
@@ -89,7 +104,7 @@ namespace Game {
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
 
-        wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
+        //wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
 //        wagon.loadModel("../../res/models/1level/1level.obj");
 //        wagon.calculateHitboxes();
 //        wagon.logHitboxes();
@@ -105,7 +120,16 @@ namespace Game {
 
         player1.setShader(&shader);
         player2.setShader(&shader);
-        wagon.setShader(&shader);
+        //wagon.setShader(&shader);
+
+        //rock.setShader(&shader);
+        //cactus.setShader(&shader);
+       /* backgroundTile.setShader(&shader);
+        backgroundTile.initBackgroundTile();
+        backgroundTile.SetBoundaries(100,0,-1,-100);
+        backgroundTile.SetAmountToGenerate(5,1,5,1);
+        backgroundTile.GenerateRandomObjects();*/
+        background.initBackground(2,-1500,1250,&shader);
 
         shader.setMat4("projectionView", camera.viewProjection);
 
@@ -181,8 +205,8 @@ namespace Game {
         Engine::renderLights(shader);
 
 
-
-
+        //backgroundTile.Move(-Engine::deltaTime*10);
+        background.Move(-Engine::deltaTime*40);
 
 
         //camera
