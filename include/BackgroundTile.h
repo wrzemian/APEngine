@@ -21,6 +21,8 @@ private:
     int minBoundaryX;
     int maxBoundaryZ;
     int minBoundaryZ;
+    int cactusesAmount;
+    int rocksAmount;
 public:
     BackgroundTile();
 

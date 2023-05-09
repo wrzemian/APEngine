@@ -6,7 +6,7 @@
 
 void Cactus::initCactus()
 {
-    loadModel("../../res/models/cactus/kaktus_trzon.obj");
+    loadModel("../../res/models/World/cactus/kaktus_trzon.obj");
    // cactusArm.loadModel("../../res/models/cactus/kaktus_odnoga1.obj");
 }
 

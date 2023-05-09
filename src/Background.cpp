@@ -32,6 +32,7 @@ void Background::Move(float step) {
         if(tile->_transform._position.x < leftBoarder)
         {
             tile->_transform._position.x += interval*tilesNumber;
+            tile->RegenerateRandomObjects();
         }
     }
 }

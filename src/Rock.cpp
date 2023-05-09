@@ -6,7 +6,7 @@
 #include "../include/Engine.h"
 
 void Rock::initRock() {
-    loadModel("../../res/models/rock/rock.obj");
+    loadModel("../../res/models/World/rock/rock.obj");
 }
 
 void Rock::randomizeSize(float min, float max)

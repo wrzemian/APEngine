@@ -6,7 +6,7 @@
 
 void BackgroundTile::initBackgroundTile()
 {
-    loadModel("../../res/models/world/PUSTYNIA_z_torami.obj");
+    loadModel("../../res/models/World/terrain/PUSTYNIA_z_torami.obj");
     //_transform._scale.x = 0.6f;
     //_transform._scale.y = 0.6f;
     //_transform._scale.z = 0.6f;
@@ -47,8 +47,8 @@ void BackgroundTile::SetAmountToGenerate(int maxCact,int minCact,int maxR,int mi
 
 void BackgroundTile::GenerateRandomObjects()
 {
-    int cactusesAmount = Random::get(minCactuses, maxCactuses);
-    int rocksAmount = Random::get(minRocks, maxRocks);
+    cactusesAmount = Random::get(minCactuses, maxCactuses);
+    rocksAmount = Random::get(minRocks, maxRocks);
 
     for(int i = 0 ;i < cactusesAmount;i++)
     {
@@ -67,8 +67,8 @@ void BackgroundTile::GenerateRandomObjects()
         Rock *rock = new Rock();
         rocks.push_back(rock);
         rocks[i]->_shader = _shader;
-        rocks[i]->_transform._position.x = Random::get<Random::common>(minBoundaryX, maxBoundaryX);
-        rocks[i]->_transform._position.z = Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
+        rocks[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
+        rocks[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
         rocks[i]->initRock();
         rocks[i]->randomizeRotation();
         rocks[i]->randomizeSize(1,2);
@@ -77,8 +77,20 @@ void BackgroundTile::GenerateRandomObjects()
 
 void BackgroundTile::RegenerateRandomObjects()
 {
-    cactuses.clear();
-    rocks.clear();
+    for(int i = 0 ;i < cactusesAmount;i++)
+    {
+        cactuses[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
+        cactuses[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
+        cactuses[i]->randomizeRotation();
+        cactuses[i]->randomizeSize(1,2);
+    }
+    for(int i = 0 ;i < rocksAmount;i++)
+    {
+        rocks[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
+        rocks[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
+        rocks[i]->randomizeRotation();
+        rocks[i]->randomizeSize(1,2);
+    }
 }
 
 BackgroundTile::~BackgroundTile() {
