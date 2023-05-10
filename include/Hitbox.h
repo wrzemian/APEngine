@@ -11,6 +11,8 @@
 #include "IGui.h"
 #include "Object3D.h"
 
+#include <string>
+
 class Hitbox : public IGui {
 
 enum Axis {
@@ -47,6 +49,8 @@ public:
     void calculateFromMesh(const Mesh& mesh);
 
     bool TestForIntersection(Hitbox* other);
+
+    std::string toString();
 
     HitboxType _type;
 };
