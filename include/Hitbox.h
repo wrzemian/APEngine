@@ -18,9 +18,15 @@ enum Axis {
 };
 
 public:
-    Hitbox();
+    enum HitboxType {
+        DYNAMIC, STATIC
+    };
+
+    Hitbox(HitboxType type);
 
     virtual ~Hitbox();
+
+
 
     bool draw = true;
     Object3D* _object{};
@@ -40,7 +46,9 @@ public:
 
     void calculateFromMesh(const Mesh& mesh);
 
-    bool TestForIntersection(Hitbox& other);
+    bool TestForIntersection(Hitbox* other);
+
+    HitboxType _type;
 };
 
 

@@ -12,7 +12,7 @@
 void Walls::calculateHitboxes() {
     for(Mesh mesh: _model.meshes) {
         //        std::unique_ptr<Hitbox> hitbox = std::make_unique<Hitbox>();
-        auto* hitbox = new Hitbox();
+        auto* hitbox = new Hitbox(Hitbox::STATIC);
         hitbox->calculateFromMesh(mesh);
         hitbox->Create(this);
 

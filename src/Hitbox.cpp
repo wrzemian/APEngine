@@ -67,16 +67,16 @@ void Hitbox::ImGui()  {
 
 }
 
-bool Hitbox::TestForIntersection(Hitbox &other) {
+bool Hitbox::TestForIntersection(Hitbox* other) {
     //spdlog::info("1st hitbox: ({}, {}) ({}, {})");
-    bool intersects = _position->x + _offset.x + _min.x <= other._position->x + other._offset.x + other._max.x &&
-                      _position->x + _offset.x + _max.x >= other._position->x + other._offset.x + other._min.x &&
-                      _position->y + _offset.y + _min.y <= other._position->y + other._offset.y + other._max.y &&
-                      _position->y + _offset.y + _max.y >= other._position->y + other._offset.y + other._min.y &&
-                      _position->z + _offset.z + _min.z <= other._position->z + other._offset.z + other._max.z &&
-                      _position->z + _offset.z + _max.z >= other._position->z + other._offset.z + other._min.z;
+    bool intersects = _position->x + _offset.x + _min.x <= other->_position->x + other->_offset.x + other->_max.x &&
+                      _position->x + _offset.x + _max.x >= other->_position->x + other->_offset.x + other->_min.x &&
+                      _position->y + _offset.y + _min.y <= other->_position->y + other->_offset.y + other->_max.y &&
+                      _position->y + _offset.y + _max.y >= other->_position->y + other->_offset.y + other->_min.y &&
+                      _position->z + _offset.z + _min.z <= other->_position->z + other->_offset.z + other->_max.z &&
+                      _position->z + _offset.z + _max.z >= other->_position->z + other->_offset.z + other->_min.z;
     if(intersects) {
-        _object->onCollision(other._object);
+        _object->onCollision(other->_object);
 
         _color.x = 1;
         _color.y = 0;
@@ -89,19 +89,31 @@ bool Hitbox::TestForIntersection(Hitbox &other) {
     return intersects;
 }
 
-Hitbox::Hitbox() {
+Hitbox::Hitbox(HitboxType type) {
     _min = glm::vec3(-1, -1, -1);
     _max = glm::vec3(1, 1, 1);
 
     spdlog::warn("hitbox constructor");
 
     IGui::setWindowName("hitbox");
-    Engine::addHitbox(this);
+
+    _type = type;
+    if(type == STATIC) {
+        Engine::addStaticHitbox(this);
+    }
+    if(type == DYNAMIC) {
+        Engine::addDynamicHitbox(this);
+    }
     //Engine::addImgui(this);
 }
 
 Hitbox::~Hitbox() {
-    Engine::removeHitbox(this);
+    if(_type == STATIC) {
+       Engine::removeStaticHitbox(this);
+    }
+    if(_type == DYNAMIC) {
+        Engine::removeDynamicHitbox(this);
+    }
 }
 
 void Hitbox::calculateFromMesh(const Mesh &mesh) {

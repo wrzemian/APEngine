@@ -34,7 +34,9 @@ namespace Engine {
     int SCR_WIDTH = 1000;
     int SCR_HEIGHT = 800;
 
-    std::vector<Hitbox*> allHitboxes;
+    std::vector<Hitbox*> staticHitboxes;
+    std::vector<Hitbox*> dynamicHitboxes;
+
     std::vector<IGui*> allImgui;
     std::vector<Object3D*> allObjects;
     std::vector<MovingObject*> allMovingObjects;
@@ -74,19 +76,29 @@ namespace Engine {
         }
     }
 
-    void addHitbox(Hitbox* hitbox) {
-        spdlog::warn("Hitbox added");
-        allHitboxes.push_back(hitbox);
+    void addStaticHitbox(Hitbox* hitbox) {
+        spdlog::info("Static hitbox added");
+        staticHitboxes.push_back(hitbox);
+    }
+
+    void removeStaticHitbox(Hitbox* hitbox) {
+        spdlog::info("removing static hitbox");
+        std::erase(staticHitboxes, hitbox);
+    }
+
+    void addDynamicHitbox(Hitbox* hitbox) {
+        spdlog::info("Dynamic hitbox added");
+        dynamicHitboxes.push_back(hitbox);
+    }
+
+    void removeDynamicHitbox(Hitbox* hitbox) {
+        spdlog::info("removing dynamic hitbox");
+        std::erase(dynamicHitboxes, hitbox);
     }
 
     void addImgui(IGui* imgui) {
         spdlog::warn("imgui object added, {}", imgui->windowName);
         allImgui.push_back(imgui);
-    }
-
-    void removeHitbox(Hitbox* hitbox) {
-        spdlog::error("removing hitbox");
-        std::erase(allHitboxes, hitbox);
     }
 
     void removeImgui(IGui* igui) {
@@ -247,18 +259,23 @@ namespace Engine {
     }
 
     void renderHitboxes(const glm::mat4& projectionView) {
-        for(Hitbox* hitbox: allHitboxes) {
+        for(Hitbox* hitbox: staticHitboxes) {
             hitbox->Draw(projectionView);
         }
     }
 
     void resolveCollisions() {
-
-        for(size_t i=0; i<allHitboxes.size(); i++) {
-            for (size_t j = i+1; j < allHitboxes.size(); j++) {
-                allHitboxes.at(i)->TestForIntersection(*allHitboxes.at(j));
+        for(auto dynamicHitbox: dynamicHitboxes) {
+            for(auto staticHitbox: staticHitboxes) {
+                dynamicHitbox->TestForIntersection(staticHitbox);
             }
         }
+
+//        for(size_t i=0; i < staticHitboxes.size(); i++) {
+//            for (size_t j = i+1; j < staticHitboxes.size(); j++) {
+//                staticHitboxes.at(i)->TestForIntersection(*staticHitboxes.at(j));
+//            }
+//        }
     }
 
     void LoopEnd() {

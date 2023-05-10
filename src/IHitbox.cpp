@@ -5,6 +5,6 @@
 #include "../include/Engine.h"
 
 IHitbox::IHitbox() {
-//    Engine::addHitbox(this);
+//    Engine::addStaticHitbox(this);
 }
 

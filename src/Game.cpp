@@ -56,8 +56,8 @@ namespace Game {
 
     Camera camera(glm::vec3(0.f, 35.0f, 40.0f));
 
-    Hitbox p1Hitbox;
-    Hitbox p2Hitbox;
+    Hitbox p1Hitbox(Hitbox::DYNAMIC);
+    Hitbox p2Hitbox(Hitbox::DYNAMIC);
 
     Walls wagon;
 

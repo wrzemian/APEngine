@@ -37,15 +37,17 @@ namespace Engine {
     int getObject3DIndex(Object3D* obj);
     int getMovingObjectIndex(MovingObject* obj);
 
-    void addHitbox(Hitbox* hitbox);
+    void addStaticHitbox(Hitbox* hitbox);
     void addImgui(IGui* imgui);
     void addMovingObject(MovingObject* object);
     void addObject(Object3D* object);
     void addDirLight(DirectionalLight* dirLight);
     void addPointLight(PointLight* pointLight);
     void addSpotLight(SpotLight* spotLight);
+    void addDynamicHitbox(Hitbox* hitbox);
+    void removeDynamicHitbox(Hitbox* hitbox);
 
-    void removeHitbox(Hitbox* hitbox);
+    void removeStaticHitbox(Hitbox* hitbox);
     void removeImgui(IGui* igui);
     void removeMovingObject(MovingObject* object);
     void removeObject(Object3D* object);

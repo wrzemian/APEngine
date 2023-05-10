@@ -2,7 +2,7 @@
 # www.blender.org
 
 newmtl Material.009
-Ka 1.000000 1.000000 1.000000
+Ka 1.0 1.0 1.0
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
 illum 2
