@@ -259,7 +259,10 @@ namespace Engine {
     }
 
     void renderHitboxes(const glm::mat4& projectionView) {
-        for(Hitbox* hitbox: staticHitboxes) {
+        for(auto hitbox: staticHitboxes) {
+            hitbox->Draw(projectionView);
+        }
+        for(auto hitbox: dynamicHitboxes) {
             hitbox->Draw(projectionView);
         }
     }
