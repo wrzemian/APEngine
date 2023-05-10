@@ -56,8 +56,12 @@ void MovingObject::ImGui() {
     ImGui::End();
 }
 
-void MovingObject::Move() {
-    _transform._position += _velocity * Engine::deltaTime;
+void MovingObject::Move(float deltaTime) {
+    _transform._position += _velocity * deltaTime;
+    _velocity += _gravity * deltaTime;
+
+//    pPosition += pVelocity * deltaTime + real_gravity * deltaTime * deltaTime / 2.0;
+//    pVelocity += real_gravity * deltaTime;
 }
 
 void MovingObject::onCollision(Object3D *other) {

@@ -28,7 +28,7 @@ public:
 
 
 
-    bool draw = true;
+    bool draw = false;
     Object3D* _object{};
     glm::vec3* _position{};
 

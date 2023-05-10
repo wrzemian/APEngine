@@ -185,8 +185,11 @@ namespace Engine {
     }
 
     void moveObjects(){
+        if(deltaTime > 0.01) {
+            deltaTime = 0.01;
+        }
         for(MovingObject* object: allMovingObjects) {
-            object->Move();
+            object->Move(deltaTime);
         }
     }
 

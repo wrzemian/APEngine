@@ -275,7 +275,9 @@ namespace Game {
             player1._velocity.x = 0;
 
         if (inputSystem.GetKey(GLFW_KEY_SPACE))
-            player1.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
+            player1.AddVelocity(glm::vec3(0.0f, 0.5f, 0.0f));
+
+
         if (inputSystem.GetKey(GLFW_KEY_UP))
             player2._transform._position.z += -movementSpeed;
         if (inputSystem.GetKey(GLFW_KEY_LEFT))
