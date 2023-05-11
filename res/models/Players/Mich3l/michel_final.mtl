@@ -1,7 +1,7 @@
 # Blender 3.5.1 MTL File: 'None'
 # www.blender.org
 
-newmtl Kapelusz.001
+newmtl Kapelusz
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -13,14 +13,14 @@ map_Ns kapelusz_Kapelusz_Roughness.png
 map_refl kapelusz_Kapelusz_Metallic.png
 map_Bump -bm 1.000000 kapelusz_Kapelusz_Normal.png
 
-newmtl robot.002
+newmtl robot
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd first character_DefaultMaterial_BaseColor.png
-map_Ns first character_DefaultMaterial_Roughness.png
-map_refl first character_DefaultMaterial_Metallic.png
-map_Bump -bm 1.000000 first character_DefaultMaterial_Normal.png
+map_Kd untitled_robot_BaseColor.png
+map_Ns untitled_robot_Roughness.png
+map_refl untitled_robot_Metallic.png
+map_Bump -bm 1.000000 untitled_robot_Normal.png
