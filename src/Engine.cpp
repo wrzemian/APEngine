@@ -34,6 +34,8 @@ namespace Engine {
     int SCR_WIDTH = 1000;
     int SCR_HEIGHT = 800;
 
+    bool frustum = true;
+
     std::vector<Hitbox*> staticHitboxes;
     std::vector<Hitbox*> dynamicHitboxes;
 
@@ -206,8 +208,14 @@ namespace Engine {
             test.transform.setLocalRotation(object->_transform._rotation);
             test.transform.computeModelMatrix();
 //            if (test.boundingVolume->isOnFrustum(camFrustum, object->_transform))
-            if (test.boundingVolume->isOnFrustum(camFrustum, test.transform))
-            {
+            if(frustum) {
+                if (test.boundingVolume->isOnFrustum(camFrustum, test.transform))
+                {
+                    object->Draw();
+                    displayCounter++;
+                }
+            }
+            else {
                 object->Draw();
                 displayCounter++;
             }
@@ -217,13 +225,14 @@ namespace Engine {
 
     void ImGui() {
         ImGui::Begin("Engine");
-        ImGui::SetWindowSize(ImVec2(200, 100));
+        ImGui::SetWindowSize(ImVec2(200, 150));
         //spdlog::info("deltaTime: ", Engine::deltaTime);
 
         ImGui::Text("deltaTime: %f", Engine::deltaTime);
         ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
         ImGui::Text("displayed: %d", displayCounter);
         ImGui::Text("total: %d", totalCounter);
+        ImGui::Checkbox("FRUSTUM", &frustum);
         ImGui::End();
     }
 

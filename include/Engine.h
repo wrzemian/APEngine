@@ -26,6 +26,7 @@ namespace Engine {
     extern Parser parser;
     extern int SCR_WIDTH;
     extern int SCR_HEIGHT;
+    extern bool frustum;
 
     void ImGui();
     int Init();
