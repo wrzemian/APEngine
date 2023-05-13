@@ -13,6 +13,7 @@
 #include "Object3D.h"
 #include "MovingObject.h"
 #include "Walls.h"
+#include "Camera.h"
 
 class Parser {
 private:
@@ -35,6 +36,8 @@ public:
     MovingObject CreateFromJSONMovingObject(std::string fileName);
 
     Walls CreateFromJSONWalls(std::string fileName);
+
+    Camera CreateFromJSONCam(std::string fileName);
 
 private:
     rapidjson::Document openJSON (std::string fileName);

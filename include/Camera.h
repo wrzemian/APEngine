@@ -57,6 +57,9 @@ public:
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
 
+    //constructor from .json
+    Camera(glm::vec3 position, float yaw, float pitch, float zoom);
+
     // constructor with vectors
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, -20.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
@@ -106,27 +109,9 @@ public:
         updateCameraVectors();
     }
 
-    void ImGui(){
+    void ImGui();
 
-        ImGui::Begin("Camera");
-        ImGui::SetWindowSize(ImVec2(300, 400));
-
-        ImGui::SliderFloat("position X", &Position.x, -100.0f, 100.0f);
-        ImGui::SliderFloat("position Y", &Position.y, -100.0f, 100.0f);
-        ImGui::SliderFloat("position Z", &Position.z, -100.0f, 100.f);
-
-        ImGui::SliderFloat("rotate X", &degX, -180.0f, 180.0f);
-        ImGui::SliderFloat("rotate Y", &degY, -180.0f, 180.0f);
-        rotate(degX, degY);
-        ImGui::Checkbox("Lock target point", &isBlocked);
-        if(ImGui::Button("Calculate Lock target Point")) {
-            Look = Look - Position;
-        }
-        ImGui::Checkbox("Follow object / reset kamery", &isFound);
-
-        ImGui::End();
-    }
-
+    rapidjson::Document ParseToJSON();
 
     glm::mat4 getViewProjection(){
         return projection * view;

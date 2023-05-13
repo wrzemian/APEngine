@@ -54,7 +54,7 @@ namespace Game {
     MovingObject player1;
     MovingObject player2;
 
-    Camera camera(glm::vec3(0.f, 35.0f, 40.0f));
+    Camera camera;
 
     Hitbox p1Hitbox(Hitbox::DYNAMIC);
     Hitbox p2Hitbox(Hitbox::DYNAMIC);
@@ -110,6 +110,7 @@ namespace Game {
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
 
+        camera = Engine::parser.CreateFromJSONCam("camera");
 
         p1Hitbox.Create(&player1);
         p2Hitbox.Create(&player2);

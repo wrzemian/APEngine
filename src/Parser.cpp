@@ -159,6 +159,21 @@ Walls Parser::CreateFromJSONWalls(std::string fileName) {
     return {};
 }
 
+Camera Parser::CreateFromJSONCam(std::string fileName) {
+    rapidjson::Document d = Parser::openJSON(fileName);
+    std::string type = d["type"].GetString();
+
+    if(type == "camera") {
+        glm::vec3 tempPos(d["posX"].GetFloat(), d["posY"].GetFloat(), d["posZ"].GetFloat());
+        float tempRotX = d["rotX"].GetFloat();
+        float tempRotY = d["rotY"].GetFloat();
+        float tempZoom = d["zoom"].GetFloat();
+        return {tempPos, tempRotX, tempRotY, tempZoom};
+    }
+    std::cerr << "No type matches!\n";
+    return {};
+}
+
 rapidjson::Document Parser::openJSON(std::string fileName) {
     std::stringstream fullPath;
     fullPath << savePath << "/" << fileName << ".json";
