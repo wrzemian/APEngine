@@ -6,14 +6,14 @@
 
 void BackgroundTile::initBackgroundTile()
 {
-    loadModel("../../res/models/World/terrain/PUSTYNIA_z_torami.obj");
+    loadModel("../../res/models/World/terrain/pustynia.obj");
     //_transform._scale.x = 0.6f;
-    //_transform._scale.y = 0.6f;
+    _transform._scale.y = 0.1f;
     //_transform._scale.z = 0.6f;
     //_transform._position.x = -1200;
     _transform._position.y = 0;
-    //_transform._position.z = 100;
-    _transform._rotation.y = -1.57079632679f;
+    _transform._position.z = 100;
+    _transform._rotation.y = 1.57079632679f;
 }
 
 void BackgroundTile::Move(float step)
@@ -59,9 +59,10 @@ void BackgroundTile::GenerateRandomObjects()
         cactuses[i]->_shader = _shader;
         cactuses[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
         cactuses[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
+        cactuses[i]->_transform._position.y = 0.2;
         cactuses[i]->initCactus();
         cactuses[i]->randomizeRotation();
-        cactuses[i]->randomizeSize(1,2);
+        cactuses[i]->randomizeSize(1,1.5);
     }
     for(int i = 0 ;i < rocksAmount;i++)
     {
@@ -71,6 +72,7 @@ void BackgroundTile::GenerateRandomObjects()
         rocks[i]->_shader = _shader;
         rocks[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
         rocks[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
+        rocks[i]->_transform._position.y = 0.2;
         rocks[i]->initRock();
         rocks[i]->randomizeRotation();
         rocks[i]->randomizeSize(1,2);
@@ -84,7 +86,7 @@ void BackgroundTile::RegenerateRandomObjects()
         cactuses[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
         cactuses[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
         cactuses[i]->randomizeRotation();
-        cactuses[i]->randomizeSize(1,2);
+        cactuses[i]->randomizeSize(1,1.5);
     }
     for(int i = 0 ;i < rocksAmount;i++)
     {
