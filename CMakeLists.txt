@@ -5,6 +5,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(global_settings)
 
+set(CMAKE_CXX_STANDARD 20)
+
 # ---- Dependencies ----
 add_subdirectory(thirdparty)
 

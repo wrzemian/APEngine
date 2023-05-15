@@ -4,6 +4,7 @@
 #endif //APENGINE_FRUSTUMOPITMIZER_H
 
 #include "Camera.h"
+#include <list>
 
 struct Plane
 {

@@ -369,7 +369,8 @@ namespace Engine {
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
         ImGui_ImplGlfw_InitForOpenGL(window, true);
-        ImGui_ImplOpenGL3_Init("#version 430");
+        if (__APPLE__) ImGui_ImplOpenGL3_Init("#version 330");
+        else ImGui_ImplOpenGL3_Init("#version 430");
         ImGui::StyleColorsClassic();
 
         return 0;
