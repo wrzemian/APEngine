@@ -296,7 +296,7 @@ bool    ImGui_ImplOpenGL3_Init(const char* glsl_version)
     }
     IM_ASSERT((int)strlen(glsl_version) + 2 < IM_ARRAYSIZE(bd->GlslVersionString));
     strcpy(bd->GlslVersionString, glsl_version);
-    strcat(bd->GlslVersionString, "\n");
+    strcat(bd->GlslVersionString, "\n");d
 
     // Make an arbitrary GL call (we don't actually need the result)
     // IF YOU GET A CRASH HERE: it probably means the OpenGL function loader didn't do its job. Let us know!
