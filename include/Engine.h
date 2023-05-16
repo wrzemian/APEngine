@@ -12,7 +12,6 @@
 #include <vector>
 #include <iostream>
 
-#include "IHitbox.h"
 #include "IGui.h"
 #include "Hitbox.h"
 #include "MovingObject.h"

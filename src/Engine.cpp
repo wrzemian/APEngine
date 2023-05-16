@@ -12,7 +12,7 @@
 
 #include "../include/Engine.h"
 
-#include "../include/InputSystem.h"
+#include "../include/User/InputSystem.h"
 #include "../include/Hitbox.h"
 #include "../include/Object3D.h"
 #include "../include/MovingObject.h"

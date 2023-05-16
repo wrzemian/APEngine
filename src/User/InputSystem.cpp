@@ -2,7 +2,7 @@
 // Created by Karol on 02.04.2023.
 //
 
-#include "../include/InputSystem.h"
+#include "../../include/User/InputSystem.h"
 
 
 

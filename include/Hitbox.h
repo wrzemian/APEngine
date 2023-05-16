@@ -7,7 +7,6 @@
 
 #include "Transform.h"
 #include "DebugShape.h"
-#include "IHitbox.h"
 #include "IGui.h"
 #include "Object3D.h"
 

@@ -17,11 +17,11 @@
 
 #include "../include/Parser.h"
 #include "../include/Hitbox.h"
-#include "../include/InputSystem.h"
-#include "../include/HUD.h"
+#include "../include/User/InputSystem.h"
+#include "../include/User/HUD.h"
 #include "../include/Walls.h"
-#include "../include/Animation.h"
-#include "../include/Constant.h"
+#include "../include/User/Animation.h"
+#include "../include/User/Constant.h"
 
 //temporary
 #include "../include/Rock.h"

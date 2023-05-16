@@ -1,10 +1,10 @@
-#include "../include/Animation.h"
+#include "../../include/User/Animation.h"
 #include "glm/fwd.hpp"
 #include "glm/detail/type_mat4x4.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "../include/Shader.h"
+#include "../../include/Shader.h"
 
 
 
