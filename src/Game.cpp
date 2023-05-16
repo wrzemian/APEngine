@@ -107,8 +107,8 @@ namespace Game {
         p1Hitbox.Create(&player1);
         p2Hitbox.Create(&player2);
 
-        p1Hitbox.calculateFromMesh(player1._model.meshes[0]);
-        p2Hitbox.calculateFromMesh(player2._model.meshes[0]);
+        p1Hitbox.calculateFromModel(player1._model);
+        p2Hitbox.calculateFromModel(player2._model);
 
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
         wagon.setShader(&shader);

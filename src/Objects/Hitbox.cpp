@@ -152,6 +152,17 @@ Hitbox::~Hitbox() {
     }
 }
 
+void Hitbox::calculateFromModel(const Model &model) {
+    int i = 0;
+    for(auto const& mesh: model.meshes) {
+        i++;
+        if (i==1) {
+            continue;
+        }
+        calculateFromMesh(mesh);
+    }
+}
+
 void Hitbox::calculateFromMesh(const Mesh &mesh) {
     float minX = mesh.vertices.at(0).Position.x;
     float maxX = mesh.vertices.at(0).Position.x;
@@ -185,13 +196,13 @@ void Hitbox::calculateFromMesh(const Mesh &mesh) {
         }
     }
 
-    _min.x = minX;
-    _min.y = minY;
-    _min.z = minZ;
+    minX < _min.x ? _min.x = minX : _min.x = _min.x;
+    minY < _min.y ? _min.y = minY : _min.y = _min.y;
+    minZ < _min.z ? _min.z = minZ : _min.z = _min.z;
 
-    _max.x = maxX;
-    _max.y = maxY;
-    _max.z = maxZ;
+    maxX > _max.x ? _max.x = maxX : _max.x = _max.x;
+    maxY > _max.y ? _max.y = maxY : _max.y = _max.y;
+    maxZ > _max.z ? _max.z = maxZ : _max.z = _max.z;
 }
 
 glm::vec3 Hitbox::currentMin() {
