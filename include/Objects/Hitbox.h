@@ -48,6 +48,7 @@ public:
     void ImGui() override;
 
     void calculateFromMesh(const Mesh& mesh);
+    void calculateFromModel(const Model &model);
 
     bool TestForIntersection(Hitbox* other);
 
