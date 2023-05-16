@@ -3,14 +3,13 @@
 //
 
 #pragma once
-#include "../include/Mesh.h"
-#include "../include/Object3D.h"
-#include "../include/Model.h"
-#include "../include/Hitbox.h"
+#include "Mesh.h"
+#include "Object3D.h"
+#include "Model.h"
+#include "Hitbox.h"
 #include <memory>
 
 #include <vector>
-#include "../typedef.h"
 
 class Walls : public Object3D {
 

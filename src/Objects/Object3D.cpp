@@ -2,9 +2,9 @@
 // Created by micha on 30.03.2023.
 //
 
-#include "../include/Object3D.h"
-#include "../include/Transform.h"
-#include "../include/Engine.h"
+#include "../include/Objects/Object3D.h"
+#include "../include/Objects/Transform.h"
+#include "../../include/Engine.h"
 
 Object3D::Object3D() {
     spdlog::warn("object3D constructor");

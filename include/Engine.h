@@ -13,9 +13,9 @@
 #include <iostream>
 
 #include "IGui.h"
-#include "Hitbox.h"
-#include "MovingObject.h"
-#include "Object3D.h"
+#include "Objects/Hitbox.h"
+#include "Objects/MovingObject.h"
+#include "Objects/Object3D.h"
 #include "Parser.h"
 #include "Camera.h"
 

@@ -5,8 +5,8 @@
 #pragma once
 #include "Transform.h"
 #include "Model.h"
-#include "Shader.h"
-#include "IGui.h"
+#include "../Shader.h"
+#include "../IGui.h"
 #include "document.h"
 
 class Object3D : public IGui {

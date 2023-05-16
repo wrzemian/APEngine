@@ -2,10 +2,10 @@
 // Created by micha on 02.04.2023.
 //
 
-#include "../include/Engine.h"
-#include "../include/MovingObject.h"
-#include "imgui_impl/imgui_impl_glfw.h"
-#include "imgui_impl/imgui_impl_opengl3.h"
+#include "../../include/Engine.h"
+#include "../include/Objects/MovingObject.h"
+#include "../imgui_impl/imgui_impl_glfw.h"
+#include "../imgui_impl/imgui_impl_opengl3.h"
 
 MovingObject::MovingObject() {
     //windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());

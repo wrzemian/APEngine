@@ -5,7 +5,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "imgui.h"
-#include "MovingObject.h"
+#include "Objects/MovingObject.h"
 #include <vector>
 
 

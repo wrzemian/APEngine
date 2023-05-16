@@ -5,21 +5,21 @@
 
 #include "../include/Engine.h"
 
-#include "../include/Object3D.h"
-#include "../include/MovingObject.h"
+#include "../include/Objects/Object3D.h"
+#include "../include/Objects/MovingObject.h"
 
 #include "../include/lights/DirectionalLight.h"
 #include "../include/Camera.h"
-#include "../include/DebugShape.h"
+#include "../include/Objects/DebugShape.h"
 
 #include "../include/lights/SpotLight.h"
 #include "../include/lights/PointLight.h"
 
 #include "../include/Parser.h"
-#include "../include/Hitbox.h"
+#include "../include/Objects/Hitbox.h"
 #include "../include/User/InputSystem.h"
 #include "../include/User/HUD.h"
-#include "../include/Walls.h"
+#include "../include/Objects/Walls.h"
 #include "../include/User/Animation.h"
 #include "../include/User/Constant.h"
 

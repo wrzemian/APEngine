@@ -3,7 +3,7 @@
 //
 #pragma once
 #include "Model.h"
-#include "Shader.h"
+#include "../Shader.h"
 //#include "imgui_impl/imgui_impl_opengl3_loader.h"
 
 class DebugShape

@@ -12,13 +12,35 @@ file(GLOB_RECURSE HEADER_FILES
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		Engine.cpp ../include/Engine.h
 		Game.cpp ../include/Game.h
-		Renderer.cpp
 		../include/Shader.h
-		Sierpinski.cpp
-		../include/Mesh.h ../include/Model.h lights/AmbientLight.cpp ../include/lights/AmbientLight.h
-		lights/DirectionalLight.cpp ../include/lights/DirectionalLight.h lights/PointLight.cpp
-		../include/lights/PointLight.h lights/SpotLight.cpp ../include/lights/SpotLight.h ../include/Transform.h
-		../include/Scene.h ../include/Object3D.h Object3D.cpp ../include/Camera.h MovingObject.cpp ../include/MovingObject.h Hitbox.cpp ../include/Hitbox.h ../include/DebugShape.h DebugShape.cpp User/InputSystem.cpp ../include/User/InputSystem.h Parser.cpp ../include/Parser.h ../include/User/HUD.h ../include/IGui.h IGui.cpp Walls.cpp ../include/Walls.h ../typedef.h User/Animation.cpp ../include/User/Animation.h User/Constant.cpp ../include/User/Constant.h ../include/FrustumOpitmizer.h FrustumOptimizer.cpp Camera.cpp Rock.cpp ../include/Rock.h ../include/Rock.h Rock.cpp Background.cpp ../include/Background.h ../include/Background.h BackgroundTile.cpp ../include/BackgroundTile.h ../include/BackgroundTile.h Cactus.cpp ../include/Cactus.h ../include/Cactus.h BackgroundTile.cpp)
+		lights/AmbientLight.cpp ../include/lights/AmbientLight.h
+		lights/DirectionalLight.cpp ../include/lights/DirectionalLight.h
+		lights/PointLight.cpp ../include/lights/PointLight.h
+		lights/SpotLight.cpp ../include/lights/SpotLight.h
+		../include/Objects/Mesh.h
+		../include/Objects/Model.h
+		../include/Objects/Transform.h
+		../include/Scene.h
+		../include/Objects/Object3D.h Objects/Object3D.cpp
+		../include/Camera.h
+		Objects/MovingObject.cpp ../include/Objects/MovingObject.h
+		Objects/Hitbox.cpp ../include/Objects/Hitbox.h
+		../include/Objects/DebugShape.h Objects/DebugShape.cpp
+		User/InputSystem.cpp ../include/User/InputSystem.h
+		Parser.cpp ../include/Parser.h
+		../include/User/HUD.h
+		../include/IGui.h IGui.cpp
+		Objects/Walls.cpp ../include/Objects/Walls.h
+		User/Animation.cpp
+		../include/User/Animation.h
+		User/Constant.cpp ../include/User/Constant.h
+		../include/FrustumOpitmizer.h FrustumOptimizer.cpp
+		Camera.cpp
+		Rock.cpp ../include/Rock.h
+		../include/Rock.h Rock.cpp
+		Background.cpp ../include/Background.h
+		BackgroundTile.cpp ../include/BackgroundTile.h
+		Cactus.cpp ../include/Cactus.h  )
 
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)

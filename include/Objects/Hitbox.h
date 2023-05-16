@@ -7,7 +7,7 @@
 
 #include "Transform.h"
 #include "DebugShape.h"
-#include "IGui.h"
+#include "../IGui.h"
 #include "Object3D.h"
 
 class Hitbox : public IGui {

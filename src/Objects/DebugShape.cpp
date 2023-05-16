@@ -1,7 +1,7 @@
 //
 // Created by micha on 03.04.2023.
 //
-#include "../include/DebugShape.h"
+#include "../include/Objects/DebugShape.h"
 
 #include <vector>
 

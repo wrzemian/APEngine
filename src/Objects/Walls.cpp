@@ -2,11 +2,11 @@
 // Created by micha on 21.04.2023.
 //
 
-#include "../include/Walls.h"
-#include "../include/Hitbox.h"
+#include "../include/Objects/Walls.h"
+#include "../include/Objects/wHitbox.h"
 
 #include "spdlog/spdlog.h"
-#include "../include/Engine.h"
+#include "../../include/Engine.h"
 
 
 void Walls::calculateHitboxes() {

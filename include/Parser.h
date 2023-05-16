@@ -10,9 +10,9 @@
 #include "lights/DirectionalLight.h"
 #include "lights/PointLight.h"
 #include "lights/SpotLight.h"
-#include "Object3D.h"
-#include "MovingObject.h"
-#include "Walls.h"
+#include "Objects/Object3D.h"
+#include "Objects/MovingObject.h"
+#include "Objects/Walls.h"
 #include "Camera.h"
 
 class Parser {
