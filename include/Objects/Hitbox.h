@@ -25,6 +25,10 @@ public:
 
     virtual ~Hitbox();
 
+    glm::vec3 currentMin();
+    glm::vec3 currentMax();
+    bool checkCollision(Hitbox& other);
+    void resolveCollision(Hitbox& other);
 
 
     bool draw = false;

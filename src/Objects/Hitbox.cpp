@@ -7,6 +7,8 @@
 #include "../imgui_impl/imgui_impl_glfw.h"
 #include "../imgui_impl/imgui_impl_opengl3.h"
 #include "../../include/Engine.h"
+#include "../../include/Objects/Hitbox.h"
+
 
 void Hitbox::Create(Object3D* object, glm::vec3 offset) {
     _object = object;
@@ -69,15 +71,18 @@ void Hitbox::ImGui()  {
 
 bool Hitbox::TestForIntersection(Hitbox* other) {
     //spdlog::info("1st hitbox: ({}, {}) ({}, {})");
-    bool intersects = _position->x + _offset.x + _min.x <= other->_position->x + other->_offset.x + other->_max.x &&
-                      _position->x + _offset.x + _max.x >= other->_position->x + other->_offset.x + other->_min.x &&
-                      _position->y + _offset.y + _min.y <= other->_position->y + other->_offset.y + other->_max.y &&
-                      _position->y + _offset.y + _max.y >= other->_position->y + other->_offset.y + other->_min.y &&
-                      _position->z + _offset.z + _min.z <= other->_position->z + other->_offset.z + other->_max.z &&
-                      _position->z + _offset.z + _max.z >= other->_position->z + other->_offset.z + other->_min.z;
-    if(intersects) {
-        _object->onCollision(other->_object);
+//    bool intersects = _position->x + _offset.x + _min.x <= other->_position->x + other->_offset.x + other->_max.x &&
+//                      _position->x + _offset.x + _max.x >= other->_position->x + other->_offset.x + other->_min.x &&
+//                      _position->y + _offset.y + _min.y <= other->_position->y + other->_offset.y + other->_max.y &&
+//                      _position->y + _offset.y + _max.y >= other->_position->y + other->_offset.y + other->_min.y &&
+//                      _position->z + _offset.z + _min.z <= other->_position->z + other->_offset.z + other->_max.z &&
+//                      _position->z + _offset.z + _max.z >= other->_position->z + other->_offset.z + other->_min.z;
+//
+    bool intersects = checkCollision(*other);
 
+    if(intersects) {
+        //_object->onCollision(other->_object);
+        resolveCollision(*other);
         _color.x = 1;
         _color.y = 0;
     } else {
@@ -87,6 +92,37 @@ bool Hitbox::TestForIntersection(Hitbox* other) {
 
 
     return intersects;
+}
+
+// Collision detection function
+bool Hitbox::checkCollision(Hitbox& other) {
+    auto aMin = currentMin();
+    auto aMax = currentMax();
+    auto bMin = other.currentMin();
+    auto bMax = other.currentMax();
+
+    return (aMin.x <= bMax.x) && (aMax.x >= bMin.x) &&
+           (aMin.y <= bMax.y) && (aMax.y >= bMin.y) &&
+           (aMin.z <= bMax.z) && (aMax.z >= bMin.z);
+}
+
+// Resolve the collision by moving the object out of the other one
+void Hitbox::resolveCollision(Hitbox& other) {
+    glm::vec3 overlap = currentMin() - other.currentMax();
+    glm::vec3 overlapAbs(std::abs(overlap.x), std::abs(overlap.y), std::abs(overlap.z));
+
+    // Find the smallest overlap
+    float minOverlap = std::min({overlapAbs.x, overlapAbs.y, overlapAbs.z});
+
+    // Move the object out of the other one along the smallest overlap axis
+    if (minOverlap == overlapAbs.x) {
+        _position->x -= overlap.x;
+    } else if (minOverlap == overlapAbs.y) {
+        _object->onCollision(other._object);
+        _position->y -= overlap.y;
+    } else if (minOverlap == overlapAbs.z) {
+        _position->z -= overlap.z;
+    }
 }
 
 Hitbox::Hitbox(HitboxType type) {
@@ -156,6 +192,14 @@ void Hitbox::calculateFromMesh(const Mesh &mesh) {
     _max.x = maxX;
     _max.y = maxY;
     _max.z = maxZ;
+}
+
+glm::vec3 Hitbox::currentMin() {
+    return _min + _offset + *_position;
+}
+
+glm::vec3 Hitbox::currentMax() {
+    return _max + _offset + *_position;
 }
 
 
