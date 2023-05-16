@@ -2,8 +2,8 @@
 // Created by Karol on 27.04.2023.
 //
 
-#include "../include/Rock.h"
-#include "../include/Engine.h"
+#include "../../include/Background/Rock.h"
+#include "../../include/Engine.h"
 
 void Rock::initRock() {
     loadModel("../../res/models/World/rock/rock.obj");

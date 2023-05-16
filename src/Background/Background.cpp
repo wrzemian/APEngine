@@ -2,7 +2,7 @@
 // Created by Karol on 27.04.2023.
 //
 
-#include "../include/Background.h"
+#include "../../include/Background/Background.h"
 
 void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmount, Shader* shader) {
     leftBoarder = maxLeft;

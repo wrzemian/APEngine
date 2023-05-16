@@ -20,7 +20,6 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		../include/Objects/Mesh.h
 		../include/Objects/Model.h
 		../include/Objects/Transform.h
-		../include/Scene.h
 		../include/Objects/Object3D.h Objects/Object3D.cpp
 		../include/Camera.h
 		Objects/MovingObject.cpp ../include/Objects/MovingObject.h
@@ -36,11 +35,11 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		User/Constant.cpp ../include/User/Constant.h
 		../include/FrustumOpitmizer.h FrustumOptimizer.cpp
 		Camera.cpp
-		Rock.cpp ../include/Rock.h
-		../include/Rock.h Rock.cpp
-		Background.cpp ../include/Background.h
-		BackgroundTile.cpp ../include/BackgroundTile.h
-		Cactus.cpp ../include/Cactus.h  )
+		Background/Rock.cpp ../include/Background/Rock.h
+		../include/Background/Rock.h Background/Rock.cpp
+		Background/Background.cpp ../include/Background/Background.h
+		Background/BackgroundTile.cpp ../include/Background/BackgroundTile.h
+		Background/Cactus.cpp ../include/Background/Cactus.h)
 
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)

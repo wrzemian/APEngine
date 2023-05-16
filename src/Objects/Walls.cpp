@@ -3,7 +3,7 @@
 //
 
 #include "../include/Objects/Walls.h"
-#include "../include/Objects/wHitbox.h"
+#include "../include/Objects/Hitbox.h"
 
 #include "spdlog/spdlog.h"
 #include "../../include/Engine.h"

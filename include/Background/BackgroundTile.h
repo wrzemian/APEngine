@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Objects/Object3D.h"
+#include "../Objects/Object3D.h"
 #include "Cactus.h"
 #include "Rock.h"
 class BackgroundTile: public Object3D{

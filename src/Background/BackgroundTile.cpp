@@ -2,7 +2,7 @@
 // Created by Karol on 27.04.2023.
 //
 
-#include "../include/BackgroundTile.h"
+#include "../../include/Background/BackgroundTile.h"
 
 void BackgroundTile::initBackgroundTile()
 {

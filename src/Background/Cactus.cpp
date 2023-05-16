@@ -2,7 +2,7 @@
 // Created by Karol on 27.04.2023.
 //
 
-#include "../include/Cactus.h"
+#include "../../include/Background/Cactus.h"
 
 void Cactus::initCactus()
 {

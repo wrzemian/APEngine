@@ -24,10 +24,10 @@
 #include "../include/User/Constant.h"
 
 //temporary
-#include "../include/Rock.h"
-#include "../include/Cactus.h"
-#include "../include/BackgroundTile.h"
-#include "../include/Background.h"
+#include "../include/Background/Rock.h"
+#include "../include/Background/Cactus.h"
+#include "../include/Background/BackgroundTile.h"
+#include "../include/Background/Background.h"
 
 #include "spdlog/spdlog.h"
 
