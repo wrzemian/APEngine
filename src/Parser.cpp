@@ -174,6 +174,7 @@ Camera Parser::CreateFromJSONCam(std::string fileName) {
     return {};
 }
 
+
 rapidjson::Document Parser::openJSON(std::string fileName) {
     std::stringstream fullPath;
     fullPath << savePath << "/" << fileName << ".json";

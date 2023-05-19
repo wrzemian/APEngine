@@ -39,7 +39,6 @@ public:
 
     Camera CreateFromJSONCam(std::string fileName);
 
-private:
     rapidjson::Document openJSON (std::string fileName);
 
 

@@ -9,6 +9,57 @@
 #include "../../include/Engine.h"
 #include "../../include/Objects/Hitbox.h"
 
+Hitbox::Hitbox(HitboxType type) {
+    _min = glm::vec3(-1, -1, -1);
+    _max = glm::vec3(1, 1, 1);
+
+    spdlog::warn("hitbox constructor");
+
+    IGui::setWindowName("hitbox");
+
+    _type = type;
+    if(type == STATIC) {
+        Engine::addStaticHitbox(this);
+    }
+    if(type == DYNAMIC) {
+        Engine::addDynamicHitbox(this);
+    }
+    //Engine::addImgui(this);
+}
+
+Hitbox::Hitbox(std::string fileName) {
+    spdlog::warn("hitbox JSON constructor");
+    rapidjson::Document d = Engine::parser.openJSON(fileName);
+    std::string type = d["type"].GetString();
+
+    if(type == "hitbox") {
+        if (d["_type"].GetInt() == 0){
+
+            _type = STATIC;
+        }
+        else if (d["_type"].GetInt() == 1) {
+            _type = DYNAMIC; }
+
+        _object = Engine::getObject3DById(d["object"].GetInt());
+        _position = &Engine::getObject3DById(d["object"].GetInt())->_transform._position;
+
+        _min = glm::vec3(d["minX"].GetFloat(), d["minY"].GetFloat(), d["minZ"].GetFloat());
+        _max = glm::vec3(d["maxX"].GetFloat(), d["maxY"].GetFloat(), d["maxZ"].GetFloat());
+        _color = glm::vec3(1,1,0);
+        _offset = glm::vec3(0,0,0);;
+    }
+    else
+        spdlog::error("no JSON file found");
+}
+
+Hitbox::~Hitbox() {
+    if(_type == STATIC) {
+        Engine::removeStaticHitbox(this);
+    }
+    if(_type == DYNAMIC) {
+        Engine::removeDynamicHitbox(this);
+    }
+}
 
 void Hitbox::Create(Object3D* object, glm::vec3 offset) {
     _object = object;
@@ -64,9 +115,34 @@ void Hitbox::ImGui()  {
     if (ImGui::Button("Reset Offset")) {
         _offset = glm::vec3(0,0,0);
     }
+    if (ImGui::Button("SAVE HITBOX")) {
+
+        Engine::parser.SaveJSON(this->ParseToJSON(), "hitboxes/hitbox_" + std::to_string(Engine::getObject3DIndex(_object)));
+    }
     ImGui::Checkbox("Draw: ", &draw);
     ImGui::End();
 
+}
+
+rapidjson::Document Hitbox::ParseToJSON() {
+    rapidjson::Document d;
+    d.SetObject();
+    d.AddMember("type", "hitbox", d.GetAllocator());
+    if(_type == STATIC)
+        d.AddMember("_type", 0, d.GetAllocator());
+    else if(_type == DYNAMIC)
+        d.AddMember("_type", 1, d.GetAllocator());
+    d.AddMember("object", Engine::getObject3DIndex(this->_object), d.GetAllocator());
+    d.AddMember("minX", _min.x, d.GetAllocator());
+    d.AddMember("minY", _min.y, d.GetAllocator());
+    d.AddMember("minZ", _min.z, d.GetAllocator());
+    d.AddMember("maxX", _max.x, d.GetAllocator());
+    d.AddMember("maxY", _max.y, d.GetAllocator());
+    d.AddMember("maxZ", _max.z, d.GetAllocator());
+
+
+
+    return d;
 }
 
 bool Hitbox::TestForIntersection(Hitbox* other) {
@@ -125,32 +201,6 @@ void Hitbox::resolveCollision(Hitbox& other) {
     }
 }
 
-Hitbox::Hitbox(HitboxType type) {
-    _min = glm::vec3(-1, -1, -1);
-    _max = glm::vec3(1, 1, 1);
-
-    spdlog::warn("hitbox constructor");
-
-    IGui::setWindowName("hitbox");
-
-    _type = type;
-    if(type == STATIC) {
-        Engine::addStaticHitbox(this);
-    }
-    if(type == DYNAMIC) {
-        Engine::addDynamicHitbox(this);
-    }
-    //Engine::addImgui(this);
-}
-
-Hitbox::~Hitbox() {
-    if(_type == STATIC) {
-       Engine::removeStaticHitbox(this);
-    }
-    if(_type == DYNAMIC) {
-        Engine::removeDynamicHitbox(this);
-    }
-}
 
 void Hitbox::calculateFromModel(const Model &model) {
     int i = 0;

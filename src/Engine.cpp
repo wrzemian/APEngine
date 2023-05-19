@@ -63,6 +63,10 @@ namespace Engine {
         }
     }
 
+    Object3D* getObject3DById(int id) {
+            return allObjects.at(id);
+    }
+
     int getMovingObjectIndex(MovingObject* obj) {
         auto it = find(allMovingObjects.begin(), allMovingObjects.end(), obj);
         if (it != allMovingObjects.end())

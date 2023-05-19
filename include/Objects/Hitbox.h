@@ -22,6 +22,7 @@ public:
     };
 
     Hitbox(HitboxType type);
+    Hitbox(std::string fileName);
 
     virtual ~Hitbox();
 
@@ -51,6 +52,8 @@ public:
     void calculateFromModel(const Model &model);
 
     bool TestForIntersection(Hitbox* other);
+
+    rapidjson::Document ParseToJSON();
 
     HitboxType _type;
 };

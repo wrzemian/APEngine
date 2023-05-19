@@ -35,6 +35,7 @@ namespace Engine {
     int getHitboxIndex();
     int getImguiIndex();
     int getObject3DIndex(Object3D* obj);
+    Object3D* getObject3DById(int id);
     int getMovingObjectIndex(MovingObject* obj);
 
     void addStaticHitbox(Hitbox* hitbox);

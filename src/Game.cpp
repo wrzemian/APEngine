@@ -56,8 +56,8 @@ namespace Game {
 
     Camera camera;
 
-    Hitbox p1Hitbox(Hitbox::DYNAMIC);
-    Hitbox p2Hitbox(Hitbox::DYNAMIC);
+    Hitbox p1Hitbox("hitboxes/hitbox_0");
+    Hitbox p2Hitbox("hitboxes/hitbox_1");
 
     Walls wagon;
 
@@ -104,11 +104,11 @@ namespace Game {
 
         camera = Engine::parser.CreateFromJSONCam("camera");
 
-        p1Hitbox.Create(&player1);
-        p2Hitbox.Create(&player2);
+        //p1Hitbox.Create(&player1);
+        //p2Hitbox.Create(&player2);
 
-        p1Hitbox.calculateFromModel(player1._model);
-        p2Hitbox.calculateFromModel(player2._model);
+        //p1Hitbox.calculateFromModel(player1._model);
+        //p2Hitbox.calculateFromModel(player2._model);
 
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
         wagon.setShader(&shader);
