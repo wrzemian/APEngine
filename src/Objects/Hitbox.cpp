@@ -35,11 +35,13 @@ Hitbox::Hitbox(std::string fileName) {
 
     if(type == "hitbox") {
         if (d["_type"].GetInt() == 0){
-
             _type = STATIC;
+            Engine::addStaticHitbox(this);
         }
         else if (d["_type"].GetInt() == 1) {
-            _type = DYNAMIC; }
+            _type = DYNAMIC;
+            Engine::addDynamicHitbox(this);
+        }
 
         _object = Engine::getObject3DById(d["object"].GetInt());
         _position = &Engine::getObject3DById(d["object"].GetInt())->_transform._position;
