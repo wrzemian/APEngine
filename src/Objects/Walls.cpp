@@ -54,7 +54,7 @@ void Walls::ImGui() {
 
     if (ImGui::Button("SAVE WALLS")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "walls");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/walls");
     }
 
 //    if (ImGui::Button("Show hitboxes")) {

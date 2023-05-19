@@ -99,8 +99,8 @@ namespace Game {
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");
 
-        player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_0"));
-        player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("movingObj_1"));
+        player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
+        player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
 
         camera = Engine::parser.CreateFromJSONCam("camera");
 
@@ -110,7 +110,7 @@ namespace Game {
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
 
-        wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("walls"));
+        wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
         wagon.setShader(&shader);
 //        wagon.loadModel("../../res/models/1level/1level.obj");
 //        wagon.calculateHitboxes();
@@ -137,9 +137,9 @@ namespace Game {
         shader.setMat4("model", model);
 
 
-        dirLight = Engine::parser.CreateFromJSONDir("dirLight");
-        spotLight = Engine::parser.CreateFromJSONSpot("spotLight");
-        pointLight = Engine::parser.CreateFromJSONPoint("pointLight");
+        dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
+        spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
+        pointLight = Engine::parser.CreateFromJSONPoint("lights/pointLight");
 
         spdlog::info("ImGui");
         ImGui();

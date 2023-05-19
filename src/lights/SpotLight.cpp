@@ -104,7 +104,7 @@ void SpotLight::ImGui() {
     ImGui::SliderFloat("outerCutOff", &outerCutOff, -1.0f, 1.0f);
 
     if (ImGui::Button("SAVE")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "spotLight");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/spotLight");
     }
     ImGui::End();
 }

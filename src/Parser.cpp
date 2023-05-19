@@ -7,6 +7,7 @@
 #include "../include/Parser.h"
 #include "istreamwrapper.h"
 #include "../include/Engine.h"
+#include "../cmake-build-debug-visual-studio/_deps/assimp-src/contrib/rapidjson/include/rapidjson/prettywriter.h"
 
 
 Parser::Parser(std::string savePath) {
@@ -31,11 +32,11 @@ void Parser::SaveJSON(rapidjson::Document d, std::string fileName) {
     char writeBuffer[65536];
     rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 
-    rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+    rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(os);
     d.Accept(writer);
 
     fclose(fp);
-    std::cout << "\nsaved " << fullPath.str();
+    spdlog::info("saved " + fullPath.str());
 }
 
 DirectionalLight Parser::CreateFromJSONDir(std::string fileName) {

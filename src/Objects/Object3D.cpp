@@ -59,7 +59,7 @@ void Object3D::ImGui() {
     }
     if (ImGui::Button("SAVE OBJ3D")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "object3D_" + std::to_string(Engine::getObject3DIndex(this)));
+        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getObject3DIndex(this)));
     }
 
     ImGui::End();

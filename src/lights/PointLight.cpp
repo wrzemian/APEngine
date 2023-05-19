@@ -94,7 +94,7 @@ void PointLight::ImGui() {
     ImGui::SliderFloat("quadratic", &quadratic, -1.0f, 1.0f);
 
     if (ImGui::Button("SAVE")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "pointLight");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/pointLight");
     }
     ImGui::End();
 }

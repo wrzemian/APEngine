@@ -51,7 +51,7 @@ void MovingObject::ImGui() {
 
     if (ImGui::Button("SAVE MOV OBJ")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "movingObj_" + std::to_string(Engine::getMovingObjectIndex(this)));
+        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/movingObj_" + std::to_string(Engine::getMovingObjectIndex(this)));
     }
     ImGui::End();
 }

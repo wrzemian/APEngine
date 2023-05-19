@@ -1,0 +1,13 @@
+{
+    "type": "object3D",
+    "scaleX": 1.0,
+    "scaleY": 1.0,
+    "scaleZ": 1.0,
+    "rotationX": 0.0,
+    "rotationY": 0.0,
+    "rotationZ": 0.0,
+    "positionX": -7.039000034332275,
+    "positionY": 4.692999839782715,
+    "positionZ": 4.35699987411499,
+    "model": "../../res/models/Levels/1/1level.obj"
+}

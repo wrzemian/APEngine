@@ -55,7 +55,7 @@ void DirectionalLight::ImGui() {
     ImGui::SliderFloat3("direction", &direction.x, -1.0f, 1.0f);
 
     if (ImGui::Button("SAVE")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "dirLight");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/dirLight");
     }
 
     ImGui::End();

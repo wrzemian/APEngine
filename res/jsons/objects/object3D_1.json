@@ -1,0 +1,16 @@
+{
+    "type": "object3D",
+    "scaleX": 1.0,
+    "scaleY": 1.0,
+    "scaleZ": 1.0,
+    "rotationX": 0.0,
+    "rotationY": 0.0,
+    "rotationZ": 0.0,
+    "positionX": -5.866000175476074,
+    "positionY": 11.665464401245118,
+    "positionZ": -12.234999656677246,
+    "velocityX": 0.0,
+    "velocityY": 0.0,
+    "velocityZ": 0.0,
+    "model": "../../res/models/Players/Mich3l/michel_final.obj"
+}
