@@ -89,5 +89,6 @@ void Object3D::setShader(Shader *shader) {
 }
 
 Object3D::~Object3D() {
+    spdlog::error("object3d destructor");
     Engine::removeObject(this);
 }

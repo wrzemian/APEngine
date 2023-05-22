@@ -15,7 +15,7 @@ void Walls::calculateHitboxes() {
         auto* hitbox = new Hitbox(Hitbox::STATIC);
         hitbox->calculateFromMesh(mesh);
         hitbox->Create(this);
-
+        spdlog::info("Calculating hitboxes for {}", mesh._name);
 
 
         if(hitbox->windowName == "hitbox #13") {
