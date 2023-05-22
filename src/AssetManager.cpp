@@ -30,9 +30,7 @@ Model *AssetManager::requestModel(std::string path) {
     if (models.count(path) > 0) {
         return models[path];
     }
-    spdlog::error("Model at \"{}\" not found", path);
-
-    spdlog::info("Loading {}", path);
+    spdlog::info("Model at \"{}\" not found", path);
     Model *model = new Model(path);
     models[path] = model;
 }

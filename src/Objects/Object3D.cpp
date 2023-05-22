@@ -21,6 +21,7 @@ void Object3D::Draw() {
     //shader.use();
     _transform.updateWorldTransform(glm::mat4(1.0f), *_shader);
     // shader.setMat4("model", _transform.getModel());
+    spdlog::info("drawing model");
     _model->Draw(*_shader);
 
 }
