@@ -10,25 +10,21 @@
 #include "document.h"
 
 class Object3D : public IGui {
-
 public:
     Object3D();
-
     virtual ~Object3D();
-
-    Shader* _shader;
-
-    Model* _model;
-    Transform _transform;
-    std::string _path;
 
     void Draw();
     void setShader(Shader* shader);
-    void loadModel(std::string const &path);
+
+    void ImGui();
+    void loadModel(const std::string& path);
 
     virtual void onCollision(Object3D* other);
-
-    virtual void ImGui();
-
     virtual rapidjson::Document ParseToJSON();
+
+    Transform _transform;
+    std::shared_ptr<Model> _model;
+    Shader* _shader;
+    std::string _path;
 };

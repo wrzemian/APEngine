@@ -7,13 +7,7 @@
 #include "../../include/Engine.h"
 #include "../../include/AssetManager.h"
 
-Object3D::Object3D() {
-    //spdlog::warn("object3D constructor");
-
-    _transform = Transform();
-//    windowName = fmt::format("Object3D #{}", Engine::getImguiIndex());
-//    spdlog::warn("Object3d window name = {}", windowName);
-//
+Object3D::Object3D() : _shader(nullptr), _model(nullptr), _transform(), _path("") {
     Engine::addObject(this);
 }
 
@@ -29,6 +23,7 @@ void Object3D::loadModel(const std::string& path) {
     _path = path;
     _model = AssetManager::getInstance().getModel(path);
 }
+
 
 void Object3D::ImGui() {
     ImGui::Begin(windowName.c_str());
