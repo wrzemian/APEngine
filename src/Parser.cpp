@@ -7,7 +7,7 @@
 #include "../include/Parser.h"
 #include "istreamwrapper.h"
 #include "../include/Engine.h"
-#include "../cmake-build-debug-visual-studio/_deps/assimp-src/contrib/rapidjson/include/rapidjson/prettywriter.h"
+#include "prettywriter.h"
 
 
 Parser::Parser(std::string savePath) {
