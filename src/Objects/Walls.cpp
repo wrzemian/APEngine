@@ -23,7 +23,7 @@ void Walls::calculateHitboxes() {
             hitbox->_max.z = -10;
         }
 
-        spdlog::info("{} from ({}, {}, {}) to ({}, {}, {})", hitbox->windowName, hitbox->_min.x, hitbox->_min.y, hitbox->_min.z,hitbox->_max.x, hitbox->_max.y, hitbox->_max.z );
+        //spdlog::info("{} from ({}, {}, {}) to ({}, {}, {})", hitbox->windowName, hitbox->_min.x, hitbox->_min.y, hitbox->_min.z,hitbox->_max.x, hitbox->_max.y, hitbox->_max.z );
 
 
         hitbox->isRendered = false;
@@ -92,7 +92,7 @@ void Walls::onCollision(Object3D *other) {
 
 Walls::~Walls() {
     for(int i=0; i<hitboxes.size(); i++) {
-        spdlog::info("deleted {} hitbox", i);
+       // spdlog::info("deleted {} hitbox", i);
         delete hitboxes[i];
     }
     spdlog::info("deleted all hitboxes");

@@ -20,7 +20,7 @@ public:
 
     void setWindowName(std::string name) {
         windowName = name + " #" + windowName;
-        spdlog::info("set window name to: {}", windowName);
+       // spdlog::info("set window name to: {}", windowName);
 
     }
 

@@ -80,82 +80,82 @@ namespace Engine {
     }
 
     void addStaticHitbox(Hitbox* hitbox) {
-        spdlog::info("Static hitbox added");
+        //spdlog::info("Static hitbox added");
         staticHitboxes.push_back(hitbox);
     }
 
     void removeStaticHitbox(Hitbox* hitbox) {
-        spdlog::info("removing static hitbox");
+        //spdlog::info("removing static hitbox");
         std::erase(staticHitboxes, hitbox);
     }
 
     void addDynamicHitbox(Hitbox* hitbox) {
-        spdlog::info("Dynamic hitbox added");
+        //spdlog::info("Dynamic hitbox added");
         dynamicHitboxes.push_back(hitbox);
     }
 
     void removeDynamicHitbox(Hitbox* hitbox) {
-        spdlog::info("removing dynamic hitbox");
+        //spdlog::info("removing dynamic hitbox");
         std::erase(dynamicHitboxes, hitbox);
     }
 
     void addImgui(IGui* imgui) {
-        spdlog::warn("imgui object added, {}", imgui->windowName);
+        //spdlog::warn("imgui object added, {}", imgui->windowName);
         allImgui.push_back(imgui);
     }
 
     void removeImgui(IGui* igui) {
-        spdlog::error("removing igui, windowName = {}", igui->windowName);
+        //spdlog::error("removing igui, windowName = {}", igui->windowName);
         std::erase(allImgui, igui);
     }
 
     void addMovingObject(MovingObject* object) {
-        spdlog::warn("moving object added, {}", object->windowName);
+        //spdlog::warn("moving object added, {}", object->windowName);
         allMovingObjects.push_back(object);
     }
 
     void removeMovingObject(MovingObject* object) {
-        spdlog::warn("removing moving object");
+        //spdlog::warn("removing moving object");
         std::erase(allMovingObjects, object);
     }
 
     void addObject(Object3D* object) {
-        spdlog::warn("object added, {}", object->windowName);
+        //spdlog::warn("object added, {}", object->windowName);
         allObjects.push_back(object);
     }
 
     void removeObject(Object3D* object) {
-        spdlog::warn("removing object");
+        //spdlog::warn("removing object");
         std::erase(allObjects, object);
     }
 
     void addDirLight(DirectionalLight* dirLight) {
-        spdlog::warn("adding dirLight");
+        //spdlog::warn("adding dirLight");
         allDirLights.push_back(dirLight);
     }
 
     void removeDirLight(DirectionalLight* dirLight) {
-        spdlog::warn("removing dirLight");
+        //spdlog::warn("removing dirLight");
         std::erase(allDirLights, dirLight);
     }
 
     void addPointLight(PointLight* pointLight) {
-        spdlog::warn("adding pointLight");
+        //spdlog::warn("adding pointLight");
         allPointLights.push_back(pointLight);
     }
 
     void removePointLight(PointLight* pointLight) {
-        spdlog::warn("removing pointLight");
+        //spdlog::warn("removing pointLight");
         std::erase(allPointLights, pointLight);
     }
 
     void addSpotLight(SpotLight* spotLight) {
-        spdlog::warn("adding spotLight");
+        //spdlog::warn("adding spotLight");
         allSpotLights.push_back(spotLight);
     }
 
     void removeSpotLight(SpotLight* spotLight) {
-        spdlog::warn("removing spotLight");
+       // spdlog::warn("removing spotLight");
         std::erase(allSpotLights, spotLight);
     }
 

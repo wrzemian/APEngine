@@ -7,7 +7,7 @@
 #include "../../include/Engine.h"
 
 Object3D::Object3D() {
-    spdlog::warn("object3D constructor");
+    //spdlog::warn("object3D constructor");
 
     _transform = Transform();
 //    windowName = fmt::format("Object3D #{}", Engine::getImguiIndex());

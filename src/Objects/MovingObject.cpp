@@ -10,7 +10,7 @@
 MovingObject::MovingObject() {
     //windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
     IGui::setWindowName("moving object");
-    spdlog::warn("moving object constructor");
+    //spdlog::warn("moving object constructor");
 
     Engine::addMovingObject(this);
 }
