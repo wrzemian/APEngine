@@ -5,6 +5,7 @@
 #include "../include/Objects/Object3D.h"
 #include "../include/Objects/Transform.h"
 #include "../../include/Engine.h"
+#include "../../include/AssetManager.h"
 
 Object3D::Object3D() {
     //spdlog::warn("object3D constructor");
@@ -20,14 +21,14 @@ void Object3D::Draw() {
     //shader.use();
     _transform.updateWorldTransform(glm::mat4(1.0f), *_shader);
     // shader.setMat4("model", _transform.getModel());
-    _model.Draw(*_shader);
+    _model->Draw(*_shader);
 
 }
 
 void Object3D::loadModel(const std::string &path) {
     _path = path;
-    Model temp(path);
-    _model = temp;
+    //Model temp(path);
+    _model = AssetManager::requestModel(path)  ;//temp;
 }
 
 void Object3D::ImGui() {

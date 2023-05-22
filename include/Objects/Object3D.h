@@ -18,7 +18,7 @@ public:
 
     Shader* _shader;
 
-    Model _model;
+    Model* _model;
     Transform _transform;
     std::string _path;
 
