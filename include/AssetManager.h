@@ -18,9 +18,8 @@ enum ModelName{
 };
 
 namespace AssetManager{
-
-
-
+    void logPaths();
+    void logModels();
     Model* requestModel(ModelName modelName);
     Model* requestModel(std::string path);
 

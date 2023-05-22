@@ -26,6 +26,20 @@ std::unordered_map<std::string, Model *> models;
 //    }
 //}
 
+void AssetManager::logPaths() {
+    for (const std::pair<const ModelName, const std::string> &p: paths)
+    {
+        spdlog::info("paths[{}] = {}", p.first, p.second);
+    }
+}
+
+void AssetManager::logModels() {
+    for (const std::pair<const std::string, Model*> &p: models)
+    {
+        spdlog::info("models[{}] = {}", p.first, p.second->directory);
+    }
+}
+
 Model *AssetManager::requestModel(std::string path) {
     if (models.count(path) > 0) {
         return models[path];

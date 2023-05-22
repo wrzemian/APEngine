@@ -14,6 +14,7 @@
 
 #include "../include/User/InputSystem.h"
 #include "../include/FrustumOpitmizer.h"
+#include "../include/AssetManager.h"
 
 
 namespace Engine {
@@ -197,6 +198,9 @@ namespace Engine {
     }
 
     void drawObjects(const Camera& camera) {
+        AssetManager::logPaths();
+        AssetManager::logModels();
+
         displayCounter = 0;
         totalCounter = 0;
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
