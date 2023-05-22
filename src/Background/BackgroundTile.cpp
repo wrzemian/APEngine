@@ -56,7 +56,7 @@ void BackgroundTile::GenerateRandomObjects()
         Cactus *cactus = new Cactus();
         cactus->isRendered = false;
         cactuses.push_back(cactus);
-        cactuses[i]->_shader = _shader;
+        cactuses[i]->setShader(_shader);
         cactuses[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
         cactuses[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
         cactuses[i]->_transform._position.y = 0.2;
@@ -69,7 +69,7 @@ void BackgroundTile::GenerateRandomObjects()
         Rock *rock = new Rock();
         rock->isRendered = false;
         rocks.push_back(rock);
-        rocks[i]->_shader = _shader;
+        cactuses[i]->setShader(_shader);
         rocks[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
         rocks[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
         rocks[i]->_transform._position.y = 0.2;

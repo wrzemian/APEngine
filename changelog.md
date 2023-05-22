@@ -1,6 +1,7 @@
 # Change Log
 
 - Collisions separation
+- Asset manager
 
 ## [0.0.12] - 2023-05-02
 ### Added

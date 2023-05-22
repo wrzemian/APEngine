@@ -5,14 +5,9 @@
 #include "../include/Objects/Object3D.h"
 #include "../include/Objects/Transform.h"
 #include "../../include/Engine.h"
+#include "../../include/AssetManager.h"
 
-Object3D::Object3D() {
-    //spdlog::warn("object3D constructor");
-
-    _transform = Transform();
-//    windowName = fmt::format("Object3D #{}", Engine::getImguiIndex());
-//    spdlog::warn("Object3d window name = {}", windowName);
-//
+Object3D::Object3D() : _shader(nullptr), _model(nullptr), _transform(), _path("") {
     Engine::addObject(this);
 }
 
@@ -20,15 +15,15 @@ void Object3D::Draw() {
     //shader.use();
     _transform.updateWorldTransform(glm::mat4(1.0f), *_shader);
     // shader.setMat4("model", _transform.getModel());
-    _model.Draw(*_shader);
+    _model->Draw(*_shader);
 
 }
 
-void Object3D::loadModel(const std::string &path) {
+void Object3D::loadModel(const std::string& path) {
     _path = path;
-    Model temp(path);
-    _model = temp;
+    _model = AssetManager::getInstance().getModel(path);
 }
+
 
 void Object3D::ImGui() {
     ImGui::Begin(windowName.c_str());
@@ -94,5 +89,6 @@ void Object3D::setShader(Shader *shader) {
 }
 
 Object3D::~Object3D() {
+    spdlog::error("object3d destructor");
     Engine::removeObject(this);
 }

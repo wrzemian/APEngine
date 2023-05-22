@@ -1,39 +1,37 @@
-//
-// Created by micha on 22.05.2023.
-//
-
-#pragma once
-
-#include <string>
-#include <vector>
 #include <unordered_map>
-#include "../include/Objects/Model.h"
+#include <memory>
 
-using std::string;
+class AssetManager {
+public:
+    typedef std::shared_ptr<Model> ModelPtr;
 
-enum ModelName{
-    CRANK,
-    MICHEL,
-    LEVEL1,
-    CACTUS,
-    ROCK
-};
+    static AssetManager& getInstance() {
+        static AssetManager instance;
+        return instance;
+    }
 
-class AssetManager{
+    ModelPtr getModel(const std::string& path) {
+        if (models.find(path) != models.end()) {
+            return models[path];
+        }
+
+        ModelPtr model = std::make_shared<Model>(path);
+        models[path] = model;
+        return model;
+    }
+
+    void clearModels() {
+        models.clear();
+    }
 
 private:
-    std::unordered_map<ModelName, string> paths = {
-            {CRANK, "../../res/models/Players/Cr4nk/crank.obj"},
-            {MICHEL, "../../res/models/Players/Mich3l/michel_final.obj"},
-            {LEVEL1, "../../res/models/Levels/1/1level.obj"},
-            {CACTUS, "../../res/models/World/cactus/kaktus.obj"},
-            {ROCK, "../../res/models/World/rock/rock.obj"},
-    };
+    std::unordered_map<std::string, ModelPtr> models;
 
-    std::unordered_map<string, Model*> models;
+    AssetManager() {}
+    ~AssetManager() {
+        clearModels();
+    }
 
-public:
-    Model* requestModel(ModelName modelName);
-    void loadModels();
-
+    AssetManager(const AssetManager&) = delete;
+    AssetManager& operator=(const AssetManager&) = delete;
 };

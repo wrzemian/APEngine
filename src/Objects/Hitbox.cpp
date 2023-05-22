@@ -13,7 +13,7 @@ Hitbox::Hitbox(HitboxType type) {
     _min = glm::vec3(-1, -1, -1);
     _max = glm::vec3(1, 1, 1);
 
-    spdlog::warn("hitbox constructor");
+    //spdlog::info("hitbox constructor");
 
     IGui::setWindowName("hitbox");
 
