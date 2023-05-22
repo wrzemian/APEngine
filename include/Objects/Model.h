@@ -15,6 +15,8 @@
 #include <assimp/postprocess.h>
 
 #include "Mesh.h"
+#include "spdlog/spdlog.h"
+
 #include "../Shader.h"
 
 #include <string>
@@ -53,6 +55,7 @@ private:
     // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes std::vector.
     void loadModel(std::string const &path)
     {
+        spdlog::warn("loading model at {}", path);
         // read file via ASSIMP
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -169,7 +172,7 @@ private:
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
         // return a mesh object created from the extracted mesh data
-        return Mesh(vertices, indices, textures);
+        return Mesh(vertices, indices, textures, std::string(mesh->mName.C_Str()));
     }
 
     // checks all material textures of a given type and loads the textures if they're not loaded yet.

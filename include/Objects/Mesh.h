@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "../Shader.h"
+#include "spdlog/spdlog.h"
 
 #include <string>
 #include <vector>
@@ -46,15 +47,18 @@ public:
     std::vector<Vertex>       vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture>      textures;
+    std::string _name;
     unsigned int VAO;
 
     // constructor
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, std::string name)
     {
+        //spdlog::info("MESH NAME = {}", name);
+
         this->vertices = vertices;
         this->indices = indices;
         this->textures = textures;
-
+        this->_name = name;
         // now that we have all the required data, set the vertex buffers and its attribute pointers.
         setupMesh();
     }
