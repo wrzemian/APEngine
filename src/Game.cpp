@@ -98,8 +98,6 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
-        AssetManager assetManager;
-        assetManager.loadModels();
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");

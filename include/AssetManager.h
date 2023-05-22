@@ -1,39 +1,35 @@
-//
-// Created by micha on 22.05.2023.
-//
-
-#pragma once
-
-#include <string>
-#include <vector>
 #include <unordered_map>
-#include "../include/Objects/Model.h"
+#include "Objects/Model.h"
+#include "spdlog/spdlog.h"
 
-using std::string;
 
-enum ModelName{
-    CRANK,
-    MICHEL,
-    LEVEL1,
-    CACTUS,
-    ROCK
-};
+class AssetManager {
+public:
+    static AssetManager& getInstance() {
+        static AssetManager instance;
+        return instance;
+    }
 
-class AssetManager{
+    Model* getModel(const std::string& path) {
+        // Check if the model is already loaded
+        if (models.find(path) != models.end()) {
+            return models[path];
+        }
+        spdlog::info("model {} not found, loading", path);
+
+        // Model is not loaded, load it and store in the map
+        Model* model = new Model(path);
+        models[path] = model;
+        return model;
+    }
 
 private:
-    std::unordered_map<ModelName, string> paths = {
-            {CRANK, "../../res/models/Players/Cr4nk/crank.obj"},
-            {MICHEL, "../../res/models/Players/Mich3l/michel_final.obj"},
-            {LEVEL1, "../../res/models/Levels/1/1level.obj"},
-            {CACTUS, "../../res/models/World/cactus/kaktus.obj"},
-            {ROCK, "../../res/models/World/rock/rock.obj"},
-    };
+    std::unordered_map<std::string, Model*> models;
 
-    std::unordered_map<string, Model*> models;
+    AssetManager() {}
+    ~AssetManager() {}
 
-public:
-    Model* requestModel(ModelName modelName);
-    void loadModels();
-
+    // Disable copy constructor and assignment operator
+    AssetManager(const AssetManager&) = delete;
+    AssetManager& operator=(const AssetManager&) = delete;
 };
