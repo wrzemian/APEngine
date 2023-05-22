@@ -1,0 +1,16 @@
+{
+    "type": "object3D",
+    "scaleX": 1.0,
+    "scaleY": 1.0,
+    "scaleZ": 1.0,
+    "rotationX": 0.0,
+    "rotationY": 0.0,
+    "rotationZ": 0.0,
+    "positionX": -6.0,
+    "positionY": 12.0,
+    "positionZ": 5.0,
+    "velocityX": 0.0,
+    "velocityY": 0.0,
+    "velocityZ": 0.0,
+    "model": "../../res/models/Ant/ant.obj"
+}

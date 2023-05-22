@@ -1,0 +1,11 @@
+{
+    "type": "hitbox",
+    "_type": 0,
+    "object": 2,
+    "minX": -1.0,
+    "minY": -1.0,
+    "minZ": -1.0,
+    "maxX": 1.0,
+    "maxY": 1.0,
+    "maxZ": 1.0
+}

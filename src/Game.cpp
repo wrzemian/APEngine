@@ -55,11 +55,13 @@ namespace Game {
 
     MovingObject player1;
     MovingObject player2;
+    MovingObject ant;
 
     Camera camera;
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
+    Hitbox antHitbox("hitboxes/hitbox_2");
 
     Walls wagon;
 
@@ -106,6 +108,8 @@ namespace Game {
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
 
+        ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
+
         camera = Engine::parser.CreateFromJSONCam("camera");
 
         //p1Hitbox.Create(&player1);
@@ -131,9 +135,10 @@ namespace Game {
 
         player1.setShader(&shader);
         player2.setShader(&shader);
+        ant.setShader(&shader);
         //wagon.setShader(&shader);
 
-        background.initBackground(5,-525.509948,262.754974,&shader);
+//        background.initBackground(5,-525.509948,262.754974,&shader);
 
         shader.setMat4("projectionView", camera.getViewProjection());
 
@@ -208,7 +213,7 @@ namespace Game {
 
         Engine::renderLights(shader);
 
-        background.Move(-Engine::deltaTime*40);
+//        background.Move(-Engine::deltaTime*40);
 
 
         //camera
