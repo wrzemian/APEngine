@@ -1,6 +1,6 @@
 {
     "type": "hitbox",
-    "_type": 0,
+    "_type": 1,
     "object": 2,
     "minX": -1.0,
     "minY": -1.0,

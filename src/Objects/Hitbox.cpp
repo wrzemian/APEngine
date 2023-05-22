@@ -160,7 +160,7 @@ bool Hitbox::TestForIntersection(Hitbox* other) {
     bool intersects = checkCollision(*other);
 
     if(intersects) {
-        //_object->onCollision(other->_object);
+        _object->onCollision(other->_object);
         resolveCollision(*other);
         _color.x = 1;
         _color.y = 0;
