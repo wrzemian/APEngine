@@ -1,5 +1,7 @@
 # Change Log
 
+- Collisions separation
+
 ## [0.0.12] - 2023-05-02
 ### Added
 - added random scrolling background

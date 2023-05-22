@@ -29,6 +29,8 @@
 #include "../include/Background/BackgroundTile.h"
 #include "../include/Background/Background.h"
 
+#include "../include/AssetManager.h"
+
 #include "spdlog/spdlog.h"
 
 #include <ft2build.h>
@@ -94,6 +96,8 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
+        AssetManager assetManager;
+        assetManager.loadModels();
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");

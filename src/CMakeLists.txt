@@ -39,7 +39,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		../include/Background/Rock.h Background/Rock.cpp
 		Background/Background.cpp ../include/Background/Background.h
 		Background/BackgroundTile.cpp ../include/Background/BackgroundTile.h
-		Background/Cactus.cpp ../include/Background/Cactus.h)
+		Background/Cactus.cpp ../include/Background/Cactus.h ../include/AssetManager.h AssetManager.cpp)
 
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE)
