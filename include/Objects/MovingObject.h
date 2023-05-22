@@ -23,7 +23,8 @@ public:
     void SetVelocity(glm::vec3 velocity);
     void AddVelocity(glm::vec3 velocity);
     void StopMoving();
-    void Move(float deltaTime);
+
+    virtual void Move(float deltaTime);
 
     void ImGui();
     void onCollision(Object3D* other) override;

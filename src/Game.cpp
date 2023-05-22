@@ -55,7 +55,7 @@ namespace Game {
 
     MovingObject player1;
     MovingObject player2;
-    MovingObject ant;
+    Ant ant;
 
     Camera camera;
 
@@ -193,7 +193,7 @@ namespace Game {
         hud.renderImage(imgMOv);
 
         //player1.Move();
-
+        Engine::timeAnts();
         Engine::moveObjects();
         Engine::drawObjects(camera);
 

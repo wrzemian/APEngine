@@ -18,6 +18,7 @@
 #include "Objects/Object3D.h"
 #include "Parser.h"
 #include "Camera.h"
+#include "Objects/Ant.h"
 
 
 namespace Engine {
@@ -47,6 +48,9 @@ namespace Engine {
     void addSpotLight(SpotLight* spotLight);
     void addDynamicHitbox(Hitbox* hitbox);
     void removeDynamicHitbox(Hitbox* hitbox);
+    void addAnt(Ant* ant);
+
+    void removeAnt(Ant* ant);
 
     void removeStaticHitbox(Hitbox* hitbox);
     void removeImgui(IGui* igui);
@@ -66,6 +70,7 @@ namespace Engine {
 
     void moveObjects();
     void drawObjects(const Camera& camera);
+    void timeAnts();
 
     void terminate();
     void resolveCollisions();

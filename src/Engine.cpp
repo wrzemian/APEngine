@@ -14,6 +14,7 @@
 
 #include "../include/User/InputSystem.h"
 #include "../include/FrustumOpitmizer.h"
+#include "../include/Objects/Ant.h"
 
 
 namespace Engine {
@@ -42,6 +43,7 @@ namespace Engine {
     std::vector<DirectionalLight*> allDirLights;
     std::vector<PointLight*> allPointLights;
     std::vector<SpotLight*> allSpotLights;
+    std::vector<Ant*> allAnts;
 
     int Init() {
         if (initGLandImGui() == -1) {
@@ -159,6 +161,16 @@ namespace Engine {
         std::erase(allSpotLights, spotLight);
     }
 
+    void addAnt(Ant* ant) {
+        //spdlog::warn("adding spotLight");
+        allAnts.push_back(ant);
+    }
+
+    void removeAnt(Ant* ant) {
+        // spdlog::warn("removing spotLight");
+        std::erase(allAnts, ant);
+    }
+
     void renderDirLights(Shader shader){
         for(DirectionalLight* dirLight: allDirLights) {
             dirLight->SendToShader(shader, "dirLight");
@@ -221,6 +233,14 @@ namespace Engine {
                 displayCounter++;
             }
             totalCounter++;
+        }
+    }
+
+    void timeAnts() {
+        for(Ant* ant: allAnts) {
+            if(!ant->isMoving) {
+                ant->timer += Engine::deltaTime;
+            }
         }
     }
 
