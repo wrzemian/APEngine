@@ -29,6 +29,9 @@ public:
     void ImGui();
     void Move(float deltaTime);
 
+    void onCollisionX(Object3D* other) override;
+    void onCollisionY(Object3D* other) override;
+    void onCollisionZ(Object3D* other) override;
     void onCollision(Object3D* other) override;
 
 };

@@ -22,6 +22,9 @@ public:
     void ImGui();
     void loadModel(const std::string& path);
 
+    virtual void onCollisionX(Object3D* other);
+    virtual void onCollisionY(Object3D* other);
+    virtual void onCollisionZ(Object3D* other);
     virtual void onCollision(Object3D* other);
     virtual rapidjson::Document ParseToJSON();
 

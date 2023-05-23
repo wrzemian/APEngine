@@ -80,8 +80,23 @@ rapidjson::Document Object3D::ParseToJSON() {
     return d;
 }
 
+void Object3D::onCollisionX(Object3D *other) {
+    //spdlog::warn("Object3D empty onCollisionX");
+}
+
+void Object3D::onCollisionY(Object3D *other) {
+    //spdlog::warn("Object3D empty onCollisionY");
+}
+
+void Object3D::onCollisionZ(Object3D *other) {
+    //spdlog::warn("Object3D empty onCollisionZ");
+}
+
 void Object3D::onCollision(Object3D *other) {
     spdlog::warn("Object3D empty onCollision");
+    this->onCollisionX(other);
+    this->onCollisionY(other);
+    this->onCollisionZ(other);
 }
 
 void Object3D::setShader(Shader *shader) {

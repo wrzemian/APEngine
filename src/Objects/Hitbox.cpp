@@ -212,11 +212,13 @@ void Hitbox::resolveCollision(Hitbox& other) {
 
     // Move the object out of the other one along the smallest overlap axis
     if (minOverlap == overlapAbs.x) {
+        _object->onCollisionX(other._object);
         _position->x -= overlap.x;
     } else if (minOverlap == overlapAbs.y) {
-        _object->onCollision(other._object);
+        _object->onCollisionY(other._object);
         _position->y -= overlap.y;
     } else if (minOverlap == overlapAbs.z) {
+        _object->onCollisionZ(other._object);
         _position->z -= overlap.z;
     }
 }

@@ -40,6 +40,7 @@
 
 #include "al.h"
 #include "alc.h"
+#include "../include/Objects/SimpleHitbox.h"
 
 
 namespace Game {
@@ -63,7 +64,8 @@ namespace Game {
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
-    Hitbox antHitbox("hitboxes/hitbox_2");
+    SimpleHitbox antHitbox("hitboxes/hitbox_2");
+    SimpleHitbox antBigHitbox("hitboxes/hitbox_3");
 
     Hitbox platform1Hitbox("hitboxes/hitbox_platform");
     Hitbox button1Hitbox("hitboxes/hitbox_button");

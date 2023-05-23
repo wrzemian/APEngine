@@ -12,7 +12,7 @@ Ant::Ant() {
     maxSpeed = maxSpeed + Random::get(2.0f, 0.5f);
     minMoveTime = Random::get(1, 3);
     maxMoveTime = minMoveTime + Random::get(1, 2);
-    refreshTime = Random::get(30, 31);
+    refreshTime = Random::get(1, 3);
     movingTime = 0;
     isMoving = false;
     Engine::addAnt(this);
@@ -53,11 +53,38 @@ void Ant::Move(float deltaTime) {
     MovingObject::Move(deltaTime);
 }
 
+
+void Ant::onCollisionX(Object3D *other) {
+    if(other->tag == "floor") {
+        //spdlog::info("ant hit X wall");
+        _velocity.x = 0;
+        _velocity.z = 0;
+    }
+    if(other->tag == "player") {
+        spdlog::info("ant player X");
+
+    }
+}
+
+void Ant::onCollisionY(Object3D *other) {
+    if(other->tag == "floor") {
+        _velocity.y = 0;
+    }
+}
+
+void Ant::onCollisionZ(Object3D *other) {
+    if(other->tag == "floor") {
+        //spdlog::info("ant hit Z wall");
+        _velocity.x = 0;
+        _velocity.z = 0;
+    }
+    if(other->tag == "player") {
+        spdlog::info("ant player Z");
+
+    }
+}
+
 void Ant::onCollision(Object3D *other) {
-//    spdlog::warn("ant colliding");
-//    _velocity.x = 0;
-    _velocity.y = 0;
-//    _velocity.z = 0;
 }
 
 void Ant::ImGui() {
