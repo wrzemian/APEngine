@@ -36,7 +36,15 @@ void Walls::ImGui() {
     ImGui::Begin(windowName.c_str());
     Object3D::ImGui();
 
-    ImGui::SetWindowSize(ImVec2(300, 600));
+    ImGui::SetWindowSize(ImVec2(300, 700));
+
+    int x = 0;
+    ImGui::SliderInt("visible hitbox", &x, 0, hitboxes.size() - 1);
+    for (const auto& hitbox : hitboxes) {
+        hitbox->draw = false;
+    }
+    hitboxes.at(x)->draw = true;
+
 
     if (ImGui::Button("Show hitboxes")) {
         spdlog::warn("showing hitboxes");
