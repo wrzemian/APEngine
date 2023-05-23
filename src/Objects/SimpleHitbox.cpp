@@ -9,6 +9,10 @@ SimpleHitbox::~SimpleHitbox() {
 }
 
 void SimpleHitbox::resolveCollision(Hitbox &other) {
+    if(other._object->tag != "player") {
+        return;
+    }
+
     glm::vec3 overlap = currentMin() - other.currentMax();
     glm::vec3 overlapAbs(std::abs(overlap.x), std::abs(overlap.y), std::abs(overlap.z));
 
