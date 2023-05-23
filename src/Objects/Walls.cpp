@@ -23,6 +23,7 @@ void Walls::calculateHitboxes() {
 
         hitboxes.push_back(hitbox);
     }
+    //logHitboxes();
 }
 
 void Walls::logHitboxes() {
@@ -45,18 +46,11 @@ void Walls::ImGui() {
     }
     hitboxes.at(x)->draw = true;
 
-
-    if (ImGui::Button("Show hitboxes")) {
-        spdlog::warn("showing hitboxes");
+    ImGui::Checkbox("Show hitboxes", &areRendered);
+    if (areRendered) {
+        //spdlog::warn("showing hitboxes");
         for (const auto& hitbox : hitboxes) {
             hitbox->draw = true;
-        }
-    }
-
-    if (ImGui::Button("Hide hitboxes")) {
-        spdlog::warn("hiding hitboxes");
-        for (const auto& hitbox : hitboxes) {
-            hitbox->draw = false;
         }
     }
 

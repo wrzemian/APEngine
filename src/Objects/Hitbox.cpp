@@ -10,8 +10,8 @@
 #include "../../include/Objects/Hitbox.h"
 
 Hitbox::Hitbox(HitboxType type) {
-    _min = glm::vec3(-1, -1, -1);
-    _max = glm::vec3(1, 1, 1);
+    _min = glm::vec3(1000, 1000, 1000);
+    _max = glm::vec3(-1000, -1000, -1000);
 
     isRendered = false;
     //spdlog::info("hitbox constructor");
