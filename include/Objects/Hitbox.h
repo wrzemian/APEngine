@@ -18,7 +18,7 @@ enum Axis {
 
 public:
     enum HitboxType {
-        DYNAMIC, STATIC
+        DYNAMIC, STATIC, DETECTION_ONLY
     };
 
     Hitbox(HitboxType type);

@@ -73,7 +73,7 @@ namespace Game {
     Walls wagon;
 
 
-    GLfloat movementSpeed = 10.0f;
+    GLfloat movementSpeed = 0.1f;
 
 
     DirectionalLight dirLight;
@@ -297,8 +297,9 @@ namespace Game {
             player2._velocity.z += movementSpeed;
         }
         else {
-            player2._velocity.z += 0;
+            player2._velocity.z = 0;
         }
+
         if (inputSystem.GetKey(GLFW_KEY_LEFT)) {
             player2._velocity.x += -movementSpeed;
         }
