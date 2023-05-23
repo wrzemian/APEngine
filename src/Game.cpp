@@ -304,7 +304,7 @@ namespace Game {
             player2._velocity.x += -movementSpeed;
         }
         else if (inputSystem.GetKey(GLFW_KEY_RIGHT)) {
-            player2._velocity.x = movementSpeed;
+            player2._velocity.x +git = movementSpeed;
         }
         else {
             player2._velocity.x = 0;

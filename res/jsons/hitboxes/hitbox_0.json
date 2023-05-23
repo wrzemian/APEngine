@@ -7,5 +7,8 @@
     "minZ": -1.0,
     "maxX": 1.0,
     "maxY": 1.0,
-    "maxZ": 1.0
+    "maxZ": 1.0,
+    "offsetX": 0.0,
+    "offsetY": 0.0,
+    "offsetZ": 0.0
 }
