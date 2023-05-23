@@ -34,7 +34,7 @@ void Ant::Move(float deltaTime) {
         const float PI = 3.14159265358979323846f;
         float angle = Random::get(0.0f, 2 * PI);
         _velocity.x = cos(angle) * Random::get(minSpeed, maxSpeed);
-        _velocity.z = cos(angle) * Random::get(minSpeed, maxSpeed);
+        _velocity.z = sin(angle) * Random::get(minSpeed, maxSpeed);
     }
     if(isMoving && movingTime < 0) {
         spdlog::warn("stopping movement");

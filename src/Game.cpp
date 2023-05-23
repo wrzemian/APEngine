@@ -113,6 +113,7 @@ namespace Game {
         player2.tag = "player";
 
         ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
+        ant.tag = "ant";
 
         camera = Engine::parser.CreateFromJSONCam("camera");
 
