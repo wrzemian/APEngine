@@ -110,6 +110,10 @@ namespace Game {
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");
 
+        p2Hitbox.draw = true;
+        p1Hitbox.draw = true;
+        antBigHitbox.draw = true;
+
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
         p2Hitbox.isRendered = true;
@@ -171,6 +175,8 @@ namespace Game {
         ImGui();
         spdlog::info("ResolveCollisions");
         Engine::resolveCollisions();
+        Engine::logStaticHitboxes();
+        Engine::logDynamicHitboxes();
         spdlog::info("loop");
 
 
@@ -245,7 +251,7 @@ namespace Game {
 
 //       camera.followObject(player1);
         button.Update(Engine::deltaTime);
-        Engine::resolveCollisions();;
+        Engine::resolveCollisions();
 
         hud2.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -304,7 +310,7 @@ namespace Game {
             player2._velocity.x += -movementSpeed;
         }
         else if (inputSystem.GetKey(GLFW_KEY_RIGHT)) {
-            player2._velocity.x +git = movementSpeed;
+            player2._velocity.x += movementSpeed;
         }
         else {
             player2._velocity.x = 0;

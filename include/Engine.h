@@ -50,6 +50,10 @@ namespace Engine {
     void removeDynamicHitbox(Hitbox* hitbox);
     void addAnt(Ant* ant);
 
+    void logStaticHitboxes();
+    void logDynamicHitboxes();
+
+
     void removeAnt(Ant* ant);
 
     void removeStaticHitbox(Hitbox* hitbox);

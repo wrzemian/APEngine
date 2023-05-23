@@ -39,7 +39,7 @@ Hitbox::Hitbox(std::string fileName) {
             _type = STATIC;
             Engine::addStaticHitbox(this);
         }
-        else if (d["_type"].GetInt() == 1) {
+        if (d["_type"].GetInt() == 1) {
             _type = DYNAMIC;
             Engine::addDynamicHitbox(this);
         }
@@ -54,6 +54,9 @@ Hitbox::Hitbox(std::string fileName) {
     }
     else
         spdlog::error("no JSON file found");
+
+    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", windowName, _object->tag, _type);
+
 }
 
 Hitbox::~Hitbox() {
