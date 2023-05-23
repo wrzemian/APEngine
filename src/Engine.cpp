@@ -236,14 +236,6 @@ namespace Engine {
         }
     }
 
-    void timeAnts() {
-        for(Ant* ant: allAnts) {
-            if(!ant->isMoving) {
-                ant->timer += Engine::deltaTime;
-            }
-        }
-    }
-
     void ImGui() {
         ImGui::Begin("Engine");
         ImGui::SetWindowSize(ImVec2(200, 150));

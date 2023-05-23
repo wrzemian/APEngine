@@ -26,6 +26,10 @@ Ant::~Ant() {
 
 void Ant::Move(float deltaTime) {
 //    spdlog::warn("refreshTime {}, timer {}", refreshTime, timer);
+    if(!isMoving) {
+        timer += deltaTime;
+    }
+
     if(timer >= refreshTime) {
         timer = 0;
         isMoving = true;
@@ -43,15 +47,15 @@ void Ant::Move(float deltaTime) {
         _velocity.z = 0;
     }
     if (isMoving) {
-        _transform._position += _velocity * deltaTime;
         movingTime -= deltaTime;
     }
+    MovingObject::Move(deltaTime);
 }
 
 void Ant::onCollision(Object3D *other) {
 //    spdlog::warn("ant colliding");
 //    _velocity.x = 0;
-//    _velocity.y = 0;
+    _velocity.y = 0;
 //    _velocity.z = 0;
 }
 

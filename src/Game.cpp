@@ -89,6 +89,7 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
+        antHitbox.isRendered = true;
 
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_W);
@@ -205,7 +206,6 @@ namespace Game {
         hud.renderImage(imgMOv);
 
         //player1.Move();
-        Engine::timeAnts();
         Engine::moveObjects();
         Engine::drawObjects(camera);
 

@@ -13,6 +13,7 @@ Hitbox::Hitbox(HitboxType type) {
     _min = glm::vec3(-1, -1, -1);
     _max = glm::vec3(1, 1, 1);
 
+    isRendered = false;
     //spdlog::info("hitbox constructor");
 
     IGui::setWindowName("hitbox");
@@ -32,7 +33,7 @@ Hitbox::Hitbox(std::string fileName) {
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("hitbox");
-
+    isRendered = false;
     if(type == "hitbox") {
         if (d["_type"].GetInt() == 0){
             _type = STATIC;
@@ -122,6 +123,12 @@ void Hitbox::ImGui()  {
 
         Engine::parser.SaveJSON(this->ParseToJSON(), "hitboxes/hitbox_" + std::to_string(Engine::getObject3DIndex(_object)));
     }
+    if (ImGui::Button("Calculate hitbox")) {
+        _min = glm::vec3(-0.001, -0.001, -0.001);
+        _max = glm::vec3(0.001, 0.001, 0.001);
+
+        calculateFromModel(*_object->_model);
+    }
     ImGui::Checkbox("Draw: ", &draw);
     ImGui::End();
 
@@ -160,7 +167,7 @@ bool Hitbox::TestForIntersection(Hitbox* other) {
     bool intersects = checkCollision(*other);
 
     if(intersects) {
-        //_object->onCollision(other->_object);
+        _object->onCollision(other->_object);
         if(!isTrigger && !other->isTrigger)
         {
             resolveCollision(*other);
@@ -216,14 +223,10 @@ void Hitbox::resolveCollision(Hitbox& other) {
 
 
 void Hitbox::calculateFromModel(const Model &model) {
-    int i = 0;
     for(auto const& mesh: model.meshes) {
-        i++;
-        if (i==1) {
-            continue;
-        }
         calculateFromMesh(mesh);
     }
+    spdlog::info("({}, {}) to ({}, {})", _min.x, _min.y, _max.x, _max.y);
 }
 
 void Hitbox::calculateFromMesh(const Mesh &mesh) {
