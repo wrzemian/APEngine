@@ -22,6 +22,8 @@
 #include "../include/Objects/Walls.h"
 #include "../include/User/Animation.h"
 #include "../include/User/Constant.h"
+#include "../include/Objects/Platform.h"
+#include "../include/Objects/Button.h"
 
 //temporary
 #include "../include/Background/Rock.h"
@@ -63,6 +65,9 @@ namespace Game {
     Hitbox p2Hitbox("hitboxes/hitbox_1");
     Hitbox antHitbox("hitboxes/hitbox_2");
 
+    Hitbox platform1Hitbox("hitboxes/hitbox_platform");
+    Hitbox button1Hitbox("hitboxes/hitbox_button");
+
     Walls wagon;
 
 
@@ -77,13 +82,12 @@ namespace Game {
 
     Background background;
 
+    Platform platform(glm::vec3(-5,16,7),glm::vec3(-5,13,7),1.0f);
+
+    Button button(&platform,glm::vec3(0,13,7));
+
     void Start() {
         std::cout << Engine::Init() <<"\n";
-
-
-//        camera.Position = glm::vec3(21, 5, 11);
-//        camera.Front = glm::vec3(-0.6, -0.02f, -0.02f);
-//        camera.Zoom = 46;
 
 
         inputSystem.InputInit();
@@ -105,13 +109,13 @@ namespace Game {
 
         player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
         player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
+        player1.tag = "player";
+        player2.tag = "player";
 
         ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
 
         camera = Engine::parser.CreateFromJSONCam("camera");
 
-        //p1Hitbox.Create(&player1);
-        //p2Hitbox.Create(&player2);
 
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
@@ -136,7 +140,16 @@ namespace Game {
         ant.setShader(&shader);
         //wagon.setShader(&shader);
 
-//        background.initBackground(5,-525.509948,262.754974,&shader);
+        platform.loadModel("../../res/models/Assets/chest1/box1.obj");
+        platform.setShader(&shader);
+        platform1Hitbox.Create(&platform);
+
+
+        button.setShader(&shader);
+        button.loadModel("../../res/models/Assets/chest1/box1.obj");
+        button1Hitbox.Create(&button);
+        button1Hitbox.isTrigger = true;
+        //background.initBackground(5,-525.509948,262.754974,&shader);
 
         shader.setMat4("projectionView", camera.getViewProjection());
 
@@ -211,8 +224,8 @@ namespace Game {
 
         Engine::renderLights(shader);
 
-//        background.Move(-Engine::deltaTime*40);
-
+        //background.Move(-Engine::deltaTime*40);
+        platform.UpdatePosition(Engine::deltaTime);
 
         //camera
 
@@ -225,9 +238,9 @@ namespace Game {
 
         Engine::renderHitboxes(projection * view);
 
-//        camera.followObject(player1);
-
-        Engine::resolveCollisions();
+//       camera.followObject(player1);
+        button.Update(Engine::deltaTime);
+        Engine::resolveCollisions();;
 
         hud2.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
 
@@ -250,35 +263,49 @@ namespace Game {
 
     void processInput()
     {
-        if (inputSystem.GetKey(GLFW_KEY_W))
+        if (inputSystem.GetKey(GLFW_KEY_W)) {
             player1._velocity.z = -movementSpeed;
-        else if (inputSystem.GetKey(GLFW_KEY_S))
+        }
+        else if (inputSystem.GetKey(GLFW_KEY_S)) {
             player1._velocity.z = movementSpeed;
-        else
+        }
+        else {
             player1._velocity.z = 0;
-
-
-        if (inputSystem.GetKey(GLFW_KEY_A))
+        }
+        if (inputSystem.GetKey(GLFW_KEY_A)) {
             player1._velocity.x = -movementSpeed;
-        else if (inputSystem.GetKey(GLFW_KEY_D))
+        }
+        else if (inputSystem.GetKey(GLFW_KEY_D)) {
             player1._velocity.x = movementSpeed;
-        else
+        }
+        else {
             player1._velocity.x = 0;
+        }
+        if (inputSystem.GetKeyDown(GLFW_KEY_SPACE)) {
+            player1.AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        }
 
-        if (inputSystem.GetKeyDown(GLFW_KEY_SPACE))
-            player1.AddVelocity(glm::vec3(0.0f, 5.5f, 0.0f));
-
-
-        if (inputSystem.GetKey(GLFW_KEY_UP))
-            player2._transform._position.z += -movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_LEFT))
-            player2._transform._position.x += -movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_DOWN))
-            player2._transform._position.z += movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_RIGHT))
-            player2._transform._position.x += movementSpeed;
-        if (inputSystem.GetKey(GLFW_KEY_KP_1))
-            player2.AddVelocity(glm::vec3(0.0f, 1.0f, 0.0f));
+        if (inputSystem.GetKey(GLFW_KEY_UP)) {
+            player2._velocity.z += -movementSpeed;
+        }
+        else if (inputSystem.GetKey(GLFW_KEY_DOWN)) {
+            player2._velocity.z += movementSpeed;
+        }
+        else {
+            player2._velocity.z += 0;
+        }
+        if (inputSystem.GetKey(GLFW_KEY_LEFT)) {
+            player2._velocity.x += -movementSpeed;
+        }
+        else if (inputSystem.GetKey(GLFW_KEY_RIGHT)) {
+            player2._velocity.x = movementSpeed;
+        }
+        else {
+            player2._velocity.x = 0;
+        }
+        if (inputSystem.GetKeyDown(GLFW_KEY_KP_1)) {
+            player2.AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        }
 
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
 //        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));

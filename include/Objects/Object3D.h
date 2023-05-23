@@ -14,6 +14,8 @@ public:
     Object3D();
     virtual ~Object3D();
 
+    std::string tag = "floor";
+
     void Draw();
     void setShader(Shader* shader);
 

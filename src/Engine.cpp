@@ -306,7 +306,12 @@ namespace Engine {
                 dynamicHitbox->TestForIntersection(staticHitbox);
             }
         }
-
+        for (int i = 0; i < dynamicHitboxes.size(); i++) {
+            for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
+                dynamicHitboxes[i]->TestForIntersection(dynamicHitboxes[j]);
+                //dynamicHitboxes[j]->TestForIntersection(dynamicHitboxes[i]);
+            }
+        }
 //        for(size_t i=0; i < staticHitboxes.size(); i++) {
 //            for (size_t j = i+1; j < staticHitboxes.size(); j++) {
 //                staticHitboxes.at(i)->TestForIntersection(*staticHitboxes.at(j));

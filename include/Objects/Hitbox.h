@@ -31,6 +31,7 @@ public:
     bool checkCollision(Hitbox& other);
     void resolveCollision(Hitbox& other);
 
+    bool isTrigger = false;
 
     bool draw = false;
     Object3D* _object{};

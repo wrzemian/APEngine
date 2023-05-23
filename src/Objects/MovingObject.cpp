@@ -66,9 +66,11 @@ void MovingObject::Move(float deltaTime) {
 }
 
 void MovingObject::onCollision(Object3D *other) {
-//    _velocity.x = 0;
-    _velocity.y = 0;
-//    _velocity.z = 0;
+    if(other->tag == "floor" && _velocity.y != 0)
+    {
+        _velocity.y = 0;
+    }
+
 }
 
 rapidjson::Document MovingObject::ParseToJSON() {
