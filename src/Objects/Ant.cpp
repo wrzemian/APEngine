@@ -31,8 +31,7 @@ void Ant::Move(float deltaTime) {
         isMoving = true;
         movingTime = Random::get(minMoveTime, maxMoveTime);
         spdlog::warn("starting movement for {}", movingTime);
-        const float PI = 3.14159265358979323846f;
-        float angle = Random::get(0.0f, 2 * PI);
+        float angle = Random::get(0.0f, 2 * glm::pi<float>());
         _velocity.x = cos(angle) * Random::get(minSpeed, maxSpeed);
         _velocity.z = sin(angle) * Random::get(minSpeed, maxSpeed);
     }
