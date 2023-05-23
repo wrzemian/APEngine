@@ -49,8 +49,8 @@ Hitbox::Hitbox(std::string fileName) {
 
         _min = glm::vec3(d["minX"].GetFloat(), d["minY"].GetFloat(), d["minZ"].GetFloat());
         _max = glm::vec3(d["maxX"].GetFloat(), d["maxY"].GetFloat(), d["maxZ"].GetFloat());
+        _offset = glm::vec3(d["offsetX"].GetFloat(), d["offsetY"].GetFloat(), d["offsetZ"].GetFloat());
         _color = glm::vec3(1,1,0);
-        _offset = glm::vec3(0,0,0);;
     }
     else
         spdlog::error("no JSON file found");
@@ -149,6 +149,9 @@ rapidjson::Document Hitbox::ParseToJSON() {
     d.AddMember("maxX", _max.x, d.GetAllocator());
     d.AddMember("maxY", _max.y, d.GetAllocator());
     d.AddMember("maxZ", _max.z, d.GetAllocator());
+    d.AddMember("offsetX", _offset.x, d.GetAllocator());
+    d.AddMember("offsetY", _offset.y, d.GetAllocator());
+    d.AddMember("offsetZ", _offset.z, d.GetAllocator());
 
 
 
