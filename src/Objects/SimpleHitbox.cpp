@@ -13,7 +13,7 @@ void SimpleHitbox::resolveCollision(Hitbox &other) {
     if(other._object->tag != "player") {
         return;
     }
-    spdlog::error("simple resolve");
+    //spdlog::error("simple resolve");
 
     glm::vec3 overlap = currentMin() - other.currentMax();
     glm::vec3 overlapAbs(std::abs(overlap.x), std::abs(overlap.y), std::abs(overlap.z));
@@ -24,12 +24,12 @@ void SimpleHitbox::resolveCollision(Hitbox &other) {
     // Move the object out of the other one along the smallest overlap axis
     if (minOverlap == overlapAbs.x) {
         _object->onCollisionX(other._object);
-        spdlog::error("col x");
+        //spdlog::error("col x");
     } else if (minOverlap == overlapAbs.y) {
         _object->onCollisionY(other._object);
-        spdlog::error("col y");
+        //spdlog::error("col y");
     } else if (minOverlap == overlapAbs.z) {
         _object->onCollisionZ(other._object);
-        spdlog::error("col z");
+        //spdlog::error("col z");
     }
 }

@@ -53,6 +53,15 @@ void Ant::Move(float deltaTime) {
     MovingObject::Move(deltaTime);
 }
 
+void Ant::Escape(Object3D* other) {
+    glm::vec2 AntPlayerVec(other->_transform._position.x - this->_transform._position.x,
+                           other->_transform._position.z - this->_transform._position.z);
+    glm::normalize(AntPlayerVec);
+    isMoving = true;
+    movingTime =minMoveTime;
+    _velocity.x = -AntPlayerVec.x * maxSpeed;
+    _velocity.z = -AntPlayerVec.y * minSpeed;
+}
 
 void Ant::onCollisionX(Object3D *other) {
     if(other->tag == "floor") {
@@ -61,8 +70,8 @@ void Ant::onCollisionX(Object3D *other) {
         _velocity.z = 0;
     }
     if(other->tag == "player") {
-        spdlog::info("ant player X");
-
+        //spdlog::info("ant player X");
+        this->Escape(other);
     }
 }
 
@@ -79,8 +88,8 @@ void Ant::onCollisionZ(Object3D *other) {
         _velocity.z = 0;
     }
     if(other->tag == "player") {
-        spdlog::info("ant player Z");
-
+        //spdlog::info("ant player Z");
+        this->Escape(other);
     }
 }
 
