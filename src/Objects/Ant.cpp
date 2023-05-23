@@ -12,7 +12,7 @@ Ant::Ant() {
     maxSpeed = maxSpeed + Random::get(2.0f, 0.5f);
     minMoveTime = Random::get(1, 3);
     maxMoveTime = minMoveTime + Random::get(1, 2);
-    refreshTime = Random::get(3, 30);
+    refreshTime = Random::get(30, 31);
     movingTime = 0;
     isMoving = false;
     Engine::addAnt(this);
@@ -34,10 +34,11 @@ void Ant::Move(float deltaTime) {
         timer = 0;
         isMoving = true;
         movingTime = Random::get(minMoveTime, maxMoveTime);
-        spdlog::warn("starting movement for {}", movingTime);
         float angle = Random::get(0.0f, 2 * glm::pi<float>());
         _velocity.x = cos(angle) * Random::get(minSpeed, maxSpeed);
         _velocity.z = sin(angle) * Random::get(minSpeed, maxSpeed);
+        spdlog::warn("starting movement for {} in X {}, Z {}", movingTime, _velocity.x, _velocity.z);
+
     }
     if(isMoving && movingTime < 0) {
         spdlog::warn("stopping movement");

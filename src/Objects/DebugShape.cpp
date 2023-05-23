@@ -35,6 +35,7 @@ void DebugShape::Initialize()
 
 void DebugShape::DrawCube(glm::vec3 min, glm::vec3 max)
 {
+    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     std::vector<GLfloat> vertices = {
             max.x, max.y, max.z,
             max.x, min.y, max.z,
@@ -77,6 +78,7 @@ void DebugShape::DrawCube(glm::vec3 min, glm::vec3 max)
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
+    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 }
 
 void DebugShape::DrawArrow(glm::vec3 Start, glm::vec3 End, glm::vec4 Color, glm::mat4 proview)
