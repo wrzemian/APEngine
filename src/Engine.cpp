@@ -45,6 +45,12 @@ namespace Engine {
     std::vector<SpotLight*> allSpotLights;
     std::vector<Ant*> allAnts;
 
+    bool renderDynamic = false;
+    bool renderStatic = false;
+
+    int renderedStatic = 0;
+    int renderedDynamic = 0;
+
     int Init() {
         if (initGLandImGui() == -1) {
             return -1;
@@ -253,7 +259,7 @@ namespace Engine {
 
     void ImGui() {
         ImGui::Begin("Engine");
-        ImGui::SetWindowSize(ImVec2(200, 150));
+        ImGui::SetWindowSize(ImVec2(200, 500));
         //spdlog::info("deltaTime: ", Engine::deltaTime);
 
         ImGui::Text("deltaTime: %f", Engine::deltaTime);
@@ -261,6 +267,34 @@ namespace Engine {
         ImGui::Text("displayed: %d", displayCounter);
         ImGui::Text("total: %d", totalCounter);
         ImGui::Checkbox("FRUSTUM", &frustum);
+
+        ImGui::SliderInt("static hitbox", &renderedStatic, 0, staticHitboxes.size() - 1);
+        for (const auto& hitbox : staticHitboxes) {
+            hitbox->draw = false;
+        }
+        staticHitboxes.at(renderedStatic)->draw = true;
+
+        ImGui::SliderInt("dynamic hitbox", &renderedDynamic, 0, dynamicHitboxes.size() - 1);
+        for (const auto& hitbox : dynamicHitboxes) {
+            hitbox->draw = false;
+        }
+        dynamicHitboxes.at(renderedDynamic)->draw = true;
+
+        ImGui::Checkbox("Show static", &renderStatic);
+        if (renderStatic) {
+            //spdlog::warn("showing hitboxes");
+            for (const auto& hitbox : staticHitboxes) {
+                hitbox->draw = true;
+            }
+        }
+
+        ImGui::Checkbox("Show dynamic", &renderDynamic);
+        if (renderDynamic) {
+            //spdlog::warn("showing hitboxes");
+            for (const auto& hitbox : dynamicHitboxes) {
+                hitbox->draw = true;
+            }
+        }
         ImGui::End();
     }
 

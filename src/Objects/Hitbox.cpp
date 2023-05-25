@@ -101,7 +101,7 @@ void Hitbox::Draw(glm::mat4 projectionView) {
 
 void Hitbox::ImGui()  {
     ImGui::Begin(windowName.c_str());
-    ImGui::SetWindowSize(ImVec2(300, 380));
+    ImGui::SetWindowSize(ImVec2(300, 420));
 
     ImGui::SliderFloat("min X", &_min.x, -20.0f, 20.0f);
     ImGui::SliderFloat("min Y", &_min.y, -20.0f, 20.0f);

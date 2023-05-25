@@ -37,11 +37,11 @@ void Ant::Move(float deltaTime) {
         float angle = Random::get(0.0f, 2 * glm::pi<float>());
         _velocity.x = cos(angle) * Random::get(minSpeed, maxSpeed);
         _velocity.z = sin(angle) * Random::get(minSpeed, maxSpeed);
-        spdlog::warn("starting movement for {} in X {}, Z {}", movingTime, _velocity.x, _velocity.z);
+        //spdlog::warn("starting movement for {} in X {}, Z {}", movingTime, _velocity.x, _velocity.z);
 
     }
     if(isMoving && movingTime < 0) {
-        spdlog::warn("stopping movement");
+       // spdlog::warn("stopping movement");
         isMoving = false;
         movingTime = 0;
         _velocity.x = 0;
@@ -91,9 +91,6 @@ void Ant::onCollisionZ(Object3D *other) {
         //spdlog::info("ant player Z");
         this->Escape(other);
     }
-}
-
-void Ant::onCollision(Object3D *other) {
 }
 
 void Ant::ImGui() {

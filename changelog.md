@@ -2,6 +2,7 @@
 
 - Collisions separation
 - Asset manager
+- Rendering individual hitboxes
 
 ## [0.0.12] - 2023-05-02
 ### Added

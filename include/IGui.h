@@ -12,7 +12,7 @@
 class IGui {
 
 public:
-    bool isRendered;
+    bool isRendered = false;
 
     IGui();
 
