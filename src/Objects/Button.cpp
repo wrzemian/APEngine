@@ -16,7 +16,6 @@ void Button::onCollision(Object3D *other) {
     {
         isPushed = true;
         connectedPlatform->OnActivate();
-        std::cout<<"klik i ruch" <<std::endl;
     }
 }
 

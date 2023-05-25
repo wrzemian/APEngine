@@ -1,8 +1,8 @@
 {
     "type": "object3D",
-    "scaleX": 0.15000000596046449,
-    "scaleY": 0.16099999845027924,
-    "scaleZ": 0.18400000035762788,
+    "scaleX": 0.1,
+    "scaleY": 0.1,
+    "scaleZ": 0.1,
     "rotationX": 0.0,
     "rotationY": 0.0,
     "rotationZ": 0.0,

@@ -1,4 +1,4 @@
-{"type":"hitbox","_type":1,"object":1,"minX":-0.5,"minY":-0.5,"minZ":-0.5,"maxX":0.5,"maxY":0.5,"maxZ":0.5,
+{"type":"hitbox","_type":0,"object":1,"minX":-0.5,"minY":-0.5,"minZ":-0.5,"maxX":0.5,"maxY":0.0,"maxZ":0.5,
   "offsetX": 0.0,
   "offsetY": 0.0,
   "offsetZ": 0.0}

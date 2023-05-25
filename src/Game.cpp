@@ -24,6 +24,9 @@
 #include "../include/User/Constant.h"
 #include "../include/Objects/Platform.h"
 #include "../include/Objects/Button.h"
+#include "../include/Objects/PlayerJumper.h"
+#include "../include/Objects/PlayerGrabber.h"
+#include "../include/Objects/Battery.h"
 
 //temporary
 #include "../include/Background/Rock.h"
@@ -56,8 +59,10 @@ namespace Game {
 //    Image image;
 
 
-    MovingObject player1;
-    MovingObject player2;
+    //MovingObject player1;
+    PlayerJumper playerJumper;
+    PlayerGrabber playerGrabber;
+    //MovingObject player2;
     Ant ant;
 
     Camera camera;
@@ -70,10 +75,13 @@ namespace Game {
     Hitbox platform1Hitbox("hitboxes/hitbox_platform");
     Hitbox button1Hitbox("hitboxes/hitbox_button");
 
+    Battery battery;
+    Hitbox batteryHitbox("hitboxes/hitbox_battery");
+
     Walls wagon;
 
 
-    GLfloat movementSpeed = 0.1f;
+    GLfloat movementSpeed = 3.0f;
 
 
     DirectionalLight dirLight;
@@ -84,9 +92,9 @@ namespace Game {
 
     Background background;
 
-    Platform platform(glm::vec3(-5,16,7),glm::vec3(-5,13,7),1.0f);
+    Platform platform(glm::vec3(-8,6,5),glm::vec3(-8,9,5),1.0f);
 
-    Button button(&platform,glm::vec3(0,13,7));
+    Button button(&platform,glm::vec3(-8,5,7));
 
     void Start() {
         std::cout << Engine::Init() <<"\n";
@@ -94,50 +102,47 @@ namespace Game {
         antHitbox.isRendered = true;
 
         inputSystem.InputInit();
-        inputSystem.monitorKey(GLFW_KEY_W);
+        /*inputSystem.monitorKey(GLFW_KEY_W);
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_S);
-        inputSystem.monitorKey(GLFW_KEY_D);
-        inputSystem.monitorKey(GLFW_KEY_UP);
-        inputSystem.monitorKey(GLFW_KEY_LEFT);
-        inputSystem.monitorKey(GLFW_KEY_RIGHT);
-        inputSystem.monitorKey(GLFW_KEY_DOWN);
+        inputSystem.monitorKey(GLFW_KEY_D);*/
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
+        playerJumper.initPlayer(&inputSystem);
+        playerGrabber.initPlayer(&inputSystem);
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");
 
+
         p2Hitbox.draw = true;
         p1Hitbox.draw = true;
         antBigHitbox.draw = true;
 
-        player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
-        player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
+
+        //player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
+        //player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
         p2Hitbox.isRendered = true;
         antBigHitbox.isRendered = true;
-        player1.tag = "player";
-        player2.tag = "player";
+        //player1.tag = "player";
+        //player2.tag = "player";
 
         ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
         ant.tag = "ant";
 
+
+
         camera = Engine::parser.CreateFromJSONCam("camera");
 
+        p1Hitbox.Create(&playerJumper);
+        p2Hitbox.Create(&playerGrabber);
 
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
-
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
         wagon.setShader(&shader);
-//        wagon.loadModel("../../res/models/1level/1level.obj");
-//        wagon.calculateHitboxes();
-//        wagon.logHitboxes();
-//        for(auto m: wagon._model.meshes) {
-//            spdlog::info("loaded mesh with {} vertices", m.vertices.size());
-//        }
 
         // build and compile our shader program
         // ------------------------------------
@@ -145,27 +150,44 @@ namespace Game {
         shader = temp;
         shader.use();
 
-        player1.setShader(&shader);
-        player2.setShader(&shader);
+        //player1.setShader(&shader);
+        playerJumper.setShader(&shader);
+        playerGrabber.setShader(&shader);
+        //player2.setShader(&shader);
         ant.setShader(&shader);
         //wagon.setShader(&shader);
 
         platform.loadModel("../../res/models/Assets/chest1/box1.obj");
         platform.setShader(&shader);
         platform1Hitbox.Create(&platform);
-
+        platform1Hitbox.draw = true;
 
         button.setShader(&shader);
         button.loadModel("../../res/models/Assets/chest1/box1.obj");
         button1Hitbox.Create(&button);
         button1Hitbox.isTrigger = true;
+
         //background.initBackground(5,-525.509948,262.754974,&shader);
+
+        battery.setShader(&shader);
+        battery.loadModel("../../res/models/Assets/battery/battery.obj");
+        battery.tag = "battery";
+        batteryHitbox.Create(&battery);
+        batteryHitbox.draw = true;
+        battery._transform._position.x = -8;
+        battery._transform._position.y = 7;
+        battery._transform._position.z = 6;
+        battery._transform._scale.x = 0.2f;
+        battery._transform._scale.y = 0.2f;
+        battery._transform._scale.z = 0.2f;
+        playerJumper.battery = &battery;
+        playerGrabber.battery = &battery;
+
 
         shader.setMat4("projectionView", camera.getViewProjection());
 
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
-
 
         dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
         spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
@@ -208,6 +230,8 @@ namespace Game {
         imgMOv -= 0.1;
         inputSystem.update();
         processInput();
+        playerJumper.UpdatePlayer(&inputSystem,movementSpeed);
+        playerGrabber.UpdatePlayer(&inputSystem,movementSpeed);
         movImage -= 0.1;
 
         float time = static_cast<float>(glfwGetTime());
@@ -234,6 +258,8 @@ namespace Game {
         shader.setVec3("viewPos", camera.Position);
 
         Engine::renderLights(shader);
+
+
 
         //background.Move(-Engine::deltaTime*40);
         platform.UpdatePosition(Engine::deltaTime);
@@ -274,6 +300,7 @@ namespace Game {
 
     void processInput()
     {
+        /*
         if (inputSystem.GetKey(GLFW_KEY_W)) {
             player1._velocity.z = -movementSpeed;
         }
@@ -291,32 +318,33 @@ namespace Game {
         }
         else {
             player1._velocity.x = 0;
-        }
+        }*/
         if (inputSystem.GetKeyDown(GLFW_KEY_SPACE)) {
-            player1.AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+            playerJumper.Jump();
         }
 
+/*
         if (inputSystem.GetKey(GLFW_KEY_UP)) {
-            player2._velocity.z += -movementSpeed;
+            player2._velocity.z = -movementSpeed;
         }
         else if (inputSystem.GetKey(GLFW_KEY_DOWN)) {
-            player2._velocity.z += movementSpeed;
+            player2._velocity.z = movementSpeed;
         }
         else {
             player2._velocity.z = 0;
         }
 
         if (inputSystem.GetKey(GLFW_KEY_LEFT)) {
-            player2._velocity.x += -movementSpeed;
+            player2._velocity.x = -movementSpeed;
         }
         else if (inputSystem.GetKey(GLFW_KEY_RIGHT)) {
-            player2._velocity.x += movementSpeed;
+            player2._velocity.x = movementSpeed;
         }
         else {
             player2._velocity.x = 0;
-        }
+        }*/
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1)) {
-            player2.AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+            playerGrabber.AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         }
 
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));

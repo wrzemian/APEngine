@@ -1,16 +1,16 @@
 {
     "type": "object3D",
-    "scaleX": 1.0,
-    "scaleY": 1.0,
-    "scaleZ": 1.0,
+    "scaleX": 0.5,
+    "scaleY": 0.5,
+    "scaleZ": 0.5,
     "rotationX": 0.0,
     "rotationY": 0.0,
     "rotationZ": 0.0,
-    "positionX": -4.926000118255615,
-    "positionY": -3849.595458984375,
-    "positionZ": 10.05064582824707,
+    "positionX": -8.583000183105469,
+    "positionY": 6.507883071899414,
+    "positionZ": 4.697000026702881,
     "velocityX": 0.0,
-    "velocityY": -196.3483428955078,
+    "velocityY": 0.0,
     "velocityZ": 0.0,
-    "model": "../../res/models/Players/Cr4nk/crank.obj"
+    "model": "../../res/models/Players/Cr4nk/Cr4nk.obj"
 }

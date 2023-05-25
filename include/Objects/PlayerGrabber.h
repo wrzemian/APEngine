@@ -1,16 +1,16 @@
 //
-// Created by Karol on 23.05.2023.
+// Created by Karol on 25.05.2023.
 //
 
-#ifndef APENGINE_PLAYERJUMPER_H
-#define APENGINE_PLAYERJUMPER_H
+#ifndef APENGINE_PLAYERGRABBER_H
+#define APENGINE_PLAYERGRABBER_H
 
 #include "MovingObject.h"
 #include "../include/Engine.h"
 #include "../include/User/InputSystem.h"
 #include "Battery.h"
 
-class PlayerJumper : public MovingObject {
+class PlayerGrabber: public MovingObject {
 private:
     using super = MovingObject;
     int jumpCount = 0;
@@ -21,9 +21,9 @@ public:
     Battery* battery;
     void initPlayer(InputSystem* inputSystem);
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
-    void Jump();
     void onCollision(Object3D* other) override;
+    void Grab();
 };
 
 
-#endif //APENGINE_PLAYERJUMPER_H
+#endif //APENGINE_PLAYERGRABBER_H
