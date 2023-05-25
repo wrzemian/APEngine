@@ -59,10 +59,6 @@ void Walls::ImGui() {
     ImGui::End();
 }
 
-void Walls::onCollision(Object3D* other) {
-    // Implement collision handling logic for walls
-}
-
 rapidjson::Document Walls::ParseToJSON() {
     rapidjson::Document d;
     d.SetObject();

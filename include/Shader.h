@@ -9,7 +9,7 @@
 #include <sstream>
 #include <iostream>
 
-class Shader
+class Shader: public std::enable_shared_from_this<Shader>
 {
 public:
     unsigned int ID;

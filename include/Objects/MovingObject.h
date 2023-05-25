@@ -7,7 +7,7 @@
 #include "Object3D.h"
 #include "random"
 
-class MovingObject : public Object3D {
+class MovingObject : public Object3D, public std::enable_shared_from_this<MovingObject> {
 
 private:
     using super = Object3D;
@@ -26,10 +26,10 @@ public:
 
     virtual void Move(float deltaTime);
 
-    void ImGui();
-    void onCollision(Object3D* other) override;
+    void ImGui() override;
+    void onCollision( Object3D& other) override;
 
-    rapidjson::Document ParseToJSON();
+    rapidjson::Document ParseToJSON() const;
 
     void loadFromJSON(MovingObject temp);
 };

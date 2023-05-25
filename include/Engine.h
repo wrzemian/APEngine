@@ -35,19 +35,19 @@ namespace Engine {
 
     int getHitboxIndex();
     int getImguiIndex();
-    int getObject3DIndex(Object3D* obj);
-    Object3D* getObject3DById(int id);
-    int getMovingObjectIndex(MovingObject* obj);
+    int getObject3DIndex(const std::shared_ptr<Object3D>& obj);
+    std::shared_ptr<Object3D> getObject3DById(int id);
+    int getMovingObjectIndex(const std::shared_ptr<MovingObject>& obj);
 
-    void addStaticHitbox(Hitbox* hitbox);
-    void addImgui(IGui* imgui);
-    void addMovingObject(MovingObject* object);
-    void addObject(Object3D* object);
+    void addStaticHitbox(const std::shared_ptr<Hitbox>& hitbox);
+    void addImgui(const std::shared_ptr<IGui>& imgui);
+    void addMovingObject(const std::shared_ptr<MovingObject>& object);
+    void addObject(const std::shared_ptr<Object3D>& object);
     void addDirLight(DirectionalLight* dirLight);
     void addPointLight(PointLight* pointLight);
     void addSpotLight(SpotLight* spotLight);
-    void addDynamicHitbox(Hitbox* hitbox);
-    void removeDynamicHitbox(Hitbox* hitbox);
+    void addDynamicHitbox(const std::shared_ptr<Hitbox>& hitbox);
+    void removeDynamicHitbox(const std::shared_ptr<Hitbox>& hitbox);
     void addAnt(Ant* ant);
 
     void logStaticHitboxes();
@@ -56,10 +56,10 @@ namespace Engine {
 
     void removeAnt(Ant* ant);
 
-    void removeStaticHitbox(Hitbox* hitbox);
-    void removeImgui(IGui* igui);
-    void removeMovingObject(MovingObject* object);
-    void removeObject(Object3D* object);
+    void removeStaticHitbox(const std::shared_ptr<Hitbox>& hitbox);
+    void removeImgui(const std::shared_ptr<IGui>& igui);
+    void removeMovingObject(const std::shared_ptr<MovingObject>& object);
+    void removeObject(const std::shared_ptr<Object3D>& object);
     void removeDirLight(DirectionalLight* dirLight);
     void removePointLight(PointLight* pointLight);
     void removeSpotLight(SpotLight* spotLight);
@@ -67,10 +67,10 @@ namespace Engine {
 
     void renderHitboxes(const glm::mat4& projectionView);
     void renderImgui();
-    void renderLights(Shader shader);
-    void renderDirLights(Shader shader);
-    void renderPointLights(Shader shader);
-    void renderSpotLights(Shader shader);
+    void renderLights(const Shader& shader);
+    void renderDirLights(const Shader& shader);
+    void renderPointLights(const Shader& shader);
+    void renderSpotLights(const Shader& shader);
 
     void moveObjects();
     void drawObjects(const Camera& camera);

@@ -140,7 +140,7 @@ namespace Game {
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
-        wagon.setShader(&shader);
+        wagon.setShader(shader.shared_from_this());
 
         // build and compile our shader program
         // ------------------------------------
@@ -149,25 +149,25 @@ namespace Game {
         shader.use();
 
         //player1.setShader(&shader);
-        playerJumper.setShader(&shader);
-        playerGrabber.setShader(&shader);
+        playerJumper.setShader(shader.shared_from_this());
+        playerGrabber.setShader(shader.shared_from_this());
         //player2.setShader(&shader);
-        ant.setShader(&shader);
+        ant.setShader(shader.shared_from_this());
         //wagon.setShader(&shader);
 
         platform.loadModel("../../res/models/Assets/chest1/box1.obj");
-        platform.setShader(&shader);
+        platform.setShader(shader.shared_from_this());
         platform1Hitbox.Create(&platform);
         platform1Hitbox.draw = true;
 
-        button.setShader(&shader);
+        button.setShader(shader.shared_from_this());
         button.loadModel("../../res/models/Assets/chest1/box1.obj");
         button1Hitbox.Create(&button);
         button1Hitbox.isTrigger = true;
 
         //background.initBackground(5,-525.509948,262.754974,&shader);
 
-        battery.setShader(&shader);
+        battery.setShader(shader.shared_from_this());
         battery.loadModel("../../res/models/Assets/battery/battery.obj");
         battery.tag = "battery";
         batteryHitbox.Create(&battery);

@@ -8,7 +8,7 @@
 #include "../../include/AssetManager.h"
 
 Object3D::Object3D() : _shader(nullptr), _model(nullptr), _transform(), _path("") {
-    Engine::addObject(this);
+    Engine::addObject(shared_from_this());
 }
 
 void Object3D::Draw() {
@@ -54,7 +54,7 @@ void Object3D::ImGui() {
     }
     if (ImGui::Button("SAVE OBJ3D")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getObject3DIndex(this)));
+        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getObject3DIndex(shared_from_this())));
     }
 
     ImGui::End();
@@ -80,30 +80,34 @@ rapidjson::Document Object3D::ParseToJSON() {
     return d;
 }
 
-void Object3D::onCollisionX(Object3D *other) {
+void Object3D::onCollisionX(Object3D& other) {
     //spdlog::warn("Object3D empty onCollisionX");
 }
 
-void Object3D::onCollisionY(Object3D *other) {
+void Object3D::onCollisionY(Object3D& other) {
     //spdlog::warn("Object3D empty onCollisionY");
 }
 
-void Object3D::onCollisionZ(Object3D *other) {
+void Object3D::onCollisionZ(Object3D& other) {
     //spdlog::warn("Object3D empty onCollisionZ");
 }
 
-void Object3D::onCollision(Object3D *other) {
+void Object3D::onCollision(Object3D& other) {
     spdlog::warn("Object3D empty onCollision");
     this->onCollisionX(other);
     this->onCollisionY(other);
     this->onCollisionZ(other);
 }
 
-void Object3D::setShader(Shader *shader) {
+Object3D::~Object3D() {
+    spdlog::error("object3d destructor");
+    Engine::removeObject(shared_from_this());
+}
+
+void Object3D::setShader(const std::shared_ptr<Shader> &shader) {
     _shader = shader;
 }
 
-Object3D::~Object3D() {
-    spdlog::error("object3d destructor");
-    Engine::removeObject(this);
+std::shared_ptr<MovingObject> Object3D::getSharedMovingObject() {
+    return std::static_pointer_cast<MovingObject>(shared_from_this());
 }

@@ -160,7 +160,7 @@ rapidjson::Document Hitbox::ParseToJSON() {
     return d;
 }
 
-bool Hitbox::TestForIntersection(Hitbox* other) {
+bool Hitbox::TestForIntersection(Hitbox other) {
     //spdlog::info("1st hitbox: ({}, {}) ({}, {})");
 //    bool intersects = _position->x + _offset.x + _min.x <= other->_position->x + other->_offset.x + other->_max.x &&
 //                      _position->x + _offset.x + _max.x >= other->_position->x + other->_offset.x + other->_min.x &&
@@ -217,13 +217,13 @@ void Hitbox::resolveCollision(Hitbox& other) {
 
     // Move the object out of the other one along the smallest overlap axis
     if (minOverlap == overlapAbs.x) {
-        _object->onCollisionX(other._object);
+        _object->onCollisionX(*other._object);
         _position->x -= overlap.x;
     } else if (minOverlap == overlapAbs.y) {
-        _object->onCollisionY(other._object);
+        _object->onCollisionY(*other._object);
         _position->y -= overlap.y;
     } else if (minOverlap == overlapAbs.z) {
-        _object->onCollisionZ(other._object);
+        _object->onCollisionZ(*other._object);
         _position->z -= overlap.z;
     }
 }

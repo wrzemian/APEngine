@@ -24,14 +24,15 @@ public:
         models.clear();
     }
 
+    AssetManager(const AssetManager&) = delete;
+    AssetManager& operator=(const AssetManager&) = delete;
+
 private:
     std::unordered_map<std::string, ModelPtr> models;
 
-    AssetManager() {}
+    AssetManager() = default;
     ~AssetManager() {
         clearModels();
     }
 
-    AssetManager(const AssetManager&) = delete;
-    AssetManager& operator=(const AssetManager&) = delete;
 };

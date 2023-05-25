@@ -9,7 +9,7 @@
 class Walls : public Object3D {
 public:
     Walls();
-    virtual ~Walls();
+    ~Walls() override;
     bool areRendered = false;
 
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
@@ -18,8 +18,6 @@ public:
     void logHitboxes();
 
     void ImGui() override;
-
-    void onCollision(Object3D* other) override;
 
     rapidjson::Document ParseToJSON();
 

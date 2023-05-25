@@ -9,7 +9,9 @@
 #include "../IGui.h"
 #include "document.h"
 
-class Object3D : public IGui {
+class MovingObject;
+
+class Object3D : public IGui, public std::enable_shared_from_this<Object3D> {
 public:
     Object3D();
     virtual ~Object3D();
@@ -17,19 +19,21 @@ public:
     std::string tag = "floor";
 
     void Draw();
-    void setShader(Shader* shader);
+    void setShader(const std::shared_ptr<Shader>& shader);
 
-    void ImGui();
+    void ImGui() override;
     void loadModel(const std::string& path);
 
-    virtual void onCollisionX(Object3D* other);
-    virtual void onCollisionY(Object3D* other);
-    virtual void onCollisionZ(Object3D* other);
-    virtual void onCollision(Object3D* other);
+    virtual void onCollisionX(Object3D& other);
+    virtual void onCollisionY(Object3D& other);
+    virtual void onCollisionZ(Object3D& other);
+    virtual void onCollision( Object3D& other);
     virtual rapidjson::Document ParseToJSON();
+
+    std::shared_ptr<MovingObject> getSharedMovingObject();
 
     Transform _transform;
     std::shared_ptr<Model> _model;
-    Shader* _shader;
+    std::shared_ptr<Shader> _shader;
     std::string _path;
 };

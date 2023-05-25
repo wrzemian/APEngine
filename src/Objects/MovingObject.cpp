@@ -12,14 +12,12 @@ MovingObject::MovingObject() {
     IGui::setWindowName("moving object");
     spdlog::info("moving object constructor");
 
-    Engine::addMovingObject(this);
+    Engine::addMovingObject(getSharedMovingObject());
 }
-
-
 
 MovingObject::~MovingObject() {
     spdlog::error("moving object destructor");
-    Engine::removeMovingObject(this);
+    Engine::removeMovingObject(getSharedMovingObject());
 }
 
 void MovingObject::SetVelocity(glm::vec3 velocity) {
@@ -65,15 +63,15 @@ void MovingObject::Move(float deltaTime) {
 //    pVelocity += real_gravity * deltaTime;
 }
 
-void MovingObject::onCollision(Object3D *other) {
-    if(other->tag == "floor" && _velocity.y != 0)
+void MovingObject::onCollision(Object3D& other) {
+    if(other.tag == "floor" && _velocity.y != 0)
     {
         _velocity.y = 0;
     }
 
 }
 
-rapidjson::Document MovingObject::ParseToJSON() {
+rapidjson::Document MovingObject::ParseToJSON() const {
     rapidjson::Document d;
     d.SetObject();
     d.AddMember("type", "object3D", d.GetAllocator());

@@ -34,13 +34,14 @@ namespace Engine {
 
     bool frustum = true;
 
-    std::vector<Hitbox*> staticHitboxes;
-    std::vector<Hitbox*> dynamicHitboxes;
+    std::vector<std::shared_ptr<Hitbox>> staticHitboxes;
+    std::vector<std::shared_ptr<Hitbox>> dynamicHitboxes;
 
-    std::vector<IGui*> allImgui;
-    std::vector<Object3D*> allObjects;
-    std::vector<MovingObject*> allMovingObjects;
+    std::vector<std::shared_ptr<IGui>> allImgui;
+    std::vector<std::shared_ptr<Object3D>> allObjects;
+    std::vector<std::shared_ptr<MovingObject>> allMovingObjects;
     std::vector<DirectionalLight*> allDirLights;
+    
     std::vector<PointLight*> allPointLights;
     std::vector<SpotLight*> allSpotLights;
     std::vector<Ant*> allAnts;
@@ -59,7 +60,7 @@ namespace Engine {
         return 0;
     }
 
-    int getObject3DIndex(Object3D* obj) {
+    int getObject3DIndex(const std::shared_ptr<Object3D>& obj) {
         auto it = find(allObjects.begin(), allObjects.end(), obj);
         if (it != allObjects.end())
         {
@@ -86,11 +87,11 @@ namespace Engine {
     }
 
 
-    Object3D* getObject3DById(int id) {
+    std::shared_ptr<Object3D> getObject3DById(int id) {
             return allObjects.at(id);
     }
 
-    int getMovingObjectIndex(MovingObject* obj) {
+    int getMovingObjectIndex(const std::shared_ptr<MovingObject>& obj) {
         auto it = find(allMovingObjects.begin(), allMovingObjects.end(), obj);
         if (it != allMovingObjects.end())
         {
@@ -102,52 +103,52 @@ namespace Engine {
         }
     }
 
-    void addStaticHitbox(Hitbox* hitbox) {
+    void addStaticHitbox(const std::shared_ptr<Hitbox>& hitbox) {
         //spdlog::info("Static hitbox added");
         staticHitboxes.push_back(hitbox);
     }
 
-    void removeStaticHitbox(Hitbox* hitbox) {
+    void removeStaticHitbox(const std::shared_ptr<Hitbox>& hitbox) {
         //spdlog::info("removing static hitbox");
         std::erase(staticHitboxes, hitbox);
     }
 
-    void addDynamicHitbox(Hitbox* hitbox) {
+    void addDynamicHitbox(const std::shared_ptr<Hitbox>& hitbox) {
         spdlog::info("Dynamic hitbox added, {}", hitbox->getWindowName());
         dynamicHitboxes.push_back(hitbox);
     }
 
-    void removeDynamicHitbox(Hitbox* hitbox) {
+    void removeDynamicHitbox(const std::shared_ptr<Hitbox>& hitbox) {
         //spdlog::info("removing dynamic hitbox");
         std::erase(dynamicHitboxes, hitbox);
     }
 
-    void addImgui(IGui* imgui) {
+    void addImgui(const std::shared_ptr<IGui>& imgui) {
         //spdlog::warn("imgui object added, {}", imgui->_windowName);
         allImgui.push_back(imgui);
     }
 
-    void removeImgui(IGui* igui) {
+    void removeImgui(const std::shared_ptr<IGui>& igui) {
         //spdlog::error("removing igui, _windowName = {}", igui->_windowName);
         std::erase(allImgui, igui);
     }
 
-    void addMovingObject(MovingObject* object) {
+    void addMovingObject(const std::shared_ptr<MovingObject>& object) {
         //spdlog::warn("moving object added, {}", object->_windowName);
         allMovingObjects.push_back(object);
     }
 
-    void removeMovingObject(MovingObject* object) {
+    void removeMovingObject(const std::shared_ptr<MovingObject>& object) {
         //spdlog::warn("removing moving object");
         std::erase(allMovingObjects, object);
     }
 
-    void addObject(Object3D* object) {
+    void addObject(const std::shared_ptr<Object3D>& object) {
         //spdlog::warn("object added, {}", object->_windowName);
         allObjects.push_back(object);
     }
 
-    void removeObject(Object3D* object) {
+    void removeObject(const std::shared_ptr<Object3D>& object) {
         //spdlog::warn("removing object");
         std::erase(allObjects, object);
     }
@@ -192,25 +193,25 @@ namespace Engine {
         std::erase(allAnts, ant);
     }
 
-    void renderDirLights(Shader shader){
+    void renderDirLights(const Shader& shader){
         for(DirectionalLight* dirLight: allDirLights) {
             dirLight->SendToShader(shader, "dirLight");
         }
     }
 
-    void renderPointLights(Shader shader){
+    void renderPointLights(const Shader& shader){
         for(PointLight* pointLight: allPointLights) {
             pointLight->SendToShader(shader, "pointLight");
         }
     }
-    void renderSpotLights(Shader shader){
+    void renderSpotLights(const Shader& shader){
         for(SpotLight* spotLight: allSpotLights) {
             spotLight->SendToShader(shader, "spotLight");
         }
     }
 
 
-    void renderLights(Shader shader) {
+    void renderLights(const Shader& shader) {
         renderDirLights(shader);
         renderPointLights(shader);
         renderSpotLights(shader);
@@ -224,7 +225,7 @@ namespace Engine {
         if(deltaTime > 0.01) {
             deltaTime = 0.01f;
         }
-        for(MovingObject* object: allMovingObjects) {
+        for(std::shared_ptr<MovingObject> object: allMovingObjects) {
             object->Move(deltaTime);
         }
     }
@@ -233,7 +234,7 @@ namespace Engine {
         displayCounter = 0;
         totalCounter = 0;
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
-        for(Object3D* object: allObjects) {
+        for(std::shared_ptr<Object3D> object: allObjects) {
 //                object->Draw();
 //            object->_transform.computeModelMatrix();
             Entity test(*object->_model);
@@ -323,7 +324,7 @@ namespace Engine {
     }
 
     void renderImgui() {
-        for(IGui* gui: allImgui) {
+        for(const auto& gui: allImgui) {
             if(gui->isShownImgui()) {
                 gui->ImGui();
             }
@@ -331,25 +332,25 @@ namespace Engine {
     }
 
     void renderHitboxes(const glm::mat4& projectionView) {
-        for(auto hitbox: staticHitboxes) {
+        for(const auto& hitbox: staticHitboxes) {
             hitbox->Draw(projectionView);
         }
-        for(auto hitbox: dynamicHitboxes) {
+        for(const auto& hitbox: dynamicHitboxes) {
             hitbox->Draw(projectionView);
         }
     }
 
     void resolveCollisions() {
-        for(auto dynamicHitbox: dynamicHitboxes) {
-            for(auto staticHitbox: staticHitboxes) {
-                dynamicHitbox->TestForIntersection(staticHitbox);
+        for(const auto& dynamicHitbox: dynamicHitboxes) {
+            for(const auto& staticHitbox: staticHitboxes) {
+                dynamicHitbox->TestForIntersection(*staticHitbox);
             }
         }
 
         for (int i = 0; i < dynamicHitboxes.size(); i++) {
             for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
                 if(dynamicHitboxes.at(i)->_object != dynamicHitboxes.at(j)->_object) {
-                    dynamicHitboxes.at(j)->TestForIntersection(dynamicHitboxes.at(i));
+                    dynamicHitboxes.at(j)->TestForIntersection(*dynamicHitboxes.at(i));
                 }
             }
         }
