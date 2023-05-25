@@ -19,7 +19,7 @@
 #include "../include/Objects/Hitbox.h"
 #include "../include/User/InputSystem.h"
 #include "../include/User/HUD.h"
-#include "../include/Objects/Walls.h"
+#include "../include/Objects/Level.h"
 #include "../include/User/Animation.h"
 #include "../include/User/Constant.h"
 #include "../include/Objects/Platform.h"
@@ -78,7 +78,7 @@ namespace Game {
     Battery battery;
     Hitbox batteryHitbox("hitboxes/hitbox_battery");
 
-    Walls wagon;
+    Level wagon;
 
 
     GLfloat movementSpeed = 3.0f;
@@ -134,12 +134,12 @@ namespace Game {
 
         camera = Engine::parser.CreateFromJSONCam("camera");
 
-        p1Hitbox.Create(&playerJumper);
-        p2Hitbox.Create(&playerGrabber);
+        p1Hitbox.Create(std::make_shared<Object3D>(playerJumper));
+        p1Hitbox.Create(std::make_shared<Object3D>(playerGrabber));
 
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
-        wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
+        wagon.loadLevel("objects/walls");
         wagon.setShader(&shader);
 
         // build and compile our shader program
@@ -157,12 +157,12 @@ namespace Game {
 
         platform.loadModel("../../res/models/Assets/chest1/box1.obj");
         platform.setShader(&shader);
-        platform1Hitbox.Create(&platform);
+        platform1Hitbox.Create(std::make_shared<Object3D>(platform));
         platform1Hitbox.draw = true;
 
         button.setShader(&shader);
         button.loadModel("../../res/models/Assets/chest1/box1.obj");
-        button1Hitbox.Create(&button);
+        button1Hitbox.Create(std::make_shared<Object3D>(button));
         button1Hitbox.isTrigger = true;
 
         //background.initBackground(5,-525.509948,262.754974,&shader);
@@ -170,7 +170,7 @@ namespace Game {
         battery.setShader(&shader);
         battery.loadModel("../../res/models/Assets/battery/battery.obj");
         battery.tag = "battery";
-        batteryHitbox.Create(&battery);
+        batteryHitbox.Create(std::make_shared<Object3D>(battery));
         batteryHitbox.draw = true;
         battery._transform._position.x = -8;
         battery._transform._position.y = 7;

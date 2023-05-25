@@ -53,7 +53,7 @@ void Ant::Move(float deltaTime) {
     MovingObject::Move(deltaTime);
 }
 
-void Ant::Escape(Object3D* other) {
+void Ant::Escape(std::shared_ptr<Object3D> other) {
     glm::vec2 AntPlayerVec(other->_transform._position.x - this->_transform._position.x,
                            other->_transform._position.z - this->_transform._position.z);
     glm::normalize(AntPlayerVec);
@@ -63,7 +63,7 @@ void Ant::Escape(Object3D* other) {
     _velocity.z = -AntPlayerVec.y * minSpeed;
 }
 
-void Ant::onCollisionX(Object3D *other) {
+void Ant::onCollisionX(std::shared_ptr<Object3D> other) {
     if(other->tag == "floor") {
         //spdlog::info("ant hit X wall");
         _velocity.x = 0;
@@ -75,13 +75,13 @@ void Ant::onCollisionX(Object3D *other) {
     }
 }
 
-void Ant::onCollisionY(Object3D *other) {
+void Ant::onCollisionY(std::shared_ptr<Object3D> other) {
     if(other->tag == "floor") {
         _velocity.y = 0;
     }
 }
 
-void Ant::onCollisionZ(Object3D *other) {
+void Ant::onCollisionZ(std::shared_ptr<Object3D> other) {
     if(other->tag == "floor") {
         //spdlog::info("ant hit Z wall");
         _velocity.x = 0;

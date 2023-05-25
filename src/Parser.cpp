@@ -138,7 +138,7 @@ MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
     return {};
 }
 
-Walls Parser::CreateFromJSONWalls(std::string fileName) {
+Level Parser::CreateFromJSONWalls(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();
 
@@ -148,7 +148,7 @@ Walls Parser::CreateFromJSONWalls(std::string fileName) {
         glm::vec3 tempPosition(d["positionX"].GetFloat(), d["positionY"].GetFloat(), d["positionZ"].GetFloat());
         std::string tempModel = d["model"].GetString();
 
-        Walls temp;
+        Level temp;
 //        temp._model = tempModel;
         temp.loadModel(tempModel);
         temp._transform._scale = tempScale;

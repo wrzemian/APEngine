@@ -67,7 +67,7 @@ Hitbox::~Hitbox() {
     }
 }
 
-void Hitbox::Create(Object3D* object, glm::vec3 offset) {
+void Hitbox::Create(std::shared_ptr<Object3D> object, glm::vec3 offset) {
     _object = object;
     _position = &object->_transform._position;
     _offset = offset;

@@ -38,7 +38,7 @@ namespace Engine {
     std::vector<Hitbox*> dynamicHitboxes;
 
     std::vector<IGui*> allImgui;
-    std::vector<Object3D*> allObjects;
+    std::vector<std::shared_ptr<Object3D>> allObjects;
     std::vector<MovingObject*> allMovingObjects;
     std::vector<DirectionalLight*> allDirLights;
     std::vector<PointLight*> allPointLights;
@@ -59,7 +59,7 @@ namespace Engine {
         return 0;
     }
 
-    int getObject3DIndex(Object3D* obj) {
+    int getObject3DIndex(std::shared_ptr<Object3D> obj) {
         auto it = find(allObjects.begin(), allObjects.end(), obj);
         if (it != allObjects.end())
         {
@@ -86,8 +86,8 @@ namespace Engine {
     }
 
 
-    Object3D* getObject3DById(int id) {
-            return allObjects.at(id);
+    std::shared_ptr<Object3D> getObject3DById(int id) {
+        return allObjects.at(id);
     }
 
     int getMovingObjectIndex(MovingObject* obj) {
@@ -142,12 +142,12 @@ namespace Engine {
         std::erase(allMovingObjects, object);
     }
 
-    void addObject(Object3D* object) {
+    void addObject(std::shared_ptr<Object3D> object) {
         //spdlog::warn("object added, {}", object->_windowName);
         allObjects.push_back(object);
     }
 
-    void removeObject(Object3D* object) {
+    void removeObject(std::shared_ptr<Object3D> object) {
         //spdlog::warn("removing object");
         std::erase(allObjects, object);
     }
@@ -233,7 +233,7 @@ namespace Engine {
         displayCounter = 0;
         totalCounter = 0;
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
-        for(Object3D* object: allObjects) {
+        for(auto object: allObjects) {
 //                object->Draw();
 //            object->_transform.computeModelMatrix();
             Entity test(*object->_model);

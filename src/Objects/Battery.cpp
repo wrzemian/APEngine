@@ -4,7 +4,7 @@
 
 #include "../../include/Objects/Battery.h"
 
-void Battery::onCollision(Object3D *other) {
+void Battery::onCollision(std::shared_ptr<Object3D> other) {
     //Object3D::onCollision(other);
     if(other->tag == "floor" && _velocity.y != 0)
     {
@@ -12,7 +12,7 @@ void Battery::onCollision(Object3D *other) {
     }
     if(other->tag == "player")
     {
-        other->onCollision(this);
+        other->onCollision(shared_from_this());
         //canPickUp = true;
     }
 }

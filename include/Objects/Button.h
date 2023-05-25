@@ -12,15 +12,16 @@ class Button : public Object3D {
 private:
     using super = Object3D;
 
-    Platform* connectedPlatform;
     bool isPushed = false;
     float t = 1.0f;
     float timeToReset = 1.0f;
 public:
-    Button(Platform* p, glm::vec3 position);
+    Platform* connectedPlatform;
 
+    Button(Platform* p, glm::vec3 position);
+    int id = -1;
     void Update(float dt);
-    virtual void onCollision(Object3D* other);
+    void onCollision(std::shared_ptr<Object3D> other) override;
 };
 
 

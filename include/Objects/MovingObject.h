@@ -27,7 +27,7 @@ public:
     virtual void Move(float deltaTime);
 
     void ImGui();
-    void onCollision(Object3D* other) override;
+    void onCollision(std::shared_ptr<Object3D> other) override;
 
     rapidjson::Document ParseToJSON();
 

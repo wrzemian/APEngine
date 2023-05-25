@@ -9,7 +9,7 @@
 
 class Battery : public MovingObject {
 public:
-    void onCollision(Object3D* other) override;
+    void onCollision(std::shared_ptr<Object3D> other) override;
 };
 
 

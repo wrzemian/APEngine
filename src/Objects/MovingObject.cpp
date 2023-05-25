@@ -65,7 +65,7 @@ void MovingObject::Move(float deltaTime) {
 //    pVelocity += real_gravity * deltaTime;
 }
 
-void MovingObject::onCollision(Object3D *other) {
+void MovingObject::onCollision(std::shared_ptr<Object3D> other) {
     if(other->tag == "floor" && _velocity.y != 0)
     {
         _velocity.y = 0;

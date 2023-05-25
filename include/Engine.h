@@ -35,14 +35,14 @@ namespace Engine {
 
     int getHitboxIndex();
     int getImguiIndex();
-    int getObject3DIndex(Object3D* obj);
-    Object3D* getObject3DById(int id);
+    int getObject3DIndex(std::shared_ptr<Object3D> obj);
+    std::shared_ptr<Object3D> getObject3DById(int id);
     int getMovingObjectIndex(MovingObject* obj);
 
     void addStaticHitbox(Hitbox* hitbox);
     void addImgui(IGui* imgui);
     void addMovingObject(MovingObject* object);
-    void addObject(Object3D* object);
+    void addObject(std::shared_ptr<Object3D> object);
     void addDirLight(DirectionalLight* dirLight);
     void addPointLight(PointLight* pointLight);
     void addSpotLight(SpotLight* spotLight);
@@ -59,7 +59,7 @@ namespace Engine {
     void removeStaticHitbox(Hitbox* hitbox);
     void removeImgui(IGui* igui);
     void removeMovingObject(MovingObject* object);
-    void removeObject(Object3D* object);
+    void removeObject(std::shared_ptr<Object3D> object);
     void removeDirLight(DirectionalLight* dirLight);
     void removePointLight(PointLight* pointLight);
     void removeSpotLight(SpotLight* spotLight);

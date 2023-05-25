@@ -21,6 +21,8 @@ public:
         DYNAMIC, STATIC, DETECTION_ONLY
     };
 
+    std::string tag;
+
     Hitbox(HitboxType type);
     Hitbox(std::string fileName);
 
@@ -35,7 +37,7 @@ public:
     bool isTrigger = false;
 
     bool draw = false;
-    Object3D* _object{};
+    std::shared_ptr<Object3D> _object;
     glm::vec3* _position{};
 
     glm::vec3 _min{};
@@ -46,7 +48,7 @@ public:
     glm::vec3 _offset{};
     DebugShape debugShape;
 
-    void Create(Object3D* object, glm::vec3 offset = glm::vec3(0));
+    void Create(std::shared_ptr<Object3D> object, glm::vec3 offset = glm::vec3(0));
     void Draw(glm::mat4 projectionView);
     void ImGui() override;
 

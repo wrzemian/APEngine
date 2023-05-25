@@ -12,7 +12,7 @@
 #include "lights/SpotLight.h"
 #include "Objects/Object3D.h"
 #include "Objects/MovingObject.h"
-#include "Objects/Walls.h"
+#include "Objects/Level.h"
 #include "Camera.h"
 
 class Parser {
@@ -35,7 +35,7 @@ public:
 
     MovingObject CreateFromJSONMovingObject(std::string fileName);
 
-    Walls CreateFromJSONWalls(std::string fileName);
+    Level CreateFromJSONWalls(std::string fileName);
 
     Camera CreateFromJSONCam(std::string fileName);
 

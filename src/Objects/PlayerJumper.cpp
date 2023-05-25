@@ -73,7 +73,7 @@ void PlayerJumper::Jump() {
     }
 }
 
-void PlayerJumper::onCollision(Object3D *other) {
+void PlayerJumper::onCollision(std::shared_ptr<Object3D> other) {
     if(other->tag == "floor" && _velocity.y != 0)
     {
         _velocity.y = 0;

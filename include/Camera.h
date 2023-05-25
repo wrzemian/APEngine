@@ -90,6 +90,8 @@ public:
         spdlog::error("camera destructor");
     }
 
+
+
     void rotate(float xdeg, float ydeg, GLboolean constrainPitch = true)
     {
 

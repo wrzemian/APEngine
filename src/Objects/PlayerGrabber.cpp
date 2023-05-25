@@ -61,7 +61,7 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     }
 }
 
-void PlayerGrabber::onCollision(Object3D *other) {
+void PlayerGrabber::onCollision(std::shared_ptr<Object3D> other) {
     if(other->tag == "floor" && _velocity.y != 0)
     {
         _velocity.y = 0;

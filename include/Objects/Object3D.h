@@ -9,10 +9,11 @@
 #include "../IGui.h"
 #include "document.h"
 
-class Object3D : public IGui {
+class Object3D : public IGui, public std::enable_shared_from_this<Object3D>  {
 public:
     Object3D();
     virtual ~Object3D();
+    //std::shared_ptr<Object3D> object = std::make_shared<Object3D>();
 
     std::string tag = "floor";
 
@@ -22,10 +23,10 @@ public:
     void ImGui();
     void loadModel(const std::string& path);
 
-    virtual void onCollisionX(Object3D* other);
-    virtual void onCollisionY(Object3D* other);
-    virtual void onCollisionZ(Object3D* other);
-    virtual void onCollision(Object3D* other);
+    virtual void onCollisionX(std::shared_ptr<Object3D> other);
+    virtual void onCollisionY(std::shared_ptr<Object3D> other);
+    virtual void onCollisionZ(std::shared_ptr<Object3D> other);
+    virtual void onCollision(std::shared_ptr<Object3D> other);
     virtual rapidjson::Document ParseToJSON();
 
     Transform _transform;

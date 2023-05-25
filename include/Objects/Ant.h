@@ -29,10 +29,10 @@ public:
     void ImGui() override;
     void Move(float deltaTime) override;
 
-    void Escape(Object3D* other);
-    void onCollisionX(Object3D* other) override;
-    void onCollisionY(Object3D* other) override;
-    void onCollisionZ(Object3D* other) override;
+    void Escape(std::shared_ptr<Object3D> other);
+    void onCollisionX(std::shared_ptr<Object3D> other) override;
+    void onCollisionY(std::shared_ptr<Object3D> other) override;
+    void onCollisionZ(std::shared_ptr<Object3D> other) override;
 
 };
 

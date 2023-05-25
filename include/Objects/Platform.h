@@ -18,10 +18,11 @@ public:
     bool moveToOrigin = false;
     float t;
     float speed = 1; //1 equals to one second of movement
+    int id = -1;
     glm::vec3 positionOrigin = glm::vec3(0);
     glm::vec3 positionTarget = glm::vec3(0);
     Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s);
-    void onCollision(Object3D* other) override;
+    void onCollision(std::shared_ptr<Object3D> other) override;
     void UpdatePosition(float dt);
     void OnActivate();
     void OnDeactivate();

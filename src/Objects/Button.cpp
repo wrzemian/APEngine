@@ -11,7 +11,7 @@ Button::Button(Platform* p, glm::vec3 position)
     tag = "button";
 }
 
-void Button::onCollision(Object3D *other) {
+void Button::onCollision(std::shared_ptr<Object3D> other) {
     if(other->tag == "player")
     {
         isPushed = true;
