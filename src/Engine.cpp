@@ -222,7 +222,7 @@ namespace Engine {
 
     void moveObjects(){
         if(deltaTime > 0.01) {
-            deltaTime = 0.01;
+            deltaTime = 0.01f;
         }
         for(MovingObject* object: allMovingObjects) {
             object->Move(deltaTime);
@@ -343,8 +343,6 @@ namespace Engine {
         for(auto dynamicHitbox: dynamicHitboxes) {
             for(auto staticHitbox: staticHitboxes) {
                 dynamicHitbox->TestForIntersection(staticHitbox);
-                //spdlog::warn("{} with {}", dynamicHitbox->_object->tag, staticHitbox->_object->tag);
-
             }
         }
 
@@ -352,23 +350,9 @@ namespace Engine {
             for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
                 if(dynamicHitboxes.at(i)->_object != dynamicHitboxes.at(j)->_object) {
                     dynamicHitboxes.at(j)->TestForIntersection(dynamicHitboxes.at(i));
-                    //spdlog::warn("{} with {}", dynamicHitboxes.at(i)->_object->tag, dynamicHitboxes.at(j)->_object->tag);
                 }
-                //dynamicHitboxes[j]->TestForIntersection(dynamicHitboxes[i]);
             }
         }
-
-//        for (int i = 0; i < dynamicHitboxes.size(); i++) {
-//            for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
-//                dynamicHitboxes[i]->TestForIntersection(dynamicHitboxes[j]);
-//                //dynamicHitboxes[j]->TestForIntersection(dynamicHitboxes[i]);
-//            }
-//        }
-//        for(size_t i=0; i < staticHitboxes.size(); i++) {
-//            for (size_t j = i+1; j < staticHitboxes.size(); j++) {
-//                staticHitboxes.at(i)->TestForIntersection(*staticHitboxes.at(j));
-//            }
-//        }
     }
 
     void LoopEnd() {

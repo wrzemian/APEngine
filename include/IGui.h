@@ -19,19 +19,15 @@ public:
     IGui();
     virtual ~IGui();
 
-    bool isShownImgui() const;
+    [[nodiscard]] bool isShownImgui() const;
 
     void ShowImgui();
     void HideImgui();
 
-    const std::string &getWindowName() const;
+    [[nodiscard]] const std::string &getWindowName() const;
 
-    void setWindowName(std::string const& name) {
-        _windowName = name + " #" + _windowName;
-    }
+    void setWindowName(std::string const& name);
 
-    virtual void ImGui() {
-        spdlog::warn("default IGui");
-    }
+    virtual void ImGui();
 
 };

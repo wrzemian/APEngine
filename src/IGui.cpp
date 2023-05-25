@@ -30,3 +30,11 @@ void IGui::HideImgui() {
 const std::string &IGui::getWindowName() const {
     return _windowName;
 }
+
+void IGui::setWindowName(std::string const& name) {
+    _windowName = name + " #" + _windowName;
+}
+
+void IGui::ImGui() {
+    spdlog::error("default IGui");
+}
