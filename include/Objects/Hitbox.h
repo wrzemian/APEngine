@@ -18,7 +18,7 @@ enum Axis {
 
 public:
     enum HitboxType {
-        DYNAMIC, STATIC
+        DYNAMIC, STATIC, DETECTION_ONLY
     };
 
     Hitbox(HitboxType type);
@@ -29,7 +29,8 @@ public:
     glm::vec3 currentMin();
     glm::vec3 currentMax();
     bool checkCollision(Hitbox& other);
-    void resolveCollision(Hitbox& other);
+
+    virtual void resolveCollision(Hitbox& other);
 
     bool isTrigger = false;
 

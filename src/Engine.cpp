@@ -45,6 +45,12 @@ namespace Engine {
     std::vector<SpotLight*> allSpotLights;
     std::vector<Ant*> allAnts;
 
+    bool renderDynamic = false;
+    bool renderStatic = false;
+
+    int renderedStatic = 0;
+    int renderedDynamic = 0;
+
     int Init() {
         if (initGLandImGui() == -1) {
             return -1;
@@ -64,6 +70,21 @@ namespace Engine {
             return -1;
         }
     }
+
+    void logStaticHitboxes() {
+        spdlog::warn("Static hitboxes:");
+        for(auto h: staticHitboxes) {
+            spdlog::info("{}", h->_object->tag);
+        }
+    }
+
+    void logDynamicHitboxes() {
+        spdlog::warn("Dynamic hitboxes:");
+        for(auto h: dynamicHitboxes) {
+            spdlog::info("{}", h->_object->tag);
+        }
+    }
+
 
     Object3D* getObject3DById(int id) {
             return allObjects.at(id);
@@ -92,7 +113,7 @@ namespace Engine {
     }
 
     void addDynamicHitbox(Hitbox* hitbox) {
-        //spdlog::info("Dynamic hitbox added");
+        spdlog::info("Dynamic hitbox added, {}", hitbox->getWindowName());
         dynamicHitboxes.push_back(hitbox);
     }
 
@@ -102,17 +123,17 @@ namespace Engine {
     }
 
     void addImgui(IGui* imgui) {
-        //spdlog::warn("imgui object added, {}", imgui->windowName);
+        //spdlog::warn("imgui object added, {}", imgui->_windowName);
         allImgui.push_back(imgui);
     }
 
     void removeImgui(IGui* igui) {
-        //spdlog::error("removing igui, windowName = {}", igui->windowName);
+        //spdlog::error("removing igui, _windowName = {}", igui->_windowName);
         std::erase(allImgui, igui);
     }
 
     void addMovingObject(MovingObject* object) {
-        //spdlog::warn("moving object added, {}", object->windowName);
+        //spdlog::warn("moving object added, {}", object->_windowName);
         allMovingObjects.push_back(object);
     }
 
@@ -122,7 +143,7 @@ namespace Engine {
     }
 
     void addObject(Object3D* object) {
-        //spdlog::warn("object added, {}", object->windowName);
+        //spdlog::warn("object added, {}", object->_windowName);
         allObjects.push_back(object);
     }
 
@@ -238,7 +259,7 @@ namespace Engine {
 
     void ImGui() {
         ImGui::Begin("Engine");
-        ImGui::SetWindowSize(ImVec2(200, 150));
+        ImGui::SetWindowSize(ImVec2(250, 300));
         //spdlog::info("deltaTime: ", Engine::deltaTime);
 
         ImGui::Text("deltaTime: %f", Engine::deltaTime);
@@ -246,6 +267,32 @@ namespace Engine {
         ImGui::Text("displayed: %d", displayCounter);
         ImGui::Text("total: %d", totalCounter);
         ImGui::Checkbox("FRUSTUM", &frustum);
+
+        ImGui::SliderInt("static", &renderedStatic, 0, (int)staticHitboxes.size() - 1);
+        for (const auto& hitbox : staticHitboxes) {
+            hitbox->draw = false;
+        }
+        staticHitboxes.at(renderedStatic)->draw = true;
+
+        ImGui::SliderInt("dynamic", &renderedDynamic, 0, (int)dynamicHitboxes.size() - 1);
+        for (const auto& hitbox : dynamicHitboxes) {
+            hitbox->draw = false;
+        }
+        dynamicHitboxes.at(renderedDynamic)->draw = true;
+
+        ImGui::Checkbox("Show static hitboxes", &renderStatic);
+        if (renderStatic) {
+            for (const auto& hitbox : staticHitboxes) {
+                hitbox->draw = true;
+            }
+        }
+
+        ImGui::Checkbox("Show dynamic hitboxes", &renderDynamic);
+        if (renderDynamic) {
+            for (const auto& hitbox : dynamicHitboxes) {
+                hitbox->draw = true;
+            }
+        }
         ImGui::End();
     }
 
@@ -277,7 +324,7 @@ namespace Engine {
 
     void renderImgui() {
         for(IGui* gui: allImgui) {
-            if(gui->isRendered) {
+            if(gui->isShownImgui()) {
                 gui->ImGui();
             }
         }
@@ -296,14 +343,27 @@ namespace Engine {
         for(auto dynamicHitbox: dynamicHitboxes) {
             for(auto staticHitbox: staticHitboxes) {
                 dynamicHitbox->TestForIntersection(staticHitbox);
+                //spdlog::warn("{} with {}", dynamicHitbox->_object->tag, staticHitbox->_object->tag);
+
             }
         }
+
         for (int i = 0; i < dynamicHitboxes.size(); i++) {
             for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
-                dynamicHitboxes[i]->TestForIntersection(dynamicHitboxes[j]);
+                if(dynamicHitboxes.at(i)->_object != dynamicHitboxes.at(j)->_object) {
+                    dynamicHitboxes.at(j)->TestForIntersection(dynamicHitboxes.at(i));
+                    //spdlog::warn("{} with {}", dynamicHitboxes.at(i)->_object->tag, dynamicHitboxes.at(j)->_object->tag);
+                }
                 //dynamicHitboxes[j]->TestForIntersection(dynamicHitboxes[i]);
             }
         }
+
+//        for (int i = 0; i < dynamicHitboxes.size(); i++) {
+//            for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
+//                dynamicHitboxes[i]->TestForIntersection(dynamicHitboxes[j]);
+//                //dynamicHitboxes[j]->TestForIntersection(dynamicHitboxes[i]);
+//            }
+//        }
 //        for(size_t i=0; i < staticHitboxes.size(); i++) {
 //            for (size_t j = i+1; j < staticHitboxes.size(); j++) {
 //                staticHitboxes.at(i)->TestForIntersection(*staticHitboxes.at(j));

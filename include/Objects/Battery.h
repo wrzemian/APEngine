@@ -5,9 +5,11 @@
 #ifndef APENGINE_BATTERY_H
 #define APENGINE_BATTERY_H
 
+#include "MovingObject.h"
 
-class Battery {
-
+class Battery : public MovingObject {
+public:
+    void onCollision(Object3D* other) override;
 };
 
 

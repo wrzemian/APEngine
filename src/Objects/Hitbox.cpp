@@ -13,7 +13,6 @@ Hitbox::Hitbox(HitboxType type) {
     _min = glm::vec3(1000, 1000, 1000);
     _max = glm::vec3(-1000, -1000, -1000);
 
-    isRendered = false;
     //spdlog::info("hitbox constructor");
 
     IGui::setWindowName("hitbox");
@@ -33,13 +32,13 @@ Hitbox::Hitbox(std::string fileName) {
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("hitbox");
-    isRendered = false;
+
     if(type == "hitbox") {
         if (d["_type"].GetInt() == 0){
             _type = STATIC;
             Engine::addStaticHitbox(this);
         }
-        else if (d["_type"].GetInt() == 1) {
+        if (d["_type"].GetInt() == 1) {
             _type = DYNAMIC;
             Engine::addDynamicHitbox(this);
         }
@@ -49,11 +48,14 @@ Hitbox::Hitbox(std::string fileName) {
 
         _min = glm::vec3(d["minX"].GetFloat(), d["minY"].GetFloat(), d["minZ"].GetFloat());
         _max = glm::vec3(d["maxX"].GetFloat(), d["maxY"].GetFloat(), d["maxZ"].GetFloat());
+        _offset = glm::vec3(d["offsetX"].GetFloat(), d["offsetY"].GetFloat(), d["offsetZ"].GetFloat());
         _color = glm::vec3(1,1,0);
-        _offset = glm::vec3(0,0,0);;
     }
     else
         spdlog::error("no JSON file found");
+
+    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
+
 }
 
 Hitbox::~Hitbox() {
@@ -78,7 +80,7 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     if(!draw) {
         return;
     }
-    //spdlog::info("drawing hitbox {}", windowName);
+    //spdlog::info("drawing hitbox {}", _windowName);
 
     DebugShape::shader.use();
     DebugShape::shader.setVec3("offset", _offset);
@@ -97,8 +99,8 @@ void Hitbox::Draw(glm::mat4 projectionView) {
 }
 
 void Hitbox::ImGui()  {
-    ImGui::Begin(windowName.c_str());
-    ImGui::SetWindowSize(ImVec2(300, 380));
+    ImGui::Begin(getWindowName().c_str());
+    ImGui::SetWindowSize(ImVec2(300, 420));
 
     ImGui::SliderFloat("min X", &_min.x, -20.0f, 20.0f);
     ImGui::SliderFloat("min Y", &_min.y, -20.0f, 20.0f);
@@ -149,6 +151,9 @@ rapidjson::Document Hitbox::ParseToJSON() {
     d.AddMember("maxX", _max.x, d.GetAllocator());
     d.AddMember("maxY", _max.y, d.GetAllocator());
     d.AddMember("maxZ", _max.z, d.GetAllocator());
+    d.AddMember("offsetX", _offset.x, d.GetAllocator());
+    d.AddMember("offsetY", _offset.y, d.GetAllocator());
+    d.AddMember("offsetZ", _offset.z, d.GetAllocator());
 
 
 
@@ -212,11 +217,13 @@ void Hitbox::resolveCollision(Hitbox& other) {
 
     // Move the object out of the other one along the smallest overlap axis
     if (minOverlap == overlapAbs.x) {
+        _object->onCollisionX(other._object);
         _position->x -= overlap.x;
     } else if (minOverlap == overlapAbs.y) {
-        _object->onCollision(other._object);
+        _object->onCollisionY(other._object);
         _position->y -= overlap.y;
     } else if (minOverlap == overlapAbs.z) {
+        _object->onCollisionZ(other._object);
         _position->z -= overlap.z;
     }
 }

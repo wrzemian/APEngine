@@ -19,8 +19,6 @@ void Walls::calculateHitboxes() {
         hitbox->Create(this);
         spdlog::info("Calculating hitboxes for {}", mesh._name);
 
-        hitbox->isRendered = false;
-
         hitboxes.push_back(hitbox);
     }
     //logHitboxes();
@@ -34,7 +32,7 @@ void Walls::logHitboxes() {
 }
 
 void Walls::ImGui() {
-    ImGui::Begin(windowName.c_str());
+    ImGui::Begin(getWindowName().c_str());
     Object3D::ImGui();
 
     ImGui::SetWindowSize(ImVec2(300, 700));

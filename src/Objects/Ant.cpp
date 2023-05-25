@@ -4,7 +4,7 @@
 using Random = effolkronium::random_static;
 
 Ant::Ant() {
-    //windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
+    //_windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
     IGui::setWindowName("ant");
     //spdlog::warn("moving object constructor");
     timer = 0;
@@ -12,7 +12,7 @@ Ant::Ant() {
     maxSpeed = maxSpeed + Random::get(2.0f, 0.5f);
     minMoveTime = Random::get(1, 3);
     maxMoveTime = minMoveTime + Random::get(1, 2);
-    refreshTime = Random::get(30, 31);
+    refreshTime = Random::get(1, 3);
     movingTime = 0;
     isMoving = false;
     Engine::addAnt(this);
@@ -37,11 +37,11 @@ void Ant::Move(float deltaTime) {
         float angle = Random::get(0.0f, 2 * glm::pi<float>());
         _velocity.x = cos(angle) * Random::get(minSpeed, maxSpeed);
         _velocity.z = sin(angle) * Random::get(minSpeed, maxSpeed);
-        spdlog::warn("starting movement for {} in X {}, Z {}", movingTime, _velocity.x, _velocity.z);
+        //spdlog::warn("starting movement for {} in X {}, Z {}", movingTime, _velocity.x, _velocity.z);
 
     }
     if(isMoving && movingTime < 0) {
-        spdlog::warn("stopping movement");
+       // spdlog::warn("stopping movement");
         isMoving = false;
         movingTime = 0;
         _velocity.x = 0;
@@ -53,16 +53,49 @@ void Ant::Move(float deltaTime) {
     MovingObject::Move(deltaTime);
 }
 
-void Ant::onCollision(Object3D *other) {
-//    spdlog::warn("ant colliding");
-//    _velocity.x = 0;
-    _velocity.y = 0;
-//    _velocity.z = 0;
+void Ant::Escape(Object3D* other) {
+    glm::vec2 AntPlayerVec(other->_transform._position.x - this->_transform._position.x,
+                           other->_transform._position.z - this->_transform._position.z);
+    glm::normalize(AntPlayerVec);
+    isMoving = true;
+    movingTime =minMoveTime;
+    _velocity.x = -AntPlayerVec.x * maxSpeed;
+    _velocity.z = -AntPlayerVec.y * minSpeed;
+}
+
+void Ant::onCollisionX(Object3D *other) {
+    if(other->tag == "floor") {
+        //spdlog::info("ant hit X wall");
+        _velocity.x = 0;
+        _velocity.z = 0;
+    }
+    if(other->tag == "player") {
+        //spdlog::info("ant player X");
+        this->Escape(other);
+    }
+}
+
+void Ant::onCollisionY(Object3D *other) {
+    if(other->tag == "floor") {
+        _velocity.y = 0;
+    }
+}
+
+void Ant::onCollisionZ(Object3D *other) {
+    if(other->tag == "floor") {
+        //spdlog::info("ant hit Z wall");
+        _velocity.x = 0;
+        _velocity.z = 0;
+    }
+    if(other->tag == "player") {
+        //spdlog::info("ant player Z");
+        this->Escape(other);
+    }
 }
 
 void Ant::ImGui() {
     super::ImGui();
 
-    ImGui::Begin(windowName.c_str());
+    ImGui::Begin(getWindowName().c_str());
     ImGui::End();
 }

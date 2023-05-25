@@ -2,10 +2,13 @@
     "type": "hitbox",
     "_type": 1,
     "object": 0,
-    "minX": -1.0,
-    "minY": -1.0,
-    "minZ": -1.0,
-    "maxX": 1.0,
-    "maxY": 1.0,
-    "maxZ": 1.0
+    "minX": -0.3,
+    "minY": -0.3,
+    "minZ": -0.3,
+    "maxX": 0.3,
+    "maxY": 0.3,
+    "maxZ": 0.3,
+    "offsetX": 0.0,
+    "offsetY": 0.0,
+    "offsetZ": 0.0
 }

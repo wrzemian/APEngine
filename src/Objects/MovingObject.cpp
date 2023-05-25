@@ -8,7 +8,7 @@
 #include "../imgui_impl/imgui_impl_opengl3.h"
 
 MovingObject::MovingObject() {
-    //windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
+    //_windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
     IGui::setWindowName("moving object");
     spdlog::info("moving object constructor");
 
@@ -39,7 +39,7 @@ void MovingObject::StopMoving() {
 void MovingObject::ImGui() {
     super::ImGui();
 
-    ImGui::Begin(windowName.c_str());
+    ImGui::Begin(getWindowName().c_str());
     ImGui::SetWindowSize(ImVec2(300, 440));
 
     ImGui::SliderFloat("velocity X", &_velocity.x, -10.0f, 10.0f);
@@ -69,9 +69,6 @@ void MovingObject::onCollision(Object3D *other) {
     if(other->tag == "floor" && _velocity.y != 0)
     {
         _velocity.y = 0;
-    } else {
-        _velocity.x = 0;
-        _velocity.z = 0;
     }
 
 }
