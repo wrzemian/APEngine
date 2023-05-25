@@ -99,7 +99,7 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
-        antHitbox.isRendered = true;
+        camera.ShowImgui();;
 
         inputSystem.InputInit();
         /*inputSystem.monitorKey(GLFW_KEY_W);
@@ -124,8 +124,6 @@ namespace Game {
 
         //player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
         //player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
-        p2Hitbox.isRendered = true;
-        antBigHitbox.isRendered = true;
         //player1.tag = "player";
         //player2.tag = "player";
 

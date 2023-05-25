@@ -11,23 +11,23 @@
 
 class IGui {
 
+private:
+    bool _showImgui = false;
+    std::string _windowName;
+
 public:
-    bool isRendered = false;
-
     IGui();
-
     virtual ~IGui();
 
-    void setWindowName(std::string name) {
-        windowName = name + " #" + windowName;
-       // spdlog::info("set window name to: {}", windowName);
+    [[nodiscard]] bool isShownImgui() const;
 
-    }
+    void ShowImgui();
+    void HideImgui();
 
-    std::string windowName;
+    [[nodiscard]] const std::string &getWindowName() const;
 
-    virtual void ImGui() {
-        spdlog::warn("default IGui");
-    }
+    void setWindowName(std::string const& name);
+
+    virtual void ImGui();
 
 };
