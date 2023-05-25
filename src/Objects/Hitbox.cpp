@@ -13,7 +13,6 @@ Hitbox::Hitbox(HitboxType type) {
     _min = glm::vec3(1000, 1000, 1000);
     _max = glm::vec3(-1000, -1000, -1000);
 
-    isRendered = false;
     //spdlog::info("hitbox constructor");
 
     IGui::setWindowName("hitbox");
@@ -33,7 +32,7 @@ Hitbox::Hitbox(std::string fileName) {
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("hitbox");
-    isRendered = false;
+
     if(type == "hitbox") {
         if (d["_type"].GetInt() == 0){
             _type = STATIC;
@@ -55,7 +54,7 @@ Hitbox::Hitbox(std::string fileName) {
     else
         spdlog::error("no JSON file found");
 
-    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", windowName, _object->tag, _type);
+    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
 
 }
 
@@ -81,7 +80,7 @@ void Hitbox::Draw(glm::mat4 projectionView) {
     if(!draw) {
         return;
     }
-    //spdlog::info("drawing hitbox {}", windowName);
+    //spdlog::info("drawing hitbox {}", _windowName);
 
     DebugShape::shader.use();
     DebugShape::shader.setVec3("offset", _offset);
@@ -100,7 +99,7 @@ void Hitbox::Draw(glm::mat4 projectionView) {
 }
 
 void Hitbox::ImGui()  {
-    ImGui::Begin(windowName.c_str());
+    ImGui::Begin(getWindowName().c_str());
     ImGui::SetWindowSize(ImVec2(300, 420));
 
     ImGui::SliderFloat("min X", &_min.x, -20.0f, 20.0f);

@@ -26,7 +26,7 @@ void Object3D::loadModel(const std::string& path) {
 
 
 void Object3D::ImGui() {
-    ImGui::Begin(windowName.c_str());
+    ImGui::Begin(getWindowName().c_str());
 
     ImGui::SetWindowSize(ImVec2(300, 310));
 
