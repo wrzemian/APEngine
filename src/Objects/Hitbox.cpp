@@ -19,10 +19,10 @@ Hitbox::Hitbox(HitboxType type) {
 
     _type = type;
     if(type == STATIC) {
-        Engine::addStaticHitbox(this);
+        Engine::addStaticHitbox(getSharedHitbox());
     }
     if(type == DYNAMIC) {
-        Engine::addDynamicHitbox(this);
+        Engine::addDynamicHitbox(getSharedHitbox());
     }
     //Engine::addImgui(this);
 }
@@ -36,11 +36,11 @@ Hitbox::Hitbox(std::string fileName) {
     if(type == "hitbox") {
         if (d["_type"].GetInt() == 0){
             _type = STATIC;
-            Engine::addStaticHitbox(this);
+            Engine::addStaticHitbox(getSharedHitbox());
         }
         if (d["_type"].GetInt() == 1) {
             _type = DYNAMIC;
-            Engine::addDynamicHitbox(this);
+            Engine::addDynamicHitbox(getSharedHitbox());
         }
 
         _object = Engine::getObject3DById(d["object"].GetInt());
@@ -60,27 +60,26 @@ Hitbox::Hitbox(std::string fileName) {
 
 Hitbox::~Hitbox() {
     if(_type == STATIC) {
-        Engine::removeStaticHitbox(this);
+        Engine::removeStaticHitbox(getSharedHitbox());
     }
     if(_type == DYNAMIC) {
-        Engine::removeDynamicHitbox(this);
+        Engine::removeDynamicHitbox(getSharedHitbox());
     }
 }
 
-void Hitbox::Create(Object3D* object, glm::vec3 offset) {
-    _object = object;
-    _position = &object->_transform._position;
+void Hitbox::Create(Object3D& object, glm::vec3 offset) {
+    _object = object.getSharedObject();
+    _position = &object._transform._position;
     _offset = offset;
     _color = glm::vec3(1,1,0);
 
     debugShape.Initialize();
 }
 
-void Hitbox::Draw(glm::mat4 projectionView) {
+void Hitbox::Draw(const glm::mat4& projectionView) const{
     if(!draw) {
         return;
     }
-    //spdlog::info("drawing hitbox {}", _windowName);
 
     DebugShape::shader.use();
     DebugShape::shader.setVec3("offset", _offset);
@@ -88,9 +87,6 @@ void Hitbox::Draw(glm::mat4 projectionView) {
 
     auto model = glm::mat4(1);
     model = glm::translate(model, *_position);
-    //model = glm::scale(model, _dimensions);
-
-    //glm::mat4 model = glm::scale(_transform->_localTransform, _dimensions);
 
     DebugShape::shader.setMat4("model", model);
     DebugShape::shader.setMat4("projectionView", projectionView);
@@ -160,29 +156,21 @@ rapidjson::Document Hitbox::ParseToJSON() {
     return d;
 }
 
-bool Hitbox::TestForIntersection(Hitbox other) {
-    //spdlog::info("1st hitbox: ({}, {}) ({}, {})");
-//    bool intersects = _position->x + _offset.x + _min.x <= other->_position->x + other->_offset.x + other->_max.x &&
-//                      _position->x + _offset.x + _max.x >= other->_position->x + other->_offset.x + other->_min.x &&
-//                      _position->y + _offset.y + _min.y <= other->_position->y + other->_offset.y + other->_max.y &&
-//                      _position->y + _offset.y + _max.y >= other->_position->y + other->_offset.y + other->_min.y &&
-//                      _position->z + _offset.z + _min.z <= other->_position->z + other->_offset.z + other->_max.z &&
-//                      _position->z + _offset.z + _max.z >= other->_position->z + other->_offset.z + other->_min.z;
-//
-    bool intersects = checkCollision(*other);
+bool Hitbox::TestForIntersection(Hitbox& other) {
+    bool intersects = checkCollision(other);
 
     if(intersects) {
-        _object->onCollision(other->_object);
-        if(!isTrigger && !other->isTrigger)
+        _object->onCollision(*other._object);
+        if(!isTrigger && !other.isTrigger)
         {
-            resolveCollision(*other);
+            resolveCollision(other);
             _color.x = 1;
             _color.y = 0;
         }
         else
         {
-            _object->onCollision(other->_object);
-            other->_object->onCollision(_object);
+            _object->onCollision(*other._object);
+            other._object->onCollision(*_object);
             _color.x = 1;
             _color.y = 1;
         }
@@ -278,11 +266,11 @@ void Hitbox::calculateFromMesh(const Mesh &mesh) {
     maxZ > _max.z ? _max.z = maxZ : _max.z = _max.z;
 }
 
-glm::vec3 Hitbox::currentMin() {
+glm::vec3 Hitbox::currentMin() const {
     return _min + _offset + *_position;
 }
 
-glm::vec3 Hitbox::currentMax() {
+glm::vec3 Hitbox::currentMax() const {
     return _max + _offset + *_position;
 }
 

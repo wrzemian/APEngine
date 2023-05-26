@@ -26,8 +26,8 @@ public:
 
     virtual ~Hitbox();
 
-    glm::vec3 currentMin();
-    glm::vec3 currentMax();
+    glm::vec3 currentMin() const;
+    glm::vec3 currentMax() const;
     bool checkCollision(Hitbox& other);
 
     virtual void resolveCollision(Hitbox& other);
@@ -35,7 +35,7 @@ public:
     bool isTrigger = false;
 
     bool draw = false;
-    Object3D* _object{};
+    std::shared_ptr<Object3D> _object{};
     glm::vec3* _position{};
 
     glm::vec3 _min{};
@@ -46,8 +46,8 @@ public:
     glm::vec3 _offset{};
     DebugShape debugShape;
 
-    void Create(Object3D* object, glm::vec3 offset = glm::vec3(0));
-    void Draw(glm::mat4 projectionView);
+    void Create(Object3D& object, glm::vec3 offset = glm::vec3(0));
+    void Draw(const glm::mat4& projectionView) const;
     void ImGui() override;
 
     void calculateFromMesh(const Mesh& mesh);

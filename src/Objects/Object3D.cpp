@@ -8,7 +8,7 @@
 #include "../../include/AssetManager.h"
 
 Object3D::Object3D() : _shader(nullptr), _model(nullptr), _transform(), _path("") {
-    Engine::addObject(shared_from_this());
+    Engine::addObject(getSharedObject());
 }
 
 void Object3D::Draw() {
@@ -54,7 +54,7 @@ void Object3D::ImGui() {
     }
     if (ImGui::Button("SAVE OBJ3D")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getObject3DIndex(shared_from_this())));
+        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getObject3DIndex(getSharedObject())));
     }
 
     ImGui::End();
@@ -101,13 +101,10 @@ void Object3D::onCollision(Object3D& other) {
 
 Object3D::~Object3D() {
     spdlog::error("object3d destructor");
-    Engine::removeObject(shared_from_this());
+    Engine::removeObject(getSharedObject());
 }
 
 void Object3D::setShader(const std::shared_ptr<Shader> &shader) {
     _shader = shader;
 }
 
-std::shared_ptr<MovingObject> Object3D::getSharedMovingObject() {
-    return std::static_pointer_cast<MovingObject>(shared_from_this());
-}

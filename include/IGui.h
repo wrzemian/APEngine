@@ -9,7 +9,11 @@
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
 
-class IGui {
+class MovingObject;
+class Object3D;
+class Hitbox;
+
+class IGui : public std::enable_shared_from_this<IGui>  {
 
 private:
     bool _showImgui = false;
@@ -30,4 +34,9 @@ public:
 
     virtual void ImGui();
 
+    std::shared_ptr<Object3D> getSharedObject();
+
+    std::shared_ptr<MovingObject> getSharedMovingObject();
+
+    std::shared_ptr<Hitbox> getSharedHitbox();
 };
