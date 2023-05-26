@@ -12,6 +12,11 @@
 class MovingObject;
 class Object3D;
 class Hitbox;
+class DirectionalLight;
+class SpotLight;
+class PointLight;
+class Ant;
+class Walls;
 
 class IGui : public std::enable_shared_from_this<IGui>  {
 
@@ -39,4 +44,14 @@ public:
     std::shared_ptr<MovingObject> getSharedMovingObject();
 
     std::shared_ptr<Hitbox> getSharedHitbox();
+
+    std::shared_ptr<DirectionalLight> getSharedDirectionalLight();
+
+    std::shared_ptr<SpotLight> getSharedSpotLight();
+
+    std::shared_ptr<PointLight> getSharedPointLight();
+
+    std::shared_ptr<Ant> getSharedAnt();
+
+    std::shared_ptr<Walls> getSharedWalls();
 };

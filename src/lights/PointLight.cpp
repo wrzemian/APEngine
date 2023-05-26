@@ -12,15 +12,15 @@ PointLight::PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const
                                                                                                    linear(linear),
                                                                                                    quadratic(
                                                                                                            quadratic) {
-    Engine::addPointLight(this);
+    Engine::addPointLight(getSharedPointLight());
 }
 
 PointLight::PointLight() {
-    Engine::addPointLight(this);
+    Engine::addPointLight(getSharedPointLight());
 }
 
 PointLight::~PointLight() {
-    Engine::removePointLight(this);
+    Engine::removePointLight(getSharedPointLight());
 }
 
 const glm::vec3 &PointLight::getPosition() const {

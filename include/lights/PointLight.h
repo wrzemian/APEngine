@@ -7,7 +7,7 @@
 
 #include "AmbientLight.h"
 #include "../IGui.h"
-class PointLight : public AmbientLight{
+class PointLight : public AmbientLight, public std::enable_shared_from_this<PointLight>{
 protected:
     glm::vec3 position;
     float constant;

@@ -5,15 +5,15 @@
 DirectionalLight::DirectionalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
                                    const glm::vec3 &direction) : AmbientLight(ambient, diffuse, specular),
                                                                  direction(direction) {
-    Engine::addDirLight(this);
+    Engine::addDirLight(getSharedDirectionalLight());
 }
 
 DirectionalLight::DirectionalLight() {
-    Engine::addDirLight(this);
+    Engine::addDirLight(getSharedDirectionalLight());
 }
 
 DirectionalLight::~DirectionalLight() {
-    Engine::removeDirLight(this);
+    Engine::removeDirLight(getSharedDirectionalLight());
 }
 
 const glm::vec3 &DirectionalLight::getDirection() const {

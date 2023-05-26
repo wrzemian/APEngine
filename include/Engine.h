@@ -43,26 +43,26 @@ namespace Engine {
     void addImgui(const std::shared_ptr<IGui>& imgui);
     void addMovingObject(const std::shared_ptr<MovingObject>& object);
     void addObject(const std::shared_ptr<Object3D>& object);
-    void addDirLight(DirectionalLight* dirLight);
-    void addPointLight(PointLight* pointLight);
-    void addSpotLight(SpotLight* spotLight);
+    void addDirLight(const std::shared_ptr<DirectionalLight>& dirLight);
+    void addPointLight(const std::shared_ptr<PointLight>& pointLight);
+    void addSpotLight(const std::shared_ptr<SpotLight>& spotLight);
     void addDynamicHitbox(const std::shared_ptr<Hitbox>& hitbox);
     void removeDynamicHitbox(const std::shared_ptr<Hitbox>& hitbox);
-    void addAnt(Ant* ant);
+    void addAnt(const std::shared_ptr<Ant>& ant);
 
     void logStaticHitboxes();
     void logDynamicHitboxes();
 
 
-    void removeAnt(Ant* ant);
+    void removeAnt(const std::shared_ptr<Ant>& ant);
 
     void removeStaticHitbox(const std::shared_ptr<Hitbox>& hitbox);
     void removeImgui(const std::shared_ptr<IGui>& igui);
     void removeMovingObject(const std::shared_ptr<MovingObject>& object);
     void removeObject(const std::shared_ptr<Object3D>& object);
-    void removeDirLight(DirectionalLight* dirLight);
-    void removePointLight(PointLight* pointLight);
-    void removeSpotLight(SpotLight* spotLight);
+    void removeDirLight(const std::shared_ptr<DirectionalLight>& dirLight);
+    void removePointLight(const std::shared_ptr<PointLight>& pointLight);
+    void removeSpotLight(const std::shared_ptr<SpotLight>& spotLight);
 
 
     void renderHitboxes(const glm::mat4& projectionView);

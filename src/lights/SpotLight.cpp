@@ -12,15 +12,15 @@ SpotLight::SpotLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const g
                                                                                     direction(direction),
                                                                                     cutOff(cutOff),
                                                                                     outerCutOff(outerCutOff) {
-    Engine::addSpotLight(this);
+    Engine::addSpotLight(getSharedSpotLight());
 }
 
 SpotLight::SpotLight() {
-    Engine::addSpotLight(this);
+    Engine::addSpotLight(getSharedSpotLight());
 }
 
 SpotLight::~SpotLight() {
-    Engine::removeSpotLight(this);
+    Engine::removeSpotLight(getSharedSpotLight());
 }
 
 const glm::vec3 &SpotLight::getDirection() const {

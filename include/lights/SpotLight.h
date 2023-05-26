@@ -8,7 +8,7 @@
 #include "PointLight.h"
 #include "glm/vec3.hpp"
 #include "../IGui.h"
-class SpotLight : PointLight{
+class SpotLight : public PointLight, public std::enable_shared_from_this<SpotLight>{
 protected:
     glm::vec3 direction;
     float cutOff;

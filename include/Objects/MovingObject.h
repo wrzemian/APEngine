@@ -32,6 +32,7 @@ public:
     rapidjson::Document ParseToJSON() const;
 
     void loadFromJSON(MovingObject temp);
+
 };
 
 

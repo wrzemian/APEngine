@@ -40,11 +40,11 @@ namespace Engine {
     std::vector<std::shared_ptr<IGui>> allImgui;
     std::vector<std::shared_ptr<Object3D>> allObjects;
     std::vector<std::shared_ptr<MovingObject>> allMovingObjects;
-    std::vector<DirectionalLight*> allDirLights;
+    std::vector<std::shared_ptr<DirectionalLight>> allDirLights;
     
-    std::vector<PointLight*> allPointLights;
-    std::vector<SpotLight*> allSpotLights;
-    std::vector<Ant*> allAnts;
+    std::vector<std::shared_ptr<PointLight>> allPointLights;
+    std::vector<std::shared_ptr<SpotLight>> allSpotLights;
+    std::vector<std::shared_ptr<Ant>> allAnts;
 
     bool renderDynamic = false;
     bool renderStatic = false;
@@ -153,59 +153,59 @@ namespace Engine {
         std::erase(allObjects, object);
     }
 
-    void addDirLight(DirectionalLight* dirLight) {
+    void addDirLight(const std::shared_ptr<DirectionalLight>& dirLight) {
         //spdlog::warn("adding dirLight");
         allDirLights.push_back(dirLight);
     }
 
-    void removeDirLight(DirectionalLight* dirLight) {
+    void removeDirLight(const std::shared_ptr<DirectionalLight>& dirLight) {
         //spdlog::warn("removing dirLight");
         std::erase(allDirLights, dirLight);
     }
 
-    void addPointLight(PointLight* pointLight) {
+    void addPointLight(const std::shared_ptr<PointLight>& pointLight) {
         //spdlog::warn("adding pointLight");
         allPointLights.push_back(pointLight);
     }
 
-    void removePointLight(PointLight* pointLight) {
+    void removePointLight(const std::shared_ptr<PointLight>& pointLight) {
         //spdlog::warn("removing pointLight");
         std::erase(allPointLights, pointLight);
     }
 
-    void addSpotLight(SpotLight* spotLight) {
+    void addSpotLight(const std::shared_ptr<SpotLight>& spotLight) {
         //spdlog::warn("adding spotLight");
         allSpotLights.push_back(spotLight);
     }
 
-    void removeSpotLight(SpotLight* spotLight) {
+    void removeSpotLight(const std::shared_ptr<SpotLight>& spotLight) {
        // spdlog::warn("removing spotLight");
         std::erase(allSpotLights, spotLight);
     }
 
-    void addAnt(Ant* ant) {
+    void addAnt(const std::shared_ptr<Ant>& ant) {
         //spdlog::warn("adding spotLight");
         allAnts.push_back(ant);
     }
 
-    void removeAnt(Ant* ant) {
+    void removeAnt(const std::shared_ptr<Ant>& ant) {
         // spdlog::warn("removing spotLight");
         std::erase(allAnts, ant);
     }
 
     void renderDirLights(const Shader& shader){
-        for(DirectionalLight* dirLight: allDirLights) {
+        for(auto dirLight: allDirLights) {
             dirLight->SendToShader(shader, "dirLight");
         }
     }
 
     void renderPointLights(const Shader& shader){
-        for(PointLight* pointLight: allPointLights) {
+        for(auto pointLight: allPointLights) {
             pointLight->SendToShader(shader, "pointLight");
         }
     }
     void renderSpotLights(const Shader& shader){
-        for(SpotLight* spotLight: allSpotLights) {
+        for(auto spotLight: allSpotLights) {
             spotLight->SendToShader(shader, "spotLight");
         }
     }

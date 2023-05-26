@@ -50,3 +50,23 @@ std::shared_ptr<MovingObject> IGui::getSharedMovingObject()  {
 std::shared_ptr<Hitbox> IGui::getSharedHitbox()  {
     return std::static_pointer_cast<Hitbox>(shared_from_this());
 }
+
+std::shared_ptr<DirectionalLight> IGui::getSharedDirectionalLight()  {
+    return std::static_pointer_cast<DirectionalLight>(shared_from_this());
+}
+
+std::shared_ptr<SpotLight> IGui::getSharedSpotLight()  {
+    return std::static_pointer_cast<SpotLight>(shared_from_this());
+}
+
+std::shared_ptr<PointLight> IGui::getSharedPointLight()  {
+    return std::static_pointer_cast<PointLight>(shared_from_this());
+}
+
+std::shared_ptr<Ant> IGui::getSharedAnt()  {
+    return std::static_pointer_cast<Ant>(shared_from_this());
+}
+
+std::shared_ptr<Walls> IGui::getSharedWalls()  {
+    return std::static_pointer_cast<Walls>(shared_from_this());
+}

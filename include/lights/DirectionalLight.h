@@ -9,7 +9,7 @@
 #include "../IGui.h"
 
 
-class DirectionalLight : public AmbientLight{
+class DirectionalLight : public AmbientLight, public std::enable_shared_from_this<DirectionalLight>{
 protected:
     glm::vec3 direction;
 

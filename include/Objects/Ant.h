@@ -8,7 +8,7 @@
 
 #include "MovingObject.h"
 
-class Ant : public MovingObject {
+class Ant : public MovingObject, public std::enable_shared_from_this<Ant> {
 private:
     using super = MovingObject;
 
@@ -30,9 +30,10 @@ public:
     void Move(float deltaTime) override;
 
     void Escape(Object3D* other);
-    void onCollisionX(Object3D* other) override;
-    void onCollisionY(Object3D* other) override;
-    void onCollisionZ(Object3D* other) override;
+    void onCollisionX(Object3D* other);
+    void onCollisionY(Object3D* other);
+    void onCollisionZ(Object3D* other);
+
 
 };
 

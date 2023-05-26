@@ -16,7 +16,7 @@ void Walls::calculateHitboxes() {
     for (const Mesh& mesh : _model->meshes) {
         std::shared_ptr<Hitbox> hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
         hitbox->calculateFromMesh(mesh);
-        hitbox->Create(this);
+        hitbox->Create(*getSharedObject());
         spdlog::info("Calculating hitboxes for {}", mesh._name);
 
         hitboxes.push_back(hitbox);

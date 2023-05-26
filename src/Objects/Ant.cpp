@@ -15,13 +15,13 @@ Ant::Ant() {
     refreshTime = Random::get(1, 3);
     movingTime = 0;
     isMoving = false;
-    Engine::addAnt(this);
+    Engine::addAnt(getSharedAnt());
 }
 
 
 
 Ant::~Ant() {
-    Engine::removeAnt(this);
+    Engine::removeAnt(getSharedAnt());
 }
 
 void Ant::Move(float deltaTime) {

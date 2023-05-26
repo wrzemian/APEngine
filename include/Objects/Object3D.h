@@ -10,6 +10,7 @@
 #include "document.h"
 
 class MovingObject;
+class Ant;
 
 class Object3D : public IGui, public std::enable_shared_from_this<Object3D> {
 public:
@@ -29,8 +30,6 @@ public:
     virtual void onCollisionZ(Object3D& other);
     virtual void onCollision( Object3D& other);
     virtual rapidjson::Document ParseToJSON();
-
-    std::shared_ptr<MovingObject> getSharedMovingObject();
 
     Transform _transform;
     std::shared_ptr<Model> _model;
