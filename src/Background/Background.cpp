@@ -15,10 +15,10 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
         std::cout << "stworzony tile" << std::endl;
         BackgroundTile *bTile = new BackgroundTile();
         bTile->HideImgui();
-        backgroundTiles.push_back(bTile);
+        backgroundTiles.push_back(std::shared_ptr<BackgroundTile>(bTile));;
         backgroundTiles[i+1]->_transform._position.x += interval * i;
         std::cout << interval * i << std::endl;
-        backgroundTiles[i+1]->setShader(shader);
+        backgroundTiles[i+1]->setShader(shader->shared_from_this());
         backgroundTiles[i+1]->initBackgroundTile();
         backgroundTiles[i+1]->SetBoundaries(0,-250,-105,-150);
         backgroundTiles[i+1]->SetAmountToGenerate(15,5,15,5);
@@ -27,7 +27,7 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
 }
 
 void Background::Move(float step) {
-    for(BackgroundTile* tile : backgroundTiles)
+    for(std::shared_ptr<BackgroundTile> tile : backgroundTiles)
     {
         tile->Move(step);
         if(tile->_transform._position.x < leftBoarder)

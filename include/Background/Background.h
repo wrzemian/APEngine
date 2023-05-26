@@ -9,7 +9,7 @@
 
 class Background {
 private:
-    std::vector<BackgroundTile*> backgroundTiles;
+    std::vector<std::shared_ptr<BackgroundTile>> backgroundTiles;
     float interval = 10.0f;
     float leftBoarder = 100.0f; //the boarder after which tile moves back to the start of the tiles
     int tilesNumber;

@@ -11,8 +11,8 @@ Button::Button(Platform* p, glm::vec3 position)
     tag = "button";
 }
 
-void Button::onCollision(Object3D *other) {
-    if(other->tag == "player")
+void Button::onCollision(Object3D& other) {
+    if(other.tag == "player")
     {
         isPushed = true;
         connectedPlatform->OnActivate();

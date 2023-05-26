@@ -8,7 +8,7 @@
 #include "random.hpp"
 using Random = effolkronium::random_static;
 
-class Cactus : public Object3D{
+class Cactus : public Object3D , public std::enable_shared_from_this<Cactus>{
 
 private:
     typedef Object3D super;

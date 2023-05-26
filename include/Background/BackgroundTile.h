@@ -7,12 +7,12 @@
 #include "../Objects/Object3D.h"
 #include "Cactus.h"
 #include "Rock.h"
-class BackgroundTile : public Object3D{
+class BackgroundTile : public Object3D , public std::enable_shared_from_this<BackgroundTile>{
 private:
     typedef Object3D super;
 
-    std::vector<Cactus*> cactuses;
-    std::vector<Rock*> rocks;
+    std::vector<std::shared_ptr<Cactus>> cactuses;
+    std::vector<std::shared_ptr<Rock>> rocks;
     int maxCactuses;
     int minCactuses;
     int maxRocks;

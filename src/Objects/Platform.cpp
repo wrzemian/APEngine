@@ -39,6 +39,6 @@ void Platform::OnDeactivate() {
     moveToOrigin = true;
 }
 
-void Platform::onCollision(Object3D *other) {
+void Platform::onCollision(Object3D& other) {
     //Object3D::onCollision(other);
 }

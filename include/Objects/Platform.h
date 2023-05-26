@@ -8,7 +8,7 @@
 #include "Object3D.h"
 #include "Hitbox.h"
 
-class Platform : public Object3D {
+class Platform : public Object3D , public std::enable_shared_from_this<Platform> {
 private:
     typedef Object3D super;
 
@@ -21,7 +21,7 @@ public:
     glm::vec3 positionOrigin = glm::vec3(0);
     glm::vec3 positionTarget = glm::vec3(0);
     Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s);
-    void onCollision(Object3D* other) override;
+    void onCollision(Object3D& other) override;
     void UpdatePosition(float dt);
     void OnActivate();
     void OnDeactivate();

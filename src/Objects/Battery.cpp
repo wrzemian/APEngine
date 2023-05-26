@@ -4,15 +4,16 @@
 
 #include "../../include/Objects/Battery.h"
 
-void Battery::onCollision(Object3D *other) {
+void Battery::onCollision(Object3D& other) {
     //Object3D::onCollision(other);
-    if(other->tag == "floor" && _velocity.y != 0)
+    if(other.tag == "floor" && _velocity.y != 0)
     {
         _velocity.y = 0;
     }
-    if(other->tag == "player")
+    if(other.tag == "player")
     {
-        other->onCollision(this);
+        //this ? idk
+        //other.onCollision(shared_from_this());
         //canPickUp = true;
     }
 }

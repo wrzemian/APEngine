@@ -8,7 +8,7 @@
 #include "random.hpp"
 using Random = effolkronium::random_static;
 
-class Rock : public Object3D{
+class Rock : public Object3D ,  public std::enable_shared_from_this<Rock>{
 
 private:
     typedef Object3D super;

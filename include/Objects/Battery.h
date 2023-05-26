@@ -7,9 +7,9 @@
 
 #include "MovingObject.h"
 
-class Battery : public MovingObject {
+class Battery : public MovingObject,  public std::enable_shared_from_this<Battery>{
 public:
-    void onCollision(Object3D* other) override;
+    void onCollision(Object3D& other) override;
 };
 
 

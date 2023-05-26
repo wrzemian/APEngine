@@ -21,7 +21,7 @@ public:
     Battery* battery;
     void initPlayer(InputSystem* inputSystem);
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
-    void onCollision(Object3D* other) override;
+    void onCollision(Object3D& other) override;
     void Grab();
 };
 

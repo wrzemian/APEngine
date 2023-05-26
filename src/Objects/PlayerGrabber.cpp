@@ -61,13 +61,13 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     }
 }
 
-void PlayerGrabber::onCollision(Object3D *other) {
-    if(other->tag == "floor" && _velocity.y != 0)
+void PlayerGrabber::onCollision(Object3D& other) {
+    if(other.tag == "floor" && _velocity.y != 0)
     {
         _velocity.y = 0;
         jumpCount = 0;
     }
-    if(other->tag == "battery")
+    if(other.tag == "battery")
     {
         canPickUpBattery = true;
     }

@@ -20,7 +20,7 @@ public:
     Button(Platform* p, glm::vec3 position);
 
     void Update(float dt);
-    virtual void onCollision(Object3D* other);
+    virtual void onCollision(Object3D& other);
 };
 
 
