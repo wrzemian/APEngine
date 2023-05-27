@@ -50,6 +50,22 @@ namespace Game {
     void processInput();
     float imgMOv=0;
     void ImGui();
+
+    void renderScene(Shader shader, const Camera& camera);
+    Shader simpleDepthShader;
+    Shader debugDepthQuad;
+    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+    unsigned int depthMapFBO;
+    unsigned int depthMap;
+    float lightX = -1.0f;
+    float lightY = 6.8f;
+    float lightZ = 9.0f;
+    glm::vec3 lightPos(lightX, lightY, lightZ);
+    void renderQuad();
+//    unsigned int woodTexture;
+//    unsigned int loadTexture(char const * path);
+    float near_plane = 0.1f, far_plane = 15.5f;
+
     float movImage = 0;
     HUD hud;
     HUD hud2;
@@ -144,30 +160,29 @@ namespace Game {
 
         // build and compile our shader program
         // ------------------------------------
-        Shader temp("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
+        Shader temp("../../res/shaders/shadows/shadowShader.vert", "../../res/shaders/shadows/shadowShader.frag");
         shader = temp;
-        shader.use();
 
         //player1.setShader(&shader);
-        playerJumper.setShader(&shader);
-        playerGrabber.setShader(&shader);
+        //playerJumper.setShader(&shader);
+        //playerGrabber.setShader(&shader);
         //player2.setShader(&shader);
-        ant.setShader(&shader);
+        //ant.setShader(&shader);
         //wagon.setShader(&shader);
 
         platform.loadModel("../../res/models/Assets/chest1/box1.obj");
-        platform.setShader(&shader);
+        //platform.setShader(&shader);
         platform1Hitbox.Create(&platform);
         platform1Hitbox.draw = true;
 
-        button.setShader(&shader);
+        //button.setShader(&shader);
         button.loadModel("../../res/models/Assets/chest1/box1.obj");
         button1Hitbox.Create(&button);
         button1Hitbox.isTrigger = true;
 
         //background.initBackground(5,-525.509948,262.754974,&shader);
 
-        battery.setShader(&shader);
+        //battery.setShader(&shader);
         battery.loadModel("../../res/models/Assets/battery/battery.obj");
         battery.tag = "battery";
         batteryHitbox.Create(&battery);
@@ -214,7 +229,35 @@ namespace Game {
         hud = hud1;
         hud.initImage("res/textures/tlo.png");
 
+        Shader tempSimpleDepthShader("../../res/shaders/shadows/depthShader.vert", "../../res/shaders/shadows/depthShader.frag");
+        simpleDepthShader = tempSimpleDepthShader;
 
+        Shader tempDebugDepthQuad("../../res/shaders/shadows/debugShadow.vert", "../../res/shaders/shadows/debugShadow.frag");
+        debugDepthQuad = tempDebugDepthQuad;
+
+
+        glGenFramebuffers(1, &depthMapFBO);
+        // create depth texture
+
+        glGenTextures(1, &depthMap);
+        glBindTexture(GL_TEXTURE_2D, depthMap);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        // attach depth texture as FBO's depth buffer
+        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+        glDrawBuffer(GL_NONE);
+        glReadBuffer(GL_NONE);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        shader.use();
+        shader.setInt("diffuseTexture", 0);
+        shader.setInt("shadowMap", 1);
+        debugDepthQuad.use();
+        debugDepthQuad.setInt("depthMap", 0);
 
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
@@ -222,6 +265,7 @@ namespace Game {
     }
 
     void Update() {
+        lightPos = glm::vec3(lightX, lightY, lightZ);
 
         Engine::LoopStart();
         ImGui();
@@ -239,7 +283,47 @@ namespace Game {
 
         //player1.Move();
         Engine::moveObjects();
-        Engine::drawObjects(camera);
+
+        // 1. render depth of scene to texture (from light's perspective)
+        // --------------------------------------------------------------
+        glm::mat4 lightProjection, lightView;
+        glm::mat4 lightSpaceMatrix;
+
+        lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+        lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+        lightSpaceMatrix = lightProjection * lightView;
+        // render scene from light's point of view
+        simpleDepthShader.use();
+        simpleDepthShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+        glClear(GL_DEPTH_BUFFER_BIT);
+//        glActiveTexture(GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, woodTexture);
+        renderScene(simpleDepthShader, camera);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        // reset viewport
+        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // 2. render scene as normal using the generated depth/shadow map
+        // --------------------------------------------------------------
+        shader.use();
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        shader.setMat4("projection", projection);
+        shader.setMat4("view", view);
+        // set light uniforms
+        shader.setVec3("viewPos", camera.Position);
+        shader.setVec3("lightPos", lightPos);
+        shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+//        glActiveTexture(GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, woodTexture);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, depthMap);
+        renderScene(shader, camera);
 
 
         //player1.Draw();
@@ -255,7 +339,7 @@ namespace Game {
         //from camera
         shader.setVec3("viewPos", camera.Position);
 
-        Engine::renderLights(shader);
+        //Engine::renderLights(shader);
 
 
 
@@ -265,11 +349,11 @@ namespace Game {
         //camera
 
         //glm::mat4 projection = glm::mat4(1.0f);
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();
-
-        shader.use();
-        shader.setMat4("projectionView", projection * view);
+//        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
+//        glm::mat4 view = camera.GetViewMatrix();
+//
+//        shader.use();
+//        shader.setMat4("projectionView", projection * view);
 
         Engine::renderHitboxes(projection * view);
 
@@ -290,6 +374,15 @@ namespace Game {
         {
             Engine::renderImgui();
             Engine::ImGui();
+
+            ImGui::Begin("LIGHTPOS FOR SHADOW");
+            ImGui::SetWindowSize(ImVec2(250, 150));
+
+            ImGui::SliderFloat("lightX", &lightX, -50.0f, 50.0f);
+            ImGui::SliderFloat("lightY", &lightY, -50.0f, 50.0f);
+            ImGui::SliderFloat("lightZ", &lightZ, -50.0f, 50.0f);
+
+            ImGui::End();
 
         }
         ImGui::Render();
@@ -347,6 +440,49 @@ namespace Game {
 
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
 //        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
+    }
+
+    void renderScene(Shader shader, const Camera& camera)
+    {
+        playerJumper.setShader(&shader);
+        playerGrabber.setShader(&shader);
+        ant.setShader(&shader);
+        wagon.setShader(&shader);
+        platform.setShader(&shader);
+        button.setShader(&shader);
+        battery.setShader(&shader);
+        Engine::drawObjects(camera);
+    }
+
+    // renderQuad() renders a 1x1 XY quad in NDC
+// -----------------------------------------
+    unsigned int quadVAO = 0;
+    unsigned int quadVBO;
+    void renderQuad()
+    {
+        if (quadVAO == 0)
+        {
+            float quadVertices[] = {
+                    // positions        // texture Coords
+                    -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+                    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+                    1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+                    1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+            };
+            // setup plane VAO
+            glGenVertexArrays(1, &quadVAO);
+            glGenBuffers(1, &quadVBO);
+            glBindVertexArray(quadVAO);
+            glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+            glEnableVertexAttribArray(0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+            glEnableVertexAttribArray(1);
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        }
+        glBindVertexArray(quadVAO);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        glBindVertexArray(0);
     }
 
 };
