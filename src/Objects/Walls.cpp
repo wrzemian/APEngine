@@ -57,6 +57,9 @@ void Walls::calculateHitboxes() {
                 buttonHitbox->tag = "button";
 
                 auto button = std::make_shared<Button>(nullptr, glm::vec3(0));
+                button->setShader(_shader);
+                button->tag = "button";
+
                 button->_model = std::make_shared<Model>();
                 button->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
                 buttonHitbox->Create(button.get());
@@ -80,9 +83,14 @@ void Walls::calculateHitboxes() {
             case 'M': { // Moving platform
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 hitbox->tag = "moving platform";
+
                 // TODO: get actual position for origin
                 glm::vec3 position = mesh.vertices.at(0).Position;
                 auto platform = std::make_shared<Platform>(position, glm::vec3(0), 0);
+                platform->tag = "moving platform";
+
+                platform->setShader(_shader);
+
                 platform->id = id;
                 platform->_model = std::make_shared<Model>();
                 platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model

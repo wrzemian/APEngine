@@ -72,9 +72,6 @@ namespace Game {
     Hitbox antHitbox("hitboxes/hitbox_2");
     SimpleHitbox antBigHitbox("hitboxes/hitbox_3");
 
-    Hitbox platform1Hitbox("hitboxes/hitbox_platform");
-    Hitbox button1Hitbox("hitboxes/hitbox_button");
-
     Battery battery;
     Hitbox batteryHitbox("hitboxes/hitbox_battery");
 
@@ -91,10 +88,6 @@ namespace Game {
     InputSystem inputSystem;
 
     Background background;
-
-    Platform platform(glm::vec3(-8,6,5),glm::vec3(-8,9,5),1.0f);
-
-    Button button(&platform,glm::vec3(-8,5,7));
 
     void Start() {
         std::cout << Engine::Init() <<"\n";
@@ -156,16 +149,6 @@ namespace Game {
         ant.setShader(&shader);
         //wagon.setShader(&shader);
 
-        platform.loadModel("../../res/models/Assets/chest1/box1.obj");
-        platform.setShader(&shader);
-        platform1Hitbox.Create(&platform);
-        platform1Hitbox.draw = true;
-
-        button.setShader(&shader);
-        button.loadModel("../../res/models/Assets/chest1/box1.obj");
-        button1Hitbox.Create(&button);
-        button1Hitbox.isTrigger = true;
-
         //background.initBackground(5,-525.509948,262.754974,&shader);
 
         battery.setShader(&shader);
@@ -226,7 +209,7 @@ namespace Game {
 
         Engine::LoopStart();
         ImGui();
-        imgMOv -= 0.1;
+        imgMOv -= 0.1f;
         inputSystem.update();
         processInput();
         playerJumper.UpdatePlayer(&inputSystem,movementSpeed);
@@ -243,10 +226,6 @@ namespace Game {
         Engine::drawObjects(camera);
 
 
-        //player1.Draw();
-        //wagon.Draw();
-
-        //box.Draw(shader);
 
         ////REQUIRED FOR LIGHT
         //should be property of object
@@ -258,14 +237,8 @@ namespace Game {
 
         Engine::renderLights(shader);
 
-
-
-        //background.Move(-Engine::deltaTime*40);
-        platform.UpdatePosition(Engine::deltaTime);
-
         //camera
 
-        //glm::mat4 projection = glm::mat4(1.0f);
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
 
@@ -275,7 +248,6 @@ namespace Game {
         Engine::renderHitboxes(projection * view);
 
 //       camera.followObject(player1);
-        button.Update(Engine::deltaTime);
         Engine::resolveCollisions();
 
         hud2.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
@@ -297,51 +269,10 @@ namespace Game {
     }
 
 
-    void processInput()
-    {
-        /*
-        if (inputSystem.GetKey(GLFW_KEY_W)) {
-            player1._velocity.z = -movementSpeed;
-        }
-        else if (inputSystem.GetKey(GLFW_KEY_S)) {
-            player1._velocity.z = movementSpeed;
-        }
-        else {
-            player1._velocity.z = 0;
-        }
-        if (inputSystem.GetKey(GLFW_KEY_A)) {
-            player1._velocity.x = -movementSpeed;
-        }
-        else if (inputSystem.GetKey(GLFW_KEY_D)) {
-            player1._velocity.x = movementSpeed;
-        }
-        else {
-            player1._velocity.x = 0;
-        }*/
+    void processInput() {
         if (inputSystem.GetKeyDown(GLFW_KEY_SPACE)) {
             playerJumper.Jump();
         }
-
-/*
-        if (inputSystem.GetKey(GLFW_KEY_UP)) {
-            player2._velocity.z = -movementSpeed;
-        }
-        else if (inputSystem.GetKey(GLFW_KEY_DOWN)) {
-            player2._velocity.z = movementSpeed;
-        }
-        else {
-            player2._velocity.z = 0;
-        }
-
-        if (inputSystem.GetKey(GLFW_KEY_LEFT)) {
-            player2._velocity.x = -movementSpeed;
-        }
-        else if (inputSystem.GetKey(GLFW_KEY_RIGHT)) {
-            player2._velocity.x = movementSpeed;
-        }
-        else {
-            player2._velocity.x = 0;
-        }*/
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1)) {
             playerGrabber.AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         }
