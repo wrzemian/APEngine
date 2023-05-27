@@ -121,7 +121,7 @@ void Walls::calculateHitboxes() {
 
     }
     assignTargetsAndPlatforms();
-    logNewObjects();
+    //logNewObjects();
 }
 
 void Walls::assignTargetsAndPlatforms() {
@@ -149,8 +149,10 @@ void Walls::assignTargetsAndPlatforms() {
     }
 }
 
+
+
 void Walls::logNewObjects() {
-    spdlog::info("Walls Fields:");
+    spdlog::info("LOADED OBJECTS:");
 
     // Logging hitboxes
     spdlog::info("Hitboxes:");
@@ -168,6 +170,12 @@ void Walls::logNewObjects() {
     spdlog::info("Buttons:");
     for (const auto& button : buttons) {
         button->logFields();
+    }
+
+    // Log target positions
+    spdlog::info("Target Positions:");
+    for (const auto& pair : targetPositions) {
+        spdlog::info("- id: {}, position: ({}, {}, {})", pair.first, pair.second.x, pair.second.y, pair.second.z);
     }
 
     spdlog::info("");

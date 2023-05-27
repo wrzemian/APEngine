@@ -140,6 +140,7 @@ namespace Game {
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
+        wagon.logNewObjects();
         wagon.setShader(&shader);
 
         // build and compile our shader program
