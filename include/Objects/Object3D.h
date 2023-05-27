@@ -13,6 +13,7 @@ class Object3D : public IGui {
 public:
     Object3D();
     virtual ~Object3D();
+    int id = -1;
 
     std::string tag = "floor";
 
@@ -29,7 +30,7 @@ public:
     virtual rapidjson::Document ParseToJSON();
 
     Transform _transform;
-    std::shared_ptr<Model> _model;
-    Shader* _shader;
+    std::shared_ptr<Model> _model = nullptr;
+    Shader* _shader = nullptr;
     std::string _path;
 };

@@ -3,6 +3,7 @@
 #include "Object3D.h"
 #include "Model.h"
 #include "Hitbox.h"
+#include "Button.h"
 #include <memory>
 #include <vector>
 
@@ -13,10 +14,16 @@ public:
     bool areRendered = false;
 
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
+    std::vector<std::shared_ptr<Platform>> movingPlatforms;
+    std::vector<std::shared_ptr<Button>> buttons;
+
+    std::unordered_map<int, glm::vec3> targetPositions;
+
+    void assignTargetsAndPlatforms();
 
     void calculateHitboxes();
     void logHitboxes();
-
+    void logNewObjects();
     void ImGui() override;
 
     void onCollision(Object3D* other) override;

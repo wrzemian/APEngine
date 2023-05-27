@@ -286,6 +286,25 @@ glm::vec3 Hitbox::currentMax() {
     return _max + _offset + *_position;
 }
 
+#include "spdlog/spdlog.h"
+#include <iostream>
+
+// Rest of the code...
+
+void Hitbox::logFields() {
+    spdlog::info("Hitbox Fields:");
+    spdlog::info("- isTrigger: {}", isTrigger);
+    spdlog::info("- tag: {}", tag);
+    spdlog::info("- draw: {}", draw);
+    spdlog::info("- _object: {}", (_object ? "not null" : "null"));
+    spdlog::info("- _position: {}", (_position ? "not null" : "null"));
+    spdlog::info("- _min: ({}, {}, {})", _min.x, _min.y, _min.z);
+    spdlog::info("- _max: ({}, {}, {})", _max.x, _max.y, _max.z);
+    spdlog::info("- _color: ({}, {}, {})", _color.x, _color.y, _color.z);
+    spdlog::info("- _offset: ({}, {}, {})", _offset.x, _offset.y, _offset.z);
+    spdlog::info("");
+}
+
 
 
 

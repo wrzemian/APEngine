@@ -34,6 +34,8 @@ public:
 
     bool isTrigger = false;
 
+    std::string tag = "default";
+
     bool draw = false;
     Object3D* _object{};
     glm::vec3* _position{};
@@ -52,7 +54,7 @@ public:
 
     void calculateFromMesh(const Mesh& mesh);
     void calculateFromModel(const Model &model);
-
+    void logFields();
     bool TestForIntersection(Hitbox* other);
 
     rapidjson::Document ParseToJSON();

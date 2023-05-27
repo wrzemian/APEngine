@@ -2,6 +2,7 @@
 #include "../include/Objects/Hitbox.h"
 #include "spdlog/spdlog.h"
 #include "../../include/Engine.h"
+#include "../include/Objects/Button.h"
 
 Walls::Walls() {
     IGui::setWindowName("Walls");
@@ -14,15 +15,164 @@ Walls::~Walls() {
 
 void Walls::calculateHitboxes() {
     for (const Mesh& mesh : _model->meshes) {
-        std::shared_ptr<Hitbox> hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-        hitbox->calculateFromMesh(mesh);
-        hitbox->Create(this);
-        spdlog::info("Calculating hitboxes for {}", mesh._name);
+        std::shared_ptr<Hitbox> hitbox = nullptr;
+        char type = mesh._name[0];
 
-        hitboxes.push_back(hitbox);
+        // Extract the ID from the mesh name
+        std::string idString = mesh._name.substr(2, mesh._name.find('_', 2) - 2);  // extract from third character to the next '_'
+        int id;
+        try {
+            id = std::stoi(idString);  // try to convert to integer
+        } catch (const std::invalid_argument& e) {
+            id = -1;  // if conversion fails, assign -1 as default value
+        }
+
+        switch(type) {
+            case 'D': { // Door
+                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                hitbox->tag = "door";
+                break;
+            }
+
+            case 'F': { // Floor
+                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                hitbox->tag = "floor";
+                break;
+            }
+
+            case 'W': { // Wall
+                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                hitbox->tag = "wall";
+                break;
+            }
+
+            case 'R': { // Roof
+                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                hitbox->tag = "roof";
+                break;
+            }
+
+            case 'B': { // Button
+                auto buttonHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                buttonHitbox->tag = "button";
+
+                auto button = std::make_shared<Button>(nullptr, glm::vec3(0));
+                button->_model = std::make_shared<Model>();
+                button->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
+                buttonHitbox->Create(button.get());
+                button->id = id;
+                buttons.push_back(button);
+
+                spdlog::info("Button created {}", mesh._name);
+                break;
+            }
+
+            case 'C': { // Decoration around button
+                break;
+            }
+
+            case 'S': { // Static platform
+                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                hitbox->tag = "static platform";
+                break;
+            }
+
+            case 'M': { // Moving platform
+                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                hitbox->tag = "moving platform";
+                // TODO: get actual position for origin
+                glm::vec3 position = mesh.vertices.at(0).Position;
+                auto platform = std::make_shared<Platform>(position, glm::vec3(0), 0);
+                platform->id = id;
+                platform->_model = std::make_shared<Model>();
+                platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                movingPlatforms.push_back(platform);
+
+                spdlog::info("Moving platform created {}", mesh._name);
+                break;
+            }
+
+            case 'T': { // Target of moving platform
+                // TODO: get actual position for targer
+                spdlog::info("Target position {}", mesh._name);
+
+                glm::vec3 position = mesh.vertices.at(0).Position;
+                targetPositions[id] = position;
+
+                break;
+            }
+
+            default: { // Default behavior
+                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                spdlog::warn("unrecognized mesh name: {}", mesh._name);
+
+                break;
+            }
+        }
+        if(hitbox != nullptr) {
+            hitbox->calculateFromMesh(mesh);
+            hitbox->Create(this);
+            hitboxes.push_back(hitbox);
+
+            spdlog::info("Calculated hitbox for {}", mesh._name);
+        } else {
+            spdlog::info("No hitbox created for {}", mesh._name);
+        }
+
     }
-    //logHitboxes();
+    assignTargetsAndPlatforms();
+    logNewObjects();
 }
+
+void Walls::assignTargetsAndPlatforms() {
+    for (const auto& button : buttons) {
+        const int buttonId = button->id;
+        auto it = targetPositions.find(buttonId);
+        if (it != targetPositions.end()) {
+            const glm::vec3& targetPosition = it->second;
+            button->connectedPlatform = nullptr;
+            for (const auto& platform : movingPlatforms) {
+                if (platform->id == buttonId) {
+                    platform->positionTarget = targetPosition;
+                    button->connectedPlatform = platform.get();
+                    break;
+                }
+            }
+            if (button->connectedPlatform) {
+                spdlog::info("Button {} connected to Platform {}", buttonId, button->connectedPlatform->id);
+            } else {
+                spdlog::warn("Button {} does not have a matching platform.", buttonId);
+            }
+        } else {
+            spdlog::warn("Button {} does not have a matching target position.", buttonId);
+        }
+    }
+}
+
+void Walls::logNewObjects() {
+    spdlog::info("Walls Fields:");
+
+    // Logging hitboxes
+    spdlog::info("Hitboxes:");
+    for (const auto& hitbox : hitboxes) {
+        hitbox->logFields();
+    }
+
+    // Logging platforms
+    spdlog::info("Platforms:");
+    for (const auto& platform : movingPlatforms) {
+        platform->logFields();
+    }
+
+    // Logging buttons
+    spdlog::info("Buttons:");
+    for (const auto& button : buttons) {
+        button->logFields();
+    }
+
+    spdlog::info("");
+}
+
 
 void Walls::logHitboxes() {
     spdlog::warn("{} hitboxes loaded", hitboxes.size());

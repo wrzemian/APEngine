@@ -31,3 +31,10 @@ void Button::Update(float dt) {
         }
     }
 }
+
+void Button::logFields() {
+    spdlog::info("Button Fields:");
+    spdlog::info("- id: {}", id);
+    spdlog::info("- connectedPlatform: {}", (connectedPlatform ? "not null" : "null"));
+    spdlog::info("");
+}

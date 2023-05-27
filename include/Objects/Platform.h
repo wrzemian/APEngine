@@ -25,6 +25,8 @@ public:
     void UpdatePosition(float dt);
     void OnActivate();
     void OnDeactivate();
+
+    void logFields();
 };
 
 

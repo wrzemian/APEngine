@@ -42,3 +42,12 @@ void Platform::OnDeactivate() {
 void Platform::onCollision(Object3D *other) {
     //Object3D::onCollision(other);
 }
+
+void Platform::logFields() {
+    spdlog::info("Platform Fields:");
+    spdlog::info("- id: {}", id);
+    spdlog::info("- position: ({}, {}, {})", _transform._position.x, _transform._position.y, _transform._position.z);
+    spdlog::info("- rotation: ({}, {}, {})", _transform._rotation.x, _transform._rotation.y, _transform._rotation.z);
+    spdlog::info("- scale: ({}, {}, {})", _transform._scale.x, _transform._scale.y, _transform._scale.z);
+    spdlog::info("");
+}

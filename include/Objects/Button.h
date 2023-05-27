@@ -12,7 +12,6 @@ class Button : public Object3D {
 private:
     using super = Object3D;
 
-    Platform* connectedPlatform;
     bool isPushed = false;
     float t = 1.0f;
     float timeToReset = 1.0f;
@@ -21,6 +20,10 @@ public:
 
     void Update(float dt);
     virtual void onCollision(Object3D* other);
+
+    Platform* connectedPlatform;
+
+    void logFields();
 };
 
 
