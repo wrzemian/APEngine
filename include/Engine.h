@@ -74,6 +74,7 @@ namespace Engine {
 
     void moveObjects();
     void drawObjects(const Camera& camera);
+    void drawObjects();
 
     void terminate();
     void resolveCollisions();

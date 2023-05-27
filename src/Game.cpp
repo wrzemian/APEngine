@@ -54,17 +54,17 @@ namespace Game {
     void renderScene(Shader shader, const Camera& camera);
     Shader simpleDepthShader;
     Shader debugDepthQuad;
-    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+    const unsigned int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
     unsigned int depthMapFBO;
     unsigned int depthMap;
-    float lightX = -1.0f;
-    float lightY = 6.8f;
-    float lightZ = 9.0f;
+    float lightX = -5.0f;
+    float lightY = 11.370;
+    float lightZ = 15.130f;
     glm::vec3 lightPos(lightX, lightY, lightZ);
     void renderQuad();
 //    unsigned int woodTexture;
 //    unsigned int loadTexture(char const * path);
-    float near_plane = 0.1f, far_plane = 15.5f;
+    float near_plane = 0.1f, far_plane = 30.5f;
 
     float movImage = 0;
     HUD hud;
@@ -156,7 +156,7 @@ namespace Game {
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
-        wagon.setShader(&shader);
+        //wagon.setShader(&shader);
 
         // build and compile our shader program
         // ------------------------------------
@@ -210,8 +210,8 @@ namespace Game {
         ImGui();
         spdlog::info("ResolveCollisions");
         Engine::resolveCollisions();
-        Engine::logStaticHitboxes();
-        Engine::logDynamicHitboxes();
+        //Engine::logStaticHitboxes();
+        //Engine::logDynamicHitboxes();
         spdlog::info("loop");
 
 
@@ -284,6 +284,7 @@ namespace Game {
         //player1.Move();
         Engine::moveObjects();
 
+
         // 1. render depth of scene to texture (from light's perspective)
         // --------------------------------------------------------------
         glm::mat4 lightProjection, lightView;
@@ -299,14 +300,21 @@ namespace Game {
         glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
         glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
         glClear(GL_DEPTH_BUFFER_BIT);
-//        glActiveTexture(GL_TEXTURE0);
-//        glBindTexture(GL_TEXTURE_2D, woodTexture);
         renderScene(simpleDepthShader, camera);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // reset viewport
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+//        // SHADOW MAP DEBUGGING
+//        //---------------------------------------------
+//        debugDepthQuad.use();
+//        debugDepthQuad.setFloat("near_plane", near_plane);
+//        debugDepthQuad.setFloat("far_plane", far_plane);
+//        glActiveTexture(GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, depthMap);
+//        renderQuad();
 
         // 2. render scene as normal using the generated depth/shadow map
         // --------------------------------------------------------------
@@ -319,25 +327,22 @@ namespace Game {
         shader.setVec3("viewPos", camera.Position);
         shader.setVec3("lightPos", lightPos);
         shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
-//        glActiveTexture(GL_TEXTURE0);
-//        glBindTexture(GL_TEXTURE_2D, woodTexture);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, depthMap);
         renderScene(shader, camera);
-
 
         //player1.Draw();
         //wagon.Draw();
 
         //box.Draw(shader);
 
-        ////REQUIRED FOR LIGHT
-        //should be property of object
-        shader.setInt("material.diffuse", 0);
-        shader.setInt("material.specular", 1);
-        shader.setFloat("material.shininess", 32.0f);
-        //from camera
-        shader.setVec3("viewPos", camera.Position);
+//        ////REQUIRED FOR LIGHT
+//        //should be property of object
+//        shader.setInt("material.diffuse", 0);
+//        shader.setInt("material.specular", 1);
+//        shader.setFloat("material.shininess", 32.0f);
+//        //from camera
+//        shader.setVec3("viewPos", camera.Position);
 
         //Engine::renderLights(shader);
 
@@ -355,7 +360,7 @@ namespace Game {
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
 
-        Engine::renderHitboxes(projection * view);
+        //Engine::renderHitboxes(projection * view);
 
 //       camera.followObject(player1);
         button.Update(Engine::deltaTime);
@@ -384,6 +389,9 @@ namespace Game {
 
             ImGui::End();
 
+            //playerJumper.ShowImgui();
+            //playerGrabber.ShowImgui();
+            camera.ShowImgui();
         }
         ImGui::Render();
     }

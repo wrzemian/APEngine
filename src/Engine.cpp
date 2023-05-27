@@ -113,7 +113,7 @@ namespace Engine {
     }
 
     void addDynamicHitbox(Hitbox* hitbox) {
-        spdlog::info("Dynamic hitbox added, {}", hitbox->getWindowName());
+       //spdlog::info("Dynamic hitbox added, {}", hitbox->getWindowName());
         dynamicHitboxes.push_back(hitbox);
     }
 
@@ -255,6 +255,13 @@ namespace Engine {
             }
             totalCounter++;
         }
+    }
+
+    void drawObjects() {
+        for(Object3D* object: allObjects) {
+            object->Draw();
+        }
+
     }
 
     void ImGui() {

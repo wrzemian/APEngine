@@ -2,7 +2,7 @@
 
 SimpleHitbox::SimpleHitbox(std::string fileName) : Hitbox(fileName){
     IGui::setWindowName("SIMPLE");
-    spdlog::warn("SIMPLE CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
+    //spdlog::warn("SIMPLE CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
 }
 
 SimpleHitbox::~SimpleHitbox() {

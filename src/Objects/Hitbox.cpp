@@ -54,7 +54,7 @@ Hitbox::Hitbox(std::string fileName) {
     else
         spdlog::error("no JSON file found");
 
-    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
+    //spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
 
 }
 
