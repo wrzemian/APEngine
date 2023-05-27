@@ -14,6 +14,10 @@ Platform::Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s) {
 }
 
 void Platform::Move(float deltaTime) {
+    //TODO: uncomment
+    return;
+
+
     if (moveToTarget) {
         t += deltaTime * speed;
         if (t >= 1.0f) {
@@ -49,8 +53,8 @@ void Platform::logFields() {
     spdlog::info("Platform Fields:");
     spdlog::info("- id: {}", id);
     spdlog::info("- position: ({}, {}, {})", _transform._position.x, _transform._position.y, _transform._position.z);
-    spdlog::info("- rotation: ({}, {}, {})", _transform._rotation.x, _transform._rotation.y, _transform._rotation.z);
-    spdlog::info("- scale: ({}, {}, {})", _transform._scale.x, _transform._scale.y, _transform._scale.z);
+    spdlog::info("- origin: ({}, {}, {})", positionOrigin.x, positionOrigin.y, positionOrigin.z);
+    spdlog::info("- target: ({}, {}, {})", positionTarget.x, positionTarget.y, positionTarget.z);
     spdlog::info("");
 }
 
@@ -65,8 +69,7 @@ void Platform::ImGui() {
     //TODO: delete those ifs, they are for debugging only
     if(moveToOrigin) {
         _transform._position = positionOrigin;
-    }
-    if(moveToTarget) {
+    } else if(moveToTarget) {
         _transform._position = positionTarget;
     }
 
