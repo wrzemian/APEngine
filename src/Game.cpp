@@ -99,7 +99,6 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init() <<"\n";
 
-        camera.ShowImgui();;
 
         inputSystem.InputInit();
         /*inputSystem.monitorKey(GLFW_KEY_W);
@@ -133,6 +132,7 @@ namespace Game {
 
 
         camera = Engine::parser.CreateFromJSONCam("camera");
+        camera.ShowImgui();;
 
         p1Hitbox.Create(&playerJumper);
         p2Hitbox.Create(&playerGrabber);
