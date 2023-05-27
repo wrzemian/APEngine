@@ -20,6 +20,7 @@ public:
     std::unordered_map<int, glm::vec3> targetPositions;
 
     void assignTargetsAndPlatforms();
+    void setShader(Shader* shader);
 
     void calculateHitboxes();
     void logHitboxes();

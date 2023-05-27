@@ -232,7 +232,6 @@ namespace Engine {
     void drawObjects(const Camera& camera) {
         displayCounter = 0;
         totalCounter = 0;
-        spdlog::info("STARTING DRAWING:");
 
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
@@ -256,7 +255,6 @@ namespace Engine {
             }
             totalCounter++;
         }
-        spdlog::info("");
 
     }
 

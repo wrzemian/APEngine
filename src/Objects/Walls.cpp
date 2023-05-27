@@ -255,3 +255,15 @@ void Walls::loadFromJSON(const Walls& temp) {
     this->_transform._position = temp._transform._position;
     this->calculateHitboxes();
 }
+
+void Walls::setShader(Shader* shader) {
+    _shader = shader;
+
+    for (const auto& platform : movingPlatforms) {
+        platform->setShader(shader);
+    }
+
+    for (const auto& button : buttons) {
+        button->setShader(shader);
+    }
+};
