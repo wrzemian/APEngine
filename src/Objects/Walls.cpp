@@ -30,24 +30,29 @@ void Walls::calculateHitboxes() {
         switch(type) {
             case 'D': { // Door
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                //TODO: implement class Door
+                staticModel.meshes.push_back(mesh);
                 hitbox->tag = "door";
                 break;
             }
 
             case 'F': { // Floor
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                staticModel.meshes.push_back(mesh);
                 hitbox->tag = "floor";
                 break;
             }
 
             case 'W': { // Wall
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                staticModel.meshes.push_back(mesh);
                 hitbox->tag = "wall";
                 break;
             }
 
             case 'R': { // Roof
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                staticModel.meshes.push_back(mesh);
                 hitbox->tag = "roof";
                 break;
             }
@@ -71,11 +76,14 @@ void Walls::calculateHitboxes() {
             }
 
             case 'C': { // Decoration around button
+                staticModel.meshes.push_back(mesh);
                 break;
             }
 
             case 'S': { // Static platform
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                staticModel.meshes.push_back(mesh);
+
                 hitbox->tag = "static platform";
                 break;
             }
@@ -143,7 +151,7 @@ void Walls::assignTargetsAndPlatforms() {
                 if (platform->id == buttonId) {
                     platform->positionTarget = targetPosition;
                     button->connectedPlatform = platform.get();
-                    break;
+                    //break;
                 }
             }
             if (button->connectedPlatform) {
@@ -267,3 +275,21 @@ void Walls::setShader(Shader* shader) {
         button->setShader(shader);
     }
 };
+
+void Walls::Draw() {
+    spdlog::error("Walls draw", tag);
+
+    //shader.use();
+    if(_model == nullptr) {
+        spdlog::error("null model in {}", tag);
+        return;
+    }
+    if(_shader == nullptr) {
+        spdlog::error("null shader in {}", tag);
+        return;
+    }
+    _transform.updateWorldTransform(glm::mat4(1.0f), *_shader);
+    // shader.setMat4("model", _transform.getModel());
+
+    staticModel.Draw(*_shader);
+}

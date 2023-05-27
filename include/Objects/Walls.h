@@ -32,4 +32,8 @@ public:
     rapidjson::Document ParseToJSON();
 
     void loadFromJSON(const Walls& temp);
+
+    void Draw();
+
+    Model staticModel;
 };
