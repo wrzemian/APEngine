@@ -24,8 +24,24 @@ void Walls::calculateHitboxes() {
         try {
             id = std::stoi(idString);  // try to convert to integer
         } catch (const std::invalid_argument& e) {
-            id = -1;  // if conversion fails, assign -1 as default value
+            id = 0;  // if conversion fails, assign -1 as default value
         }
+
+        int targetId;
+        std::string targetIdString;
+        if (!mesh._name.empty()) {
+            char lastChar = mesh._name.back();
+            if (std::isdigit(lastChar)) {
+                targetIdString = std::string(1, lastChar);
+                try {
+                    targetId = std::stoi(targetIdString);
+                } catch (const std::exception& e) {
+                    targetId = 0;  // Handle the case where the conversion to integer fails
+                }
+            }
+        }
+
+        int totalId = 100 * targetId + id;
 
         switch(type) {
             case 'D': { // Door
@@ -64,11 +80,13 @@ void Walls::calculateHitboxes() {
                 auto button = std::make_shared<Button>(nullptr, glm::vec3(0));
                 button->setShader(_shader);
                 button->tag = "button";
+                button->ShowImgui();
+                button->_transform._position = _transform._position;
 
                 button->_model = std::make_shared<Model>();
                 button->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
                 buttonHitbox->Create(button.get());
-                button->id = id;
+                button->id = totalId;
                 buttons.push_back(button);
 
                 spdlog::info("Button created {}", mesh._name);
@@ -93,13 +111,14 @@ void Walls::calculateHitboxes() {
                 hitbox->tag = "moving platform";
 
                 // TODO: get actual position for origin
-                glm::vec3 position = mesh.vertices.at(0).Position;
-                auto platform = std::make_shared<Platform>(position, glm::vec3(0), 0);
+                auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
                 platform->tag = "moving platform";
-
+                platform->ShowImgui();
+                platform->_transform._position = _transform._position;
                 platform->setShader(_shader);
 
-                platform->id = id;
+                platform->id = totalId;
+
                 platform->_model = std::make_shared<Model>();
                 platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
                 movingPlatforms.push_back(platform);
@@ -110,10 +129,11 @@ void Walls::calculateHitboxes() {
 
             case 'T': { // Target of moving platform
                 // TODO: get actual position for targer
-                spdlog::info("Target position {}", mesh._name);
 
                 glm::vec3 position = mesh.vertices.at(0).Position;
-                targetPositions[id] = position;
+                spdlog::info("Target position {} = {}, {}, {}", mesh._name, position.x, position.y, position.z);
+
+                targetPositions[totalId] = position;
 
                 break;
             }
@@ -148,14 +168,16 @@ void Walls::assignTargetsAndPlatforms() {
             const glm::vec3& targetPosition = it->second;
             button->connectedPlatform = nullptr;
             for (const auto& platform : movingPlatforms) {
-                if (platform->id == buttonId) {
-                    platform->positionTarget = targetPosition;
+                if (platform->id % 100 == buttonId % 100) {
+                    platform->positionTarget = targetPosition + _transform._position;
+                    //TODO: change for method adding platform to list of pointers in button
                     button->connectedPlatform = platform.get();
-                    //break;
+                    spdlog::info("Button {} connected to Platform {}", buttonId, button->connectedPlatform->id);
+
                 }
             }
             if (button->connectedPlatform) {
-                spdlog::info("Button {} connected to Platform {}", buttonId, button->connectedPlatform->id);
+
             } else {
                 spdlog::warn("Button {} does not have a matching platform.", buttonId);
             }
@@ -209,21 +231,16 @@ void Walls::ImGui() {
     ImGui::Begin(getWindowName().c_str());
     Object3D::ImGui();
 
-    ImGui::SetWindowSize(ImVec2(300, 700));
+    ImGui::SetWindowSize(ImVec2(300, 400));
 
-    int x = 0;
-    ImGui::SliderInt("visible hitbox", &x, 0, hitboxes.size() - 1);
-    for (const auto& hitbox : hitboxes) {
-        hitbox->draw = false;
+    ImGui::Checkbox("Buttons imgui", &buttonsImgui);
+    for (const auto& button : buttons) {
+        button->setImgui(buttonsImgui);
     }
-    hitboxes.at(x)->draw = true;
 
-    ImGui::Checkbox("Show hitboxes", &areRendered);
-    if (areRendered) {
-        //spdlog::warn("showing hitboxes");
-        for (const auto& hitbox : hitboxes) {
-            hitbox->draw = true;
-        }
+    ImGui::Checkbox("Platforms imgui", &platformsImgui);
+    for (const auto& platform : movingPlatforms) {
+        platform->setImgui(platformsImgui);
     }
 
     if (ImGui::Button("SAVE WALLS")) {
@@ -277,8 +294,6 @@ void Walls::setShader(Shader* shader) {
 };
 
 void Walls::Draw() {
-    spdlog::error("Walls draw", tag);
-
     //shader.use();
     if(_model == nullptr) {
         spdlog::error("null model in {}", tag);

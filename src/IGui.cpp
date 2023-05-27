@@ -23,6 +23,10 @@ void IGui::ShowImgui() {
     IGui::_showImgui = true;
 }
 
+void IGui::setImgui(bool show) {
+    IGui::_showImgui = show;
+}
+
 void IGui::HideImgui() {
     IGui::_showImgui = false;
 }

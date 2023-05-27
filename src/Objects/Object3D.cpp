@@ -37,7 +37,7 @@ void Object3D::loadModel(const std::string& path) {
 void Object3D::ImGui() {
     ImGui::Begin(getWindowName().c_str());
 
-    ImGui::SetWindowSize(ImVec2(300, 310));
+    ImGui::SetWindowSize(ImVec2(300, 330));
 
     ImGui::SliderFloat("scale X", &_transform._scale.x, 0.0f, 2.0f);
     ImGui::SliderFloat("scale Y", &_transform._scale.y, 0.0f, 2.0f);

@@ -11,7 +11,8 @@ class Walls : public Object3D {
 public:
     Walls();
     virtual ~Walls();
-    bool areRendered = false;
+    bool buttonsImgui = false;
+    bool platformsImgui = false;
 
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
     std::vector<std::shared_ptr<Platform>> movingPlatforms;

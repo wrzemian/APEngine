@@ -135,7 +135,7 @@ namespace Game {
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
         wagon.logNewObjects();
         wagon.setShader(&shader);
-
+        wagon.ShowImgui();
         // build and compile our shader program
         // ------------------------------------
         Shader temp("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");

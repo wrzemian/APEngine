@@ -30,4 +30,5 @@ public:
 
     virtual void ImGui();
 
+    void setImgui(bool show);
 };

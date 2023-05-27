@@ -17,7 +17,7 @@ public:
 
     std::string tag = "floor";
 
-    void Draw();
+    virtual void Draw();
     void setShader(Shader* shader);
 
     void ImGui();
