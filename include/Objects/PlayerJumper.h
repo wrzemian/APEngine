@@ -23,6 +23,7 @@ public:
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
     void Jump();
     void onCollision(Object3D* other) override;
+    void onCollisionExit(Object3D* other) override;
 };
 
 

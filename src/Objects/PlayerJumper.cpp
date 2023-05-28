@@ -84,3 +84,11 @@ void PlayerJumper::onCollision(Object3D *other) {
         canPickUpBattery = true;
     }
 }
+
+void PlayerJumper::onCollisionExit(Object3D *other) {
+    Object3D::onCollisionExit(other);
+    if(other->tag == "battery")
+    {
+        canPickUpBattery = false;
+    }
+}

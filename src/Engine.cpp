@@ -44,6 +44,7 @@ namespace Engine {
     std::vector<PointLight*> allPointLights;
     std::vector<SpotLight*> allSpotLights;
     std::vector<Ant*> allAnts;
+    std::vector<std::pair<Hitbox*, Hitbox*>> previousCollisions;
 
     bool renderDynamic = false;
     bool renderStatic = false;
@@ -342,19 +343,42 @@ namespace Engine {
     }
 
     void resolveCollisions() {
+        std::vector<std::pair<Hitbox*, Hitbox*>> currentCollisions;
+
+        // Check for collisions between dynamic and static hitboxes
         for(auto dynamicHitbox: dynamicHitboxes) {
             for(auto staticHitbox: staticHitboxes) {
-                dynamicHitbox->TestForIntersection(staticHitbox);
-            }
-        }
-
-        for (int i = 0; i < dynamicHitboxes.size(); i++) {
-            for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
-                if(dynamicHitboxes.at(i)->_object != dynamicHitboxes.at(j)->_object) {
-                    dynamicHitboxes.at(j)->TestForIntersection(dynamicHitboxes.at(i));
+                if(dynamicHitbox->TestForIntersection(staticHitbox)) {
+                    currentCollisions.push_back({dynamicHitbox, staticHitbox});
                 }
             }
         }
+
+        // Check for collisions between pairs of dynamic hitboxes
+        for (int i = 0; i < dynamicHitboxes.size(); i++) {
+            for (int j = i + 1; j < dynamicHitboxes.size(); j++) {
+                if(dynamicHitboxes.at(i)->_object != dynamicHitboxes.at(j)->_object) {
+                    if(dynamicHitboxes.at(j)->TestForIntersection(dynamicHitboxes.at(i))) {
+                        currentCollisions.push_back({dynamicHitboxes.at(i), dynamicHitboxes.at(j)});
+                    }
+                }
+            }
+        }
+
+        // Now, check for collisions that have just ended
+        for(auto& collision : previousCollisions) {
+            // Do a linear search to find collision in currentCollisions
+            auto it = std::find(currentCollisions.begin(), currentCollisions.end(), collision);
+
+            if(it == currentCollisions.end()) {
+                // The objects are no longer colliding
+                collision.first->_object->onCollisionExit(collision.second->_object);
+                collision.second->_object->onCollisionExit(collision.first->_object);
+            }
+        }
+
+        // Finally, update the set of previous collisions for the next frame
+        previousCollisions = std::move(currentCollisions);
     }
 
     void LoopEnd() {

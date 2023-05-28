@@ -88,3 +88,11 @@ void PlayerGrabber::Jump() {
 void PlayerGrabber::Grab() {
     grabber->Grab();
 }
+
+void PlayerGrabber::onCollisionExit(Object3D *other) {
+    Object3D::onCollisionExit(other);
+    if(other->tag == "battery")
+    {
+        canPickUpBattery = false;
+    }
+}

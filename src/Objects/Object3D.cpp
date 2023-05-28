@@ -116,3 +116,7 @@ Object3D::~Object3D() {
     spdlog::error("object3d destructor");
     Engine::removeObject(this);
 }
+
+void Object3D::onCollisionExit(Object3D *other) {
+
+}

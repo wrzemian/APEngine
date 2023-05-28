@@ -27,6 +27,7 @@ public:
     virtual void onCollisionY(Object3D* other);
     virtual void onCollisionZ(Object3D* other);
     virtual void onCollision(Object3D* other);
+    virtual void onCollisionExit(Object3D* other);
     virtual rapidjson::Document ParseToJSON();
 
     Transform _transform;
