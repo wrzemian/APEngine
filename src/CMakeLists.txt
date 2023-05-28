@@ -40,7 +40,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		Background/Background.cpp ../include/Background/Background.h
 		Background/BackgroundTile.cpp ../include/Background/BackgroundTile.h
 		Background/Cactus.cpp ../include/Background/Cactus.h ../include/AssetManager.h AssetManager.cpp Objects/Ant.cpp ../include/Objects/Ant.h
-		Objects/Platform.cpp ../include/Objects/Platform.h ../include/Objects/Platform.h Objects/Battery.cpp ../include/Objects/Battery.h ../include/Objects/Battery.h Objects/Button.cpp ../include/Objects/Button.h ../include/Objects/Button.h Objects/PlayerJumper.cpp ../include/Objects/PlayerJumper.h ../include/Objects/PlayerJumper.h Objects/SimpleHitbox.cpp ../include/Objects/SimpleHitbox.h Objects/PlayerGrabber.cpp ../include/Objects/PlayerGrabber.h ../include/Objects/PlayerGrabber.h)
+		Objects/Platform.cpp ../include/Objects/Platform.h ../include/Objects/Platform.h Objects/Battery.cpp ../include/Objects/Battery.h ../include/Objects/Battery.h Objects/Button.cpp ../include/Objects/Button.h ../include/Objects/Button.h Objects/PlayerJumper.cpp ../include/Objects/PlayerJumper.h ../include/Objects/PlayerJumper.h Objects/SimpleHitbox.cpp ../include/Objects/SimpleHitbox.h Objects/PlayerGrabber.cpp ../include/Objects/PlayerGrabber.h ../include/Objects/PlayerGrabber.h Objects/Grabber.cpp ../include/Objects/Grabber.h ../include/Objects/Grabber.h Objects/Box.cpp ../include/Objects/Box.h ../include/Objects/Box.h)
 
 
 

@@ -87,7 +87,8 @@ namespace Engine {
 
 
     Object3D* getObject3DById(int id) {
-            return allObjects.at(id);
+        std::cout<< allObjects.size() <<std::endl;
+        return allObjects.at(id);
     }
 
     int getMovingObjectIndex(MovingObject* obj) {

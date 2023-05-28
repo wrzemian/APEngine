@@ -21,7 +21,8 @@ public:
     void Update(float dt);
     virtual void onCollision(Object3D* other);
 
-    Platform* connectedPlatform;
+    void addPlatform(Platform* connectedPlatform);
+    std::vector<Platform*> connectedPlatforms;
 
     void logFields();
 };

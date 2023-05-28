@@ -12,24 +12,24 @@ void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
     inputSystem->monitorKey(GLFW_KEY_RIGHT);
     inputSystem->monitorKey(GLFW_KEY_DOWN);
     inputSystem->monitorKey(GLFW_KEY_KP_2);
-
+    inputSystem->monitorKey(GLFW_KEY_KP_3);
     //inputSystem->monitorKey(GLFW_KEY_SPACE);
 }
 
 void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
-    if (inputSystem->GetKey(GLFW_KEY_LEFT)) {
+    if (inputSystem->GetKey(GLFW_KEY_UP)) {
         _velocity.z = -movementSpeed;
     }
-    else if (inputSystem->GetKey(GLFW_KEY_RIGHT)) {
+    else if (inputSystem->GetKey(GLFW_KEY_DOWN)) {
         _velocity.z = movementSpeed;
     }
     else {
         _velocity.z = 0;
     }
-    if (inputSystem->GetKey(GLFW_KEY_DOWN)) {
+    if (inputSystem->GetKey(GLFW_KEY_LEFT)) {
         _velocity.x = -movementSpeed;
     }
-    else if (inputSystem->GetKey(GLFW_KEY_UP)) {
+    else if (inputSystem->GetKey(GLFW_KEY_RIGHT)) {
         _velocity.x = movementSpeed;
     }
     else {
@@ -49,6 +49,9 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
             std::cout<< "pick up battery"<<std::endl;
         }
     }
+    if (inputSystem->GetKeyDown(GLFW_KEY_KP_3)) {
+        Grab();
+    }
     /* if (inputSystem->GetKeyDown(GLFW_KEY_SPACE)) {
          Jump();
          std::cout<<_velocity.y<<std::endl;
@@ -59,6 +62,7 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
         battery->_transform._position=this->_transform._position+batteryOffset;
         battery->_velocity = glm::vec3(0.0f, 0.0f, 0.0f);
     }
+    grabber->UpdateGrabber(this->_transform._position);
 }
 
 void PlayerGrabber::onCollision(Object3D *other) {
@@ -71,4 +75,16 @@ void PlayerGrabber::onCollision(Object3D *other) {
     {
         canPickUpBattery = true;
     }
+}
+
+void PlayerGrabber::Jump() {
+    if (jumpCount == 0)
+    {
+        this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        jumpCount += 1;
+    }
+}
+
+void PlayerGrabber::Grab() {
+    grabber->Grab();
 }

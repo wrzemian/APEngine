@@ -18,7 +18,7 @@ public:
     bool moveToTarget = false;
     bool moveToOrigin = false;
     float t;
-    float speed = 1; //1 equals to one second of movement
+    float speed = 1.0f; //1 equals to one second of movement
     int targetId = -1;
     glm::vec3 positionOrigin = glm::vec3(0);
     glm::vec3 positionTarget = glm::vec3(0);

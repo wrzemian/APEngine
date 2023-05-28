@@ -9,6 +9,7 @@
 #include "../include/Engine.h"
 #include "../include/User/InputSystem.h"
 #include "Battery.h"
+#include "Grabber.h"
 
 class PlayerGrabber: public MovingObject {
 private:
@@ -19,9 +20,11 @@ private:
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
 public:
     Battery* battery;
+    Grabber* grabber;
     void initPlayer(InputSystem* inputSystem);
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
     void onCollision(Object3D* other) override;
+    void Jump();
     void Grab();
 };
 

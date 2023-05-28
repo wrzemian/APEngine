@@ -27,7 +27,8 @@
 #include "../include/Objects/PlayerJumper.h"
 #include "../include/Objects/PlayerGrabber.h"
 #include "../include/Objects/Battery.h"
-
+#include "../include/Objects/Grabber.h"
+#include "../include/Objects/Box.h"
 //temporary
 #include "../include/Background/Rock.h"
 #include "../include/Background/Cactus.h"
@@ -59,10 +60,9 @@ namespace Game {
 //    Image image;
 
 
-    //MovingObject player1;
     PlayerJumper playerJumper;
     PlayerGrabber playerGrabber;
-    //MovingObject player2;
+
     Ant ant;
 
     Camera camera;
@@ -74,6 +74,12 @@ namespace Game {
 
     Battery battery;
     Hitbox batteryHitbox("hitboxes/hitbox_battery");
+
+    Grabber grabber;
+    Hitbox grabberHitbox("hitboxes/hitbox_grabber");
+
+    Box box;
+    Hitbox boxHitbox("hitboxes/hitbox_box1");
 
     Walls wagon;
 
@@ -127,8 +133,8 @@ namespace Game {
         camera = Engine::parser.CreateFromJSONCam("camera");
         camera.ShowImgui();;
 
-        p1Hitbox.Create(&playerJumper);
-        p2Hitbox.Create(&playerGrabber);
+        //p1Hitbox.Create(&playerJumper);
+        //p2Hitbox.Create(&playerGrabber);
 
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
@@ -154,7 +160,7 @@ namespace Game {
         battery.setShader(&shader);
         battery.loadModel("../../res/models/Assets/battery/battery.obj");
         battery.tag = "battery";
-        batteryHitbox.Create(&battery);
+        //batteryHitbox.Create(&battery);
         batteryHitbox.draw = true;
         battery._transform._position.x = -8;
         battery._transform._position.y = 7;
@@ -165,6 +171,24 @@ namespace Game {
         playerJumper.battery = &battery;
         playerGrabber.battery = &battery;
 
+        playerGrabber.grabber = &grabber;
+        grabber.setShader(&shader);
+        grabber.loadModel("../../res/models/Assets/battery/battery.obj");
+        //grabberHitbox.Create(&grabber);
+        grabberHitbox.draw = true;
+        grabberHitbox.isTrigger = true;
+        grabber.ShowImgui();
+        grabberHitbox.ShowImgui();
+
+
+        box.setShader(&shader);
+        box.loadModel("../../res/models/Assets/chest1/box1.obj");
+        box._transform._position.x = -4.6f;
+        box._transform._position.y = 7;
+        box._transform._position.z = 7;
+        box.ShowImgui();
+        boxHitbox.draw = true;
+        boxHitbox.ShowImgui();
 
         shader.setMat4("projectionView", camera.getViewProjection());
 
@@ -274,7 +298,7 @@ namespace Game {
             playerJumper.Jump();
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1)) {
-            playerGrabber.AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+            playerGrabber.Jump();
         }
 
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));

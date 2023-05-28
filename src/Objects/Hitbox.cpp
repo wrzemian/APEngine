@@ -24,7 +24,7 @@ Hitbox::Hitbox(HitboxType type) {
     if(type == DYNAMIC) {
         Engine::addDynamicHitbox(this);
     }
-    //Engine::addImgui(this);
+    Engine::addImgui(this);
 }
 
 Hitbox::Hitbox(std::string fileName) {

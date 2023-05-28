@@ -121,6 +121,7 @@ void Walls::calculateHitboxes() {
 
                 platform->_model = std::make_shared<Model>();
                 platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                platform-> speed = 1;
                 movingPlatforms.push_back(platform);
 
                 spdlog::info("Moving platform created {}", mesh._name);
@@ -161,22 +162,23 @@ void Walls::calculateHitboxes() {
 }
 
 void Walls::assignTargetsAndPlatforms() {
+    int i = 0;
     for (const auto& button : buttons) {
         const int buttonId = button->id;
         auto it = targetPositions.find(buttonId);
         if (it != targetPositions.end()) {
             const glm::vec3& targetPosition = it->second;
-            button->connectedPlatform = nullptr;
+            //button->connectedPlatforms.clear();
             for (const auto& platform : movingPlatforms) {
                 if (platform->id % 100 == buttonId % 100) {
                     platform->positionTarget = targetPosition + _transform._position;
                     //TODO: change for method adding platform to list of pointers in button
-                    button->connectedPlatform = platform.get();
-                    spdlog::info("Button {} connected to Platform {}", buttonId, button->connectedPlatform->id);
+                    button->addPlatform(platform.get());
+                    //spdlog::info("Button {} connected to Platform {}", buttonId, button->connectedPlatform->id);
 
                 }
             }
-            if (button->connectedPlatform) {
+            if (button->connectedPlatforms[i]) {
 
             } else {
                 spdlog::warn("Button {} does not have a matching platform.", buttonId);
@@ -184,6 +186,7 @@ void Walls::assignTargetsAndPlatforms() {
         } else {
             spdlog::warn("Button {} does not have a matching target position.", buttonId);
         }
+        i++;
     }
 }
 

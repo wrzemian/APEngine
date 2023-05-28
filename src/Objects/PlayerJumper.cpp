@@ -16,19 +16,19 @@ void PlayerJumper::initPlayer(InputSystem* inputSystem) {
 }
 
 void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
-    if (inputSystem->GetKey(GLFW_KEY_A)) {
+    if (inputSystem->GetKey(GLFW_KEY_W)) {
         _velocity.z = -movementSpeed;
     }
-    else if (inputSystem->GetKey(GLFW_KEY_D)) {
+    else if (inputSystem->GetKey(GLFW_KEY_S)) {
         _velocity.z = movementSpeed;
     }
     else {
         _velocity.z = 0;
     }
-    if (inputSystem->GetKey(GLFW_KEY_S)) {
+    if (inputSystem->GetKey(GLFW_KEY_A)) {
         _velocity.x = -movementSpeed;
     }
-    else if (inputSystem->GetKey(GLFW_KEY_W)) {
+    else if (inputSystem->GetKey(GLFW_KEY_D)) {
         _velocity.x = movementSpeed;
     }
     else {

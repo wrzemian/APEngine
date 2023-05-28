@@ -6,7 +6,7 @@
 
 Button::Button(Platform* p, glm::vec3 position)
 {
-    connectedPlatform = p;
+    connectedPlatforms.push_back(p);
     _transform._position = position;
     tag = "button";
 }
@@ -15,7 +15,9 @@ void Button::onCollision(Object3D *other) {
     if(other->tag == "player")
     {
         isPushed = true;
-        connectedPlatform->OnActivate();
+        for (Platform* platform : connectedPlatforms) {
+            platform->OnActivate();
+        }
     }
 }
 
@@ -25,7 +27,9 @@ void Button::Update(float dt) {
         t -= dt;
         if(t < 0)
         {
-            connectedPlatform->OnDeactivate();
+            for (Platform* platform : connectedPlatforms) {
+                platform->OnDeactivate();
+            }
             isPushed = false;
             t = timeToReset;
         }
@@ -35,6 +39,14 @@ void Button::Update(float dt) {
 void Button::logFields() {
     spdlog::info("Button Fields:");
     spdlog::info("- id: {}", id);
-    spdlog::info("- connectedPlatform: {}", (connectedPlatform ? "not null" : "null"));
+    int i = 0;
+    for (Platform* platform : connectedPlatforms) {
+        spdlog::info("- connectedPlatform: {}", (connectedPlatforms[i] ? "not null" : "null"));
+        i++;
+    }
     spdlog::info("");
+}
+
+void Button::addPlatform(Platform *connectedPlatform) {
+    connectedPlatforms.push_back(connectedPlatform);
 }

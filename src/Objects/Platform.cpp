@@ -14,10 +14,6 @@ Platform::Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s) {
 }
 
 void Platform::Move(float deltaTime) {
-    //TODO: uncomment
-    return;
-
-
     if (moveToTarget) {
         t += deltaTime * speed;
         if (t >= 1.0f) {
@@ -67,11 +63,11 @@ void Platform::ImGui() {
     ImGui::Checkbox("move to target", &moveToTarget);
 
     //TODO: delete those ifs, they are for debugging only
-    if(moveToOrigin) {
+    /*if(moveToOrigin) {
         _transform._position = positionOrigin;
     } else if(moveToTarget) {
         _transform._position = positionTarget;
-    }
+    }*/
 
     ImGui::End();
 }
