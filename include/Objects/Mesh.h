@@ -51,6 +51,7 @@ public:
     unsigned int VAO;
 
     // constructor
+
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, std::string name)
     {
         //spdlog::info("MESH NAME = {}", name);
