@@ -174,18 +174,15 @@ namespace Game {
         playerGrabber.grabber = &grabber;
         grabber.setShader(&shader);
         grabber.loadModel("../../res/models/Assets/battery/battery.obj");
-        //grabberHitbox.Create(&grabber);
         grabberHitbox.draw = true;
         grabberHitbox.isTrigger = true;
-        grabber.ShowImgui();
-        grabberHitbox.ShowImgui();
 
 
         box.setShader(&shader);
         box.loadModel("../../res/models/Assets/chest1/box1.obj");
-        box._transform._position.x = -4.6f;
-        box._transform._position.y = 7;
-        box._transform._position.z = 7;
+        box._transform._position.x = -4.0f;
+        box._transform._position.y = 8.5f;
+        box._transform._position.z = 8.5f;
         box.ShowImgui();
         boxHitbox.draw = true;
         boxHitbox.ShowImgui();

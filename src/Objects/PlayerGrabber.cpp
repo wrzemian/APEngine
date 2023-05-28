@@ -5,6 +5,9 @@
 #include "../../include/Objects/PlayerGrabber.h"
 
 void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
+    _transform._scale.x = 0.5f;
+    _transform._scale.y = 0.5f;
+    _transform._scale.z = 0.5f;
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
     tag = "player";
     inputSystem->monitorKey(GLFW_KEY_UP);

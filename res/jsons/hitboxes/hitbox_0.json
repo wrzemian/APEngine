@@ -3,12 +3,12 @@
     "_type": 1,
     "object": 0,
     "minX": -0.3,
-    "minY": -0.3,
+    "minY": -0.02,
     "minZ": -0.3,
     "maxX": 0.3,
-    "maxY": 0.3,
+    "maxY": 0.6,
     "maxZ": 0.3,
     "offsetX": 0.0,
-    "offsetY": 0.0,
+    "offsetY": 0.02,
     "offsetZ": 0.0
 }
