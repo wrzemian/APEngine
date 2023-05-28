@@ -3,6 +3,9 @@
 - Collisions separation
 - Asset manager
 - Rendering individual hitboxes
+- Loading buttons, platforms, decorations with and without collisions
+- Platforms semi-correctly load their target positions
+- Buttons connect to platforms
 
 ## [0.0.12] - 2023-05-02
 ### Added
