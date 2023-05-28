@@ -18,7 +18,7 @@ Hitbox::Hitbox(HitboxType type) {
     IGui::setWindowName("hitbox");
 
     _type = type;
-    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), tag, _type);
+    //spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), tag, _type);
 
     if(type == STATIC) {
         Engine::addStaticHitbox(this);
@@ -56,7 +56,7 @@ Hitbox::Hitbox(std::string fileName) {
     else
         spdlog::error("no JSON file found");
 
-    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
+    //spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), _object->tag, _type);
 
 }
 
@@ -237,7 +237,7 @@ void Hitbox::calculateFromModel(const Model &model) {
     for(auto const& mesh: model.meshes) {
         calculateFromMesh(mesh);
     }
-    spdlog::info("({}, {}) to ({}, {})", _min.x, _min.y, _max.x, _max.y);
+    spdlog::info("Calculated hitbox from model from({}, {}) to ({}, {})", _min.x, _min.y, _max.x, _max.y);
 }
 
 void Hitbox::calculateFromMesh(const Mesh &mesh) {

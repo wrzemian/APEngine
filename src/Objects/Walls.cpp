@@ -201,11 +201,14 @@ void Walls::calculateHitboxes() {
 
             case 'T': { // Target of moving platform
                 // TODO: get actual position for targer
+                Hitbox test(Hitbox::STATIC);
+                test.Create(this);
+                test.calculateFromMesh(mesh);
+                auto middle = (test._min + test._max) * 0.5f;
 
-                glm::vec3 position = mesh.vertices.at(0).Position;
-                spdlog::info("Target position {} = {}, {}, {}", mesh._name, position.x, position.y, position.z);
+                spdlog::info("Target position {} = {}, {}, {}", mesh._name, middle.x, middle.y, middle.z);
 
-                targetPositions[totalId] = position;
+                targetPositions[totalId] = middle;
 
                 break;
             }
@@ -247,11 +250,16 @@ void Walls::assignTargetsAndPlatforms() {
     }
 
     for (const auto& platform : movingPlatforms) {
-        spdlog::info("Looking for target position for platformId {}", platform->id);
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
-            platform->positionTarget = it->second;
-            spdlog::info("Platform {} assigned target position: ({}, {}, {})", platform->id, platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
+            //TODO: reconsider with graphic designers
+            Hitbox test(Hitbox::STATIC);
+            test.Create(platform.get());
+            test.calculateFromModel(*platform->_model);
+            auto middle = (test._min + test._max) * 0.5f;
+            spdlog::info("Platform id {} in the middle in ({}, {}, {}) has target ({}, {}, {})", platform->id, middle.x, middle.y, middle.z, it->second.x, it->second.y, it->second.z);
+            platform->positionTarget = it->second - middle + _transform._position;
+            spdlog::info("assigned target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
         }
@@ -295,7 +303,7 @@ void Walls::logNewObjects() {
 void Walls::logHitboxes() {
     spdlog::warn("{} hitboxes loaded", hitboxes.size());
     for (const auto& hitbox : hitboxes) {
-        spdlog::info("({}, {}) to ({}, {})", hitbox->_min.x, hitbox->_min.y, hitbox->_max.x, hitbox->_max.y);
+        spdlog::info("Hitbox ({}, {}) to ({}, {})", hitbox->_min.x, hitbox->_min.y, hitbox->_max.x, hitbox->_max.y);
     }
 }
 
