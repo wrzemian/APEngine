@@ -18,17 +18,19 @@ Hitbox::Hitbox(HitboxType type) {
     IGui::setWindowName("hitbox");
 
     _type = type;
+    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), tag, _type);
+
     if(type == STATIC) {
         Engine::addStaticHitbox(this);
     }
     if(type == DYNAMIC) {
         Engine::addDynamicHitbox(this);
     }
-    Engine::addImgui(this);
+    //Engine::addImgui(this);
 }
 
 Hitbox::Hitbox(std::string fileName) {
-    spdlog::info("hitbox JSON constructor");
+    //spdlog::info("hitbox JSON constructor");
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("hitbox");
@@ -69,7 +71,9 @@ Hitbox::~Hitbox() {
 
 void Hitbox::Create(Object3D* object, glm::vec3 offset) {
     _object = object;
+    //spdlog::info("Create 1");
     _position = &object->_transform._position;
+    //spdlog::info("Create 2");
     _offset = offset;
     _color = glm::vec3(1,1,0);
 

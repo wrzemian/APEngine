@@ -16,13 +16,13 @@
 class Transform
 {
 public:
-    glm::vec3 _position;
-    glm::vec3 _scale;
-    glm::vec3 _rotation;
-    glm::mat4 _model;
-    glm::mat4 _localTransform;
+    glm::vec3 _position{};
+    glm::vec3 _scale{};
+    glm::vec3 _rotation{};
+    glm::mat4 _model{};
+    glm::mat4 _localTransform{};
 
-    Transform* parent;
+    Transform* parent{};
     std::vector<Transform*> children;
 
     glm::mat4 m_modelMatrix = glm::mat4(1.0f);
