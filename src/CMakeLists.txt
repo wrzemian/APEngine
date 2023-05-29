@@ -31,7 +31,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		../include/IGui.h IGui.cpp
 		Objects/Walls.cpp ../include/Objects/Walls.h
 		User/Animation.cpp
-		../include/User/Animation.h
+        ../include/User/HudAnimation.h
 		User/Constant.cpp ../include/User/Constant.h
 		../include/FrustumOpitmizer.h FrustumOptimizer.cpp
 		Camera.cpp

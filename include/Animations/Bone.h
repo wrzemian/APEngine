@@ -10,7 +10,7 @@
 //#include "glm/fwd.hpp"
 //#include "glm/detail/type_quat.hpp"
 //#include "assimp/anim.h"
-//#include "Animation.h"
+//#include "HudAnimation.h"
 //#include "GLConverter.cpp"
 //
 //struct AssimpNodeData{
@@ -38,7 +38,7 @@
 //    Bone(std::string name, int ID, const aiNodeAnim* channel);
 //    ~Bone();
 //
-//    void Update(float animationTime, float previousAnimationTime, float blendingTime, const Animation& previousAnimation);
+//    void Update(float animationTime, float previousAnimationTime, float blendingTime, const HudAnimation& previousAnimation);
 //    void Update(float animationTime);
 //
 //    const glm::mat4& GetLocalTransform() const;
@@ -59,8 +59,8 @@
 //    int GetPositionIndex(float animationTime) const;
 //    int GetRotationIndex(float animationTime) const;
 //    float GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime);
-//    glm::vec3 InterpolatePosition(float animationTime, float previousAnimationTime, float blendingTime, Animation& previousAnimation);
-//    glm::mat4 InterpolateRotation(float animationTime, float previousAnimationTime, float blendingTime, Animation& previousAnimation);
+//    glm::vec3 InterpolatePosition(float animationTime, float previousAnimationTime, float blendingTime, HudAnimation& previousAnimation);
+//    glm::mat4 InterpolateRotation(float animationTime, float previousAnimationTime, float blendingTime, HudAnimation& previousAnimation);
 //
 ////    glm::quat GetGLMQuat(aiQuaternion quaterniont);
 //    glm::quat GetGLMQuat(aiQuaternion quaterniont);

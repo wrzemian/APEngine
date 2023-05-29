@@ -1,9 +1,9 @@
-//#include "Animation.h"
+//#include "HudAnimation.h"
 //
 //class Animator
 //{
 //public:
-//    Animator::Animator(Animation* Animation)
+//    Animator::Animator(HudAnimation* HudAnimation)
 //    {
 //        m_CurrentTime = 0.0;
 //        m_CurrentAnimation = currentAnimation;
@@ -25,7 +25,7 @@
 //        }
 //    }
 //
-//    void Animator::PlayAnimation(Animation* pAnimation)
+//    void Animator::PlayAnimation(HudAnimation* pAnimation)
 //    {
 //        m_CurrentAnimation = pAnimation;
 //        m_CurrentTime = 0.0f;
@@ -65,7 +65,7 @@
 //
 //private:
 //    std::vector<glm::mat4> m_FinalBoneMatrices;
-//    Animation* m_CurrentAnimation;
+//    HudAnimation* m_CurrentAnimation;
 //    float m_CurrentTime;
 //    float m_DeltaTime;
 //};

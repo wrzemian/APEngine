@@ -2,11 +2,11 @@
 //// Created by tomek on 28.05.2023.
 ////
 //
-//#include "Animation.h"
+//#include "HudAnimation.h"
 //
-//Animation::Animation() = default;
+//HudAnimation::HudAnimation() = default;
 //
-//Animation::Animation(std::string name, float mDuration, int mTicksPerSecond) : name(std::move(name))
+//HudAnimation::HudAnimation(std::string name, float mDuration, int mTicksPerSecond) : name(std::move(name))
 //{
 //    bones.reserve(BONE_NUMBER);
 //    boneInfoMap.reserve(BONE_NUMBER);
@@ -14,31 +14,31 @@
 //    ticksPerSecond = mTicksPerSecond;
 //}
 //
-//Animation::~Animation() = default;
+//HudAnimation::HudAnimationion() = default;
 //
-//std::shared_ptr<Bone> Animation::FindBone(const std::string& name)
+//std::shared_ptr<Bone> HudAnimation::FindBone(const std::string& name)
 //{
 //    if (!bones.contains(name)) return nullptr;
 //    else return bones.at(name);
 //}
 //
-//int Animation::GetTicksPerSecond() const {
+//int HudAnimation::GetTicksPerSecond() const {
 //    return ticksPerSecond;
 //}
 //
-//float Animation::GetDuration() const {
+//float HudAnimation::GetDuration() const {
 //    return duration;
 //}
 //
-//AssimpNodeData& Animation::GetRootNode() {
+//AssimpNodeData& HudAnimation::GetRootNode() {
 //    return rootNode;
 //}
 //
-//const std::unordered_map<std::string, BoneInfo>& Animation::GetBoneIDMap() {
+//const std::unordered_map<std::string, BoneInfo>& HudAnimation::GetBoneIDMap() {
 //    return boneInfoMap;
 //}
 //
-//void Animation::ReadMissingBones(const aiAnimation* animation, const std::shared_ptr<AnimationModel>& model) {
+//void HudAnimation::ReadMissingBones(const aiAnimation* animation, const std::shared_ptr<AnimationModel>& model) {
 //    unsigned int size = animation->mNumChannels;
 //
 //    boneInfoMap = model->GetBoneInfoMap();//getting m_BoneInfoMap from Model class
@@ -76,7 +76,7 @@
 //    }
 //}
 //
-//void Animation::ReadHierarchyData(AssimpNodeData& dest, const aiNode* src) {
+//void HudAnimation::ReadHierarchyData(AssimpNodeData& dest, const aiNode* src) {
 //    assert(src);
 //
 //    dest.name = src->mName.data;
@@ -109,7 +109,7 @@
 //    }
 //}
 //
-//void Animation::Recalculate(const std::shared_ptr<AnimationModel>& model) {
+//void HudAnimation::Recalculate(const std::shared_ptr<AnimationModel>& model) {
 //    boneInfoMap = model->GetBoneInfoMap();
 //    uint16_t boneCount = model->GetBoneCount();
 //

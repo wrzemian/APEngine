@@ -10,12 +10,12 @@
 //#include "AnimationModel.h"
 //#include "AssimpNodeData.h"
 //
-//class Animation {
+//class HudAnimation {
 //public:
-//    Animation() = default;
-//    Animation(std::string name, float mDuration, int mTicksPerSecond);
+//    HudAnimation() = default;
+//    HudAnimation(std::string name, float mDuration, int mTicksPerSecond);
 //
-//    ~Animation() = default;
+//    HudAnimationion() = default;
 //
 //    std::shared_ptr<Bone> FindBone(const std::string& name);
 //    int GetTicksPerSecond() const;

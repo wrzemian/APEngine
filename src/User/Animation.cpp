@@ -1,4 +1,4 @@
-#include "../../include/User/Animation.h"
+#include "../../include/User/HudAnimation.h"
 #include "glm/fwd.hpp"
 #include "glm/detail/type_mat4x4.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
@@ -8,7 +8,7 @@
 
 
 
-void Animation::initAnimation() {
+void HudAnimation::initAnimation() {
     // Set up vertex data for the animated element (e.g., a simple quad)
     float animationVertices[] = {
             // Positions     // Texture coords
@@ -38,7 +38,7 @@ void Animation::initAnimation() {
 
 }
 
-void Animation::renderAnimation(float time, float x, float y, float z) {
+void HudAnimation::renderAnimation(float time, float x, float y, float z) {
     // Render the animated element here
     animationShader.use();
 
@@ -58,8 +58,8 @@ void Animation::renderAnimation(float time, float x, float y, float z) {
 
 }
 
-Animation::Animation(Shader _animationShader) {
+HudAnimation::HudAnimation(Shader _animationShader) {
     animationShader = _animationShader;
 }
 
-Animation::Animation() {};
+HudAnimation::HudAnimation() {};

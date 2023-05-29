@@ -40,12 +40,12 @@
 //}
 //
 //
-//void Bone::Update(float animationTime, float previousAnimationTime, float blendingTime, const Animation& previousAnimation)
+//void Bone::Update(float animationTime, float previousAnimationTime, float blendingTime, const HudAnimation& previousAnimation)
 //{
 //    glm::vec4 translation = glm::vec4(InterpolatePosition(animationTime, previousAnimationTime, blendingTime,
-//                                                          const_cast<Animation &>(previousAnimation)), 1);
+//                                                          const_cast<HudAnimation &>(previousAnimation)), 1);
 //    glm::mat4 rotation = InterpolateRotation(animationTime, previousAnimationTime, blendingTime,
-//                                             const_cast<Animation &>(previousAnimation));
+//                                             const_cast<HudAnimation &>(previousAnimation));
 //    rotation[3] = translation;
 //    localTransform = rotation;
 //}
@@ -87,7 +87,7 @@
 //    return abs(animationTime / (nextTimeStamp + lastTimeStamp));
 //}
 //
-//glm::vec3 Bone::InterpolatePosition(float animationTime, float previousAnimationTime, float blendingTime, Animation& previousAnimation)
+//glm::vec3 Bone::InterpolatePosition(float animationTime, float previousAnimationTime, float blendingTime, HudAnimation& previousAnimation)
 //{
 //    if (numPositions == 1)
 //        return positions[0].position;
@@ -110,7 +110,7 @@
 //    return finalPosition;
 //}
 //
-//glm::mat4 Bone::InterpolateRotation(float animationTime, float previousAnimationTime, float blendingTime, Animation& previousAnimation)
+//glm::mat4 Bone::InterpolateRotation(float animationTime, float previousAnimationTime, float blendingTime, HudAnimation& previousAnimation)
 //{
 //    if (numRotations == 1)
 //    {

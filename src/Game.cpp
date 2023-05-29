@@ -20,7 +20,7 @@
 #include "../include/User/InputSystem.h"
 #include "../include/User/HUD.h"
 #include "../include/Objects/Walls.h"
-#include "../include/User/Animation.h"
+#include "../include/User/HudAnimation.h"
 #include "../include/User/Constant.h"
 #include "../include/Objects/Platform.h"
 #include "../include/Objects/Button.h"
@@ -45,6 +45,7 @@
 #include "al.h"
 #include "alc.h"
 #include "../include/Objects/SimpleHitbox.h"
+#include "../include/Animations2/Animator.h"
 
 
 namespace Game {
@@ -55,7 +56,7 @@ namespace Game {
     HUD hud;
     HUD hud2;
     Shader shader;
-    Animation animation;
+    HudAnimation animation;
     Constant constant;
 //    Image image;
 
@@ -66,6 +67,9 @@ namespace Game {
     Ant ant;
 
     Camera camera;
+
+    //animation testing
+
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
@@ -113,6 +117,8 @@ namespace Game {
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");
+
+
 
 
         p2Hitbox.draw = true;
@@ -206,7 +212,7 @@ namespace Game {
 
 
         Shader animationShader("../../res/shaders/animationsShader.vert", "../../res/shaders/animationsShader.frag");
-        Animation animation1(animationShader);
+        HudAnimation animation1(animationShader);
         animation = animation1;
         animation.initAnimation();
 
@@ -220,6 +226,10 @@ namespace Game {
         hud.initImage("res/textures/tlo.png");
 
 
+//        Model ourModel("include/Animations2/testing/first_character.dae");
+//        Animation danceAnimation("include/Animations2/testing/first_character.dae",
+//                                 &ourModel);
+//        Animator animator(&danceAnimation);
 
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
