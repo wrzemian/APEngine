@@ -73,7 +73,7 @@ namespace Engine {
     void renderSpotLights(Shader shader);
 
     void moveObjects();
-    void drawObjects(const Camera& camera);
+    void drawObjects(Shader &shader, const Camera& camera);
     void drawObjects();
 
     void terminate();

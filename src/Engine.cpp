@@ -229,11 +229,14 @@ namespace Engine {
         }
     }
 
-    void drawObjects(const Camera& camera) {
+    void drawObjects(Shader &shader, const Camera& camera) {
         displayCounter = 0;
         totalCounter = 0;
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
+            if(object->_shader != &shader) {
+                object->setShader(&shader);
+            }
 //                object->Draw();
 //            object->_transform.computeModelMatrix();
             Entity test(*object->_model);

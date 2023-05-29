@@ -44,6 +44,7 @@
 #include "al.h"
 #include "alc.h"
 #include "../include/Objects/SimpleHitbox.h"
+#include "../include/lights/Shadows.h"
 
 
 namespace Game {
@@ -54,33 +55,13 @@ namespace Game {
     void renderScene(Shader shader, const Camera& camera);
     Shader simpleDepthShader;
     Shader debugDepthQuad;
-    const unsigned int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
-    unsigned int depthMapFBO;
-    unsigned int depthMap;
-    float lightX = -5.0f;
-    float lightY = 11.370;
-    float lightZ = 15.130f;
-    float ortho1 = -10.0f;
-    float ortho2 = 10.0f;
-    float ortho3 = -10.0f;
-    float ortho4 = 10.0f;
-    float idkX = 0.0f;
-    float idkY = 0.0f;
-    float idkZ = 0.0f;
-    float lookAtX = 0.0f;
-    float lookAtY = 1.0f;
-    float lookAtZ = 0.0f;
-    glm::vec3 lightPos(lightX, lightY, lightZ);
-    bool debug = false;
-    void renderQuad();
-//    unsigned int woodTexture;
-//    unsigned int loadTexture(char const * path);
-    float near_plane = 0.1f, far_plane = 30.5f;
+
 
     float movImage = 0;
     HUD hud;
     HUD hud2;
     Shader shader;
+    Shadows shadows("lights/shadows");
     Animation animation;
     Constant constant;
 //    Image image;
@@ -128,36 +109,18 @@ namespace Game {
 
         // build and compile our shader program
         // ------------------------------------
-        Shader temp("../../res/shaders/shadows/shadowShader.vert", "../../res/shaders/shadows/shadowShader.frag");
-        shader = temp;
-        Shader tempSimpleDepthShader("../../res/shaders/shadows/depthShader.vert", "../../res/shaders/shadows/depthShader.frag");
-        simpleDepthShader = tempSimpleDepthShader;
-        Shader tempDebugDepthQuad("../../res/shaders/shadows/debugShadow.vert", "../../res/shaders/shadows/debugShadow.frag");
-        debugDepthQuad = tempDebugDepthQuad;
+//        Shader temp("../../res/shaders/shadows/shadowShader.vert", "../../res/shaders/shadows/shadowShader.frag");
+//        shader = temp;
+//        Shader tempSimpleDepthShader("../../res/shaders/shadows/depthShader.vert", "../../res/shaders/shadows/depthShader.frag");
+//        simpleDepthShader = tempSimpleDepthShader;
+//        Shader tempDebugDepthQuad("../../res/shaders/shadows/debugShadow.vert", "../../res/shaders/shadows/debugShadow.frag");
+//        debugDepthQuad = tempDebugDepthQuad;
+        shadows.initShaders();
 
-        glGenFramebuffers(1, &depthMapFBO);
-        // create depth texture
-        glGenTextures(1, &depthMap);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-        float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-        // attach depth texture as FBO's depth buffer
-        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
-        glDrawBuffer(GL_NONE);
-        glReadBuffer(GL_NONE);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-        shader.use();
-        shader.setInt("diffuseTexture", 0);
-        shader.setInt("shadowMap", 31);
-        debugDepthQuad.use();
-        debugDepthQuad.setInt("depthMap", 0);
+
+//        debugDepthQuad.use();
+//        debugDepthQuad.setInt("depthMap", 0);
 
         inputSystem.InputInit();
         /*inputSystem.monitorKey(GLFW_KEY_W);
@@ -268,7 +231,6 @@ namespace Game {
     }
 
     void Update() {
-        lightPos = glm::vec3(lightX, lightY, lightZ);
 
         Engine::LoopStart();
         ImGui();
@@ -286,51 +248,10 @@ namespace Game {
 
         //player1.Move();
         Engine::moveObjects();
+        shadows.renderShadows(camera);
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // 1. render depth of scene to texture (from light's perspective)
-        // --------------------------------------------------------------
-        glm::mat4 lightProjection, lightView;
-        glm::mat4 lightSpaceMatrix;
-        lightProjection = glm::ortho(ortho1, ortho2, ortho3, ortho4, near_plane, far_plane);
-        lightView = glm::lookAt(lightPos, glm::vec3(idkX, idkY, idkZ), glm::vec3(lookAtX, lookAtY, lookAtZ));
-        lightSpaceMatrix = lightProjection * lightView;
-        // render scene from light's point of view
-        simpleDepthShader.use();
-        simpleDepthShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-        glClear(GL_DEPTH_BUFFER_BIT);
-        renderScene(simpleDepthShader, camera);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        // reset viewport
-        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if(debug) {
-            // SHADOW MAP DEBUGGING
-            //---------------------------------------------
-            debugDepthQuad.use();
-            debugDepthQuad.setFloat("near_plane", near_plane);
-            debugDepthQuad.setFloat("far_plane", far_plane);
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, depthMap);
-            renderQuad();
-        } else {
-            shader.use();
-            glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-            glm::mat4 view = camera.GetViewMatrix();
-            shader.setMat4("projection", projection);
-            shader.setMat4("view", view);
-            // set light uniforms
-            shader.setVec3("viewPos", camera.Position);
-            shader.setVec3("lightPos", lightPos);
-            shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
-            glActiveTexture(GL_TEXTURE31);
-            glBindTexture(GL_TEXTURE_2D, depthMap);
-            renderScene(shader, camera);
-        }
 
 
         // 2. render scene as normal using the generated depth/shadow map
@@ -378,17 +299,6 @@ namespace Game {
 
     }
 
-    void renderScene(Shader shader, const Camera& camera)
-    {
-        playerJumper.setShader(&shader);
-        playerGrabber.setShader(&shader);
-        ant.setShader(&shader);
-        wagon.setShader(&shader);
-        platform.setShader(&shader);
-        button.setShader(&shader);
-        battery.setShader(&shader);
-        Engine::drawObjects(camera);
-    }
 
     void ImGui() {
         ImGui_ImplOpenGL3_NewFrame();
@@ -397,33 +307,8 @@ namespace Game {
         {
             Engine::renderImgui();
             Engine::ImGui();
-
-            ImGui::Begin("LIGHTPOS FOR SHADOW");
-            ImGui::SetWindowSize(ImVec2(250, 400));
-
-            ImGui::SliderFloat("lightX", &lightX, -50.0f, 50.0f);
-            ImGui::SliderFloat("lightY", &lightY, -50.0f, 50.0f);
-            ImGui::SliderFloat("lightZ", &lightZ, -50.0f, 50.0f);
-            ImGui::SliderFloat("idkX", &idkX, -50.0f, 50.0f);
-            ImGui::SliderFloat("idkY", &idkY, -50.0f, 50.0f);
-            ImGui::SliderFloat("idkZ", &idkZ, -50.0f, 50.0f);
-            ImGui::SliderFloat("lookAtX", &lookAtX, -50.0f, 50.0f);
-            ImGui::SliderFloat("lookAtY", &lookAtY, -50.0f, 50.0f);
-            ImGui::SliderFloat("lookAtZ", &lookAtZ, -50.0f, 50.0f);
-            ImGui::SliderFloat("nearPlane", &near_plane, -50.0f, 50.0f);
-            ImGui::SliderFloat("farPlane", &far_plane, -50.0f, 50.0f);
-            ImGui::SliderFloat("ortho1", &ortho1, -50.0f, 50.0f);
-            ImGui::SliderFloat("ortho2", &ortho2, -50.0f, 50.0f);
-            ImGui::SliderFloat("ortho3", &ortho3, -50.0f, 50.0f);
-            ImGui::SliderFloat("ortho4", &ortho4, -50.0f, 50.0f);
-            ImGui::Checkbox("Debug", &debug);
-
-
-            ImGui::End();
-
-            //playerJumper.ShowImgui();
-            //playerGrabber.ShowImgui();
             camera.ShowImgui();
+            shadows.ShowImgui();
         }
         ImGui::Render();
     }
