@@ -18,7 +18,10 @@ private:
     bool canPickUpBattery = false;
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
 public:
-    Battery* battery;
+
+    PlayerJumper();
+
+    Battery* battery = nullptr;
     void initPlayer(InputSystem* inputSystem);
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
     void Jump();

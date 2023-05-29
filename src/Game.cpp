@@ -72,8 +72,8 @@ namespace Game {
     Hitbox antHitbox("hitboxes/hitbox_2");
     SimpleHitbox antBigHitbox("hitboxes/hitbox_3");
 
-    Battery battery;
-    Hitbox batteryHitbox("hitboxes/hitbox_battery");
+   // Battery battery;
+   // Hitbox batteryHitbox("hitboxes/hitbox_battery");
 
     Grabber grabber;
     Hitbox grabberHitbox("hitboxes/hitbox_grabber");
@@ -157,19 +157,24 @@ namespace Game {
 
         //background.initBackground(5,-525.509948,262.754974,&shader);
 
-        battery.setShader(&shader);
-        battery.loadModel("../../res/models/Assets/battery/battery.obj");
-        battery.tag = "battery";
-        //batteryHitbox.Create(&battery);
-        batteryHitbox.draw = true;
-        battery._transform._position.x = -8;
-        battery._transform._position.y = 7;
-        battery._transform._position.z = 6;
-        battery._transform._scale.x = 0.2f;
-        battery._transform._scale.y = 0.2f;
-        battery._transform._scale.z = 0.2f;
-        playerJumper.battery = &battery;
-        playerGrabber.battery = &battery;
+//        battery.setShader(&shader);
+//        battery.loadModel("../../res/models/Assets/battery/battery.obj");
+//        battery.tag = "battery";
+//        //batteryHitbox.Create(&battery);
+//        batteryHitbox.draw = true;
+//        battery._transform._position.x = -8;
+//        battery._transform._position.y = 7;
+//        battery._transform._position.z = 6;
+//        battery._transform._scale.x = 0.2f;
+//        battery._transform._scale.y = 0.2f;
+//        battery._transform._scale.z = 0.2f;
+        if(wagon.batteries.empty()) {
+            spdlog::error("NO BATTERIES LOADED!");
+        } else {
+            spdlog::info("{} batteries loaded from level file", wagon.batteries.size());
+            playerJumper.battery = wagon.batteries.at(0).get(); //TODO: figure out better solution
+            playerGrabber.battery = wagon.batteries.at(0).get();
+        }
 
         playerGrabber.grabber = &grabber;
         grabber.setShader(&shader);

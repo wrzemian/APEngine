@@ -99,3 +99,7 @@ void PlayerGrabber::onCollisionExit(Object3D *other) {
         canPickUpBattery = false;
     }
 }
+
+PlayerGrabber::PlayerGrabber() {
+    spdlog::info("player grabber constructor");
+}

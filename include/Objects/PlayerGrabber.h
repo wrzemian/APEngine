@@ -19,8 +19,10 @@ private:
     bool canPickUpBattery = false;
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
 public:
-    Battery* battery;
-    Grabber* grabber;
+    PlayerGrabber();
+
+    Battery* battery = nullptr;
+    Grabber* grabber = nullptr;
     void initPlayer(InputSystem* inputSystem);
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
     void onCollision(Object3D* other) override;

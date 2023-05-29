@@ -92,3 +92,7 @@ void PlayerJumper::onCollisionExit(Object3D *other) {
         canPickUpBattery = false;
     }
 }
+
+PlayerJumper::PlayerJumper() {
+    spdlog::info("player jumper constructor");
+}
