@@ -51,10 +51,13 @@
 
 namespace Game {
     void processInput();
-    float imgMOv=0;
+
+    float imgMOv = 0;
+
     void ImGui();
 
-    void renderScene(Shader shader, const Camera& camera);
+    void renderScene(Shader shader, const Camera &camera);
+
     Shader simpleDepthShader;
     Shader debugDepthQuad;
 
@@ -65,7 +68,7 @@ namespace Game {
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
-    Animation animation;
+//    Animation animation;
     Constant constant;
 //    Image image;
 
@@ -109,7 +112,7 @@ namespace Game {
     Background background;
 
     void Start() {
-        std::cout << Engine::Init() <<"\n";
+        std::cout << Engine::Init() << "\n";
 
         shadows.initShaders();
 
@@ -129,8 +132,6 @@ namespace Game {
         hud2.initText("res/fonts/Arialn.ttf");
 
 
-
-
         p2Hitbox.draw = true;
         p1Hitbox.draw = true;
         antBigHitbox.draw = true;
@@ -143,7 +144,6 @@ namespace Game {
 
         ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
         ant.tag = "ant";
-
 
 
         camera = Engine::parser.CreateFromJSONCam("camera");
@@ -193,7 +193,7 @@ namespace Game {
 
         shader.setMat4("projectionView", camera.getViewProjection());
 
-        glm::mat4 model = glm::mat4 (1.0f);
+        glm::mat4 model = glm::mat4(1.0f);
         shader.setMat4("model", model);
 
         dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
@@ -244,13 +244,13 @@ namespace Game {
         imgMOv -= 0.1f;
         inputSystem.update();
         processInput();
-        playerJumper.UpdatePlayer(&inputSystem,movementSpeed);
-        playerGrabber.UpdatePlayer(&inputSystem,movementSpeed);
+        playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
+        playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
         movImage -= 0.1;
 
         float time = static_cast<float>(glfwGetTime());
-        animation.renderAnimation(time,2,520,1);
-        constant.renderConstant(2,550,1);
+        animation.renderAnimation(time, 2, 520, 1);
+        constant.renderConstant(2, 550, 1);
         hud.renderImage(imgMOv);
 
         //player1.Move();
@@ -270,7 +270,7 @@ namespace Game {
 //       camera.followObject(player1);
         Engine::resolveCollisions();
 
-        hud2.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
+        hud2.renderText("nie psuje textur?", 100, 0, 2, glm::vec3(1.0f, 1.0f, 1.0f));
 
         Engine::LoopEnd();
 
@@ -302,3 +302,4 @@ namespace Game {
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
 //        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
     }
+};
