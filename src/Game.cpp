@@ -153,7 +153,7 @@ namespace Game {
 
         shader.use();
         shader.setInt("diffuseTexture", 0);
-        shader.setInt("shadowMap", 1);
+        shader.setInt("shadowMap", 31);
         debugDepthQuad.use();
         debugDepthQuad.setInt("depthMap", 0);
 
@@ -325,7 +325,7 @@ namespace Game {
             shader.setVec3("viewPos", camera.Position);
             shader.setVec3("lightPos", lightPos);
             shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
-            glActiveTexture(GL_TEXTURE1);
+            glActiveTexture(GL_TEXTURE31);
             glBindTexture(GL_TEXTURE_2D, depthMap);
             renderScene(shader, camera);
         }
