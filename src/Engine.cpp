@@ -25,7 +25,7 @@ namespace Engine {
     float frameEnd = 0;
     float frameStart = 0;
     float deltaTime = 0;
-
+    int Weights = 4;
     unsigned int displayCounter = 0;
     unsigned int totalCounter = 0;
 
