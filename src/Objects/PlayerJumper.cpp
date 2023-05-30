@@ -61,7 +61,7 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
 }
 
 void PlayerJumper::Jump() {
-    if (jumpCount == 1 && haveBattery && this->_velocity.y <= 0)
+    if (jumpCount == 1 && haveBattery)
     {
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         this->_velocity.y = 4.0f;
