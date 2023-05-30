@@ -54,11 +54,31 @@ void Camera::ImGui(){
 
 Camera::Camera(glm::vec3 position, float yaw, float pitch, float zoom)
 : Front(glm::vec3(0.0f, 0.0f, -1.0f)), Yaw(yaw), Pitch(pitch), Zoom(zoom) {
-    spdlog::warn("camera .json constructor");
+    //spdlog::warn("camera .json constructor");
     Position = position;
     WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     degX = yaw;
     degY = pitch;
 
     updateCameraVectors();
+}
+
+Camera::Camera(std::string fileName) {
+    spdlog::info("camera JSON constructor");
+    rapidjson::Document d = Engine::parser.openJSON(fileName);
+    std::string type = d["type"].GetString();
+    IGui::setWindowName("camera");
+
+    if(type == "camera") {
+        Position = glm::vec3(d["posX"].GetFloat(), d["posY"].GetFloat(), d["posZ"].GetFloat());
+        Zoom = d["zoom"].GetFloat();
+        Front = glm::vec3(0.0f, 0.0f, -1.0f);
+        Yaw = d["rotX"].GetFloat();
+        Pitch = d["rotY"].GetFloat();
+        WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        degX = Yaw;
+        degY = Pitch;
+    }
+    else
+        spdlog::error("no JSON file found");
 }

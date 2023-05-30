@@ -79,7 +79,7 @@ namespace Game {
 
     Ant ant;
 
-    Camera camera;
+    Camera camera("camera");
 
     //animation testing
 
@@ -153,7 +153,7 @@ namespace Game {
         ant.tag = "ant";
 
 
-        camera = Engine::parser.CreateFromJSONCam("camera");
+        //camera = Engine::parser.CreateFromJSONCam("camera");
         camera.ShowImgui();;
 
         //p1Hitbox.Create(&playerJumper);
