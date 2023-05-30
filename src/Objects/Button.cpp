@@ -6,7 +6,9 @@
 
 Button::Button(Platform* p, glm::vec3 position)
 {
-    connectedPlatforms.push_back(p);
+    if(p != nullptr) {
+        connectedPlatforms.push_back(p);
+    }
     _transform._position = position;
     tag = "button";
 }
@@ -39,10 +41,7 @@ void Button::onCollisionExit(Object3D *other) {
         {
             isPushed = false;
             for (Platform* platform : connectedPlatforms) {
-                if(platform != nullptr)
-                {
-                    platform->OnDeactivate();
-                }
+                platform->OnDeactivate();
             }
         }
     }
