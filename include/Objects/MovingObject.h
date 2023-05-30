@@ -17,7 +17,7 @@ public:
 
     virtual ~MovingObject();
 
-    glm::vec3 _velocity;
+    glm::vec3 _velocity = glm::vec3(0, 0, 0);
     glm::vec3 _gravity = glm::vec3(0, -10, 0);
 
     void SetVelocity(glm::vec3 velocity);

@@ -18,7 +18,7 @@ Hitbox::Hitbox(HitboxType type) {
     IGui::setWindowName("hitbox");
 
     _type = type;
-    //spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), tag, _type);
+    spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), tag, _type);
 
     if(type == STATIC) {
         Engine::addStaticHitbox(this);
@@ -61,6 +61,7 @@ Hitbox::Hitbox(std::string fileName) {
 }
 
 Hitbox::~Hitbox() {
+    spdlog::error("Hitbox object = {}, tag = {} destructor", _object->tag, tag);
     if(_type == STATIC) {
         Engine::removeStaticHitbox(this);
     }
