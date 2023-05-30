@@ -116,8 +116,8 @@ void main()
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;
 
     lighting += CalcDirLight(dirLight, normal, viewDir) / 3;
-    lighting += CalcPointLight(pointLight, normal, fs_in.FragPos, viewDir) / 3;
-    lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir) / 3;
+    lighting += CalcPointLight(pointLight, normal, fs_in.FragPos, viewDir);
+    lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir);
 
     FragColor = vec4(lighting, 1.0);
 }
