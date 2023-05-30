@@ -109,15 +109,15 @@ void main()
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = 0.0;
     vec3 halfwayDir = normalize(lightDir + viewDir);
-    spec = pow(max(dot(normal, halfwayDir), 0.0), 64.0);
+    spec = pow(max(dot(normal, halfwayDir), 0.0), 1.0);
     vec3 specular = spec * lightColor;
     // calculate shadow
     float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * color;
 
-    lighting += CalcDirLight(dirLight, normal, viewDir);
-    lighting += CalcPointLight(pointLight, normal, fs_in.FragPos, viewDir);
-    lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir);
+    lighting += CalcDirLight(dirLight, normal, viewDir) / 3;
+    lighting += CalcPointLight(pointLight, normal, fs_in.FragPos, viewDir) / 3;
+    lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir) / 3;
 
     FragColor = vec4(lighting, 1.0);
 }
