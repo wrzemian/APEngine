@@ -225,7 +225,7 @@ void Walls::calculateHitboxes() {
                 boxes.push_back(box);
                 box->tag = "box";
 
-                auto test = std::make_shared<Hitbox>(Hitbox::STATIC);
+                auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->calculateFromMesh(mesh);
 
                 test->Create(box.get());
@@ -237,6 +237,7 @@ void Walls::calculateHitboxes() {
                 box->setShader(_shader);
                 box->_model = std::make_shared<Model>();
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                box->_transform._position = _transform._position;
 
                 spdlog::info("Box created from {}", mesh._name);
 

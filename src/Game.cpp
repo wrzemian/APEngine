@@ -95,8 +95,8 @@ namespace Game {
     Grabber grabber;
     Hitbox grabberHitbox("hitboxes/hitbox_grabber");
 
-    Box box;
-    Hitbox boxHitbox("hitboxes/hitbox_box1");
+   // Box box;
+   // Hitbox boxHitbox("hitboxes/hitbox_box1");
 
     WinArea winArea;
     Hitbox winHitbox("hitboxes/hitbox_win");
@@ -189,16 +189,16 @@ namespace Game {
         grabberHitbox.isTrigger = true;
 
 
-        box.setShader(&shader);
-        box.loadModel("../../res/models/Assets/chest1/box1.obj");
-        box._transform._position.x = -4.2f;
-        box._transform._position.y = 8.5f;
-        box._transform._position.z = 8.0f;
-        box._transform._scale.x=0.5f;
-        box._transform._scale.z=0.5f;
-        box.ShowImgui();
-        //boxHitbox.draw = true;
-        boxHitbox.ShowImgui();
+//        box.setShader(&shader);
+//        box.loadModel("../../res/models/Assets/chest1/box1.obj");
+//        box._transform._position.x = -4.2f;
+//        box._transform._position.y = 8.5f;
+//        box._transform._position.z = 8.0f;
+//        box._transform._scale.x=0.5f;
+//        box._transform._scale.z=0.5f;
+//        box.ShowImgui();
+//        //boxHitbox.draw = true;
+//        boxHitbox.ShowImgui();
 
         winArea.setShader(&shader);
         winArea.loadModel("../../res/models/Assets/chest1/box1.obj");
