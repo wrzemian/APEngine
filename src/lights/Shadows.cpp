@@ -151,9 +151,20 @@ void Shadows::renderShadows(Camera& camera) {
     shader.setVec3("viewPos", camera.Position);
     shader.setVec3("lightPos", position);
     shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+    glm::mat4 model = glm::mat4 (1.0f);
+    shader.setMat4("model", model);
+    shader.setInt("material.diffuse", 0);
+    shader.setInt("material.specular", 1);
+    shader.setFloat("material.shininess", 32.0f);
+
     glActiveTexture(GL_TEXTURE31);
     glBindTexture(GL_TEXTURE_2D, depthMap);
     Engine::drawObjects(shader, camera);
+
+    Engine::renderDirLights(shader);
+    Engine::renderPointLights(shader);
+    Engine::renderSpotLights(shader);
 }
 
 
