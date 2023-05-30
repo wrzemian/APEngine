@@ -7,6 +7,7 @@
 
 #include <glad/glad.h>
 
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <stb_image.h>
@@ -18,6 +19,8 @@
 #include "spdlog/spdlog.h"
 
 #include "../Shader.h"
+#include "../Animations2/AssimpGLMHelpers.h"
+
 
 #include <string>
 #include <fstream>
@@ -25,6 +28,16 @@
 #include <iostream>
 #include <map>
 #include <vector>
+
+struct BoneInfo
+{
+    /*id is index in finalBoneMatrices*/
+    int id;
+    /*offset matrix transforms vertex from model space to bone space*/
+    glm::mat4 offset;
+
+};
+
 
 
 class Model
@@ -35,6 +48,7 @@ public:
     std::vector<Mesh>    meshes;
     std::string directory;
     bool gammaCorrection;
+
 
     Model(){};
     // constructor, expects a filepath to a 3D model.
@@ -51,7 +65,28 @@ public:
             meshes[i].Draw(shader);
     }
 
+    auto& GetBoneInfoMap() { return m_BoneInfoMap; }
+
+    int& GetBoneCount() { return m_BoneCounter; }
+
 private:
+    int Weights = 4;
+    std::map<std::string, BoneInfo> m_BoneInfoMap; //
+    int m_BoneCounter = 0;
+
+    void SetVertexBoneDataToDefault(Vertex& vertex)
+    {
+
+        for (int i = 0; i < Weights; i++)
+        {
+            vertex.m_BoneIDs[i] = -1;
+            vertex.m_Weights[i] = 0.0f;
+        }
+    }
+
+
+
+
     // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes std::vector.
     void loadModel(std::string const &path)
     {
@@ -172,11 +207,61 @@ private:
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
         // return a mesh object created from the extracted mesh data
+        ExtractBoneWeightForVertices(vertices,mesh,scene);
         return Mesh(vertices, indices, textures, std::string(mesh->mName.C_Str()));
     }
-
     // checks all material textures of a given type and loads the textures if they're not loaded yet.
     // the required info is returned as a Texture struct.
+
+
+    void SetVertexBoneData(Vertex& vertex, int boneID, float weight)
+    {
+        for (int i = 0; i < Weights; ++i)
+        {
+            if (vertex.m_BoneIDs[i] < 0)
+            {
+                vertex.m_Weights[i] = weight;
+                vertex.m_BoneIDs[i] = boneID;
+                break;
+            }
+        }
+    }
+
+    void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
+    {
+        for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
+        {
+            int boneID = -1;
+            std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
+            if (m_BoneInfoMap.find(boneName) == m_BoneInfoMap.end())
+            {
+                BoneInfo newBoneInfo;
+                newBoneInfo.id = m_BoneCounter;
+                newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(
+                        mesh->mBones[boneIndex]->mOffsetMatrix);
+                m_BoneInfoMap[boneName] = newBoneInfo;
+                boneID = m_BoneCounter;
+                m_BoneCounter++;
+            }
+            else
+            {
+                boneID = m_BoneInfoMap[boneName].id;
+            }
+            assert(boneID != -1);
+            auto weights = mesh->mBones[boneIndex]->mWeights;
+            int numWeights = mesh->mBones[boneIndex]->mNumWeights;
+
+            for (int weightIndex = 0; weightIndex < numWeights; ++weightIndex)
+            {
+                int vertexId = weights[weightIndex].mVertexId;
+                float weight = weights[weightIndex].mWeight;
+                assert(vertexId <= vertices.size());
+                SetVertexBoneData(vertices[vertexId], boneID, weight);
+            }
+        }
+    }
+
+
 public:
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {

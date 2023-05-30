@@ -63,18 +63,20 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
 void PlayerJumper::Jump() {
     if (jumpCount == 1 && haveBattery)
     {
-        this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        this->_velocity.y = 4.0f;
         jumpCount += 1;
     }
-    else if (jumpCount == 0)
+    else if (jumpCount == 0 && this->_velocity.y <= 0)
     {
-        this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        this->_velocity.y = 4.0f;
         jumpCount += 1;
     }
 }
 
 void PlayerJumper::onCollision(Object3D *other) {
-    if(other->tag == "floor" && _velocity.y != 0)
+    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
         _velocity.y = 0;
         jumpCount = 0;

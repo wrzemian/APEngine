@@ -14,9 +14,11 @@ private:
     bool moveToOrigin = false;
     float t;
     float speed = 1.0f; //1 equals to one second of movement
+    float forwardSpeed = 1.0f;
+    float backSpeed = 3.0f;
     glm::vec3 positionOrigin = glm::vec3(0);
-    glm::vec3 positionTarget = glm::vec3(5,5,0);
-    glm::vec3 playerOffset = glm::vec3(1,1,1);
+    glm::vec3 positionTarget = glm::vec3(3,3,0);
+    glm::vec3 playerOffset = glm::vec3(0.2f,1,0.2f);
     glm::vec3 grabbedObjectOffset = glm::vec3(0);
     glm::vec3 playerPos = glm::vec3(0);
     bool grabbed = false;
