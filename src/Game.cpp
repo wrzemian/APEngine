@@ -89,8 +89,8 @@ namespace Game {
     Hitbox antHitbox("hitboxes/hitbox_2");
     SimpleHitbox antBigHitbox("hitboxes/hitbox_3");
 
-    Battery battery;
-    Hitbox batteryHitbox("hitboxes/hitbox_battery");
+//    Battery battery;
+//    Hitbox batteryHitbox("hitboxes/hitbox_battery");
 
     Grabber grabber;
     Hitbox grabberHitbox("hitboxes/hitbox_grabber");
@@ -139,9 +139,9 @@ namespace Game {
         hud2.initText("res/fonts/Arialn.ttf");
 
 
-        p2Hitbox.draw = true;
-        p1Hitbox.draw = true;
-        antBigHitbox.draw = true;
+        p2Hitbox.draw = false;
+        p1Hitbox.draw = false;
+        antBigHitbox.draw = false;
 
 
         //player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
@@ -169,23 +169,23 @@ namespace Game {
 
         //background.initBackground(5,-525.509948,262.754974,&shader);
 
-        battery.loadModel("../../res/models/Assets/battery/battery.obj");
-        battery.tag = "battery";
-        //batteryHitbox.Create(&battery);
-        batteryHitbox.draw = true;
-        battery._transform._position.x = -8;
-        battery._transform._position.y = 7;
-        battery._transform._position.z = 6;
-        battery._transform._scale.x = 0.2f;
-        battery._transform._scale.y = 0.2f;
-        battery._transform._scale.z = 0.2f;
-        playerJumper.battery = &battery;
-        playerGrabber.battery = &battery;
+//        battery.loadModel("../../res/models/Assets/battery/battery.obj");
+//        battery.tag = "battery";
+//        //batteryHitbox.Create(&battery);
+//        batteryHitbox.draw = true;
+//        battery._transform._position.x = -8;
+//        battery._transform._position.y = 7;
+//        battery._transform._position.z = 6;
+//        battery._transform._scale.x = 0.2f;
+//        battery._transform._scale.y = 0.2f;
+//        battery._transform._scale.z = 0.2f;
+        playerJumper.battery = wagon.batteries.at(0).get();
+        playerGrabber.battery = wagon.batteries.at(0).get();
 
         playerGrabber.grabber = &grabber;
         grabber.setShader(&shader);
         grabber.loadModel("../../res/models/Assets/battery/battery.obj");
-        grabberHitbox.draw = true;
+        grabberHitbox.draw = false;
         grabberHitbox.isTrigger = true;
 
 
@@ -206,7 +206,7 @@ namespace Game {
         winArea._transform._position.y = 8.0f;
         winArea._transform._position.z = 8.0f;
         winArea.ShowImgui();
-        winHitbox.draw = true;
+        winHitbox.draw = false;
         winHitbox.ShowImgui();
         winHitbox.isTrigger = true;
         winArea.text = &texToDisplay;
