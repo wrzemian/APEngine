@@ -216,6 +216,7 @@ namespace Engine {
         renderDirLights(shader);
         renderPointLights(shader);
         renderSpotLights(shader);
+
     }
 
     int getImguiIndex() {

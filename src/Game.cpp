@@ -179,8 +179,11 @@ namespace Game {
 //        battery._transform._scale.x = 0.2f;
 //        battery._transform._scale.y = 0.2f;
 //        battery._transform._scale.z = 0.2f;
-        playerJumper.battery = wagon.batteries.at(0).get();
-        playerGrabber.battery = wagon.batteries.at(0).get();
+        if(!wagon.batteries.empty()) {
+            playerJumper.battery = wagon.batteries.at(0).get();
+            playerGrabber.battery = wagon.batteries.at(0).get();
+        }
+
 
         playerGrabber.grabber = &grabber;
         grabber.setShader(&shader);
@@ -303,8 +306,8 @@ namespace Game {
         {
             Engine::renderImgui();
             Engine::ImGui();
-            camera.ShowImgui();
-            shadows.ShowImgui();
+            //camera.ShowImgui();
+            //shadows.ShowImgui();
         }
         ImGui::Render();
     }
