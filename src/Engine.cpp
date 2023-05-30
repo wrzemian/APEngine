@@ -212,12 +212,7 @@ namespace Engine {
     }
 
 
-    void renderLights(Shader shader) {
-        renderDirLights(shader);
-        renderPointLights(shader);
-        renderSpotLights(shader);
 
-    }
 
     int getImguiIndex() {
         return allImgui.size();
@@ -266,6 +261,26 @@ namespace Engine {
             }
             totalCounter++;
         }
+
+    }
+
+    void renderLights(Shader shader, Camera& camera) {
+        shader.setMat4("projectionView", camera.getViewProjection());
+        glm::mat4 model = glm::mat4 (1.0f);
+        shader.setMat4("model", model);
+        drawObjects(shader, camera);
+
+        shader.setInt("material.diffuse", 0);
+        shader.setInt("material.specular", 1);
+        shader.setFloat("material.shininess", 32.0f);
+        //from camera
+        shader.setVec3("viewPos", camera.Position);
+        renderDirLights(shader);
+        renderPointLights(shader);
+        renderSpotLights(shader);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        shader.setMat4("projectionView", projection * view);
 
     }
 

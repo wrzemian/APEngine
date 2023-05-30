@@ -67,7 +67,7 @@ namespace Engine {
 
     void renderHitboxes(const glm::mat4& projectionView);
     void renderImgui();
-    void renderLights(Shader shader);
+    void renderLights(Shader shader, Camera& camera);
     void renderDirLights(Shader shader);
     void renderPointLights(Shader shader);
     void renderSpotLights(Shader shader);

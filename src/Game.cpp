@@ -69,6 +69,7 @@ namespace Game {
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
+    Shader lightShader;
 //    Animation animation;
     Constant constant;
 //    Image image;
@@ -122,6 +123,9 @@ namespace Game {
         std::cout << Engine::Init() << "\n";
 
         shadows.initShaders();
+        Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
+        lightShader = tempLightShader;
+        lightShader.use();
 
         inputSystem.InputInit();
         /*inputSystem.monitorKey(GLFW_KEY_W);
@@ -278,6 +282,8 @@ namespace Game {
 
         //player1.Move();
         Engine::moveObjects();
+
+        Engine::renderLights(lightShader, camera);
         shadows.renderShadows(camera);
 
         //glm::mat4 projection = glm::mat4(1.0f);
@@ -306,8 +312,11 @@ namespace Game {
         {
             Engine::renderImgui();
             Engine::ImGui();
-            //camera.ShowImgui();
-            //shadows.ShowImgui();
+            dirLight.ShowImgui();
+            pointLight.ShowImgui();
+            spotLight.ShowImgui();
+            camera.ShowImgui();
+            shadows.ShowImgui();
         }
         ImGui::Render();
     }
