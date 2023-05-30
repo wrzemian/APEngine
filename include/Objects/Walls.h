@@ -14,6 +14,8 @@ public:
     virtual ~Walls();
     bool buttonsImgui = false;
     bool platformsImgui = false;
+    bool batteriesImgui = false;
+    bool boxesImgui = false;
 
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
     std::vector<std::shared_ptr<Platform>> movingPlatforms;
