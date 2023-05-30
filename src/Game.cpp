@@ -283,7 +283,7 @@ namespace Game {
         //player1.Move();
         Engine::moveObjects();
 
-        Engine::renderLights(lightShader, camera);
+        //Engine::renderLights(lightShader, camera);
         shadows.renderShadows(camera);
 
         //glm::mat4 projection = glm::mat4(1.0f);
