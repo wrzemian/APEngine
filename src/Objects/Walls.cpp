@@ -224,9 +224,10 @@ void Walls::calculateHitboxes() {
                 auto box = std::make_shared<Box>();
                 box->tag = "box";
 
-                Hitbox test(Hitbox::DYNAMIC); // TODO: reconsider type
-                test.Create(box.get());
-                test.calculateFromMesh(mesh);
+                auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
+                test->Create(box.get());
+                test->calculateFromMesh(mesh);
+                test->draw = true;
 
                 box->_transform._position = _transform._position;
                 box->setShader(_shader);
@@ -239,7 +240,6 @@ void Walls::calculateHitboxes() {
             }
 
             case 'P': { // Battery
-                // TODO: change to Box implementation
                 auto battery = std::make_shared<Battery>();
                 battery->tag = "battery";
                 batteries.push_back(battery);
@@ -249,9 +249,10 @@ void Walls::calculateHitboxes() {
                 battery->_model = std::make_shared<Model>();
                 battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
 
-                Hitbox test(Hitbox::DYNAMIC); // TODO: reconsider type
-                test.Create(battery.get());
-                test.calculateFromMesh(mesh);
+                auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
+                test->Create(battery.get());
+                test->calculateFromMesh(mesh);
+                test->draw = true;
 
                 spdlog::info("Battery created from {}", mesh._name);
 
@@ -350,7 +351,7 @@ void Walls::ImGui() {
     ImGui::Begin(getWindowName().c_str());
     Object3D::ImGui();
 
-    ImGui::SetWindowSize(ImVec2(300, 400));
+    ImGui::SetWindowSize(ImVec2(300, 500));
 
     ImGui::Checkbox("Buttons imgui", &buttonsImgui);
     for (const auto& button : buttons) {
@@ -360,6 +361,16 @@ void Walls::ImGui() {
     ImGui::Checkbox("Platforms imgui", &platformsImgui);
     for (const auto& platform : movingPlatforms) {
         platform->setImgui(platformsImgui);
+    }
+
+    ImGui::Checkbox("Boxes imgui", &boxesImgui);
+    for (const auto& box : boxes) {
+        box->setImgui(boxesImgui);
+    }
+
+    ImGui::Checkbox("Batteries imgui", &batteriesImgui);
+    for (const auto& battery : batteries) {
+        battery->setImgui(batteriesImgui);
     }
 
     if (ImGui::Button("SAVE WALLS")) {
