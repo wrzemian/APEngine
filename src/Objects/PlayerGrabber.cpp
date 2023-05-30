@@ -78,9 +78,9 @@ void PlayerGrabber::onCollision(Object3D *other) {
 }
 
 void PlayerGrabber::Jump() {
-    if (jumpCount == 0)
+    if (jumpCount == 0 && this->_velocity.y <= 0&& this->_velocity.y <= 0)
     {
-        this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        this->AddVelocity(glm::vec3(0.0f, 4.0f, 0.0f));
         jumpCount += 1;
     }
 }
