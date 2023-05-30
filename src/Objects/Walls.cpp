@@ -3,6 +3,7 @@
 #include "spdlog/spdlog.h"
 #include "../../include/Engine.h"
 #include "../include/Objects/Button.h"
+#include "../../include/Objects/Battery.h"
 
 Walls::Walls() {
     IGui::setWindowName("Walls");
@@ -11,6 +12,35 @@ Walls::Walls() {
 Walls::~Walls() {
     spdlog::error("Walls destructor");
     hitboxes.clear();
+}
+
+[[nodiscard]] int getButtonId(const std::string& name) {
+    // Extract the ID from the mesh name
+    std::string idString = name.substr(2, name.find('_', 2) - 2);  // extract from third character to the next '_'
+    int id = 0;
+    try {
+        id = std::stoi(idString);  // try to convert to integer
+    } catch (const std::invalid_argument& e) {
+        id = 0;  // if conversion fails, assign -1 as default value
+    }
+    return id;
+}
+
+[[nodiscard]] int getTargetId(const std::string& name) {
+    int targetId = 0;
+    std::string targetIdString;
+    if (!name.empty()) {
+        char lastChar = name.back();
+        if (std::isdigit(lastChar)) {
+            targetIdString = std::string(1, lastChar);
+            try {
+                targetId = std::stoi(targetIdString);
+            } catch (const std::invalid_argument& e) {
+                targetId = 0;  // Handle the case where the conversion to integer fails
+            }
+        }
+    }
+    return targetId;
 }
 
 void Walls::calculateHitboxes() {
@@ -24,32 +54,10 @@ void Walls::calculateHitboxes() {
         std::shared_ptr<Hitbox> hitbox = nullptr;
         char type = mesh._name[0];
 
-        // Extract the ID from the mesh name
-        std::string idString = mesh._name.substr(2, mesh._name.find('_', 2) - 2);  // extract from third character to the next '_'
-        int id;
-        try {
-            id = std::stoi(idString);  // try to convert to integer
-        } catch (const std::invalid_argument& e) {
-            id = 0;  // if conversion fails, assign -1 as default value
-        }
-        spdlog::info("id1 = {}", idString);
+        int buttonId = getButtonId(mesh._name);
+        int targetId = getTargetId(mesh._name);
 
-        int targetId;
-        std::string targetIdString;
-        if (!mesh._name.empty()) {
-            char lastChar = mesh._name.back();
-            if (std::isdigit(lastChar)) {
-                targetIdString = std::string(1, lastChar);
-                try {
-                    targetId = std::stoi(targetIdString);
-                } catch (const std::exception& e) {
-                    targetId = 0;  // Handle the case where the conversion to integer fails
-                }
-            }
-        }
-        spdlog::info("id2 = {}", targetId);
-
-        int totalId = 100 * targetId + id;
+        int totalId = 100 * targetId + buttonId;
 
         switch(type) {
             case 'D': { // Door
@@ -98,7 +106,6 @@ void Walls::calculateHitboxes() {
                 hitbox->Create(this);
 
                 staticModel.meshes.push_back(mesh);
-                //TODO: figure out what to do with "pręt"s
                 hitbox->tag = "wall";
 
                 spdlog::info("Wall (pręt) created {}", mesh._name);
@@ -177,17 +184,15 @@ void Walls::calculateHitboxes() {
                 platformHitbox->tag = "moving platform";
                 hitboxes.push_back(platformHitbox);
 
-                // TODO: get actual position for origin
                 spdlog::info("Moving platform position {}, {}, {}", _transform._position.x,_transform._position.y,_transform._position.z);
 
                 auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
                 platform->tag = "moving platform";
                 platform->ShowImgui();
-                platform->_transform._position = _transform._position;
-                platform->setShader(_shader);
-
                 platform->id = totalId;
 
+                platform->_transform._position = _transform._position;
+                platform->setShader(_shader);
                 platform->_model = std::make_shared<Model>();
                 platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
                 platform-> speed = 1;
@@ -201,7 +206,6 @@ void Walls::calculateHitboxes() {
             }
 
             case 'T': { // Target of moving platform
-                // TODO: get actual position for targer
                 Hitbox test(Hitbox::STATIC);
                 test.Create(this);
                 test.calculateFromMesh(mesh);
@@ -210,6 +214,45 @@ void Walls::calculateHitboxes() {
                 spdlog::info("Target position {} = {}, {}, {}", mesh._name, middle.x, middle.y, middle.z);
 
                 targetPositions[totalId] = middle;
+
+                break;
+            }
+
+            case 'E': { // Box
+                // TODO: change to Box implementation
+                auto box = std::make_shared<Object3D>();
+                box->tag = "box";
+
+                Hitbox test(Hitbox::DYNAMIC); // TODO: reconsider type
+                test.Create(box.get());
+                test.calculateFromMesh(mesh);
+
+                box->_transform._position = _transform._position;
+                box->setShader(_shader);
+                box->_model = std::make_shared<Model>();
+                box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+
+                spdlog::info("Box created from {}", mesh._name);
+
+                break;
+            }
+
+            case 'P': { // Battery
+                // TODO: change to Box implementation
+                auto battery = std::make_shared<Battery>();
+                battery->tag = "battery";
+                batteries.push_back(battery);
+
+                battery->_transform._position = _transform._position;
+                battery->setShader(_shader);
+                battery->_model = std::make_shared<Model>();
+                battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+
+                Hitbox test(Hitbox::DYNAMIC); // TODO: reconsider type
+                test.Create(battery.get());
+                test.calculateFromMesh(mesh);
+
+                spdlog::info("Battery created from {}", mesh._name);
 
                 break;
             }
@@ -225,15 +268,9 @@ void Walls::calculateHitboxes() {
         }
         if(hitbox != nullptr) {
             hitboxes.push_back(hitbox);
-
-            spdlog::info("Calculated hitbox for {}", mesh._name);
-        } else {
-            spdlog::info("No hitbox created for {}", mesh._name);
         }
-
     }
     assignTargetsAndPlatforms();
-    //logNewObjects();
 }
 
 void Walls::assignTargetsAndPlatforms() {

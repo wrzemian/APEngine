@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Hitbox.h"
 #include "Button.h"
+#include "Battery.h"
 #include <memory>
 #include <vector>
 
@@ -17,6 +18,8 @@ public:
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
     std::vector<std::shared_ptr<Platform>> movingPlatforms;
     std::vector<std::shared_ptr<Button>> buttons;
+    std::vector<std::shared_ptr<Object3D>> boxes; //TODO: add class Box
+    std::vector<std::shared_ptr<Battery>> batteries;
 
     std::unordered_map<int, glm::vec3> targetPositions;
 
