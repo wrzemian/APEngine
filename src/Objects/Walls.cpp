@@ -4,6 +4,7 @@
 #include "../../include/Engine.h"
 #include "../include/Objects/Button.h"
 #include "../../include/Objects/Battery.h"
+#include "../../include/Objects/Box.h"
 
 Walls::Walls() {
     IGui::setWindowName("Walls");
@@ -220,7 +221,7 @@ void Walls::calculateHitboxes() {
 
             case 'E': { // Box
                 // TODO: change to Box implementation
-                auto box = std::make_shared<Object3D>();
+                auto box = std::make_shared<Box>();
                 box->tag = "box";
 
                 Hitbox test(Hitbox::DYNAMIC); // TODO: reconsider type

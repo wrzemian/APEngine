@@ -237,7 +237,10 @@ namespace Engine {
 
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
-
+            if(object->_model == nullptr) {
+                spdlog::error("object {}/{} has null model", object->tag, object->getWindowName());
+                object->setShader(&shader);
+            }
             if(object->_shader != &shader) {
                 object->setShader(&shader);
             }
