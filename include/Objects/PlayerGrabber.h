@@ -19,6 +19,7 @@ private:
     bool canPickUpBattery = false;
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
 public:
+    PlayerGrabber();
     Battery* battery;
     Grabber* grabber;
     void initPlayer(InputSystem* inputSystem);
