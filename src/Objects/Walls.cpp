@@ -230,6 +230,8 @@ void Walls::calculateHitboxes() {
 
                 test->Create(box.get());
                 test->draw = true;
+                hitboxes.push_back(test);
+                test->tag = "box";
 
                 box->_transform._position = _transform._position;
                 box->setShader(_shader);
@@ -251,10 +253,11 @@ void Walls::calculateHitboxes() {
                 battery->_model = std::make_shared<Model>();
                 battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
 
-                auto test = std::make_shared<Hitbox>(Hitbox::STATIC);
+                auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
+                test->tag = "battery";
                 test->calculateFromMesh(mesh);
                 test->Create(battery.get());
-
+                hitboxes.push_back(test);
                 test->draw = true;
 
                 spdlog::info("Battery created from {}", mesh._name);
@@ -263,7 +266,7 @@ void Walls::calculateHitboxes() {
             }
 
             default: { // Default behavior
-                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                hitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 hitbox->calculateFromMesh(mesh);
                 hitbox->Create(this);
                 spdlog::warn("unrecognized mesh name: {}", mesh._name);

@@ -61,6 +61,7 @@ Hitbox::Hitbox(std::string fileName) {
 }
 
 Hitbox::~Hitbox() {
+    spdlog::error("Hitbox object = {}, tag = {} destructor", _object->tag, tag);
     if(_type == STATIC) {
         Engine::removeStaticHitbox(this);
     }
