@@ -20,7 +20,7 @@
 #include "../include/User/InputSystem.h"
 #include "../include/User/HUD.h"
 #include "../include/Objects/Walls.h"
-#include "../include/User/Animation.h"
+#include "../include/User/HudAnimation.h"
 #include "../include/User/Constant.h"
 #include "../include/Objects/Platform.h"
 #include "../include/Objects/Button.h"
@@ -29,6 +29,7 @@
 #include "../include/Objects/Battery.h"
 #include "../include/Objects/Grabber.h"
 #include "../include/Objects/Box.h"
+#include "../include/Objects/WinArea.h"
 //temporary
 #include "../include/Background/Rock.h"
 #include "../include/Background/Cactus.h"
@@ -45,17 +46,30 @@
 #include "al.h"
 #include "alc.h"
 #include "../include/Objects/SimpleHitbox.h"
+#include "../include/Animations2/Animator.h"
+#include "../include/lights/Shadows.h"
 
 
 namespace Game {
     void processInput();
-    float imgMOv=0;
+
+    float imgMOv = 0;
+
     void ImGui();
+
+    void renderScene(Shader shader, const Camera &camera);
+
+    Shader simpleDepthShader;
+    Shader debugDepthQuad;
+
+
     float movImage = 0;
     HUD hud;
     HUD hud2;
     Shader shader;
-    Animation animation;
+    HudAnimation animation;
+    Shadows shadows("lights/shadows");
+//    Animation animation;
     Constant constant;
 //    Image image;
 
@@ -66,6 +80,9 @@ namespace Game {
     Ant ant;
 
     Camera camera;
+
+    //animation testing
+
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
@@ -81,7 +98,11 @@ namespace Game {
     Box box;
     Hitbox boxHitbox("hitboxes/hitbox_box1");
 
+    WinArea winArea;
+    Hitbox winHitbox("hitboxes/hitbox_win");
+
     Walls wagon;
+
 
 
     GLfloat movementSpeed = 3.0f;
@@ -93,11 +114,14 @@ namespace Game {
 
     InputSystem inputSystem;
 
+    std::string texToDisplay = "";
+
     Background background;
 
     void Start() {
-        std::cout << Engine::Init() <<"\n";
+        std::cout << Engine::Init() << "\n";
 
+        shadows.initShaders();
 
         inputSystem.InputInit();
         /*inputSystem.monitorKey(GLFW_KEY_W);
@@ -129,7 +153,6 @@ namespace Game {
         ant.tag = "ant";
 
 
-
         camera = Engine::parser.CreateFromJSONCam("camera");
         camera.ShowImgui();;
 
@@ -142,32 +165,10 @@ namespace Game {
         wagon.logNewObjects();
         wagon.setShader(&shader);
         wagon.ShowImgui();
-        // build and compile our shader program
-        // ------------------------------------
-        Shader temp("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
-        shader = temp;
-        shader.use();
 
-        //player1.setShader(&shader);
-        playerJumper.setShader(&shader);
-        playerGrabber.setShader(&shader);
-        //player2.setShader(&shader);
-        ant.setShader(&shader);
-        //wagon.setShader(&shader);
 
         //background.initBackground(5,-525.509948,262.754974,&shader);
 
-//        battery.setShader(&shader);
-//        battery.loadModel("../../res/models/Assets/battery/battery.obj");
-//        battery.tag = "battery";
-//        //batteryHitbox.Create(&battery);
-//        batteryHitbox.draw = true;
-//        battery._transform._position.x = -8;
-//        battery._transform._position.y = 7;
-//        battery._transform._position.z = 6;
-//        battery._transform._scale.x = 0.2f;
-//        battery._transform._scale.y = 0.2f;
-//        battery._transform._scale.z = 0.2f;
         if(wagon.batteries.empty()) {
             spdlog::error("NO BATTERIES LOADED!");
         } else {
@@ -185,16 +186,29 @@ namespace Game {
 
         box.setShader(&shader);
         box.loadModel("../../res/models/Assets/chest1/box1.obj");
-        box._transform._position.x = -4.0f;
+        box._transform._position.x = -4.2f;
         box._transform._position.y = 8.5f;
-        box._transform._position.z = 8.5f;
+        box._transform._position.z = 8.0f;
+        box._transform._scale.x=0.5f;
+        box._transform._scale.z=0.5f;
         box.ShowImgui();
-        boxHitbox.draw = true;
+        //boxHitbox.draw = true;
         boxHitbox.ShowImgui();
+
+        winArea.setShader(&shader);
+        winArea.loadModel("../../res/models/Assets/chest1/box1.obj");
+        winArea._transform._position.x = -1.5f;
+        winArea._transform._position.y = 8.0f;
+        winArea._transform._position.z = 8.0f;
+        winArea.ShowImgui();
+        winHitbox.draw = true;
+        winHitbox.ShowImgui();
+        winHitbox.isTrigger = true;
+        winArea.text = &texToDisplay;
 
         shader.setMat4("projectionView", camera.getViewProjection());
 
-        glm::mat4 model = glm::mat4 (1.0f);
+        glm::mat4 model = glm::mat4(1.0f);
         shader.setMat4("model", model);
 
         dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
@@ -205,13 +219,13 @@ namespace Game {
         ImGui();
         spdlog::info("ResolveCollisions");
         Engine::resolveCollisions();
-        Engine::logStaticHitboxes();
-        Engine::logDynamicHitboxes();
+        //Engine::logStaticHitboxes();
+        //Engine::logDynamicHitboxes();
         spdlog::info("loop");
 
 
         Shader animationShader("../../res/shaders/animationsShader.vert", "../../res/shaders/animationsShader.frag");
-        Animation animation1(animationShader);
+        HudAnimation animation1(animationShader);
         animation = animation1;
         animation.initAnimation();
 
@@ -223,6 +237,13 @@ namespace Game {
         HUD hud1(imageShader);
         hud = hud1;
         hud.initImage("res/textures/tlo.png");
+
+
+//        Model ourModel("include/Animations2/testing/first_character.dae");
+//        Animation danceAnimation("include/Animations2/testing/first_character.dae",
+//                                 &ourModel);
+//        Animator animator(&danceAnimation);
+
 
 
 
@@ -238,49 +259,37 @@ namespace Game {
         imgMOv -= 0.1f;
         inputSystem.update();
         processInput();
-        playerJumper.UpdatePlayer(&inputSystem,movementSpeed);
-        playerGrabber.UpdatePlayer(&inputSystem,movementSpeed);
+        playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
+        playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
         movImage -= 0.1;
 
         float time = static_cast<float>(glfwGetTime());
-        animation.renderAnimation(time,2,520,1);
-        constant.renderConstant(2,550,1);
+        animation.renderAnimation(time, 2, 520, 1);
+        constant.renderConstant(2, 550, 1);
         hud.renderImage(imgMOv);
 
         //player1.Move();
         Engine::moveObjects();
-        Engine::drawObjects(camera);
+        shadows.renderShadows(camera);
 
-
-
-        ////REQUIRED FOR LIGHT
-        //should be property of object
-        shader.setInt("material.diffuse", 0);
-        shader.setInt("material.specular", 1);
-        shader.setFloat("material.shininess", 32.0f);
-        //from camera
-        shader.setVec3("viewPos", camera.Position);
-
-        Engine::renderLights(shader);
-
-        //camera
-
+        //glm::mat4 projection = glm::mat4(1.0f);
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
-
-        shader.use();
-        shader.setMat4("projectionView", projection * view);
+//
+//        shader.use();
+//        shader.setMat4("projectionView", projection * view);
 
         Engine::renderHitboxes(projection * view);
 
 //       camera.followObject(player1);
         Engine::resolveCollisions();
 
-        hud2.renderText("nie psuje textur?",100,0,2,glm::vec3(1.0f, 1.0f, 1.0f));
+        hud2.renderText(texToDisplay, 100, 0, 2, glm::vec3(1.0f, 1.0f, 1.0f));
 
         Engine::LoopEnd();
 
     }
+
 
     void ImGui() {
         ImGui_ImplOpenGL3_NewFrame();
@@ -289,7 +298,8 @@ namespace Game {
         {
             Engine::renderImgui();
             Engine::ImGui();
-
+            camera.ShowImgui();
+            shadows.ShowImgui();
         }
         ImGui::Render();
     }
@@ -306,5 +316,4 @@ namespace Game {
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
 //        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
     }
-
 };

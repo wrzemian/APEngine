@@ -43,7 +43,7 @@ void Platform::OnDeactivate() {
 }
 
 void Platform::onCollision(Object3D *other) {
-    //Object3D::onCollision(other);
+    Object3D::onCollision(other);
 }
 
 void Platform::logFields() {

@@ -16,7 +16,7 @@ private:
 public:
 
     bool moveToTarget = false;
-    bool moveToOrigin = false;
+    bool moveToOrigin = true;
     float t;
     float speed = 1.0f; //1 equals to one second of movement
     int targetId = -1;

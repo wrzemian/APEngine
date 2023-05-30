@@ -23,6 +23,7 @@ public:
 
     Battery* battery = nullptr;
     Grabber* grabber = nullptr;
+
     void initPlayer(InputSystem* inputSystem);
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
     void onCollision(Object3D* other) override;

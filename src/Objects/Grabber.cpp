@@ -10,14 +10,11 @@ Grabber::Grabber() {
     _transform._scale.x  = 0.3f;
     _transform._scale.y  = 0.3f;
     _transform._scale.z  = 0.3f;
+    _gravity.y = 0;
 }
 
 void Grabber::onCollision(Object3D *other) {
     //MovingObject::onCollision(other);
-    if(other->tag == "box")
-    {
-        std::cout << "hit a box" << std::endl;
-    }
     if(other->tag == "box" && !grabbed && moveToTarget)
     {
         grabbedBox = other;
@@ -25,12 +22,17 @@ void Grabber::onCollision(Object3D *other) {
         moveToOrigin = true;
         grabbed = true;
     }
+    else if(other->tag == "floor" || other->tag == "wall" || other->tag == "platform" || other->tag ==  "static platform")
+    {
+        moveToTarget = false;
+        moveToOrigin = true;
+    }
 }
 
 void Grabber::Move(float deltaTime) {
     //MovingObject::Move(deltaTime);
     if (moveToTarget) {
-        t += deltaTime * speed;
+        t += deltaTime * forwardSpeed;
         if (t >= 1.0f) {
             t = 1.0f;
             moveToTarget = false;
@@ -38,7 +40,7 @@ void Grabber::Move(float deltaTime) {
         }
     }
     else if(moveToOrigin){
-        t -= deltaTime * speed;
+        t -= deltaTime * backSpeed;
         if (t <= 0.0f) {
             t = 0.0f;
             moveToOrigin = false;

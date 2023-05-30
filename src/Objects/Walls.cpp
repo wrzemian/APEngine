@@ -145,6 +145,7 @@ void Walls::calculateHitboxes() {
 
                 buttonHitbox->calculateFromMesh(mesh);
                 buttonHitbox->Create(button.get());
+                buttonHitbox->isTrigger = true;
 
                 spdlog::info("Button created {}", mesh._name);
                 break;

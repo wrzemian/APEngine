@@ -14,27 +14,58 @@ Button::Button(Platform* p, glm::vec3 position)
 void Button::onCollision(Object3D *other) {
     if(other->tag == "player" || other->tag == "box")
     {
+        if (std::find(objectsWithContact.begin(), objectsWithContact.end(), other) == objectsWithContact.end()) {
+            objectsWithContact.push_back(other);
+        }
+        //objectsWithContact.push_back(other);
+        //std::cout << "przycisk wcisniety" << std::endl;
         isPushed = true;
         for (Platform* platform : connectedPlatforms) {
-            platform->OnActivate();
+            if(platform != nullptr)
+            {
+                platform->OnActivate();
+            }
         }
     }
 }
 
+void Button::onCollisionExit(Object3D *other) {
+    Object3D::onCollisionExit(other);
+    if(other->tag == "player" || other->tag == "box")
+    {
+        objectsWithContact.erase(std::remove(objectsWithContact.begin(), objectsWithContact.end(), other), objectsWithContact.end());
+        //std::cout << "przycisk odcisniety" << std::endl;
+        if(objectsWithContact.empty())
+        {
+            isPushed = false;
+            for (Platform* platform : connectedPlatforms) {
+                if(platform != nullptr)
+                {
+                    platform->OnDeactivate();
+                }
+            }
+        }
+    }
+}
+/*
 void Button::Update(float dt) {
     if(isPushed)
     {
         t -= dt;
         if(t < 0)
         {
+            std::cout << "przycisk powinien sie wylaczyc" << std::endl;
             for (Platform* platform : connectedPlatforms) {
-                platform->OnDeactivate();
+                if(platform != nullptr)
+                {
+                    platform->OnDeactivate();
+                }
             }
             isPushed = false;
             t = timeToReset;
         }
     }
-}
+}*/
 
 void Button::logFields() {
     spdlog::info("Button Fields:");
@@ -50,3 +81,5 @@ void Button::logFields() {
 void Button::addPlatform(Platform *connectedPlatform) {
     connectedPlatforms.push_back(connectedPlatform);
 }
+
+
