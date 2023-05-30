@@ -88,7 +88,7 @@ void PointLight::ImGui() {
     ImGui::SliderFloat3("ambient", &ambient.x, -1.0f, 1.0f);
     ImGui::SliderFloat3("diffuse", &diffuse.x, -1.0f, 1.0f);
     ImGui::SliderFloat3("specular", &specular.x, -1.0f, 1.0f);
-    ImGui::SliderFloat3("position", &position.x, -5.0f, 5.0f);
+    ImGui::SliderFloat3("position", &position.x, -25.0f, 25.0f);
     ImGui::SliderFloat("constant", &constant, -1.0f, 1.0f);
     ImGui::SliderFloat("linear", &linear, -1.0f, 1.0f);
     ImGui::SliderFloat("quadratic", &quadratic, -1.0f, 1.0f);
