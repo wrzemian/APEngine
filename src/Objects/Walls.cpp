@@ -222,11 +222,13 @@ void Walls::calculateHitboxes() {
             case 'E': { // Box
                 // TODO: change to Box implementation
                 auto box = std::make_shared<Box>();
+                boxes.push_back(box);
                 box->tag = "box";
 
-                auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
-                test->Create(box.get());
+                auto test = std::make_shared<Hitbox>(Hitbox::STATIC);
                 test->calculateFromMesh(mesh);
+
+                test->Create(box.get());
                 test->draw = true;
 
                 box->_transform._position = _transform._position;
@@ -249,9 +251,10 @@ void Walls::calculateHitboxes() {
                 battery->_model = std::make_shared<Model>();
                 battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
 
-                auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
-                test->Create(battery.get());
+                auto test = std::make_shared<Hitbox>(Hitbox::STATIC);
                 test->calculateFromMesh(mesh);
+                test->Create(battery.get());
+
                 test->draw = true;
 
                 spdlog::info("Battery created from {}", mesh._name);
@@ -328,6 +331,21 @@ void Walls::logNewObjects() {
     spdlog::info("Buttons:");
     for (const auto& button : buttons) {
         button->logFields();
+    }
+
+    // Logging boxes
+    spdlog::info("Boxes:");
+    for (const auto& box : boxes) {
+        //box->logFields(); TODO: add logging
+        spdlog::info("box at {}, {}, {}", box->_transform._position.x, box->_transform._position.y, box->_transform._position.z);
+    }
+
+    // Logging batteries
+    spdlog::info("Batteries:");
+    for (const auto& battery : batteries) {
+        //battery->logFields(); TODO: ad logging
+        spdlog::info("battery at {}, {}, {}", battery->_transform._position.x, battery->_transform._position.y, battery->_transform._position.z);
+
     }
 
     // Log target positions
