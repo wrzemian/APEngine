@@ -72,6 +72,8 @@ namespace Engine {
     void renderPointLights(Shader shader);
     void renderSpotLights(Shader shader);
 
+    void logTextures();
+
     void moveObjects();
     void drawObjects(Shader &shader, const Camera& camera);
     void drawObjects();

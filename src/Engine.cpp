@@ -212,7 +212,14 @@ namespace Engine {
     }
 
 
-
+    void logTextures() {
+        for(Object3D* object: allObjects) {
+            spdlog::info("OBJECT {}", object->_path);
+            for (auto tex: object->_model->textures_loaded) {
+                spdlog::info("TEXTURE id: {}, type: {}, path: {}", tex.id, tex.type, tex.path);
+            }
+        }
+    }
 
     int getImguiIndex() {
         return allImgui.size();

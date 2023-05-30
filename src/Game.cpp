@@ -258,7 +258,7 @@ namespace Game {
 
 
 
-
+        Engine::logTextures();
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
