@@ -6,6 +6,8 @@
 
 Button::Button(Platform* p, glm::vec3 position)
 {
+    IGui::setWindowName("button");
+
     if(p != nullptr) {
         connectedPlatforms.push_back(p);
     }

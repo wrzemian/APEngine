@@ -17,3 +17,8 @@ void Battery::onCollision(Object3D *other) {
     }
 }
 
+Battery::Battery() {
+    IGui::setWindowName("Battery");
+
+}
+

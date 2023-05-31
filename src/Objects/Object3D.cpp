@@ -8,6 +8,8 @@
 #include "../../include/AssetManager.h"
 
 Object3D::Object3D() {
+    IGui::setWindowName("object 3d");
+
     Engine::addObject(this);
 }
 

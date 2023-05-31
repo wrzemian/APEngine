@@ -49,8 +49,8 @@ namespace Engine {
     bool renderDynamic = false;
     bool renderStatic = false;
 
-    int renderedStatic = 0;
-    int renderedDynamic = 0;
+    int renderedStatic = -1;
+    int renderedDynamic = -1;
 
     int Init() {
         if (initGLandImGui() == -1) {
@@ -240,6 +240,9 @@ namespace Engine {
 
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
+            if(!object->rendered) {
+                continue;
+            }
             if(object->_model == nullptr) {
                 spdlog::error("object {}/{} has null model", object->tag, object->getWindowName());
                 object->setShader(&shader);
@@ -309,31 +312,25 @@ namespace Engine {
         ImGui::Text("total: %d", totalCounter);
         ImGui::Checkbox("FRUSTUM", &frustum);
 
-        ImGui::SliderInt("static", &renderedStatic, 0, (int)staticHitboxes.size() - 1);
-        for (const auto& hitbox : staticHitboxes) {
-            hitbox->draw = false;
-        }
-        staticHitboxes.at(renderedStatic)->draw = true;
-
-        ImGui::SliderInt("dynamic", &renderedDynamic, 0, (int)dynamicHitboxes.size() - 1);
-        for (const auto& hitbox : dynamicHitboxes) {
-            hitbox->draw = false;
-        }
-        dynamicHitboxes.at(renderedDynamic)->draw = true;
+        ImGui::SliderInt("Static", &renderedStatic, -1, (int)staticHitboxes.size() - 1);
+        ImGui::SliderInt("Dynamic", &renderedDynamic, -1, (int)dynamicHitboxes.size() - 1);
 
         ImGui::Checkbox("Show static hitboxes", &renderStatic);
-        if (renderStatic) {
-            for (const auto& hitbox : staticHitboxes) {
-                hitbox->draw = true;
-            }
+        ImGui::Checkbox("Show dynamic hitboxes", &renderDynamic);
+
+        for (const auto& hitbox : staticHitboxes) {
+            hitbox->draw = renderStatic;
+        }
+        for (const auto& hitbox : dynamicHitboxes) {
+            hitbox->draw = renderDynamic;
         }
 
-        ImGui::Checkbox("Show dynamic hitboxes", &renderDynamic);
-        if (renderDynamic) {
-            for (const auto& hitbox : dynamicHitboxes) {
-                hitbox->draw = true;
-            }
-        }
+        if(renderedStatic >= 0)
+            staticHitboxes.at(renderedStatic)->draw = true;
+
+        if(renderedDynamic >= 0)
+            dynamicHitboxes.at(renderedDynamic)->draw = true;
+
         ImGui::End();
     }
 

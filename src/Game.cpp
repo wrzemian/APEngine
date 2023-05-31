@@ -19,7 +19,7 @@
 #include "../include/Objects/Hitbox.h"
 #include "../include/User/InputSystem.h"
 #include "../include/User/HUD.h"
-#include "../include/Objects/Walls.h"
+#include "../include/Objects/Level.h"
 #include "../include/User/HudAnimation.h"
 #include "../include/User/Constant.h"
 #include "../include/Objects/Platform.h"
@@ -99,12 +99,10 @@ namespace Game {
    // Box box;
    // Hitbox boxHitbox("hitboxes/hitbox_box1");
 
-    WinArea winArea;
-    Hitbox winHitbox("hitboxes/hitbox_win");
+//    WinArea winArea;
+//    Hitbox winHitbox("hitboxes/hitbox_win");
 
-    Walls wagon;
-
-
+    Level wagon;
 
     GLfloat movementSpeed = 3.0f;
 
@@ -207,16 +205,17 @@ namespace Game {
 //        //boxHitbox.draw = true;
 //        boxHitbox.ShowImgui();
 
-        winArea.setShader(&shader);
-        winArea.loadModel("../../res/models/Assets/chest1/box1.obj");
-        winArea._transform._position.x = -1.5f;
-        winArea._transform._position.y = 8.0f;
-        winArea._transform._position.z = 8.0f;
-        winArea.ShowImgui();
-        winHitbox.draw = false;
-        winHitbox.ShowImgui();
-        winHitbox.isTrigger = true;
-        winArea.text = &texToDisplay;
+//        winArea.setShader(&shader);
+//        winArea.loadModel("../../res/models/Assets/chest1/box1.obj");
+//        winArea.rendered = false;
+//        winArea._transform._position.x = -1.5f;
+//        winArea._transform._position.y = 8.0f;
+//        winArea._transform._position.z = 8.0f;
+//        winArea.ShowImgui();
+//        winHitbox.draw = false;
+//        winHitbox.ShowImgui();
+//        winHitbox.isTrigger = true;
+//        winArea.text = &texToDisplay;
 
         shader.setMat4("projectionView", camera.getViewProjection());
 

@@ -1,17 +1,14 @@
-#include "../include/Objects/Walls.h"
-#include "../include/Objects/Hitbox.h"
+#include "../include/Objects/Level.h"
 #include "spdlog/spdlog.h"
 #include "../../include/Engine.h"
-#include "../include/Objects/Button.h"
-#include "../../include/Objects/Battery.h"
 #include "../../include/Objects/Box.h"
 
-Walls::Walls() {
-    IGui::setWindowName("Walls");
+Level::Level() {
+    IGui::setWindowName("Level");
 }
 
-Walls::~Walls() {
-    spdlog::error("Walls destructor");
+Level::~Level() {
+    spdlog::error("Level destructor");
     hitboxes.clear();
 }
 
@@ -44,7 +41,7 @@ Walls::~Walls() {
     return targetId;
 }
 
-void Walls::calculateHitboxes() {
+void Level::calculateHitboxes() {
     spdlog::info("CALCULATE HITBOXES for {}", _model->directory);
 
     for (const Mesh& mesh : _model->meshes) {
@@ -62,14 +59,25 @@ void Walls::calculateHitboxes() {
 
         switch(type) {
             case 'D': { // Door
-                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                hitbox->calculateFromMesh(mesh);
-                hitbox->Create(this);
+                if(winArea == nullptr) {
+                    spdlog::info("created door object");
+                    winArea = std::make_shared<WinArea>();
+                    winArea->setShader(_shader);
+                    winArea->tag = "winArea";
+                    winArea->ShowImgui();
+                    winArea->_transform._position = _transform._position;
+                    winArea->_model = std::make_shared<Model>();
+                }
+                winArea->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
+                auto doorHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                doorHitbox->tag = "winArea";
+                doorHitbox->calculateFromMesh(mesh);
+                doorHitbox->Create(winArea.get());
+                doorHitbox->isTrigger = true;
 
-                //TODO: implement class Door
-                staticModel.meshes.push_back(mesh);
-                hitbox->tag = "door";
+                hitboxes.push_back(doorHitbox);
 
+                //staticModel.meshes.push_back(mesh);
                 spdlog::info("Door created {}", mesh._name);
 
                 break;
@@ -282,7 +290,7 @@ void Walls::calculateHitboxes() {
     assignTargetsAndPlatforms();
 }
 
-void Walls::assignTargetsAndPlatforms() {
+void Level::assignTargetsAndPlatforms() {
     for (const auto& button : buttons) {
         for (const auto& platform : movingPlatforms) {
             spdlog::info("Checking buttonId {} with platformId {} ({})", button->id, platform->id, platform->id % 100 == button->id % 100);
@@ -316,7 +324,7 @@ void Walls::assignTargetsAndPlatforms() {
 
 
 
-void Walls::logNewObjects() {
+void Level::logNewObjects() {
     spdlog::info("LOADED OBJECTS:");
 
     // Logging hitboxes
@@ -362,14 +370,14 @@ void Walls::logNewObjects() {
 }
 
 
-void Walls::logHitboxes() {
+void Level::logHitboxes() {
     spdlog::warn("{} hitboxes loaded", hitboxes.size());
     for (const auto& hitbox : hitboxes) {
         spdlog::info("Hitbox ({}, {}) to ({}, {})", hitbox->_min.x, hitbox->_min.y, hitbox->_max.x, hitbox->_max.y);
     }
 }
 
-void Walls::ImGui() {
+void Level::ImGui() {
     ImGui::Begin(getWindowName().c_str());
     Object3D::ImGui();
 
@@ -402,11 +410,11 @@ void Walls::ImGui() {
     ImGui::End();
 }
 
-void Walls::onCollision(Object3D* other) {
+void Level::onCollision(Object3D* other) {
     // Implement collision handling logic for walls
 }
 
-rapidjson::Document Walls::ParseToJSON() {
+rapidjson::Document Level::ParseToJSON() {
     rapidjson::Document d;
     d.SetObject();
     d.AddMember("type", "object3D", d.GetAllocator());
@@ -425,7 +433,7 @@ rapidjson::Document Walls::ParseToJSON() {
     return d;
 }
 
-void Walls::loadFromJSON(const Walls& temp) {
+void Level::loadFromJSON(const Level& temp) {
     this->loadModel(temp._path);
     this->_transform._scale = temp._transform._scale;
     this->_transform._rotation = temp._transform._rotation;
@@ -433,7 +441,7 @@ void Walls::loadFromJSON(const Walls& temp) {
     this->calculateHitboxes();
 }
 
-void Walls::setShader(Shader* shader) {
+void Level::setShader(Shader* shader) {
     _shader = shader;
 
     for (const auto& platform : movingPlatforms) {
@@ -445,7 +453,7 @@ void Walls::setShader(Shader* shader) {
     }
 };
 
-void Walls::Draw() {
+void Level::Draw() {
     //shader.use();
     if(_model == nullptr) {
         spdlog::error("null model in {}", tag);

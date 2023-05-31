@@ -12,6 +12,8 @@ private:
     std::vector<Object3D*> players;
     bool won = false;
 public:
+    WinArea();
+
     std::string * text;
     void onCollision(Object3D *other) override;
     void onCollisionExit(Object3D *other) override;

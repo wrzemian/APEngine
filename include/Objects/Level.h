@@ -5,13 +5,14 @@
 #include "Hitbox.h"
 #include "Button.h"
 #include "Battery.h"
+#include "WinArea.h"
 #include <memory>
 #include <vector>
 
-class Walls : public Object3D {
+class Level : public Object3D {
 public:
-    Walls();
-    virtual ~Walls();
+    Level();
+    virtual ~Level();
     bool buttonsImgui = false;
     bool platformsImgui = false;
     bool batteriesImgui = false;
@@ -22,6 +23,8 @@ public:
     std::vector<std::shared_ptr<Button>> buttons;
     std::vector<std::shared_ptr<Object3D>> boxes; //TODO: add class Box
     std::vector<std::shared_ptr<Battery>> batteries;
+
+    std::shared_ptr<WinArea> winArea = nullptr;
 
     std::unordered_map<int, glm::vec3> targetPositions;
 
@@ -37,7 +40,7 @@ public:
 
     rapidjson::Document ParseToJSON();
 
-    void loadFromJSON(const Walls& temp);
+    void loadFromJSON(const Level& temp);
 
     void Draw();
 

@@ -33,3 +33,8 @@ void WinArea::Win() {
     *text = winText;
     std::cout<< "You win!"<<std::endl;
 }
+
+WinArea::WinArea() {
+    IGui::setWindowName("Win area");
+
+}

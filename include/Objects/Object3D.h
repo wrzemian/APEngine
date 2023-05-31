@@ -14,6 +14,7 @@ public:
     Object3D();
     virtual ~Object3D();
     int id = -1;
+    bool rendered = true;
 
     std::string tag = "floor";
 

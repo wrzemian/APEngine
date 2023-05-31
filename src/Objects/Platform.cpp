@@ -10,7 +10,7 @@ Platform::Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s) {
     this->speed = s;
     _transform._position = pOrigin;
 
-    setWindowName("Moving platform");
+    setWindowName("Platform");
     logFields();
 }
 

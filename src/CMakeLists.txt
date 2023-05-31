@@ -29,7 +29,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		Parser.cpp ../include/Parser.h
 		../include/User/HUD.h
 		../include/IGui.h IGui.cpp
-		Objects/Walls.cpp ../include/Objects/Walls.h
+        Objects/Level.cpp ../include/Objects/Level.h
 		User/Animation.cpp
         ../include/User/HudAnimation.h
 		User/Constant.cpp ../include/User/Constant.h

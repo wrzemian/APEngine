@@ -9,6 +9,8 @@
 
 class Battery : public MovingObject {
 public:
+    Battery();
+
     void onCollision(Object3D* other) override;
 };
 
