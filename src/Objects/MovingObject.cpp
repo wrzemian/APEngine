@@ -58,8 +58,13 @@ void MovingObject::ImGui() {
 }
 
 void MovingObject::Move(float deltaTime) {
+    auto actualGravity = _gravity;
+
+    if(_velocity.y < 0) {
+        actualGravity *= 2;
+    }
     _transform._position += _velocity * deltaTime;
-    _velocity += _gravity * deltaTime;
+    _velocity += actualGravity * deltaTime;
 
 //    pPosition += pVelocity * deltaTime + real_gravity * deltaTime * deltaTime / 2.0;
 //    pVelocity += real_gravity * deltaTime;
