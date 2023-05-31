@@ -53,6 +53,8 @@ in VS_OUT {
 
 uniform sampler2D diffuseTexture;
 uniform sampler2D shadowMap;
+uniform sampler2D emissiveMap;
+uniform float time;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform DirLight dirLight;
@@ -118,6 +120,11 @@ void main()
     lighting += CalcDirLight(dirLight, normal, viewDir) / 3;
     lighting += CalcPointLight(pointLight, normal, fs_in.FragPos, viewDir);
     lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir);
+
+    vec3 emission = texture(emissiveMap, fs_in.TexCoords).rgb / 2;
+    emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.5;
+    lighting += emission;
+
 
     FragColor = vec4(lighting, 1.0);
 }

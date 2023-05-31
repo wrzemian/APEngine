@@ -26,6 +26,7 @@ public:
     unsigned int SHADOW_HEIGHT;
     unsigned int depthMapFBO;
     unsigned int depthMap;
+    float time;
     Shader shader;
     Shader simpleDepthShader;
 

@@ -30,5 +30,6 @@ d 1.000000
 illum 1
 map_Kd untitled_robot_BaseColor.png
 map_Ns untitled_robot_Roughness.png
+map_Ke untitled_robot_Emission.png
 map_refl untitled_robot_Metallic.png
 map_Bump -bm 1.000000 untitled_robot_Normal.png
