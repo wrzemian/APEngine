@@ -223,16 +223,16 @@ void Hitbox::resolveCollision(Hitbox& other) {
             std::abs(overlap1.z) < std::abs(overlap2.z) ? overlap1.z : overlap2.z,
     };
 
-    if(other.tag != "floor") {
-        spdlog::warn("{} min({},{},{}), max({},{},{}), {} min({},{},{}), max({},{},{})",
-                     tag,
-                     currentMin().x, currentMin().y, currentMin().z,
-                     currentMax().x, currentMax().y, currentMax().z,
-                     other.tag,
-                     other.currentMin().x, other.currentMin().y, other.currentMin().z,
-                     other.currentMax().x, other.currentMax().y, other.currentMax().z);
-        spdlog::info("overlap ({}, {}, {})", overlap.x, overlap.y, overlap.z);
-    }
+//    if(other.tag != "floor") {
+//        spdlog::warn("{} min({},{},{}), max({},{},{}), {} min({},{},{}), max({},{},{})",
+//                     tag,
+//                     currentMin().x, currentMin().y, currentMin().z,
+//                     currentMax().x, currentMax().y, currentMax().z,
+//                     other.tag,
+//                     other.currentMin().x, other.currentMin().y, other.currentMin().z,
+//                     other.currentMax().x, other.currentMax().y, other.currentMax().z);
+//        spdlog::info("overlap ({}, {}, {})", overlap.x, overlap.y, overlap.z);
+//    }
     glm::vec3 overlapAbs(std::abs(overlap.x), std::abs(overlap.y), std::abs(overlap.z));
 
     // Find the smallest overlap

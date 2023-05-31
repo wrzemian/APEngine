@@ -267,7 +267,7 @@ namespace Game {
     void Update() {
 
         Engine::LoopStart();
-        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0));
+//        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
 
         ImGui();
         imgMOv -= 0.1f;
