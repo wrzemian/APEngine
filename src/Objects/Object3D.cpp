@@ -90,15 +90,15 @@ rapidjson::Document Object3D::ParseToJSON() {
 }
 
 void Object3D::onCollisionX(Object3D *other) {
-    //spdlog::warn("Object3D empty onCollisionX");
+    spdlog::warn("Object3D empty onCollisionX");
 }
 
 void Object3D::onCollisionY(Object3D *other) {
-    //spdlog::warn("Object3D empty onCollisionY");
+    spdlog::warn("Object3D empty onCollisionY");
 }
 
 void Object3D::onCollisionZ(Object3D *other) {
-    //spdlog::warn("Object3D empty onCollisionZ");
+    spdlog::warn("Object3D empty onCollisionZ");
 }
 
 void Object3D::onCollision(Object3D *other) {

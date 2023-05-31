@@ -32,6 +32,10 @@ public:
     rapidjson::Document ParseToJSON();
 
     void loadFromJSON(MovingObject temp);
+
+    void onCollisionX(Object3D *other) override;
+    void onCollisionY(Object3D *other) override;
+    void onCollisionZ(Object3D *other) override;
 };
 
 

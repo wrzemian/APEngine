@@ -214,7 +214,25 @@ bool Hitbox::checkCollision(Hitbox& other) {
 
 // Resolve the collision by moving the object out of the other one
 void Hitbox::resolveCollision(Hitbox& other) {
-    glm::vec3 overlap = currentMin() - other.currentMax();
+    glm::vec3 overlap1 = currentMax() - other.currentMin();
+    glm::vec3 overlap2 = currentMin() - other.currentMax();
+
+    glm::vec3 overlap = {
+            std::abs(overlap1.x) < std::abs(overlap2.x) ? overlap1.x : overlap2.x,
+            std::abs(overlap1.y) < std::abs(overlap2.y) ? overlap1.y : overlap2.y,
+            std::abs(overlap1.z) < std::abs(overlap2.z) ? overlap1.z : overlap2.z,
+    };
+
+//    if(other.tag != "floor") {
+//        spdlog::warn("{} min({},{},{}), max({},{},{}), {} min({},{},{}), max({},{},{})",
+//                     tag,
+//                     currentMin().x, currentMin().y, currentMin().z,
+//                     currentMax().x, currentMax().y, currentMax().z,
+//                     other.tag,
+//                     other.currentMin().x, other.currentMin().y, other.currentMin().z,
+//                     other.currentMax().x, other.currentMax().y, other.currentMax().z);
+//        spdlog::info("overlap ({}, {}, {})", overlap.x, overlap.y, overlap.z);
+//    }
     glm::vec3 overlapAbs(std::abs(overlap.x), std::abs(overlap.y), std::abs(overlap.z));
 
     // Find the smallest overlap
