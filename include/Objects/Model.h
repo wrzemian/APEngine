@@ -61,8 +61,8 @@ public:
     void Draw(Shader &shader)
     {
         //shader.use();
-        for(unsigned int i = 0; i < meshes.size(); i++)
-            meshes[i].Draw(shader);
+        for(auto & mesh : meshes)
+            mesh.Draw(shader);
     }
 
     auto& GetBoneInfoMap() { return m_BoneInfoMap; }
@@ -205,6 +205,9 @@ private:
         // 4. height maps
         std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+        // 5. emissive maps
+        std::vector<Texture> emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive");
+        textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
 
         // return a mesh object created from the extracted mesh data
         ExtractBoneWeightForVertices(vertices,mesh,scene);
@@ -265,6 +268,8 @@ private:
 public:
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {
+        spdlog::warn("jp2gmd:: texture count ({}), typeName({}) ", mat->GetTextureCount(type), typeName);
+
         std::vector<Texture> textures;
         for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
         {
