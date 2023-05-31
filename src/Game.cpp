@@ -267,6 +267,8 @@ namespace Game {
     void Update() {
 
         Engine::LoopStart();
+        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0));
+
         ImGui();
         imgMOv -= 0.1f;
         inputSystem.update();

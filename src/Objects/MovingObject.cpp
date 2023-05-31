@@ -73,6 +73,21 @@ void MovingObject::onCollision(Object3D *other) {
 
 }
 
+void MovingObject::onCollisionX(Object3D *other) {
+    //spdlog::warn("Object3D empty onCollisionX");
+    _velocity.x = 0;
+}
+
+void MovingObject::onCollisionY(Object3D *other) {
+    //spdlog::warn("Object3D empty onCollisionY");
+    _velocity.y = 0;
+}
+
+void MovingObject::onCollisionZ(Object3D *other) {
+    //spdlog::warn("Object3D empty onCollisionZ");
+    _velocity.z = 0;
+}
+
 rapidjson::Document MovingObject::ParseToJSON() {
     rapidjson::Document d;
     d.SetObject();
