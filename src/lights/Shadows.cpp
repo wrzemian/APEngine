@@ -16,6 +16,7 @@ Shadows::Shadows() {
     far_plane = 30.5f;
     SHADOW_WIDTH = 2048;
     SHADOW_HEIGHT = 2048;
+    time = 0;
 }
 
 Shadows::Shadows(std::string fileName) {
@@ -65,7 +66,7 @@ void Shadows::initShaders() {
     shader.use();
     shader.setInt("diffuseTexture", 0);
     shader.setInt("shadowMap", 31);
-    shader.setInt("emissiveMap", 1);
+    shader.setInt("emissiveMap", 2);
 }
 
 void Shadows::ImGui()  {
@@ -158,7 +159,8 @@ void Shadows::renderShadows(Camera& camera) {
     shader.setInt("material.diffuse", 0);
     shader.setInt("material.specular", 1);
     shader.setFloat("material.shininess", 32.0f);
-    shader.setFloat("time", Engine::deltaTime);
+    time += 0.05;
+    shader.setFloat("time", time);
     glActiveTexture(GL_TEXTURE31);
     glBindTexture(GL_TEXTURE_2D, depthMap);
     Engine::drawObjects(shader, camera);

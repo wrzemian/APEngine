@@ -121,16 +121,10 @@ void main()
     lighting += CalcPointLight(pointLight, normal, fs_in.FragPos, viewDir);
     lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir);
 
-    if(texture(emissiveMap, fs_in.TexCoords).rgb != vec3(0.0f)) {
-        vec3 emission = vec3(0.0);
-        /*apply emission texture */
-        emission = texture(emissiveMap, fs_in.TexCoords).rgb;
+    vec3 emission = texture(emissiveMap, fs_in.TexCoords).rgb / 2;
+    emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.2;
+    lighting += emission;
 
-        /*some extra fun stuff with "time uniform" */
-        emission = texture(emissiveMap, fs_in.TexCoords + vec2(0.0,time)).rgb;   /*moving */
-        emission = emission * (sin(time) * 0.5 + 0.5) * 2.0;                     /*fading */
-        lighting += emission;
-    }
 
     FragColor = vec4(lighting, 1.0);
 }
