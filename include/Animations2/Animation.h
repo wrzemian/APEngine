@@ -3,6 +3,8 @@
 #include "glm/glm.hpp"
 #include "../Objects/Model.h"
 #include "Bone.h"
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
 
 
 struct AssimpNodeData

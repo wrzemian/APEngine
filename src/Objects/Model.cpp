@@ -5,6 +5,7 @@
 #include <assimp/postprocess.h>
 #include <stb_image.h>
 #include "../../include/Animations2/AssimpGLMHelpers.h"
+#include <assimp/Importer.hpp>
 
 Model::Model() {}
 
