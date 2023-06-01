@@ -19,7 +19,7 @@
 #include "Parser.h"
 #include "Camera.h"
 #include "Objects/Ant.h"
-
+#include "PostProcessor.h"
 
 namespace Engine {
     extern float deltaTime;

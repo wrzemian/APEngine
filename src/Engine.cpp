@@ -52,11 +52,13 @@ namespace Engine {
     int renderedStatic = -1;
     int renderedDynamic = -1;
 
+    PostProcessor *postProcess;
     int Init() {
         if (initGLandImGui() == -1) {
             return -1;
         }
-
+        Shader postprocessingShader("../../res/shaders/shaderPostProcess.vert", "../../res/shaders/shaderPostProcess.frag");
+        postProcess = new PostProcessor(postprocessingShader, SCR_WIDTH, SCR_HEIGHT);
         return 0;
     }
 
@@ -342,13 +344,16 @@ namespace Engine {
 
         frameStart = glfwGetTime();
 
+
         // render loop
         // -----------
-
+        postProcess->BeginRender();
         // input
         // -----
         processInput(window);
-
+        postProcess->Shake = true;
+        postProcess->Confuse = true;
+        postProcess->Chaos= true;
 
         //spdlog::info("frameEnd: {:03.20f}", frameEnd);
         //spdlog::info("frameStart: {:03.20f}", frameStart);
@@ -358,6 +363,8 @@ namespace Engine {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_LIGHT0);
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+
+
     }
 
     void renderImgui() {
@@ -419,8 +426,9 @@ namespace Engine {
     void LoopEnd() {
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
+        postProcess->EndRender();
+        postProcess->Render(glfwGetTime());
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
