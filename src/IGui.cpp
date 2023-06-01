@@ -7,12 +7,12 @@
 
 
 IGui::IGui() {
-    Engine::addImgui(this);
-    _windowName = std::to_string(Engine::getImguiIndex());
+    Engine::getInstance().addImgui(this);
+    _windowName = std::to_string(Engine::getInstance().getImguiIndex());
 }
 
 IGui::~IGui() {
-    Engine::removeImgui(this);
+    Engine::getInstance().removeImgui(this);
 }
 
 bool IGui::isShownImgui() const {

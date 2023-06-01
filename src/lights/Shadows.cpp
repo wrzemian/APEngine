@@ -21,7 +21,7 @@ Shadows::Shadows() {
 
 Shadows::Shadows(std::string fileName) {
     spdlog::info("shadows JSON constructor");
-    rapidjson::Document d = Engine::parser.openJSON(fileName);
+    rapidjson::Document d = Engine::getInstance().parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("shadows");
 
@@ -91,7 +91,7 @@ void Shadows::ImGui()  {
 
     if (ImGui::Button("SAVE SHADOWS")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/shadows");
+        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "lights/shadows");
     }
     ImGui::End();
 
@@ -138,7 +138,7 @@ void Shadows::renderShadows(Camera& camera) {
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
     glClear(GL_DEPTH_BUFFER_BIT);
-    Engine::drawObjects(simpleDepthShader, camera);
+    Engine::getInstance().drawObjects(simpleDepthShader, camera);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     // reset viewport
     glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
@@ -163,11 +163,11 @@ void Shadows::renderShadows(Camera& camera) {
     shader.setFloat("time", time);
     glActiveTexture(GL_TEXTURE31);
     glBindTexture(GL_TEXTURE_2D, depthMap);
-    Engine::drawObjects(shader, camera);
+    Engine::getInstance().drawObjects(shader, camera);
 
-    Engine::renderDirLights(shader);
-    Engine::renderPointLights(shader);
-    Engine::renderSpotLights(shader);
+    Engine::getInstance().renderDirLights(shader);
+    Engine::getInstance().renderPointLights(shader);
+    Engine::getInstance().renderSpotLights(shader);
 }
 
 

@@ -42,7 +42,7 @@ void Camera::ImGui(){
     rotate(degX, degY);
     ImGui::Checkbox("Lock target point", &isBlocked);
     if (ImGui::Button("SAVE CAM")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "camera");
+        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "camera");
     }
     if(ImGui::Button("Calculate Lock target Point")) {
         Look = Look - Position;
@@ -65,7 +65,7 @@ Camera::Camera(glm::vec3 position, float yaw, float pitch, float zoom)
 
 Camera::Camera(std::string fileName) {
     spdlog::info("camera JSON constructor");
-    rapidjson::Document d = Engine::parser.openJSON(fileName);
+    rapidjson::Document d = Engine::getInstance().parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("camera");
 

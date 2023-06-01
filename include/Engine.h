@@ -1,6 +1,6 @@
-//
-// Created by tomek on 26.03.2023.
-//
+#ifndef ENGINE_H
+#define ENGINE_H
+
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
@@ -8,96 +8,157 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui_impl/imgui_impl_glfw.h"
 #include "imgui_impl/imgui_impl_opengl3.h"
+#include "spdlog/spdlog.h"
 
 #include <vector>
 #include <iostream>
+#include <memory>
 
-#include "IGui.h"
-#include "Objects/Hitbox.h"
-#include "Objects/MovingObject.h"
-#include "Objects/Object3D.h"
-#include "Parser.h"
-#include "Camera.h"
+#include "User/InputSystem.h"
 #include "Objects/Ant.h"
+#include "Parser.h"
 
+class Engine {
+//private:
+public:
+    static std::unique_ptr<Engine> instance;
 
-namespace Engine {
-    extern float deltaTime;
-    extern Parser parser;
-    extern int SCR_WIDTH;
-    extern int SCR_HEIGHT;
-    extern bool frustum;
+    Engine();
 
-    void ImGui();
+    Engine(const Engine&) = delete;
+
+    Engine& operator=(const Engine&) = delete;
+
+    ~Engine();
+
+    static GLFWwindow* window;
+
+    Parser parser;
+
+    float frameEnd;
+    float frameStart;
+    float deltaTime;
+    int Weights;
+    unsigned int displayCounter;
+    unsigned int totalCounter;
+
+    static int SCR_WIDTH;
+    static int SCR_HEIGHT;
+
+    bool frustum;
+
+    std::vector<Hitbox*> staticHitboxes;
+    std::vector<Hitbox*> dynamicHitboxes;
+
+    std::vector<IGui*> allImgui;
+    std::vector<Object3D*> allObjects;
+    std::vector<MovingObject*> allMovingObjects;
+    std::vector<DirectionalLight*> allDirLights;
+    std::vector<PointLight*> allPointLights;
+    std::vector<SpotLight*> allSpotLights;
+    std::vector<Ant*> allAnts;
+    std::vector<std::pair<Hitbox*, Hitbox*>> previousCollisions;
+
+    bool renderDynamic;
+    bool renderStatic;
+
+    int renderedStatic;
+    int renderedDynamic;
+
     int Init();
-    void LoopStart();
-    void LoopEnd();
 
-    int getHitboxIndex();
-    int getImguiIndex();
     int getObject3DIndex(Object3D* obj);
+
+    void logStaticHitboxes();
+
+    void logDynamicHitboxes();
+
     Object3D* getObject3DById(int id);
+
     int getMovingObjectIndex(MovingObject* obj);
 
     void addStaticHitbox(Hitbox* hitbox);
-    void addImgui(IGui* imgui);
-    void addMovingObject(MovingObject* object);
-    void addObject(Object3D* object);
-    void addDirLight(DirectionalLight* dirLight);
-    void addPointLight(PointLight* pointLight);
-    void addSpotLight(SpotLight* spotLight);
+
+    void removeStaticHitbox(Hitbox* hitbox);
+
     void addDynamicHitbox(Hitbox* hitbox);
+
     void removeDynamicHitbox(Hitbox* hitbox);
+
+    void addImgui(IGui* imgui);
+
+    void removeImgui(IGui* igui);
+
+    void addMovingObject(MovingObject* object);
+
+    void removeMovingObject(MovingObject* object);
+
+    void addObject(Object3D* object);
+
+    void removeObject(Object3D* object);
+
+    void addDirLight(DirectionalLight* dirLight);
+
+    void removeDirLight(DirectionalLight* dirLight);
+
+    void addPointLight(PointLight* pointLight);
+
+    void removePointLight(PointLight* pointLight);
+
+    void addSpotLight(SpotLight* spotLight);
+
+    void removeSpotLight(SpotLight* spotLight);
+
     void addAnt(Ant* ant);
-
-    void logStaticHitboxes();
-    void logDynamicHitboxes();
-
 
     void removeAnt(Ant* ant);
 
-    void removeStaticHitbox(Hitbox* hitbox);
-    void removeImgui(IGui* igui);
-    void removeMovingObject(MovingObject* object);
-    void removeObject(Object3D* object);
-    void removeDirLight(DirectionalLight* dirLight);
-    void removePointLight(PointLight* pointLight);
-    void removeSpotLight(SpotLight* spotLight);
-
-
-    void renderHitboxes(const glm::mat4& projectionView);
-    void renderImgui();
-    void renderLights(Shader shader, Camera& camera);
     void renderDirLights(Shader shader);
+
     void renderPointLights(Shader shader);
+
     void renderSpotLights(Shader shader);
 
     void logTextures();
 
+    int getImguiIndex();
+
     void moveObjects();
-    void drawObjects(Shader &shader, const Camera& camera);
+
+    void drawObjects(Shader& shader, const Camera& camera);
+
+    void renderLights(Shader shader, Camera& camera);
+
     void drawObjects();
 
-    void terminate();
+    void ImGui();
+
+    void LoopStart();
+
+    void renderImgui();
+
+    void renderHitboxes(const glm::mat4& projectionView);
+
     void resolveCollisions();
 
+    void LoopEnd();
 
-    int initGLandImGui();
-
-    void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    void terminate();
 
     void processInput(GLFWwindow* window);
 
-    // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-    // ---------------------------------------------------------------------------------------------------------
-    void processInput(GLFWwindow* window);
-
-    // glfw: whenever the window size changed (by OS or user resize) this callback function executes
-    // ---------------------------------------------------------------------------------------------
-    void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
     int initGLandImGui();
 
-    GLFWwindow* getWindow();
+public:
+    static Engine& getInstance();
 
-}
+    static void destroyInstance();
+
+    static GLFWwindow* getWindow();
+
+    friend void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+};
+
+#endif // ENGINE_H

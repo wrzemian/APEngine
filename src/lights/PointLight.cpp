@@ -12,15 +12,15 @@ PointLight::PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const
                                                                                                    linear(linear),
                                                                                                    quadratic(
                                                                                                            quadratic) {
-    Engine::addPointLight(this);
+    Engine::getInstance().addPointLight(this);
 }
 
 PointLight::PointLight() {
-    Engine::addPointLight(this);
+    Engine::getInstance().addPointLight(this);
 }
 
 PointLight::~PointLight() {
-    Engine::removePointLight(this);
+    Engine::getInstance().removePointLight(this);
 }
 
 const glm::vec3 &PointLight::getPosition() const {
@@ -94,7 +94,7 @@ void PointLight::ImGui() {
     ImGui::SliderFloat("quadratic", &quadratic, -1.0f, 1.0f);
 
     if (ImGui::Button("SAVE")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/pointLight");
+        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "lights/pointLight");
     }
     ImGui::End();
 }

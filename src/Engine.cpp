@@ -17,42 +17,8 @@
 #include "../include/Objects/Ant.h"
 
 
-namespace Engine {
-    GLFWwindow* window;
 
-    Parser parser("../../res/jsons");
-
-    float frameEnd = 0;
-    float frameStart = 0;
-    float deltaTime = 0;
-    int Weights = 4;
-    unsigned int displayCounter = 0;
-    unsigned int totalCounter = 0;
-
-    int SCR_WIDTH = 1000;
-    int SCR_HEIGHT = 800;
-
-    bool frustum = true;
-
-    std::vector<Hitbox*> staticHitboxes;
-    std::vector<Hitbox*> dynamicHitboxes;
-
-    std::vector<IGui*> allImgui;
-    std::vector<Object3D*> allObjects;
-    std::vector<MovingObject*> allMovingObjects;
-    std::vector<DirectionalLight*> allDirLights;
-    std::vector<PointLight*> allPointLights;
-    std::vector<SpotLight*> allSpotLights;
-    std::vector<Ant*> allAnts;
-    std::vector<std::pair<Hitbox*, Hitbox*>> previousCollisions;
-
-    bool renderDynamic = false;
-    bool renderStatic = false;
-
-    int renderedStatic = -1;
-    int renderedDynamic = -1;
-
-    int Init() {
+    int Engine::Init() {
         if (initGLandImGui() == -1) {
             return -1;
         }
@@ -60,7 +26,7 @@ namespace Engine {
         return 0;
     }
 
-    int getObject3DIndex(Object3D* obj) {
+    int Engine::getObject3DIndex(Object3D* obj) {
         auto it = find(allObjects.begin(), allObjects.end(), obj);
         if (it != allObjects.end())
         {
@@ -72,14 +38,14 @@ namespace Engine {
         }
     }
 
-    void logStaticHitboxes() {
+    void Engine::logStaticHitboxes() {
         spdlog::warn("Static hitboxes:");
         for(auto h: staticHitboxes) {
             spdlog::info("{}", h->_object->tag);
         }
     }
 
-    void logDynamicHitboxes() {
+    void Engine::logDynamicHitboxes() {
         spdlog::warn("Dynamic hitboxes:");
         for(auto h: dynamicHitboxes) {
             spdlog::info("{}", h->_object->tag);
@@ -87,12 +53,12 @@ namespace Engine {
     }
 
 
-    Object3D* getObject3DById(int id) {
+    Object3D* Engine::getObject3DById(int id) {
         std::cout<< allObjects.size() <<std::endl;
         return allObjects.at(id);
     }
 
-    int getMovingObjectIndex(MovingObject* obj) {
+    int Engine::getMovingObjectIndex(MovingObject* obj) {
         auto it = find(allMovingObjects.begin(), allMovingObjects.end(), obj);
         if (it != allMovingObjects.end())
         {
@@ -104,123 +70,123 @@ namespace Engine {
         }
     }
 
-    void addStaticHitbox(Hitbox* hitbox) {
+    void Engine::addStaticHitbox(Hitbox* hitbox) {
         //spdlog::info("Static hitbox added");
         staticHitboxes.push_back(hitbox);
     }
 
-    void removeStaticHitbox(Hitbox* hitbox) {
+    void Engine::removeStaticHitbox(Hitbox* hitbox) {
         //spdlog::info("removing static hitbox");
         std::erase(staticHitboxes, hitbox);
     }
 
-    void addDynamicHitbox(Hitbox* hitbox) {
+    void Engine::addDynamicHitbox(Hitbox* hitbox) {
         //spdlog::info("Dynamic hitbox added, {}", hitbox->getWindowName());
         dynamicHitboxes.push_back(hitbox);
     }
 
-    void removeDynamicHitbox(Hitbox* hitbox) {
+    void Engine::removeDynamicHitbox(Hitbox* hitbox) {
         //spdlog::info("removing dynamic hitbox");
         std::erase(dynamicHitboxes, hitbox);
     }
 
-    void addImgui(IGui* imgui) {
+    void Engine::addImgui(IGui* imgui) {
         //spdlog::warn("imgui object added, {}", imgui->_windowName);
         allImgui.push_back(imgui);
     }
 
-    void removeImgui(IGui* igui) {
+    void Engine::removeImgui(IGui* igui) {
         //spdlog::error("removing igui, _windowName = {}", igui->_windowName);
         std::erase(allImgui, igui);
     }
 
-    void addMovingObject(MovingObject* object) {
+    void Engine::addMovingObject(MovingObject* object) {
         //spdlog::warn("moving object added, {}", object->_windowName);
         allMovingObjects.push_back(object);
     }
 
-    void removeMovingObject(MovingObject* object) {
+    void Engine::removeMovingObject(MovingObject* object) {
         //spdlog::warn("removing moving object");
         std::erase(allMovingObjects, object);
     }
 
-    void addObject(Object3D* object) {
+    void Engine::addObject(Object3D* object) {
         //spdlog::warn("object added, {}", object->_windowName);
         allObjects.push_back(object);
     }
 
-    void removeObject(Object3D* object) {
+    void Engine::removeObject(Object3D* object) {
         //spdlog::warn("removing object");
         std::erase(allObjects, object);
     }
 
-    void addDirLight(DirectionalLight* dirLight) {
+    void Engine::addDirLight(DirectionalLight* dirLight) {
         //spdlog::warn("adding dirLight");
         allDirLights.push_back(dirLight);
     }
 
-    void removeDirLight(DirectionalLight* dirLight) {
+    void Engine::removeDirLight(DirectionalLight* dirLight) {
         //spdlog::warn("removing dirLight");
         std::erase(allDirLights, dirLight);
     }
 
-    void addPointLight(PointLight* pointLight) {
+    void Engine::addPointLight(PointLight* pointLight) {
         //spdlog::warn("adding pointLight");
         allPointLights.push_back(pointLight);
     }
 
-    void removePointLight(PointLight* pointLight) {
+    void Engine::removePointLight(PointLight* pointLight) {
         //spdlog::warn("removing pointLight");
         std::erase(allPointLights, pointLight);
     }
 
-    void addSpotLight(SpotLight* spotLight) {
+    void Engine::addSpotLight(SpotLight* spotLight) {
         //spdlog::warn("adding spotLight");
         allSpotLights.push_back(spotLight);
     }
 
-    void removeSpotLight(SpotLight* spotLight) {
+    void Engine::removeSpotLight(SpotLight* spotLight) {
        // spdlog::warn("removing spotLight");
         std::erase(allSpotLights, spotLight);
     }
 
-    void addAnt(Ant* ant) {
+    void Engine::addAnt(Ant* ant) {
         //spdlog::warn("adding spotLight");
         allAnts.push_back(ant);
     }
 
-    void removeAnt(Ant* ant) {
+    void Engine::removeAnt(Ant* ant) {
         // spdlog::warn("removing spotLight");
         std::erase(allAnts, ant);
     }
 
-    void renderDirLights(Shader shader){
+    void Engine::renderDirLights(Shader shader){
         for(DirectionalLight* dirLight: allDirLights) {
             dirLight->SendToShader(shader, "dirLight");
         }
     }
 
-    void renderPointLights(Shader shader){
+    void Engine::renderPointLights(Shader shader){
         for(PointLight* pointLight: allPointLights) {
             pointLight->SendToShader(shader, "pointLight");
         }
     }
-    void renderSpotLights(Shader shader){
+    void Engine::renderSpotLights(Shader shader){
         for(SpotLight* spotLight: allSpotLights) {
             spotLight->SendToShader(shader, "spotLight");
         }
     }
 
 
-    void logTextures() {
+    void Engine::logTextures() {
 
     }
 
-    int getImguiIndex() {
+    int Engine::getImguiIndex() {
         return allImgui.size();
     }
 
-    void moveObjects(){
+    void Engine::moveObjects(){
         if(deltaTime > 0.01) {
             deltaTime = 0.01f;
         }
@@ -229,12 +195,13 @@ namespace Engine {
         }
     }
 
-    void drawObjects(Shader &shader, const Camera& camera) {
+    void Engine::drawObjects(Shader &shader, const Camera& camera) {
         displayCounter = 0;
         totalCounter = 0;
 
         const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
         for(Object3D* object: allObjects) {
+            spdlog::info("rendering {}", object->tag);
             if(!object->rendered) {
                 continue;
             }
@@ -269,7 +236,7 @@ namespace Engine {
 
     }
 
-    void renderLights(Shader shader, Camera& camera) {
+    void Engine::renderLights(Shader shader, Camera& camera) {
         shader.setMat4("projectionView", camera.getViewProjection());
         glm::mat4 model = glm::mat4 (1.0f);
         shader.setMat4("model", model);
@@ -289,14 +256,14 @@ namespace Engine {
 
     }
 
-    void drawObjects() {
+    void Engine::drawObjects() {
         for(Object3D* object: allObjects) {
             object->Draw();
         }
 
     }
 
-    void ImGui() {
+    void Engine::ImGui() {
         ImGui::Begin("Engine");
         ImGui::SetWindowSize(ImVec2(250, 300));
         //spdlog::info("deltaTime: ", Engine::deltaTime);
@@ -330,7 +297,7 @@ namespace Engine {
     }
 
 
-    void LoopStart() {
+    void Engine::LoopStart() {
         frameEnd = glfwGetTime();
 
         deltaTime = frameEnd - frameStart;
@@ -355,7 +322,7 @@ namespace Engine {
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     }
 
-    void renderImgui() {
+    void Engine::renderImgui() {
         for(IGui* gui: allImgui) {
             if(gui->isShownImgui()) {
                 gui->ImGui();
@@ -363,7 +330,7 @@ namespace Engine {
         }
     }
 
-    void renderHitboxes(const glm::mat4& projectionView) {
+    void Engine::renderHitboxes(const glm::mat4& projectionView) {
         for(auto hitbox: staticHitboxes) {
             hitbox->Draw(projectionView);
         }
@@ -372,7 +339,7 @@ namespace Engine {
         }
     }
 
-    void resolveCollisions() {
+    void Engine::resolveCollisions() {
         std::vector<std::pair<Hitbox*, Hitbox*>> currentCollisions;
 
         // Check for collisions between dynamic and static hitboxes
@@ -411,7 +378,7 @@ namespace Engine {
         previousCollisions = std::move(currentCollisions);
     }
 
-    void LoopEnd() {
+    void Engine::LoopEnd() {
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -420,7 +387,7 @@ namespace Engine {
         glfwPollEvents();
     }
 
-    void terminate() {
+    void Engine::terminate() {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
@@ -435,7 +402,7 @@ namespace Engine {
 
     // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
     // ---------------------------------------------------------------------------------------------------------
-    void processInput(GLFWwindow* window)
+    void Engine::processInput(GLFWwindow* window)
     {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, true);
@@ -450,7 +417,7 @@ namespace Engine {
         glViewport(0, 0, width, height);
     }
 
-    int initGLandImGui() {
+    int Engine::initGLandImGui() {
         // glfw: initialize and configure
         // ------------------------------
         glfwInit();
@@ -497,9 +464,10 @@ namespace Engine {
         return 0;
     }
 
-    GLFWwindow* getWindow()
+    GLFWwindow* Engine::getWindow()
     {
         return window;
     }
 
-}
+
+

@@ -21,32 +21,32 @@ Hitbox::Hitbox(HitboxType type) {
    //spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), tag, _type);
 
     if(type == STATIC) {
-        Engine::addStaticHitbox(this);
+        Engine::getInstance().addStaticHitbox(this);
     }
     if(type == DYNAMIC) {
-        Engine::addDynamicHitbox(this);
+        Engine::getInstance().addDynamicHitbox(this);
     }
     //Engine::addImgui(this);
 }
 
 Hitbox::Hitbox(std::string fileName) {
     //spdlog::info("hitbox JSON constructor");
-    rapidjson::Document d = Engine::parser.openJSON(fileName);
+    rapidjson::Document d = Engine::getInstance().parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("hitbox");
 
     if(type == "hitbox") {
         if (d["_type"].GetInt() == 0){
             _type = STATIC;
-            Engine::addStaticHitbox(this);
+            Engine::getInstance().addStaticHitbox(this);
         }
         if (d["_type"].GetInt() == 1) {
             _type = DYNAMIC;
-            Engine::addDynamicHitbox(this);
+            Engine::getInstance().addDynamicHitbox(this);
         }
 
-        _object = Engine::getObject3DById(d["object"].GetInt());
-        _position = &Engine::getObject3DById(d["object"].GetInt())->_transform._position;
+        _object = Engine::getInstance().getObject3DById(d["object"].GetInt());
+        _position = &Engine::getInstance().getObject3DById(d["object"].GetInt())->_transform._position;
 
         _min = glm::vec3(d["minX"].GetFloat(), d["minY"].GetFloat(), d["minZ"].GetFloat());
         _max = glm::vec3(d["maxX"].GetFloat(), d["maxY"].GetFloat(), d["maxZ"].GetFloat());
@@ -63,10 +63,10 @@ Hitbox::Hitbox(std::string fileName) {
 Hitbox::~Hitbox() {
     spdlog::error("Hitbox object = {}, tag = {} destructor", _object->tag, tag);
     if(_type == STATIC) {
-        Engine::removeStaticHitbox(this);
+        Engine::getInstance().removeStaticHitbox(this);
     }
     if(_type == DYNAMIC) {
-        Engine::removeDynamicHitbox(this);
+        Engine::getInstance().removeDynamicHitbox(this);
     }
 }
 
@@ -128,7 +128,7 @@ void Hitbox::ImGui()  {
     }
     if (ImGui::Button("SAVE HITBOX")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "hitboxes/hitbox_" + std::to_string(Engine::getObject3DIndex(_object)));
+        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "hitboxes/hitbox_" + std::to_string(Engine::getInstance().getObject3DIndex(_object)));
     }
     if (ImGui::Button("Calculate hitbox")) {
         _min = glm::vec3(-0.001, -0.001, -0.001);
@@ -149,7 +149,7 @@ rapidjson::Document Hitbox::ParseToJSON() {
         d.AddMember("_type", 0, d.GetAllocator());
     else if(_type == DYNAMIC)
         d.AddMember("_type", 1, d.GetAllocator());
-    d.AddMember("object", Engine::getObject3DIndex(this->_object), d.GetAllocator());
+    d.AddMember("object", Engine::getInstance().getObject3DIndex(this->_object), d.GetAllocator());
     d.AddMember("minX", _min.x, d.GetAllocator());
     d.AddMember("minY", _min.y, d.GetAllocator());
     d.AddMember("minZ", _min.z, d.GetAllocator());

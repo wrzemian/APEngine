@@ -10,7 +10,7 @@
 Object3D::Object3D() {
     IGui::setWindowName("object 3d");
 
-    Engine::addObject(this);
+    Engine::getInstance().addObject(this);
 }
 
 void Object3D::Draw() {
@@ -65,7 +65,7 @@ void Object3D::ImGui() {
     }
     if (ImGui::Button("SAVE OBJ3D")) {
 
-        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getObject3DIndex(this)));
+        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getInstance().getObject3DIndex(this)));
     }
 
     ImGui::End();
@@ -116,7 +116,7 @@ void Object3D::setShader(Shader *shader) {
 
 Object3D::~Object3D() {
     spdlog::error("object3d destructor");
-    Engine::removeObject(this);
+    Engine::getInstance().removeObject(this);
 }
 
 void Object3D::onCollisionExit(Object3D *other) {
