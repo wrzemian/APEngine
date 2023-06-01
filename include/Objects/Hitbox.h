@@ -20,7 +20,7 @@ public:
     enum HitboxType {
         DYNAMIC, STATIC, DETECTION_ONLY
     };
-
+    Hitbox() = default;
     Hitbox(HitboxType type);
     Hitbox(std::string fileName);
 

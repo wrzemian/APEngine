@@ -12,6 +12,7 @@ class SimpleHitbox : public Hitbox {
 private:
     using super = Hitbox;
 public:
+    SimpleHitbox() = default;
     SimpleHitbox(std::string fileName);
 
     ~SimpleHitbox();
