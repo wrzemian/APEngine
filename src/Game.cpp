@@ -18,7 +18,7 @@ void Game::processInput() {
 
 
 void Game::Start() {
-    std::cout << Engine::Init() << "\n";
+//    std::cout << Engine::Init() << "\n";
 
     shadows.initShaders();
     Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
@@ -220,4 +220,39 @@ void Game::ImGui() {
         shadows.ShowImgui();
     }
     ImGui::Render();
+}
+
+Game::Game() :
+        imgMOv(0),
+        movImage(0),
+        simpleDepthShader(),
+        debugDepthQuad(),
+        hud(),
+        hud2(),
+        shader(),
+        animation(),
+        shadows(),
+        lightShader(),
+        constant(),
+        playerJumper(),
+        playerGrabber(),
+        ant(),
+        camera(),
+        p1Hitbox(),
+        p2Hitbox(),
+        antHitbox(),
+        antBigHitbox(),
+        grabber(),
+        grabberHitbox(),
+        wagon(),
+        movementSpeed(3.0f),
+        dirLight(),
+        spotLight(),
+        pointLight(),
+        inputSystem(),
+        texToDisplay(""),
+        background()
+{
+    spdlog::error("kurw4 Game constructor");
+
 }

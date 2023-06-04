@@ -2,5 +2,6 @@
 #include <iostream>
 
 int main() {
+    Engine::Init();
     Game::getInstance().Start();
 }

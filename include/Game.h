@@ -31,7 +31,7 @@ public:
     void renderScene(Shader shader, const Camera &camera);
 
 private:
-    Game() {}  // Disallow instantiating an object of this class outside the class
+    Game(); // Disallow instantiating an object of this class outside the class
 
 public:
     float imgMOv;

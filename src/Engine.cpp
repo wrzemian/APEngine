@@ -49,6 +49,7 @@ std::vector<Ant*> Engine::allAnts;
 std::vector<std::pair<Hitbox*, Hitbox*>> Engine::previousCollisions;
 
 int Engine::Init() {
+    spdlog::error("kurw4 Engine init");
     if (initGLandImGui() == -1) {
         return -1;
     }
@@ -231,7 +232,7 @@ void Engine::drawObjects(Shader &shader, const Camera& camera) {
 
     const Frustum camFrustum = Fru::createFrustumFromCamera(camera, (float)SCR_WIDTH / (float)SCR_HEIGHT, glm::radians(camera.Zoom), 0.1f, 100.0f);
     for(Object3D* object: allObjects) {
-        spdlog::info("rendering {}", object->tag);
+      //  spdlog::info("rendering {}", object->tag);
         if(!object->rendered) {
             continue;
         }
