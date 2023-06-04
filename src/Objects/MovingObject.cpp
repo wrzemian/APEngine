@@ -12,14 +12,14 @@ MovingObject::MovingObject() {
     IGui::setWindowName("moving object");
     spdlog::info("moving object constructor");
 
-    Engine::getInstance().addMovingObject(this);
+    Engine::addMovingObject(this);
 }
 
 
 
 MovingObject::~MovingObject() {
     spdlog::error("moving object destructor");
-    Engine::getInstance().removeMovingObject(this);
+    Engine::removeMovingObject(this);
 }
 
 void MovingObject::SetVelocity(glm::vec3 velocity) {
@@ -52,7 +52,7 @@ void MovingObject::ImGui() {
 
     if (ImGui::Button("SAVE MOV OBJ")) {
 
-        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "objects/movingObj_" + std::to_string(Engine::getInstance().getMovingObjectIndex(this)));
+        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/movingObj_" + std::to_string(Engine::getMovingObjectIndex(this)));
     }
     ImGui::End();
 }

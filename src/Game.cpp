@@ -18,7 +18,7 @@ void Game::processInput() {
 
 
 void Game::Start() {
-    std::cout << Engine::getInstance().Init() << "\n";
+    std::cout << Engine::Init() << "\n";
 
     shadows.initShaders();
     Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
@@ -51,7 +51,7 @@ void Game::Start() {
     //player1.tag = "player";
     //player2.tag = "player";
 
-    ant.loadFromJSON(Engine::getInstance().parser.CreateFromJSONMovingObject("objects/movingObj_2"));
+    ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
     ant.tag = "ant";
 
 
@@ -63,7 +63,7 @@ void Game::Start() {
 
     //p1Hitbox.calculateFromModel(player1._model);
     //p2Hitbox.calculateFromModel(player2._model);
-    wagon.loadFromJSON(Engine::getInstance().parser.CreateFromJSONWalls("objects/walls"));
+    wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
     wagon.logNewObjects();
     wagon.setShader(&shader);
     wagon.ShowImgui();
@@ -122,14 +122,14 @@ void Game::Start() {
     glm::mat4 model = glm::mat4(1.0f);
     shader.setMat4("model", model);
 
-    dirLight = Engine::getInstance().parser.CreateFromJSONDir("lights/dirLight");
-    spotLight = Engine::getInstance().parser.CreateFromJSONSpot("lights/spotLight");
-    pointLight = Engine::getInstance().parser.CreateFromJSONPoint("lights/pointLight");
+    dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
+    spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
+    pointLight = Engine::parser.CreateFromJSONPoint("lights/pointLight");
 
     spdlog::info("ImGui");
     ImGui();
     spdlog::info("ResolveCollisions");
-    Engine::getInstance().resolveCollisions();
+    Engine::resolveCollisions();
     //Engine::logStaticHitboxes();
     //Engine::logDynamicHitboxes();
     spdlog::info("loop");
@@ -157,15 +157,15 @@ void Game::Start() {
 
 
 
-    Engine::getInstance().logTextures();
-    while (!glfwWindowShouldClose(Engine::getWindow())) {
+    Engine::logTextures();
+    while (!glfwWindowShouldClose(Engine::window)) {
         Update();
     }
 }
 
 void Game::Update() {
 
-    Engine::getInstance().LoopStart();
+    Engine::LoopStart();
 //        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
 
     ImGui();
@@ -182,7 +182,7 @@ void Game::Update() {
     hud.renderImage(imgMOv);
 
     //player1.Move();
-    Engine::getInstance().moveObjects();
+    Engine::moveObjects();
 
     //Engine::renderLights(lightShader, camera);
     shadows.renderShadows(camera);
@@ -194,14 +194,14 @@ void Game::Update() {
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
 
-    Engine::getInstance().renderHitboxes(projection * view);
+    Engine::renderHitboxes(projection * view);
 
 //       camera.followObject(player1);
-    Engine::getInstance().resolveCollisions();
+    Engine::resolveCollisions();
 
     hud2.renderText(texToDisplay, 100, 0, 2, glm::vec3(1.0f, 1.0f, 1.0f));
 
-    Engine::getInstance().LoopEnd();
+    Engine::LoopEnd();
 
 }
 
@@ -211,8 +211,8 @@ void Game::ImGui() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
     {
-        Engine::getInstance().renderImgui();
-        Engine::getInstance().ImGui();
+        Engine::renderImgui();
+        Engine::ImGui();
         dirLight.ShowImgui();
         pointLight.ShowImgui();
         spotLight.ShowImgui();

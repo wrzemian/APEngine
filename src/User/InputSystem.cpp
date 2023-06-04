@@ -8,7 +8,7 @@
 
 void InputSystem::InputInit()
 {
-    window = Engine::getWindow();
+    window = Engine::window;
     glfwSetKeyCallback(window, key_callback);
     glfwSetJoystickCallback(joystick_callback);
 }

@@ -5,15 +5,15 @@
 DirectionalLight::DirectionalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
                                    const glm::vec3 &direction) : AmbientLight(ambient, diffuse, specular),
                                                                  direction(direction) {
-    Engine::getInstance().addDirLight(this);
+    Engine::addDirLight(this);
 }
 
 DirectionalLight::DirectionalLight() {
-    Engine::getInstance().addDirLight(this);
+    Engine::addDirLight(this);
 }
 
 DirectionalLight::~DirectionalLight() {
-    Engine::getInstance().removeDirLight(this);
+    Engine::removeDirLight(this);
 }
 
 const glm::vec3 &DirectionalLight::getDirection() const {
@@ -55,7 +55,7 @@ void DirectionalLight::ImGui() {
     ImGui::SliderFloat3("direction", &direction.x, -1.0f, 1.0f);
 
     if (ImGui::Button("SAVE")) {
-        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "lights/dirLight");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/dirLight");
     }
 
     ImGui::End();

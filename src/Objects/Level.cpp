@@ -404,7 +404,7 @@ void Level::ImGui() {
     }
 
     if (ImGui::Button("SAVE WALLS")) {
-        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "objects/walls");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/walls");
     }
 
     ImGui::End();

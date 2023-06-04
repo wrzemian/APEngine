@@ -21,7 +21,7 @@ Shadows::Shadows() {
 
 Shadows::Shadows(std::string fileName) {
     spdlog::info("shadows JSON constructor");
-    rapidjson::Document d = Engine::getInstance().parser.openJSON(fileName);
+    rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("shadows");
 
@@ -91,7 +91,7 @@ void Shadows::ImGui()  {
 
     if (ImGui::Button("SAVE SHADOWS")) {
 
-        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "lights/shadows");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/shadows");
     }
     ImGui::End();
 
@@ -138,14 +138,14 @@ void Shadows::renderShadows(Camera& camera) {
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
     glClear(GL_DEPTH_BUFFER_BIT);
-    Engine::getInstance().drawObjects(simpleDepthShader, camera);
+    Engine::drawObjects(simpleDepthShader, camera);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     // reset viewport
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    glViewport(0, 0, Engine::SCR_WIDTH, Engine::SCR_HEIGHT);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.use();
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
     shader.setMat4("projection", projection);
     shader.setMat4("view", view);
@@ -163,11 +163,11 @@ void Shadows::renderShadows(Camera& camera) {
     shader.setFloat("time", time);
     glActiveTexture(GL_TEXTURE31);
     glBindTexture(GL_TEXTURE_2D, depthMap);
-    Engine::getInstance().drawObjects(shader, camera);
+    Engine::drawObjects(shader, camera);
 
-    Engine::getInstance().renderDirLights(shader);
-    Engine::getInstance().renderPointLights(shader);
-    Engine::getInstance().renderSpotLights(shader);
+    Engine::renderDirLights(shader);
+    Engine::renderPointLights(shader);
+    Engine::renderSpotLights(shader);
 }
 
 

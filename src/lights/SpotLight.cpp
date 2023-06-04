@@ -12,15 +12,15 @@ SpotLight::SpotLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const g
                                                                                     direction(direction),
                                                                                     cutOff(cutOff),
                                                                                     outerCutOff(outerCutOff) {
-    Engine::getInstance().addSpotLight(this);
+    Engine::addSpotLight(this);
 }
 
 SpotLight::SpotLight() {
-    Engine::getInstance().addSpotLight(this);
+    Engine::addSpotLight(this);
 }
 
 SpotLight::~SpotLight() {
-    Engine::getInstance().removeSpotLight(this);
+    Engine::removeSpotLight(this);
 }
 
 const glm::vec3 &SpotLight::getDirection() const {
@@ -104,7 +104,7 @@ void SpotLight::ImGui() {
     ImGui::SliderFloat("outerCutOff", &outerCutOff, -1.0f, 1.0f);
 
     if (ImGui::Button("SAVE")) {
-        Engine::getInstance().parser.SaveJSON(this->ParseToJSON(), "lights/spotLight");
+        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/spotLight");
     }
     ImGui::End();
 }

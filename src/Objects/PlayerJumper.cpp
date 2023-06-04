@@ -5,7 +5,7 @@
 #include "../../include/Objects/PlayerJumper.h"
 
 void PlayerJumper::initPlayer(InputSystem* inputSystem) {
-    loadFromJSON(Engine::getInstance().parser.CreateFromJSONMovingObject("objects/movingObj_0"));
+    loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
     tag = "player";
     inputSystem->monitorKey(GLFW_KEY_W);
     inputSystem->monitorKey(GLFW_KEY_A);
