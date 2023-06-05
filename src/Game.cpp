@@ -78,7 +78,7 @@ namespace Game {
 
 Animation grabberAnimation;
     Animator animator;
-
+Shader ourShader;
 
 
     PlayerJumper playerJumper;
@@ -125,7 +125,6 @@ Animation grabberAnimation;
     std::string texToDisplay = "";
 
     Background background;
-    Shader ourShader;
     //animation testing
 
 
@@ -153,6 +152,10 @@ Animation grabberAnimation;
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");
 
+
+
+        Shader SanimationHelper("include/Animations2/AnimationShader.vert","include/Animations2/AnimationShader.frag");
+        ourShader = SanimationHelper;
         Animation danceAnimation("res/models/Players/Cr4nk/crank_movement.dae",
                                  playerGrabber.getModel());
         grabberAnimation=danceAnimation;
@@ -295,9 +298,6 @@ Animation grabberAnimation;
 
 
 
-
-
-
         ourShader.use();
 
         // view/projection transformations
@@ -318,7 +318,9 @@ Animation grabberAnimation;
         // it's a bit too big for our scene, so scale it down
         model = glm::scale(model, glm::vec3(.5f, .5f, .5f));
         ourShader.setMat4("model", model);
-//        playerGrabber.Draw();
+        playerGrabber.Draw();
+
+
 
 
 
