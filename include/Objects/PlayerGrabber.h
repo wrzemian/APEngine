@@ -28,6 +28,7 @@ public:
     void onCollisionExit(Object3D* other) override;
     void Jump();
     void Grab();
+    Model getModel();
 };
 
 

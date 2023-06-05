@@ -109,3 +109,7 @@ PlayerGrabber::PlayerGrabber() {
     _transform._scale.y = 0.2f;
     _transform._scale.z = 0.2f;
 }
+
+Model PlayerGrabber::getModel() {
+    return *_model;
+}

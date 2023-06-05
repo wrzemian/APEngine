@@ -5,6 +5,10 @@
 class Animator
 {
 public:
+    Animator() {
+
+    }
+
     Animator(Animation* Animation)
     {
         m_CurrentTime = 0.0;
@@ -66,9 +70,34 @@ public:
         return m_FinalBoneMatrices;
     }
 
+    void renderAnimation(const std::string& vertexShader,const std::string& fragmentShader){
+//        ourShader.use();
+//
+//        // view/projection transformations
+//        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),
+//                                                (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+//        glm::mat4 view = camera.GetViewMatrix();
+//        ourShader.setMat4("projection", projection);
+//        ourShader.setMat4("view", view);
+//
+//        auto transforms = animator.GetFinalBoneMatrices();
+//        for (int i = 0; i < transforms.size(); ++i)
+//            ourShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+//
+//        // render the loaded model
+//        glm::mat4 model = glm::mat4(1.0f);
+//        // translate it down so it's at the center of the scene
+//        model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
+//        // it's a bit too big for our scene, so scale it down
+//        model = glm::scale(model, glm::vec3(.5f, .5f, .5f));
+//        ourShader.setMat4("model", model);
+//        ourModel.Draw(ourShader);
+    };
+
 private:
     std::vector<glm::mat4> m_FinalBoneMatrices;
     Animation* m_CurrentAnimation;
     float m_CurrentTime;
     float m_DeltaTime;
+    Shader ourShader;
 };

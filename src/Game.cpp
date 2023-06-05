@@ -51,6 +51,7 @@
 
 
 namespace Game {
+
     void processInput();
 
     float imgMOv = 0;
@@ -67,6 +68,7 @@ namespace Game {
     HUD hud;
     HUD hud2;
     Shader shader;
+    Shader animationShader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
     Shader lightShader;
@@ -74,15 +76,19 @@ namespace Game {
     Constant constant;
 //    Image image;
 
+Animation grabberAnimation;
+    Animator animator;
+
+
 
     PlayerJumper playerJumper;
     PlayerGrabber playerGrabber;
+
 
     Ant ant;
 
     Camera camera("camera");
 
-    //animation testing
 
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
@@ -96,7 +102,10 @@ namespace Game {
     Grabber grabber;
     Hitbox grabberHitbox("hitboxes/hitbox_grabber");
 
-   // Box box;
+
+
+
+    // Box box;
    // Hitbox boxHitbox("hitboxes/hitbox_box1");
 
 //    WinArea winArea;
@@ -116,6 +125,10 @@ namespace Game {
     std::string texToDisplay = "";
 
     Background background;
+    Shader ourShader;
+    //animation testing
+
+
 
     void Start() {
         std::cout << Engine::Init() << "\n";
@@ -140,10 +153,17 @@ namespace Game {
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");
 
+        Animation danceAnimation("res/models/Players/Cr4nk/crank_movement.dae",
+                                 playerGrabber.getModel());
+        grabberAnimation=danceAnimation;
+        Animator animatorHelper(&grabberAnimation);
+        animator = animatorHelper;
 
         p2Hitbox.draw = false;
         p1Hitbox.draw = false;
         antBigHitbox.draw = false;
+
+
 
 
         //player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
@@ -249,12 +269,8 @@ namespace Game {
         hud = hud1;
         hud.initImage("res/textures/tlo.png");
 
-
-//        Model ourModel("include/Animations2/testing/first_character.dae");
-//        Animation danceAnimation("include/Animations2/testing/first_character.dae",
-//                                 &ourModel);
-//        Animator animator(&danceAnimation);
-
+        Shader animationShader2("include/Animations2/AnimationShader.vert", "include/Animations2/AnimationShader.frag");
+        ourShader = animationShader2;
 
 
         Engine::logTextures();
@@ -274,7 +290,38 @@ namespace Game {
         processInput();
         playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
         playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
+        animator.UpdateAnimation(Engine::deltaTime);
         movImage -= 0.1;
+
+
+
+
+
+
+        ourShader.use();
+
+        // view/projection transformations
+        glm::mat4 projection1 = glm::perspective(glm::radians(camera.Zoom),
+                                                (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view1 = camera.GetViewMatrix();
+        ourShader.setMat4("projection", projection1);
+        ourShader.setMat4("view", view1);
+
+        auto transforms = animator.GetFinalBoneMatrices();
+        for (int i = 0; i < transforms.size(); ++i)
+            ourShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+
+        // render the loaded model
+        glm::mat4 model = glm::mat4(1.0f);
+        // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
+        // it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(.5f, .5f, .5f));
+        ourShader.setMat4("model", model);
+//        playerGrabber.Draw();
+
+
+
 
         float time = static_cast<float>(glfwGetTime());
         animation.renderAnimation(time, 2, 520, 1);

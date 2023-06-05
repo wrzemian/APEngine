@@ -18,7 +18,7 @@ class Animation
 public:
     Animation() = default;
 
-    Animation(const std::string& animationPath, Model* model)
+    Animation(const std::string& animationPath, Model model)
     {
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
@@ -27,7 +27,7 @@ public:
         m_Duration = animation->mDuration;
         m_TicksPerSecond = animation->mTicksPerSecond;
         ReadHeirarchyData(m_RootNode, scene->mRootNode);
-        ReadMissingBones(animation, *model);
+        ReadMissingBones(animation, model);
     }
 
     ~Animation()
