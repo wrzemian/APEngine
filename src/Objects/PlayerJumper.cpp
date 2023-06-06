@@ -34,7 +34,8 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     else {
         _velocity.x = 0;
     }
-    _transform._rotation.y = -atan2(_velocity.z, _velocity.x);
+    if(_velocity.x != 0 || _velocity.z != 0)
+        _transform._rotation.y = -atan2(_velocity.z, _velocity.x);
 
     if (inputSystem->GetKeyDown(GLFW_KEY_E)) {
         if(haveBattery)
