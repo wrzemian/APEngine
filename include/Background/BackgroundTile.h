@@ -7,6 +7,7 @@
 #include "../Objects/Object3D.h"
 #include "Cactus.h"
 #include "Rock.h"
+#include "vector"
 class BackgroundTile : public Object3D{
 private:
     typedef Object3D super;

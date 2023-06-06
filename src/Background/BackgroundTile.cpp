@@ -12,7 +12,7 @@ void BackgroundTile::initBackgroundTile()
     //_transform._scale.z = 0.6f;
     //_transform._position.x = -1200;
     _transform._position.y = 0;
-    _transform._position.z = 100;
+    _transform._position.z = 10;
     _transform._rotation.y = 1.57079632679f;
 }
 
@@ -68,12 +68,13 @@ void BackgroundTile::GenerateRandomObjects()
     {
         Rock *rock = new Rock();
         rock->HideImgui();
+        rock->initRock();
         rocks.push_back(rock);
-        cactuses[i]->setShader(_shader);
+        rocks[i]->setShader(_shader);
         rocks[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
         rocks[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
         rocks[i]->_transform._position.y = 0.2;
-        rocks[i]->initRock();
+        //rocks[i]->initRock();
         rocks[i]->randomizeRotation();
         rocks[i]->randomizeSize(1,2);
     }

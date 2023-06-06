@@ -20,7 +20,7 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
         std::cout << interval * i << std::endl;
         backgroundTiles[i+1]->setShader(shader);
         backgroundTiles[i+1]->initBackgroundTile();
-        backgroundTiles[i+1]->SetBoundaries(0,-250,-105,-150);
+        backgroundTiles[i+1]->SetBoundaries(0,-250,-15,-80);
         backgroundTiles[i+1]->SetAmountToGenerate(15,5,15,5);
         backgroundTiles[i+1]->GenerateRandomObjects();
     }

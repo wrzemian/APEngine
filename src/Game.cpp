@@ -169,7 +169,7 @@ namespace Game {
         wagon.ShowImgui();
 
 
-        //background.initBackground(5,-525.509948,262.754974,&shader);
+        background.initBackground(5,-525.509948,262.754974,&shader);
 
 //        battery.loadModel("../../res/models/Assets/battery/battery.obj");
 //        battery.tag = "battery";
@@ -293,6 +293,9 @@ namespace Game {
 //
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
+
+        background.Move(-50*Engine::deltaTime);
+
 
         Engine::renderHitboxes(projection * view);
 
