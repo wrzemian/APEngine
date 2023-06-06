@@ -26,6 +26,7 @@ public:
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);
     void onCollision(Object3D* other) override;
     void onCollisionExit(Object3D* other) override;
+    void switchAnimation();
     void Jump();
     void Grab();
 };

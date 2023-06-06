@@ -136,7 +136,8 @@ namespace Game {
         playerJumper.initPlayer(&inputSystem);
         playerGrabber.initPlayer(&inputSystem);
 
-        playerGrabber.loadAnimation("../../res/models/Players/Cr4nk/crank_movement_gud.dae");
+        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
+        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
 
 
 //        hud.initAnimation();
@@ -336,8 +337,21 @@ namespace Game {
             playerJumper.Jump();
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1)) {
+            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
             playerGrabber.Jump();
         }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_UP)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_DOWN)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_LEFT)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_RIGHT)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
 
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
 //        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));

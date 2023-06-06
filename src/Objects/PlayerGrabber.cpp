@@ -3,6 +3,7 @@
 //
 
 #include "../../include/Objects/PlayerGrabber.h"
+int walking = 0;
 
 void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
@@ -70,6 +71,9 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
 void PlayerGrabber::onCollision(Object3D *other) {
     if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
+        walking++;
+        this->switchAnimation();
+//        this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
         _velocity.y = 0;
         jumpCount = 0;
     }
@@ -82,6 +86,8 @@ void PlayerGrabber::onCollision(Object3D *other) {
 void PlayerGrabber::Jump() {
     if (jumpCount == 0 && this->_velocity.y <= 0&& this->_velocity.y <= 0)
     {
+//        this->loadAnimation("res/models/Players/Cr4nk/crank_jump_final.dae");
+        walking = 0;
         this->AddVelocity(glm::vec3(0.0f, 4.0f, 0.0f));
         jumpCount += 1;
     }
@@ -109,3 +115,11 @@ PlayerGrabber::PlayerGrabber() {
     _transform._scale.y = 0.2f;
     _transform._scale.z = 0.2f;
 }
+
+void PlayerGrabber::switchAnimation() {
+    if(walking == 1){
+        this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+    }
+
+}
+
