@@ -250,6 +250,13 @@ namespace Engine {
             if(object->_shader != &shader) {
                 object->setShader(&shader);
             }
+            if(object->animated) {
+                shader.setBool("animated", object->animated);
+                auto transforms = object->animator->GetFinalBoneMatrices();
+                for (int i = 0; i < transforms.size(); ++i)
+                    shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+            }
+
 //                object->Draw();
 //            object->_transform.computeModelMatrix();
             Entity test(*object->_model);

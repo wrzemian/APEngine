@@ -18,7 +18,7 @@ class Animation
 public:
     Animation() = default;
 
-    Animation(const std::string& animationPath, Model* model)
+    Animation(const std::string& animationPath, std::shared_ptr<Model> model)
     {
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);

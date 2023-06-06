@@ -8,6 +8,8 @@
 #include "../Shader.h"
 #include "../IGui.h"
 #include "document.h"
+#include "../Animations2/Animation.h"
+#include "../Animations2/Animator.h"
 
 class Object3D : public IGui {
 public:
@@ -15,6 +17,7 @@ public:
     virtual ~Object3D();
     int id = -1;
     bool rendered = true;
+    bool animated = false;
 
     std::string tag = "floor";
 
@@ -23,6 +26,9 @@ public:
 
     void ImGui();
     void loadModel(const std::string& path);
+
+    void loadAnimation(const std::string& modelPath,
+                       const std::string& animationPath);
 
     virtual void onCollisionX(Object3D* other);
     virtual void onCollisionY(Object3D* other);
@@ -33,6 +39,7 @@ public:
 
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;
+    Animator* animator = nullptr;
     Shader* _shader = nullptr;
     std::string _path;
 };
