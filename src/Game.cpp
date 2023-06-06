@@ -136,6 +136,8 @@ namespace Game {
         playerJumper.initPlayer(&inputSystem);
         playerGrabber.initPlayer(&inputSystem);
 
+        playerGrabber.loadAnimation("../../res/models/Players/Cr4nk/crank_movement_gud.dae");
+
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");

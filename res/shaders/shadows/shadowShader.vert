@@ -33,7 +33,7 @@ void main()
             continue;
             if(boneIds[i] >=MAX_BONES)
             {
-                totalPosition = vec4(pos,1.0f);
+                totalPosition = vec4(aPos,1.0f);
                 break;
             }
             vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);

@@ -1,6 +1,8 @@
 #include "glm/fwd.hpp"
 #include "glm/glm.hpp"
 #include "Animation.h"
+#ifndef ANIMATOR_H
+#define ANIMATOR_H
 
 class Animator
 {
@@ -72,3 +74,4 @@ private:
     float m_CurrentTime;
     float m_DeltaTime;
 };
+#endif

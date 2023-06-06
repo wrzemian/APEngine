@@ -27,8 +27,7 @@ public:
     void ImGui();
     void loadModel(const std::string& path);
 
-    void loadAnimation(const std::string& modelPath,
-                       const std::string& animationPath);
+    void loadAnimation(const std::string& daePath);
 
     virtual void onCollisionX(Object3D* other);
     virtual void onCollisionY(Object3D* other);
