@@ -260,7 +260,7 @@ namespace Game {
 
 
 
-        Engine::logTextures();
+//        Engine::logTextures();
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }

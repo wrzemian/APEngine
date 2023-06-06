@@ -126,9 +126,10 @@ void Object3D::onCollisionExit(Object3D *other) {
 void Object3D::loadAnimation(const std::string& daePath) {
     animated = true;
     Model tempModel(daePath);
-    animatedModel = &tempModel;
-    Animation temp(daePath, animatedModel);
+    animatedModel = tempModel;
+    Animation temp(daePath, &animatedModel);
+    animation = temp;
     Animator tempA(&temp);
-    animator = &tempA;
+    animator = tempA;
 
 }
