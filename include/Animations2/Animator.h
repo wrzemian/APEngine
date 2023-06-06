@@ -26,7 +26,7 @@ public:
         m_DeltaTime = dt;
         if (m_CurrentAnimation)
         {
-            spdlog::error("idk: {}", m_CurrentAnimation->GetTicksPerSecond());
+            //spdlog::error("idk: {}", m_CurrentAnimation->GetTicksPerSecond());
             m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt;
             m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
             CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
