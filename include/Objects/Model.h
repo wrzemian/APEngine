@@ -268,7 +268,7 @@ private:
 public:
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {
-        spdlog::warn("jp2gmd:: texture count ({}), typeName({}) ", mat->GetTextureCount(type), typeName);
+        //spdlog::warn("jp2gmd:: texture count ({}), typeName({}) ", mat->GetTextureCount(type), typeName);
 
         std::vector<Texture> textures;
         for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)

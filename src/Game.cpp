@@ -138,6 +138,7 @@ namespace Game {
 
         playerGrabber.loadAnimation("../../res/models/Players/Cr4nk/crank_movement_gud.dae");
 
+
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
         hud2.initText("res/fonts/Arialn.ttf");
@@ -284,6 +285,7 @@ namespace Game {
         hud.renderImage(imgMOv);
 
         //player1.Move();
+
         Engine::moveObjects();
 
         //Engine::renderLights(lightShader, camera);
@@ -323,6 +325,7 @@ namespace Game {
             spotLight.ShowImgui();
             camera.ShowImgui();
             shadows.ShowImgui();
+            playerGrabber.ShowImgui();
         }
         ImGui::Render();
     }

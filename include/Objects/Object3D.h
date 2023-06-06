@@ -38,6 +38,7 @@ public:
 
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;
+    Model* animatedModel = nullptr;
     Animator* animator = nullptr;
     Shader* _shader = nullptr;
     std::string _path;

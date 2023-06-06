@@ -255,6 +255,7 @@ namespace Engine {
                 auto transforms = object->animator->GetFinalBoneMatrices();
                 for (int i = 0; i < transforms.size(); ++i)
                     shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+//                object->animator->UpdateAnimation(Engine::deltaTime);
             }
 
 //                object->Draw();
