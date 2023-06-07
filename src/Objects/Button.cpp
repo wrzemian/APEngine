@@ -23,6 +23,10 @@ void Button::onCollision(Object3D *other) {
         }
         //objectsWithContact.push_back(other);
         //std::cout << "przycisk wcisniety" << std::endl;
+        if(!isPushed)
+        {
+            _transform._position.y -= 0.02f;
+        }
         isPushed = true;
         for (Platform* platform : connectedPlatforms) {
             if(platform != nullptr)
@@ -41,7 +45,12 @@ void Button::onCollisionExit(Object3D *other) {
         //std::cout << "przycisk odcisniety" << std::endl;
         if(objectsWithContact.empty())
         {
+            if(isPushed) {
+                _transform._position.y += 0.02f;
+            }
+
             isPushed = false;
+
             for (Platform* platform : connectedPlatforms) {
                 platform->OnDeactivate();
             }
