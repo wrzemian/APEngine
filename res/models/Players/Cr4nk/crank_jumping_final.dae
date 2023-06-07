@@ -103,6 +103,15 @@
     <image id="untitled_Material_001_BaseColor_png_001" name="untitled_Material_001_BaseColor_png_001">
       <init_from>untitled_Material.001_BaseColor.png.001.png</init_from>
     </image>
+<image id="DefaultMaterial_Normal_png_002" name="DefaultMaterial_BaseColor_png_002">
+      <init_from>DefaultMaterial_BaseColor.png.002.png</init_from>
+    </image>
+    <image id="untitled_Material_001_Normal_png" name="untitled_Material_001_BaseColor_png">
+      <init_from>untitled_Material.001_Normal.png</init_from>
+    </image>
+    <image id="untitled_Material_001_Normal_png_001" name="untitled_Material_001_BaseColor_png_001">
+      <init_from>untitled_Material.001_Normal.png.001.png</init_from>
+    </image>
   </library_images>
   <library_materials>
     <material id="Material_002-material" name="Material.002">
