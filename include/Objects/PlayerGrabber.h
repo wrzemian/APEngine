@@ -17,6 +17,8 @@ private:
     int jumpCount = 0;
     bool haveBattery = false;
     bool canPickUpBattery = false;
+    int walking;
+    int recentlyMoved;
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
 public:
     PlayerGrabber();
@@ -28,6 +30,7 @@ public:
     void onCollisionExit(Object3D* other) override;
     void switchAnimation();
     void switchAnimationJump();
+    void switchAnimationStand();
     void Jump();
     void Grab();
 };
