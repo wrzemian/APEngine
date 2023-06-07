@@ -27,6 +27,7 @@ public:
     void onCollision(Object3D* other) override;
     void onCollisionExit(Object3D* other) override;
     void switchAnimation();
+    void switchAnimationJump();
     void Jump();
     void Grab();
 };

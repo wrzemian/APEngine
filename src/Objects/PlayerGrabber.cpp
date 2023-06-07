@@ -86,7 +86,6 @@ void PlayerGrabber::onCollision(Object3D *other) {
 void PlayerGrabber::Jump() {
     if (jumpCount == 0 && this->_velocity.y <= 0&& this->_velocity.y <= 0)
     {
-//        this->loadAnimation("res/models/Players/Cr4nk/crank_jump_final.dae");
         walking = 0;
         this->AddVelocity(glm::vec3(0.0f, 4.0f, 0.0f));
         jumpCount += 1;
@@ -119,6 +118,13 @@ PlayerGrabber::PlayerGrabber() {
 void PlayerGrabber::switchAnimation() {
     if(walking == 1){
         this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+    }
+
+}
+
+void PlayerGrabber::switchAnimationJump() {
+    if(jumpCount == 0){
+        this->loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
     }
 
 }

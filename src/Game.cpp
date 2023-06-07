@@ -337,8 +337,10 @@ namespace Game {
             playerJumper.Jump();
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1)) {
-            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
+            playerGrabber.switchAnimationJump();
             playerGrabber.Jump();
+
         }
 //        if (inputSystem.GetKeyDown(GLFW_KEY_UP)) {
 //            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
