@@ -75,7 +75,7 @@ void PlayerGrabber::onCollision(Object3D *other) {
     if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
 
-        this->switchAnimation();
+        this->switchAnimationWalk();
         this->switchAnimationStand();
 
         _velocity.y = 0;
@@ -122,7 +122,7 @@ PlayerGrabber::PlayerGrabber() {
 
 
 
-void PlayerGrabber::switchAnimation() {
+void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
         this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
         this->recentlyMoved = 0;

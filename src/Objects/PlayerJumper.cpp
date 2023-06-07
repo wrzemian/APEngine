@@ -65,12 +65,16 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
 void PlayerJumper::Jump() {
     if (jumpCount == 1 && haveBattery)
     {
+        walking = 0;
+        recentlyMoved = 0;
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         this->_velocity.y = 4.0f;
         jumpCount += 1;
     }
     else if (jumpCount == 0 && this->_velocity.y <= 0)
     {
+        walking = 0;
+        recentlyMoved = 0;
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         this->_velocity.y = 4.0f;
         jumpCount += 1;
@@ -80,6 +84,11 @@ void PlayerJumper::Jump() {
 void PlayerJumper::onCollision(Object3D *other) {
     if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
+
+//        this->switchAnimationWalk();
+//        this->switchAnimationStand();
+
+
         _velocity.y = 0;
         jumpCount = 0;
     }
@@ -96,3 +105,26 @@ void PlayerJumper::onCollisionExit(Object3D *other) {
         canPickUpBattery = false;
     }
 }
+
+//void PlayerJumper::switchAnimationWalk() {
+//    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
+//        this->loadAnimation("res/models/Players/Mich3l/michel_running.dae");
+//        this->recentlyMoved = 0;
+//        this->walking = 1;
+//    }
+//}
+//
+//void PlayerJumper::switchAnimationJump() {
+//    if(jumpCount == 0){
+//        this->loadAnimation("res/models/Players/Mich3l/animation/michel_jumping.dae");
+//    }
+//
+//}
+//
+//void PlayerJumper::switchAnimationStand() {
+//    if(_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
+//        this->loadAnimation("res/models/Players/Mich3l/animation/michel_standing_and_looking_around.dae");
+//        this->recentlyMoved = 1;
+//        this->walking = 0;
+//    }
+//}

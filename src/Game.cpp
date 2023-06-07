@@ -138,7 +138,7 @@ namespace Game {
 
         playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
         playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
-
+//        playerJumper.loadAnimation("res/models/Players/Mich3l/animation/michel_movement.dae");
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
@@ -334,6 +334,7 @@ namespace Game {
 
     void processInput() {
         if (inputSystem.GetKeyDown(GLFW_KEY_SPACE)) {
+//            playerJumper.switchAnimationJump();
             playerJumper.Jump();
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1)) {

@@ -17,6 +17,9 @@ private:
     bool haveBattery = false;
     bool canPickUpBattery = false;
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
+    int walking;
+    int recentlyMoved;
+
 public:
     Battery* battery;
     void initPlayer(InputSystem* inputSystem);
@@ -24,6 +27,9 @@ public:
     void Jump();
     void onCollision(Object3D* other) override;
     void onCollisionExit(Object3D* other) override;
+    void switchAnimationWalk();
+    void switchAnimationJump();
+    void switchAnimationStand();
 };
 
 
