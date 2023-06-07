@@ -19,8 +19,14 @@ private:
     bool canPickUpBattery = false;
     int walking;
     int recentlyMoved;
+
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
 public:
+
+    Animation walk;
+    Animation jump;
+    Animation stand;
+    Animator grabberAnimator;
     PlayerGrabber();
     Battery* battery;
     Grabber* grabber;

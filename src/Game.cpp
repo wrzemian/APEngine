@@ -136,9 +136,11 @@ namespace Game {
         playerJumper.initPlayer(&inputSystem);
         playerGrabber.initPlayer(&inputSystem);
 
-        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
-        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
+//        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
 //        playerJumper.loadAnimation("res/models/Players/Mich3l/animation/michel_movement.dae");
+//        Animation temp(daePath, &*_model);
+
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");

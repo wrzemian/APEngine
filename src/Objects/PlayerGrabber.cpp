@@ -78,6 +78,7 @@ void PlayerGrabber::onCollision(Object3D *other) {
         this->switchAnimationWalk();
         this->switchAnimationStand();
 
+
         _velocity.y = 0;
         jumpCount = 0;
     }
@@ -115,9 +116,9 @@ void PlayerGrabber::onCollisionExit(Object3D *other) {
 PlayerGrabber::PlayerGrabber() {
     IGui::setWindowName("player grabber");
     //TODO: fix this xddd
-    _transform._scale.x = 0.2f;
-    _transform._scale.y = 0.2f;
-    _transform._scale.z = 0.2f;
+    _transform._scale.x = 0.02f;
+    _transform._scale.y = 0.02f;
+    _transform._scale.z = 0.02f;
 }
 
 
@@ -139,7 +140,7 @@ void PlayerGrabber::switchAnimationJump() {
 }
 
 void PlayerGrabber::switchAnimationStand() {
-    if(_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
+    if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
         this->loadAnimation("res/models/Players/Cr4nk/crank_standing_with_breathing.dae");
         this->recentlyMoved = 1;
         this->walking = 0;
