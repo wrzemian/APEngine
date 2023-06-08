@@ -104,17 +104,29 @@
               <float sid="ior">1.45</float>
             </index_of_refraction>
           </phong>
-          <extra>
-            <technique profile="FCOLLADA">
-              <displacement>
-                <texture texture="Normal1-sampler" texcoord="UVMap">
-		</texture>
-              </displacement>
-            </technique>
-            <technique profile="FCOLLADA">
-              <bump bumptype="NORMALMAP">
-                <texture texture="Normal1-sampler" texcoord="UVMap">
-		</texture>
+	  <extra>
+ 	    <technique profile="FCOLLADA">
+              <bump>
+                <texture texture= "Normal1-sampler" texcoord="UV0">
+                <extra>
+                  <technique profile="OKINO">
+                    <weighting>1.000000</weighting>
+                    <modulation_source> rgb </modulation_source>
+                  </technique>
+                  <technique profile="MAX3D">
+                    <amount>1.000000</amount>
+                  </technique>
+                  <technique profile="MAYA">
+                    <wrapU>1</wrapU>
+                    <wrapV>1</wrapV>
+                    <repeatU>1.000000</repeatU>
+                    <repeatV>1.000000</repeatV>
+                    <offsetU>0.000000</offsetU>
+                    <offsetV>0.000000</offsetV>
+                    <rotateUV>0.000000</rotateUV>
+                  </technique>
+                </extra>
+                </texture>
               </bump>
             </technique>
           </extra>
@@ -251,9 +263,6 @@
     <image id="Roughness1-image" name="Roughness1">
       <init_from>untitled_Material.001_Roughness.png</init_from>
     </image>
-    <image id="Normal1-image" name="Normal1">
-      <init_from>untitled_Material.001_Normal.png</init_from>
-    </image>
     <image id="Emission1-image" name="Emission1">
       <init_from>untitled_Material.001_Emmisive.png</init_from>
     </image>
@@ -262,6 +271,9 @@
     </image>
     <image id="Height1-image" name="Height1">
       <init_from>untitled_Material.001_Height.png</init_from>
+    </image>
+    <image id="Normal1-image" name="Normal1">
+      <init_from>untitled_Material.001_Normal.png</init_from>
     </image>
   </library_images>
 
