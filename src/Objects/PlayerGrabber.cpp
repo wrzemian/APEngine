@@ -4,7 +4,6 @@
 
 #include "../../include/Objects/PlayerGrabber.h"
 
-
 void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
     tag = "player";
@@ -20,7 +19,6 @@ void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
 void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     if (inputSystem->GetKey(GLFW_KEY_UP)) {
         _velocity.z = -movementSpeed;
-
     }
     else if (inputSystem->GetKey(GLFW_KEY_DOWN)) {
         _velocity.z = movementSpeed;
@@ -77,8 +75,6 @@ void PlayerGrabber::onCollision(Object3D *other) {
 
         this->switchAnimationWalk();
         this->switchAnimationStand();
-
-
         _velocity.y = 0;
         jumpCount = 0;
     }
@@ -121,29 +117,24 @@ PlayerGrabber::PlayerGrabber() {
     _transform._scale.z = 0.02f;
 }
 
-
-
 void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
-        this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
         this->recentlyMoved = 0;
         this->walking = 1;
     }
-
 }
 
 void PlayerGrabber::switchAnimationJump() {
     if(jumpCount == 0){
         this->loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
     }
-
 }
 
 void PlayerGrabber::switchAnimationStand() {
     if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
-        this->loadAnimation("res/models/Players/Cr4nk/crank_standing_with_breathing.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
         this->recentlyMoved = 1;
         this->walking = 0;
     }
 }
-
