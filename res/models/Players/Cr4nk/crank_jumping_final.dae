@@ -106,8 +106,15 @@
           </phong>
           <extra>
             <technique profile="FCOLLADA">
-              <bump>
-                <texture texture="Normal1-sampler" texcoord="UVMap" />
+              <displacement>
+                <texture texture="Normal1-sampler" texcoord="UVMap">
+		</texture>
+              </displacement>
+            </technique>
+            <technique profile="FCOLLADA">
+              <bump bumptype="NORMALMAP">
+                <texture texture="Normal1-sampler" texcoord="UVMap">
+		</texture>
               </bump>
             </technique>
           </extra>
@@ -209,7 +216,7 @@
           </phong>
 	  <extra>
             <technique profile="FCOLLADA">
-              <bump>
+              <bump bumptype="NORMALMAP">
                 <texture texture="Normal2-sampler" texcoord="UVMap" />
               </bump>
             </technique>
