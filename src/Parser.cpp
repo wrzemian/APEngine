@@ -118,6 +118,65 @@ MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();
 
+    /*  ZACZYTYWANIE TEKSTUR Z DAE
+    if(d["newparam"].GetString() == "newparam")	{
+        // save ID
+        int attrSID = GetAttribute( "sid");
+        std::string sid = mReader->getAttributeValue( attrSID);
+        pEffect.mParams[sid] = EffectParam();
+        ReadEffectParam( pEffect.mParams[sid]);
+    }
+    else if( d["technique"].GetString() == "technique" || d["extra"].GetString() == "extra")
+    {
+        // just syntactic sugar
+    }
+
+    else if( d["phong"].GetString() == "phong")
+        pEffect.mShadeType = Shade_Phong;
+    else if( d["constant"].GetString() == "constant")
+        pEffect.mShadeType = Shade_Constant;
+    else if( d["lambert"].GetString() == "lambert")
+        pEffect.mShadeType = Shade_Lambert;
+    else if( d["blinn"].GetString() == "blinn")
+        pEffect.mShadeType = Shade_Blinn;
+
+    else if( d["emission"].GetString() == "emission")
+        ReadEffectColor( pEffect.mEmissive, pEffect.mTexEmissive);
+    else if( IsElement( "ambient"))
+        ReadEffectColor( pEffect.mAmbient, pEffect.mTexAmbient);
+    else if( IsElement( "diffuse"))
+        ReadEffectColor( pEffect.mDiffuse, pEffect.mTexDiffuse);
+    else if( IsElement( "specular"))
+        ReadEffectColor( pEffect.mSpecular, pEffect.mTexSpecular);
+    else if( IsElement( "reflective")) {
+        ReadEffectColor( pEffect.mReflective, pEffect.mTexReflective);
+    }
+    else if( IsElement( "transparent")) {
+        ReadEffectColor( pEffect.mTransparent,pEffect.mTexTransparent);
+    }
+    else if( IsElement( "shininess"))
+        ReadEffectFloat( pEffect.mShininess);
+    else if( IsElement( "reflectivity"))
+        ReadEffectFloat( pEffect.mReflectivity);
+
+    else if( IsElement( "transparency"))
+        ReadEffectFloat( pEffect.mTransparency);
+    else if( IsElement( "index_of_refraction"))
+        ReadEffectFloat( pEffect.mRefractIndex);
+
+        // GOOGLEEARTH/OKINO extensions
+        // -------------------------------------------------------
+    else if( IsElement( "double_sided"))
+        pEffect.mDoubleSided = ReadBoolFromTextContent();
+
+        // FCOLLADA extensions
+        // -------------------------------------------------------
+    else if( IsElement( "bump")) {
+        aiColor4D dummy;
+        ReadEffectColor( dummy,pEffect.mTexBump);
+    }
+    */
+
     if(type == "object3D") {
         glm::vec3 tempScale(d["scaleX"].GetFloat(), d["scaleY"].GetFloat(), d["scaleZ"].GetFloat());
         glm::vec3 tempRotation(d["rotationX"].GetFloat(), d["rotationY"].GetFloat(), d["rotationZ"].GetFloat());

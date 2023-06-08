@@ -41,7 +41,6 @@ public:
 
     rapidjson::Document openJSON (std::string fileName);
 
-
 };
 
 
