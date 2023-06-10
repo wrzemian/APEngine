@@ -216,7 +216,7 @@ namespace Engine {
         for(Object3D* object: allObjects) {
             spdlog::info("OBJECT {}", object->_path);
             for (const auto& tex: object->_model->textures_loaded) {
-                spdlog::info("TEXTURE id: {}, type: {}, path: {}", tex.id, tex.type, tex.path);
+                spdlog::info("2137 TEXTURE id: {}, type: {}, path: {}", tex.id, tex.type, tex.path);
             }
         }
     }
