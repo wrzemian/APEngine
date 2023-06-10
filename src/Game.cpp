@@ -103,7 +103,7 @@ namespace Game {
 //    Hitbox winHitbox("hitboxes/hitbox_win");
 
 
-    Level currentLevel;
+    Level* currentLevel;
 
     GLfloat movementSpeed = 3.0f;
 
@@ -121,13 +121,16 @@ namespace Game {
     void Start() {
         std::cout << Engine::Init() << "\n";
 
+        LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
+        LevelManager::getInstance().ShowImgui();
+
         shadows.initShaders();
         Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         lightShader = tempLightShader;
         lightShader.use();
 
         inputSystem.InputInit();
-        /*inputSystem.monitorKey(GLFW_KEY_W);
+        /*inputSystem.monitorKey(GLFW_KEY_W); // TODO: please remove unncecessary comments
         inputSystem.monitorKey(GLFW_KEY_A);
         inputSystem.monitorKey(GLFW_KEY_S);
         inputSystem.monitorKey(GLFW_KEY_D);*/
@@ -164,10 +167,9 @@ namespace Game {
 
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
-        currentLevel.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
-        currentLevel.logNewObjects();
-        currentLevel.ShowImgui();
 
+
+        //currentLevel = LevelManager.getInstance().
 
         background.initBackground(5,-525.509948,262.754974,&shader);
 
@@ -181,9 +183,9 @@ namespace Game {
 //        battery._transform._scale.x = 0.2f;
 //        battery._transform._scale.y = 0.2f;
 //        battery._transform._scale.z = 0.2f;
-        if(!currentLevel.batteries.empty()) {
-            playerJumper.battery = currentLevel.batteries.at(0).get();
-            playerGrabber.battery = currentLevel.batteries.at(0).get();
+        if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty()) { // TODO: fix this tomfoolery
+            playerJumper.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
+            playerGrabber.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
         }
 
 

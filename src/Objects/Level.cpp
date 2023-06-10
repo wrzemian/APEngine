@@ -63,7 +63,7 @@ void Level::calculateHitboxes() {
                     spdlog::info("created door object");
                     winArea = std::make_shared<WinArea>();
                     winArea->tag = "winArea";
-                    winArea->ShowImgui();
+                    //winArea->ShowImgui();
                     winArea->_transform._position = _transform._position;
                     winArea->_model = std::make_shared<Model>();
                 }
@@ -141,7 +141,7 @@ void Level::calculateHitboxes() {
 
                 auto button = std::make_shared<Button>(nullptr, glm::vec3(0));
                 button->tag = "button";
-                button->ShowImgui();
+               // button->ShowImgui();
                 button->_transform._position = _transform._position;
 
                 button->_model = std::make_shared<Model>();
@@ -195,7 +195,7 @@ void Level::calculateHitboxes() {
 
                 auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
                 platform->tag = "moving platform";
-                platform->ShowImgui();
+              //  platform->ShowImgui();
                 platform->id = totalId;
 
                 platform->_transform._position = _transform._position;
