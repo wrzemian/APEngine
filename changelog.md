@@ -9,6 +9,7 @@
 - Loading multiple levels 
 - Frustum bounding box calculated once 130->180fps
 - Refactor: one shader for all objects
+- Checking wall collisions only with current level
 
 ## [0.0.12] - 2023-05-02
 ### Added

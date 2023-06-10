@@ -15,6 +15,7 @@
 #include "../include/User/InputSystem.h"
 #include "../include/FrustumOpitmizer.h"
 #include "../include/Objects/Ant.h"
+#include "../include/LevelManager.h"
 
 
 namespace Engine {
@@ -375,9 +376,9 @@ namespace Engine {
 
         // Check for collisions between dynamic and static hitboxes
         for(auto dynamicHitbox: dynamicHitboxes) {
-            for(auto staticHitbox: staticHitboxes) {
-                if(dynamicHitbox->TestForIntersection(staticHitbox)) {
-                    currentCollisions.push_back({dynamicHitbox, staticHitbox});
+            for(auto staticHitbox: LevelManager::getInstance().getCurrentLevel()->hitboxes) {
+                if(dynamicHitbox->TestForIntersection(staticHitbox.get())) {
+                    currentCollisions.push_back({dynamicHitbox, staticHitbox.get()});
                 }
             }
         }
