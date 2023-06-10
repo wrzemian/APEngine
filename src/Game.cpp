@@ -48,7 +48,7 @@
 #include "../include/Objects/SimpleHitbox.h"
 #include "../include/Animations2/Animator.h"
 #include "../include/lights/Shadows.h"
-
+#include "../include/LevelManager.h"
 
 namespace Game {
     void processInput();
@@ -101,6 +101,7 @@ namespace Game {
 
 //    WinArea winArea;
 //    Hitbox winHitbox("hitboxes/hitbox_win");
+
 
     Level wagon;
 
@@ -257,7 +258,7 @@ namespace Game {
 
 
 
-        Engine::logTextures();
+      //  Engine::logTextures();
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
