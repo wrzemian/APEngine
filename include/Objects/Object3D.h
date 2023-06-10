@@ -16,6 +16,9 @@ public:
     int id = -1;
     bool rendered = true;
 
+    glm::vec3 boundingBoxMin{};
+    glm::vec3 boundingBoxMax{};
+
     std::string tag = "floor";
 
     virtual void Draw(Shader &shader);

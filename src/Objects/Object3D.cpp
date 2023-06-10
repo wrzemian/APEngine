@@ -30,6 +30,13 @@ void Object3D::Draw(Shader &shader) {
 void Object3D::loadModel(const std::string& path) {
     _path = path;
     _model = AssetManager::getInstance().getModel(path);
+
+    auto boundingBox = Hitbox(Hitbox::BOUNDING_BOX);
+    boundingBox.Create(this);
+    boundingBox.calculateFromModel(*_model);
+
+    boundingBoxMin = boundingBox._min;
+    boundingBoxMax = boundingBox._max;
 }
 
 

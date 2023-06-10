@@ -249,11 +249,13 @@ namespace Engine {
 
 //                object->Draw();
 //            object->_transform.computeModelMatrix();
-            Entity test(*object->_model);
+            // Entity test(*object->_model);
+            Entity test(*object);
+
             test.transform.setLocalPosition(object->_transform._position);
             test.transform.setLocalScale(object->_transform._scale);
             test.transform.setLocalRotation(object->_transform._rotation);
-            test.transform.computeModelMatrix();
+            test.transform.computeModelMatrix(); // TODO: reduce matrix calculations
 //            if (test.boundingVolume->isOnFrustum(camFrustum, object->_transform))
             if(frustum) {
                 if (test.boundingVolume->isOnFrustum(camFrustum, test.transform))

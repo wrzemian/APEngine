@@ -75,6 +75,11 @@ public:
     Model* pModel = nullptr;
     std::unique_ptr<AABB> boundingVolume;
 
+    Entity(Object3D& object) : pModel{ object._model.get() }
+    {
+        boundingVolume = std::make_unique<AABB>(object.boundingBoxMin, object.boundingBoxMax);
+        //boundingVolume = std::make_unique<Sphere>(generateSphereBV(model));
+    }
 
     // constructor, expects a filepath to a 3D model.
     Entity(Model& model) : pModel{ &model }
