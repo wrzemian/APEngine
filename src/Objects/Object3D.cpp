@@ -13,7 +13,7 @@ Object3D::Object3D() {
     Engine::addObject(this);
 }
 
-void Object3D::Draw() {
+void Object3D::Draw(Shader &shader) {
     //shader.use();
     if(_model == nullptr) {
         spdlog::error("null model in {}", tag);
@@ -23,10 +23,10 @@ void Object3D::Draw() {
         spdlog::error("null shader in {}", tag);
         return;
     }
-    _transform.updateWorldTransform(glm::mat4(1.0f), *_shader);
+    _transform.updateWorldTransform(glm::mat4(1.0f), shader);
     // shader.setMat4("model", _transform.getModel());
 
-    _model->Draw(*_shader);
+    _model->Draw(shader);
 
 }
 

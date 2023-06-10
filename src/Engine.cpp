@@ -261,12 +261,12 @@ namespace Engine {
             if(frustum) {
                 if (test.boundingVolume->isOnFrustum(camFrustum, test.transform))
                 {
-                    object->Draw();
+                    object->Draw(shader);
                     displayCounter++;
                 }
             }
             else {
-                object->Draw();
+                object->Draw(shader);
                 displayCounter++;
             }
             totalCounter++;
@@ -294,12 +294,6 @@ namespace Engine {
 
     }
 
-    void drawObjects() {
-        for(Object3D* object: allObjects) {
-            object->Draw();
-        }
-
-    }
 
     void ImGui() {
         ImGui::Begin("Engine");

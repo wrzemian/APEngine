@@ -453,7 +453,7 @@ void Level::setShader(Shader* shader) {
     }
 };
 
-void Level::Draw() {
+void Level::Draw(Shader &shader) {
     //shader.use();
     if(_model == nullptr) {
         spdlog::error("null model in {}", tag);

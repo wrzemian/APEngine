@@ -42,7 +42,7 @@ public:
 
     void loadFromJSON(const Level& temp);
 
-    void Draw();
+    void Draw(Shader &shader);
 
     Model staticModel;
 };
