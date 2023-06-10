@@ -6,6 +6,9 @@
 - Loading buttons, platforms, decorations with and without collisions
 - Platforms semi-correctly load their target positions
 - Buttons connect to platforms
+- Loading multiple levels 
+- Frustum bounding box calculated once 130->180fps
+- Refactor: one shader for all objects
 
 ## [0.0.12] - 2023-05-02
 ### Added
