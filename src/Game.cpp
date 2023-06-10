@@ -103,7 +103,7 @@ namespace Game {
 //    Hitbox winHitbox("hitboxes/hitbox_win");
 
 
-    Level wagon;
+    Level currentLevel;
 
     GLfloat movementSpeed = 3.0f;
 
@@ -164,10 +164,10 @@ namespace Game {
 
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
-        wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
-        wagon.logNewObjects();
-        wagon.setShader(&shader);
-        wagon.ShowImgui();
+        currentLevel.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
+        currentLevel.logNewObjects();
+        currentLevel.setShader(&shader);
+        currentLevel.ShowImgui();
 
 
         background.initBackground(5,-525.509948,262.754974,&shader);
@@ -182,9 +182,9 @@ namespace Game {
 //        battery._transform._scale.x = 0.2f;
 //        battery._transform._scale.y = 0.2f;
 //        battery._transform._scale.z = 0.2f;
-        if(!wagon.batteries.empty()) {
-            playerJumper.battery = wagon.batteries.at(0).get();
-            playerGrabber.battery = wagon.batteries.at(0).get();
+        if(!currentLevel.batteries.empty()) {
+            playerJumper.battery = currentLevel.batteries.at(0).get();
+            playerGrabber.battery = currentLevel.batteries.at(0).get();
         }
 
 

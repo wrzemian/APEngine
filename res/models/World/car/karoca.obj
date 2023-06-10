@@ -1,7 +1,7 @@
 # Blender 3.5.1
 # www.blender.org
 mtllib karoca.mtl
-o wagon.002
+o currentLevel.002
 v -0.987056 3.397475 -3.019622
 v -0.795994 3.338352 -2.944622
 v -1.034635 3.243720 -3.003770
