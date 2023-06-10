@@ -19,10 +19,7 @@ void Object3D::Draw(Shader &shader) {
         spdlog::error("null model in {}", tag);
         return;
     }
-    if(_shader == nullptr) {
-        spdlog::error("null shader in {}", tag);
-        return;
-    }
+
     _transform.updateWorldTransform(glm::mat4(1.0f), shader);
     // shader.setMat4("model", _transform.getModel());
 
@@ -108,10 +105,6 @@ void Object3D::onCollision(Object3D *other) {
     this->onCollisionX(other);
     this->onCollisionY(other);
     this->onCollisionZ(other);
-}
-
-void Object3D::setShader(Shader *shader) {
-    _shader = shader;
 }
 
 Object3D::~Object3D() {

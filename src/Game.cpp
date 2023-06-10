@@ -166,7 +166,6 @@ namespace Game {
         //p2Hitbox.calculateFromModel(player2._model);
         currentLevel.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
         currentLevel.logNewObjects();
-        currentLevel.setShader(&shader);
         currentLevel.ShowImgui();
 
 
@@ -189,7 +188,6 @@ namespace Game {
 
 
         playerGrabber.grabber = &grabber;
-        grabber.setShader(&shader);
         grabber.loadModel("../../res/models/Assets/battery/battery.obj");
         grabberHitbox.draw = false;
         grabberHitbox.isTrigger = true;

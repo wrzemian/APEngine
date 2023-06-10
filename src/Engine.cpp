@@ -245,11 +245,8 @@ namespace Engine {
             }
             if(object->_model == nullptr) {
                 spdlog::error("object {}/{} has null model", object->tag, object->getWindowName());
-                object->setShader(&shader);
             }
-            if(object->_shader != &shader) {
-                object->setShader(&shader);
-            }
+
 //                object->Draw();
 //            object->_transform.computeModelMatrix();
             Entity test(*object->_model);

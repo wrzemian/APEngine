@@ -62,7 +62,6 @@ void Level::calculateHitboxes() {
                 if(winArea == nullptr) {
                     spdlog::info("created door object");
                     winArea = std::make_shared<WinArea>();
-                    winArea->setShader(_shader);
                     winArea->tag = "winArea";
                     winArea->ShowImgui();
                     winArea->_transform._position = _transform._position;
@@ -141,7 +140,6 @@ void Level::calculateHitboxes() {
                 hitboxes.push_back(buttonHitbox);
 
                 auto button = std::make_shared<Button>(nullptr, glm::vec3(0));
-                button->setShader(_shader);
                 button->tag = "button";
                 button->ShowImgui();
                 button->_transform._position = _transform._position;
@@ -201,7 +199,6 @@ void Level::calculateHitboxes() {
                 platform->id = totalId;
 
                 platform->_transform._position = _transform._position;
-                platform->setShader(_shader);
                 platform->_model = std::make_shared<Model>();
                 platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
                 platform-> speed = 1;
@@ -242,7 +239,6 @@ void Level::calculateHitboxes() {
                 test->tag = "box";
 
                 box->_transform._position = _transform._position;
-                box->setShader(_shader);
                 box->_model = std::make_shared<Model>();
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
                 box->_transform._position = _transform._position;
@@ -258,7 +254,6 @@ void Level::calculateHitboxes() {
                 batteries.push_back(battery);
 
                 battery->_transform._position = _transform._position;
-                battery->setShader(_shader);
                 battery->_model = std::make_shared<Model>();
                 battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
 
@@ -439,18 +434,6 @@ void Level::loadFromJSON(const Level& temp) {
     this->_transform._rotation = temp._transform._rotation;
     this->_transform._position = temp._transform._position;
     this->calculateHitboxes();
-}
-
-void Level::setShader(Shader* shader) {
-    _shader = shader;
-
-    for (const auto& platform : movingPlatforms) {
-        platform->setShader(shader);
-    }
-
-    for (const auto& button : buttons) {
-        button->setShader(shader);
-    }
 };
 
 void Level::Draw(Shader &shader) {
@@ -459,12 +442,9 @@ void Level::Draw(Shader &shader) {
         spdlog::error("null model in {}", tag);
         return;
     }
-    if(_shader == nullptr) {
-        spdlog::error("null shader in {}", tag);
-        return;
-    }
-    _transform.updateWorldTransform(glm::mat4(1.0f), *_shader);
+
+    _transform.updateWorldTransform(glm::mat4(1.0f), shader);
     // shader.setMat4("model", _transform.getModel());
 
-    staticModel.Draw(*_shader);
+    staticModel.Draw(shader);
 }

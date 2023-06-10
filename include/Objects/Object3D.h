@@ -19,7 +19,6 @@ public:
     std::string tag = "floor";
 
     virtual void Draw(Shader &shader);
-    void setShader(Shader* shader);
 
     void ImGui();
     void loadModel(const std::string& path);
@@ -33,6 +32,5 @@ public:
 
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;
-    Shader* _shader = nullptr;
     std::string _path;
 };
