@@ -20,12 +20,19 @@ public:
         }
 
         std::string line;
+        int levelCount = 0;
         while (std::getline(file, line)) {
+            spdlog::info("Loading level from path: {}", line);
+
             LevelPtr level = std::make_shared<Level>();
             level->loadModel(line);
             levels.push_back(level);
+
+            levelCount++;
+            spdlog::info("Successfully loaded level {}. Total levels loaded: {}", line, levelCount);
         }
     }
+
 
     std::vector<LevelPtr>& getLevels() {
         return levels;
