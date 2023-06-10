@@ -195,14 +195,14 @@ MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
 //        // just syntactic sugar
 //    }
 
-    if( d["phong"].GetString() == "phong")
-        pEffect.mShadeType = Shade_Phong;
-    else if( d["constant"].GetString() == "constant")
-        pEffect.mShadeType = Shade_Constant;
-    else if( d["lambert"].GetString() == "lambert")
-        pEffect.mShadeType = Shade_Lambert;
-    else if( d["blinn"].GetString() == "blinn")
-        pEffect.mShadeType = Shade_Blinn;
+//    if( d["phong"].GetString() == "phong")
+//        pEffect.mShadeType = Shade_Phong;
+//    else if( d["constant"].GetString() == "constant")
+//        pEffect.mShadeType = Shade_Constant;
+//    else if( d["lambert"].GetString() == "lambert")
+//        pEffect.mShadeType = Shade_Lambert;
+//    else if( d["blinn"].GetString() == "blinn")
+//        pEffect.mShadeType = Shade_Blinn;
 
 //    else if( d["emission"].GetString() == "emission")
 //        ReadEffectColor( pEffect.mEmissive, pEffect.mTexEmissive);
@@ -230,10 +230,10 @@ MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
 
         // FCOLLADA extensions
         // -------------------------------------------------------
-    if( d["bump"].GetString() == "bump") {
-        aiColor4D dummy;
-        ReadEffectColor( dummy,pEffect.mTexBump);
-    }
+//    if( d["bump"].GetString() == "bump") {
+//        aiColor4D dummy;
+//        ReadEffectColor( dummy,pEffect.mTexBump);
+//    }
 
     if(type == "object3D") {
         glm::vec3 tempScale(d["scaleX"].GetFloat(), d["scaleY"].GetFloat(), d["scaleZ"].GetFloat());
