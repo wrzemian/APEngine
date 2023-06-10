@@ -118,9 +118,14 @@ namespace Game {
     Background background;
 
     void Start() {
-        std::cout << Engine::Init() << "\n";
+        spdlog::info("init engine");
 
+        int init = Engine::Init();
+        spdlog::info("init engine {}", init);
+
+        spdlog::info("init shader");
         shadows.initShaders();
+        spdlog::info("shader");
         Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         lightShader = tempLightShader;
         lightShader.use();
@@ -133,7 +138,9 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
+        spdlog::info("init jumper");
         playerJumper.initPlayer(&inputSystem);
+        spdlog::info("init grabber");
         playerGrabber.initPlayer(&inputSystem);
 
 //        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
@@ -144,6 +151,7 @@ namespace Game {
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
+        spdlog::info("init text");
         hud2.initText("res/fonts/Arialn.ttf");
 
 
@@ -157,6 +165,7 @@ namespace Game {
         //player1.tag = "player";
         //player2.tag = "player";
 
+        spdlog::info("loading ant");
         ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
         ant.tag = "ant";
 
@@ -169,6 +178,7 @@ namespace Game {
 
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
+        spdlog::info("loading wagon");
         wagon.loadFromJSON(Engine::parser.CreateFromJSONWalls("objects/walls"));
         wagon.logNewObjects();
         wagon.setShader(&shader);
