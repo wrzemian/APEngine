@@ -9,7 +9,7 @@ void BackgroundTile::initBackgroundTile()
     loadModel("../../res/models/World/terrain/pustynia.obj");
     //_transform._scale.x = 0.6f;
     _transform._scale.y = 0.1f;
-    //_transform._scale.z = 0.6f;
+    _transform._scale.z = 0.8f;
     //_transform._position.x = -1200;
     _transform._position.y = 0;
     _transform._position.z = 10;
