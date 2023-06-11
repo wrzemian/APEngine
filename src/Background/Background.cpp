@@ -17,7 +17,6 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
         bTile->HideImgui();
         backgroundTiles.push_back(bTile);
         backgroundTiles[i+1]->_transform._position.x += interval * i;
-        std::cout << interval * i << std::endl;
         backgroundTiles[i+1]->initBackgroundTile();
         backgroundTiles[i+1]->SetBoundaries(0,-250,-15,-80);
         backgroundTiles[i+1]->SetAmountToGenerate(15,5,15,5);

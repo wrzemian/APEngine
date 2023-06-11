@@ -6,6 +6,7 @@
 #define APENGINE_WINAREA_H
 
 #include "Object3D.h"
+#include "../include/Game.h"
 
 class WinArea  : public Object3D {
 private:
@@ -14,7 +15,6 @@ private:
 public:
     WinArea();
 
-    std::string * text;
     void onCollision(Object3D *other) override;
     void onCollisionExit(Object3D *other) override;
     void Win();

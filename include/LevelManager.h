@@ -87,6 +87,17 @@ public:
         ImGui::End();
     }
 
+    bool nextLevel() {
+        if (currentLevel < levels.size() - 1) { // Check if there are more levels
+            currentLevel++;
+            spdlog::info("Advanced to level {}. Total levels: {}", currentLevel, levelCount);
+            return true;
+        } else {
+            spdlog::info("No more levels. You have completed the game!");
+            return false;
+        }
+    }
+
 private:
     std::vector<LevelPtr> levels;
     std::vector<std::string> successfulPaths;

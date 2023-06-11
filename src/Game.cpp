@@ -130,10 +130,6 @@ namespace Game {
         lightShader.use();
 
         inputSystem.InputInit();
-        /*inputSystem.monitorKey(GLFW_KEY_W); // TODO: please remove unncecessary comments
-        inputSystem.monitorKey(GLFW_KEY_A);
-        inputSystem.monitorKey(GLFW_KEY_S);
-        inputSystem.monitorKey(GLFW_KEY_D);*/
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
@@ -304,9 +300,24 @@ namespace Game {
         Engine::resolveCollisions();
 
         hud2.renderText(texToDisplay, 100, 0, 2, glm::vec3(1.0f, 1.0f, 1.0f));
+        std::cout <<  LevelManager::getInstance().getCurrentLevel()->_transform._position.x << " " << LevelManager::getInstance().getCurrentLevel()->_transform._position.y<< " " << LevelManager::getInstance().getCurrentLevel()->_transform._position.z<<std::endl;
 
         Engine::LoopEnd();
 
+    }
+
+    void onWin() {
+        if(LevelManager::getInstance().nextLevel())
+        {
+            //playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            //playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            //camera.Position = LevelManager::getInstance().getCurrentLevel()->cameraOffset + LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            spdlog::info("Player has won the level!");
+        }
+        else
+        {
+            spdlog::info("Player has won the game!");
+        }
     }
 
 
@@ -338,4 +349,5 @@ namespace Game {
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFWD_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
 //        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
     }
+
 };

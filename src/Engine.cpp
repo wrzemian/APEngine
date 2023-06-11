@@ -89,7 +89,6 @@ namespace Engine {
 
 
     Object3D* getObject3DById(int id) {
-        std::cout<< allObjects.size() <<std::endl;
         return allObjects.at(id);
     }
 

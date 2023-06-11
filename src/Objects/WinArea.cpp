@@ -29,12 +29,9 @@ void WinArea::onCollisionExit(Object3D *other) {
 }
 
 void WinArea::Win() {
-    std::string winText = "You win!";
-    *text = winText;
-    std::cout<< "You win!"<<std::endl;
+    Game::onWin();
 }
 
 WinArea::WinArea() {
     IGui::setWindowName("Win area");
-
 }

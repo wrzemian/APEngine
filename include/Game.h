@@ -24,5 +24,5 @@ namespace Game {
 
     void Update();
 
-
+    void onWin();
 }

@@ -44,4 +44,8 @@ public:
     void Draw(Shader &shader);
 
     Model staticModel;
+
+    glm::vec3 cameraOffset = glm::vec3(-4.0f,10.0f,17.0f);
+    glm::vec3 playerGrabberStartingPos = glm::vec3(-5,1,-1.0f);
+    glm::vec3 playerJumperStartingPos = glm::vec3(-5,1,0);
 };
