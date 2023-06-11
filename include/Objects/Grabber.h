@@ -21,13 +21,14 @@ private:
     glm::vec3 playerOffset = glm::vec3(0.2f,1,0.2f);
     glm::vec3 grabbedObjectOffset = glm::vec3(0);
     glm::vec3 playerPos = glm::vec3(0);
+    glm::vec3 playerRot = glm::vec3(0);
     bool grabbed = false;
     Object3D* grabbedBox;
 public:
     Grabber();
     void onCollision(Object3D* other) override;
     void Move(float deltaTime) override;
-    void UpdateGrabber(glm::vec3 pos);
+    void UpdateGrabber(glm::vec3 pos,glm::vec3 rot);
     void Grab();
     void SetPlayerOffset(glm::vec3 offset);
     void SetPositionTarget(glm::vec3 targetPos);

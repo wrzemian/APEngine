@@ -300,7 +300,6 @@ namespace Game {
         Engine::resolveCollisions();
 
         hud2.renderText(texToDisplay, 100, 0, 2, glm::vec3(1.0f, 1.0f, 1.0f));
-        std::cout <<  LevelManager::getInstance().getCurrentLevel()->_transform._position.x << " " << LevelManager::getInstance().getCurrentLevel()->_transform._position.y<< " " << LevelManager::getInstance().getCurrentLevel()->_transform._position.z<<std::endl;
 
         Engine::LoopEnd();
 

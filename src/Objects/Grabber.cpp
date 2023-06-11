@@ -53,7 +53,12 @@ void Grabber::Move(float deltaTime) {
     {
         grabbedBox->_transform._position = grabbedObjectOffset + _transform._position;
     }
-    _transform._position = (1.0f - t) * (playerPos+positionOrigin+playerOffset) + t * (playerPos+positionTarget+playerOffset);
+    glm::quat playerQuat = glm::quat(playerRot); // Convert Euler angles to quaternion
+    glm::mat4 rotationMat = glm::mat4_cast(playerQuat); // Convert quaternion to rotation matrix
+    glm::vec3 origin = playerPos + glm::vec3(rotationMat * glm::vec4(positionOrigin+playerOffset, 1.0f));
+    glm::vec3 target = playerPos + glm::vec3(rotationMat * glm::vec4(positionTarget+playerOffset, 1.0f));
+    _transform._position = (1.0f - t) * origin + t * target;
+    _transform._rotation = playerRot;
 }
 
 void Grabber::Grab() {
@@ -71,8 +76,9 @@ void Grabber::DropObject() {
     grabbed = false;
 }
 
-void Grabber::UpdateGrabber(glm::vec3 pos) {
+void Grabber::UpdateGrabber(glm::vec3 pos,glm::vec3 rot) {
     playerPos = pos;
+    playerRot = rot;
 }
 
 void Grabber::SetPositionTarget(glm::vec3 targetPos) {

@@ -65,7 +65,7 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
         battery->_transform._position=this->_transform._position+batteryOffset;
         battery->_velocity = glm::vec3(0.0f, 0.0f, 0.0f);
     }
-    grabber->UpdateGrabber(this->_transform._position);
+    grabber->UpdateGrabber(this->_transform._position,this->_transform._rotation);
 }
 
 void PlayerGrabber::onCollision(Object3D *other) {
