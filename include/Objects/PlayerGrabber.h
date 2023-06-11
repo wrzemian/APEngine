@@ -23,10 +23,6 @@ private:
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
 public:
 
-    Animation walk;
-    Animation jump;
-    Animation stand;
-    Animator grabberAnimator;
     PlayerGrabber();
     Battery* battery;
     Grabber* grabber;
@@ -37,6 +33,7 @@ public:
     void switchAnimationWalk();
     void switchAnimationJump();
     void switchAnimationStand();
+    void switchAnimationGrab();
     void Jump();
     void Grab();
 };

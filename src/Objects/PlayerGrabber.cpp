@@ -98,6 +98,7 @@ void PlayerGrabber::Grab() {
     if (haveBattery)
     {
         grabber->Grab();
+        this->switchAnimationGrab();
     }
 }
 
@@ -119,7 +120,7 @@ PlayerGrabber::PlayerGrabber() {
 
 void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
-        this->loadAnimation("res/models/Players/Cr4nk/dancing_vampire.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
         this->recentlyMoved = 0;
         this->walking = 1;
     }
@@ -127,14 +128,18 @@ void PlayerGrabber::switchAnimationWalk() {
 
 void PlayerGrabber::switchAnimationJump() {
     if(jumpCount == 0){
-        this->loadAnimation("res/models/Players/Cr4nk/dancing_vampire.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
     }
 }
 
 void PlayerGrabber::switchAnimationStand() {
     if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
-        this->loadAnimation("res/models/Players/Cr4nk/dancing_vampire.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/crank_standing_with_breathing.dae");
         this->recentlyMoved = 1;
         this->walking = 0;
     }
+}
+
+void PlayerGrabber::switchAnimationGrab() {
+        this->loadAnimation("res/models/Players/Cr4nk/crank_hooking_final.dae");
 }
