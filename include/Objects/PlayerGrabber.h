@@ -18,6 +18,7 @@ private:
     bool haveBattery = false;
     bool canPickUpBattery = false;
     glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
+    glm::vec3 direction =  glm::vec3(0.0f, 0.0f, 0.0f);
 public:
     PlayerGrabber();
     Battery* battery;

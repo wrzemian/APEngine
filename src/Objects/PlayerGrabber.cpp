@@ -18,25 +18,40 @@ void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
 
 void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     if (inputSystem->GetKey(GLFW_KEY_UP)) {
-        _velocity.z = -movementSpeed;
+        direction.z = -1.0f;
     }
     else if (inputSystem->GetKey(GLFW_KEY_DOWN)) {
-        _velocity.z = movementSpeed;
+        direction.z = 1.0f;
     }
-    else {
-        _velocity.z = 0;
+    else
+    {
+        direction.z = 0.0f;
     }
     if (inputSystem->GetKey(GLFW_KEY_LEFT)) {
-        _velocity.x = -movementSpeed;
+        direction.x = -1.0f;
     }
     else if (inputSystem->GetKey(GLFW_KEY_RIGHT)) {
-        _velocity.x = movementSpeed;
+        direction.x = 1.0f;
+    }
+    else
+    {
+        direction.x = 0.0f;
+    }
+
+    if(direction != glm::vec3(0.0f))
+    {
+        // normalize the direction vector to have a length of 1
+        direction = glm::normalize(direction);
+        // multiply by the desired speed
+        _velocity.x = direction.x * movementSpeed;
+        _velocity.z = direction.z * movementSpeed;
+
+        _transform._rotation.y = -atan2(_velocity.z, _velocity.x);
     }
     else {
-        _velocity.x = 0;
+        _velocity.x = 0.0f;
+        _velocity.z = 0.0f;
     }
-    if(_velocity.x != 0 || _velocity.z != 0)
-    _transform._rotation.y = -atan2(_velocity.z, _velocity.x);
 
     if (inputSystem->GetKeyDown(GLFW_KEY_KP_2)) {
         if(haveBattery)

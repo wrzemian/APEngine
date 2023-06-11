@@ -17,26 +17,38 @@ void PlayerJumper::initPlayer(InputSystem* inputSystem) {
 
 void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     if (inputSystem->GetKey(GLFW_KEY_W)) {
-        _velocity.z = -movementSpeed;
+        direction.z = -1.0f;
     }
     else if (inputSystem->GetKey(GLFW_KEY_S)) {
-        _velocity.z = movementSpeed;
+        direction.z = 1.0f;
     }
     else {
-        _velocity.z = 0;
+        direction.z = 0.0f;
     }
     if (inputSystem->GetKey(GLFW_KEY_A)) {
-        _velocity.x = -movementSpeed;
+        direction.x = -1.0f;
     }
     else if (inputSystem->GetKey(GLFW_KEY_D)) {
-        _velocity.x = movementSpeed;
+        direction.x = 1.0f;
     }
     else {
-        _velocity.x = 0;
+        direction.x = 0.0f;
     }
-    if(_velocity.x != 0 || _velocity.z != 0)
-        _transform._rotation.y = -atan2(_velocity.z, _velocity.x);
+    if(direction != glm::vec3(0.0f))
+    {
+        // normalize the direction vector to have a length of 1
+        direction = glm::normalize(direction);
+        // multiply by the desired speed
+        _velocity.x = direction.x * movementSpeed;
+        _velocity.z = direction.z * movementSpeed;
 
+        _transform._rotation.y = -atan2(_velocity.z, _velocity.x);
+    }
+    else {
+        _velocity.x = 0.0f;
+        _velocity.z = 0.0f;
+    }
+    
     if (inputSystem->GetKeyDown(GLFW_KEY_E)) {
         if(haveBattery)
         {
