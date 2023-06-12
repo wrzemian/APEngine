@@ -23,6 +23,7 @@ public:
     std::vector<std::shared_ptr<Button>> buttons;
     std::vector<std::shared_ptr<Object3D>> boxes; //TODO: add class Box
     std::vector<std::shared_ptr<Battery>> batteries;
+    std::vector<std::shared_ptr<Object3D>> walls;
 
     std::shared_ptr<WinArea> winArea = nullptr;
 
@@ -45,7 +46,9 @@ public:
 
     Model staticModel;
 
-    glm::vec3 cameraOffset = glm::vec3(10.0f,10.0f,17.0f);
+
+    void LoadDataFromJson(const Level& temp);
+    glm::vec3 cameraOffset = glm::vec3(-4.0f,10.0f,17.0f);
     glm::vec3 playerGrabberStartingPos = glm::vec3(-5,1,-1.0f);
     glm::vec3 playerJumperStartingPos = glm::vec3(-5,1,0);
 };

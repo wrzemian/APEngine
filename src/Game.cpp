@@ -122,6 +122,7 @@ namespace Game {
         std::cout << Engine::Init() << "\n";
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
+        LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
         LevelManager::getInstance().ShowImgui();
 
         shadows.initShaders();

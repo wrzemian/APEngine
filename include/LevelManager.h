@@ -2,6 +2,7 @@
 #include <sstream>
 #include "Objects/Level.h"
 #include "spdlog/spdlog.h"
+#include "Engine.h"
 
 class LevelManager : public IGui {
 public:
@@ -41,9 +42,35 @@ public:
                 levelCount++;
                 spdlog::info("Successfully loaded level {}. Total levels loaded: {}", line, levelCount);
             }
+
         }
     }
 
+    void loadAllLevelsData(const std::string& pathToFile) {
+        std::ifstream file(pathToFile);
+        if (!file) {
+            spdlog::error("Could not open file: {}", pathToFile);
+            failedPaths.push_back(pathToFile);
+            return;
+        }
+
+        std::string line;
+        int i = 0;
+        while (std::getline(file, line)) {
+            spdlog::info("Loading level data from path: {}", line);
+            levels[i]->LoadDataFromJson(Engine::parser.CreateFromJSONLevelData(line));
+            i++;
+            std::ifstream checkFile(line);
+            if (!checkFile) {
+                spdlog::error("Failed to load level from path: {}", line);
+                failedPaths.push_back(line);
+            } else {
+                successfulPaths.push_back(line);
+                spdlog::info("Successfully loaded level {}. Total levels loaded: {}", line, levelCount);
+            }
+
+        }
+    }
 
     std::vector<LevelPtr>& getLevels() {
         return levels;
