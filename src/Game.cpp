@@ -283,7 +283,7 @@ namespace Game {
 
         //Engine::renderLights(lightShader, camera);
         shadows.renderShadows(camera);
-
+        camera.Update(Engine::deltaTime);
         //glm::mat4 projection = glm::mat4(1.0f);
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
@@ -308,9 +308,9 @@ namespace Game {
     void onWin() {
         if(LevelManager::getInstance().nextLevel())
         {
-            //playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
-            //playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
-            //camera.Position = LevelManager::getInstance().getCurrentLevel()->cameraOffset + LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            camera.MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
             spdlog::info("Player has won the level!");
         }
         else

@@ -171,6 +171,13 @@ public:
         return glm::lookAt(Position, Position + Front, Up);
     }
 
+    void Update(float deltaTime);
+    float speed = 1.0f;
+    float t;
+    bool moveToTarget = false;
+    glm::vec3 positionOrigin = glm::vec3(0);
+    glm::vec3 positionTarget = glm::vec3(10,10,10);
+    void MoveToTarget(glm::vec3 targetPosition);
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()

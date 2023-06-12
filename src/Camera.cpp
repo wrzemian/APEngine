@@ -78,7 +78,26 @@ Camera::Camera(std::string fileName) {
         WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
         degX = Yaw;
         degY = Pitch;
+        positionOrigin = Position;
     }
     else
         spdlog::error("no JSON file found");
+}
+
+void Camera::Update(float deltaTime) {
+    if (moveToTarget) {
+        t += deltaTime * speed;
+        if (t >= 1.0f) {
+            t = 1.0f;
+            moveToTarget = false;
+            Position = (1.0f - t) * positionOrigin + t * positionTarget;
+            positionOrigin = Position;
+        }
+        Position = (1.0f - t) * positionOrigin + t * positionTarget;
+    }
+}
+
+void Camera::MoveToTarget(glm::vec3 targetPosition) {
+    positionTarget = targetPosition;
+    moveToTarget = true;
 }
