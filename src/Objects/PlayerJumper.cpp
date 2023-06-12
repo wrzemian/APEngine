@@ -48,7 +48,7 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
         _velocity.x = 0.0f;
         _velocity.z = 0.0f;
     }
-    
+
     if (inputSystem->GetKeyDown(GLFW_KEY_E)) {
         if(haveBattery)
         {

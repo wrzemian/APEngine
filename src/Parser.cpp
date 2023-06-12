@@ -160,6 +160,20 @@ Level Parser::CreateFromJSONWalls(std::string fileName) {
     return {};
 }
 
+Level Parser::CreateFromJSONLevelData(std::string fileName) {
+    rapidjson::Document d = Parser::openJSON(fileName);
+    glm::vec3 tempPlayerGrabPosition(d["playerGrabPosX"].GetFloat(), d["playerGrabPosY"].GetFloat(), d["playerGrabPosZ"].GetFloat());
+    glm::vec3 tempPlayerJumpPosition(d["playerJumpPosX"].GetFloat(), d["playerJumpPosY"].GetFloat(), d["playerJumpPosZ"].GetFloat());
+    glm::vec3 tempCameraPosition(d["cameraPositionX"].GetFloat(), d["cameraPositionY"].GetFloat(), d["cameraPositionZ"].GetFloat());
+
+    Level temp;
+    temp.playerGrabberStartingPos = tempPlayerGrabPosition;
+    temp.playerJumperStartingPos = tempPlayerJumpPosition;
+    temp.cameraOffset = tempCameraPosition;
+    return temp;
+
+}
+
 Camera Parser::CreateFromJSONCam(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();

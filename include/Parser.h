@@ -37,6 +37,8 @@ public:
 
     Level CreateFromJSONWalls(std::string fileName);
 
+    Level CreateFromJSONLevelData(std::string fileName);
+
     Camera CreateFromJSONCam(std::string fileName);
 
     rapidjson::Document openJSON (std::string fileName);

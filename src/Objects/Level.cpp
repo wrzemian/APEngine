@@ -96,9 +96,19 @@ void Level::calculateHitboxes() {
             }
 
             case 'W': { // Wall
+                auto wall = std::make_shared<Object3D>(); // Create a new wall object
+                wall->_transform._position = _transform._position; // Set the wall's position
+                wall->_model = std::make_shared<Model>(); // Create a new model for the wall
+                wall->_model->meshes.push_back(mesh); // Add the current mesh to the wall's model
+                wall->tag = "wall"; // Tag the wall
+
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 hitbox->calculateFromMesh(mesh);
-                hitbox->Create(this);
+                hitbox->Create(wall.get());
+
+                // Add the wall object to a suitable collection in your level
+                walls.push_back(wall);
+
 
                 staticModel.meshes.push_back(mesh);
                 hitbox->tag = "wall";
@@ -109,13 +119,22 @@ void Level::calculateHitboxes() {
             }
 
             case 'Y': { // Wall
+                auto wall = std::make_shared<Object3D>(); // Create a new wall object
+                wall->_transform._position = _transform._position; // Set the wall's position
+                wall->_model = std::make_shared<Model>(); // Create a new model for the wall
+                wall->_model->meshes.push_back(mesh); // Add the current mesh to the wall's model
+                wall->tag = "wall"; // Tag the wall
+
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 hitbox->calculateFromMesh(mesh);
-                hitbox->Create(this);
+                hitbox->Create(wall.get());
+
+                // Add the wall object to a suitable collection in your level
+                walls.push_back(wall);
+
 
                 staticModel.meshes.push_back(mesh);
                 hitbox->tag = "wall";
-
                 spdlog::info("Wall (pręt) created {}", mesh._name);
 
                 break;
@@ -447,4 +466,10 @@ void Level::Draw(Shader &shader) {
     // shader.setMat4("model", _transform.getModel());
 
     staticModel.Draw(shader);
+}
+
+void Level::LoadDataFromJson(const Level& temp) {
+    this->playerGrabberStartingPos = temp.playerGrabberStartingPos;
+    this->playerJumperStartingPos = temp.playerJumperStartingPos;
+    this->cameraOffset = temp.cameraOffset;
 }
