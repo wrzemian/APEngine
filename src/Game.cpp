@@ -309,9 +309,14 @@ namespace Game {
     void onWin() {
         if(LevelManager::getInstance().nextLevel())
         {
-            playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
-            playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos + LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+            playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
             camera.MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
+            if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty())
+            {
+                playerJumper.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
+                playerGrabber.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
+            }
             spdlog::info("Player has won the level!");
         }
         else
