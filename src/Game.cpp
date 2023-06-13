@@ -119,6 +119,7 @@ namespace Game {
     Background background;
 
     void Start() {
+        Engine::Init();
         spdlog::info("init engine");
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
