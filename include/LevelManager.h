@@ -60,15 +60,6 @@ public:
             spdlog::info("Loading level data from path: {}", line);
             levels[i]->LoadDataFromJson(Engine::parser.CreateFromJSONLevelData(line));
             i++;
-            std::ifstream checkFile(line);
-            if (!checkFile) {
-                spdlog::error("Failed to load level from path: {}", line);
-                failedPaths.push_back(line);
-            } else {
-                successfulPaths.push_back(line);
-                spdlog::info("Successfully loaded level {}. Total levels loaded: {}", line, levelCount);
-            }
-
         }
     }
 

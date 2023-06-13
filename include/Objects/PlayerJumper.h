@@ -23,6 +23,7 @@ private:
     int walking;
     int recentlyMoved;
 
+    float padJoystickTolerance = 0.2f;
 
 public:
     Battery* battery;

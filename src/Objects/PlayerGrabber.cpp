@@ -23,6 +23,10 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     else if (inputSystem->GetKey(GLFW_KEY_DOWN)) {
         direction.z = 1.0f;
     }
+    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) >= padJoystickTolerance || inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) <= -padJoystickTolerance)
+    {
+        direction.z = inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y);
+    }
     else
     {
         direction.z = 0.0f;
@@ -33,17 +37,13 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     else if (inputSystem->GetKey(GLFW_KEY_RIGHT)) {
         direction.x = 1.0f;
     }
+    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X) >= padJoystickTolerance || inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X) <= -padJoystickTolerance)
+    {
+        direction.x = inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X);
+    }
     else
     {
         direction.x = 0.0f;
-    }
-    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X) != 0)
-    {
-        direction.z = inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X);
-    }
-    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) != 0)
-    {
-        direction.x = inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y);
     }
 
 

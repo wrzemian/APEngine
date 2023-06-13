@@ -356,35 +356,27 @@ namespace Game {
             shadows.ShowImgui();
             playerGrabber.ShowImgui();
         }
+
+
+        ImGui::Begin("DevTools");
+        ImGui::SetWindowSize(ImVec2(250, 100));
+        if (ImGui::Button("Next Level"))
+            onWin();
+        ImGui::End();
+
+
         ImGui::Render();
     }
 
 
     void processInput() {
-        if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
+        if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
             playerJumper.Jump();
         }
-        if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
-			playerGrabber.switchAnimationJump();
-
+        if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
             playerGrabber.Jump();
-
+            playerGrabber.switchAnimationJump();
         }
-//        if (inputSystem.GetKeyDown(GLFW_KEY_UP)) {
-//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
-//        }
-//        if (inputSystem.GetKeyDown(GLFW_KEY_DOWN)) {
-//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
-//        }
-//        if (inputSystem.GetKeyDown(GLFW_KEY_LEFT)) {
-//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
-//        }
-//        if (inputSystem.GetKeyDown(GLFW_KEY_RIGHT)) {
-//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
-//        }
-
-//        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
-//        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));
     }
 
 };
