@@ -216,7 +216,7 @@ namespace Engine {
         for(Object3D* object: allObjects) {
             spdlog::info("OBJECT {}", object->_path);
             for (const auto& tex: object->_model->textures_loaded) {
-                spdlog::info("TEXTURE id: {}, type: {}, path: {}", tex.id, tex.type, tex.path);
+                spdlog::info("2137 TEXTURE id: {}, type: {}, path: {}", tex.id, tex.type, tex.path);
             }
         }
     }
@@ -246,6 +246,15 @@ namespace Engine {
             if(object->_model == nullptr) {
                 spdlog::error("object {}/{} has null model", object->tag, object->getWindowName());
             }
+
+            shader.setBool("animated", object->animated);
+            if(object->animated) {
+                auto transforms = object->animator.GetFinalBoneMatrices();
+                for (int i = 0; i < transforms.size(); ++i)
+                    shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+                object->animator.UpdateAnimation(Engine::deltaTime);
+            }
+
 
 //                object->Draw();
 //            object->_transform.computeModelMatrix();

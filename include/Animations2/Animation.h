@@ -3,7 +3,8 @@
 #include "glm/glm.hpp"
 #include "../Objects/Model.h"
 #include "Bone.h"
-
+#ifndef ASSIMPNODEDATA_H
+#define ASSIMPNODEDATA_H
 
 struct AssimpNodeData
 {
@@ -105,3 +106,5 @@ private:
     AssimpNodeData m_RootNode;
     std::map<std::string, BoneInfo> m_BoneInfoMap;
 };
+
+#endif

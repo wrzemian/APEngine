@@ -30,7 +30,7 @@ Hitbox::Hitbox(HitboxType type) {
 }
 
 Hitbox::Hitbox(std::string fileName) {
-    //spdlog::info("hitbox JSON constructor");
+    spdlog::info("hitbox JSON constructor");
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
     IGui::setWindowName("hitbox");

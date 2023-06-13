@@ -114,9 +114,126 @@ Object3D Parser::CreateFromJSONObj3D(std::string fileName) {
     return {};
 }
 
+void Parser::ReadEffectColor( aiColor4D& pColor, Sampler& pSampler)
+{
+//    // Save current element name
+//    const std::string curElem = mReader->getNodeName();
+//
+//    while( mReader->read())
+//    {
+//        if( mReader->getNodeType() == irr::io::EXN_ELEMENT) {
+//            if( IsElement( "color"))
+//            {
+//                // text content contains 4 floats
+//                const char* content = GetTextContent();
+//
+//                content = fast_atoreal_move<float>( content, (float&)pColor.r);
+//                SkipSpacesAndLineEnd( &content);
+//
+//                content = fast_atoreal_move<float>( content, (float&)pColor.g);
+//                SkipSpacesAndLineEnd( &content);
+//
+//                content = fast_atoreal_move<float>( content, (float&)pColor.b);
+//                SkipSpacesAndLineEnd( &content);
+//
+//                content = fast_atoreal_move<float>( content, (float&)pColor.a);
+//                SkipSpacesAndLineEnd( &content);
+//                TestClosing( "color");
+//            }
+//            else if( IsElement( "texture"))
+//            {
+//                // get name of source textur/sampler
+//                int attrTex = GetAttribute( "texture");
+//                pSampler.mName = mReader->getAttributeValue( attrTex);
+//
+//                // get name of UV source channel
+//                attrTex = GetAttribute( "texcoord");
+//                pSampler.mUVChannel = mReader->getAttributeValue( attrTex);
+//                //SkipElement();
+//            }
+//            else if( IsElement( "technique"))
+//            {
+//                const int _profile = GetAttribute( "profile");
+//                const char* profile = mReader->getAttributeValue( _profile );
+//
+//                // Some extensions are quite useful ... ReadSamplerProperties processes
+//                // several extensions in MAYA, OKINO and MAX3D profiles.
+//                if (!::strcmp(profile,"MAYA") || !::strcmp(profile,"MAX3D") || !::strcmp(profile,"OKINO"))
+//                {
+//                    // get more information on this sampler
+//                    ReadSamplerProperties(pSampler);
+//                }
+//                else SkipElement();
+//            }
+//            else if( !IsElement( "extra"))
+//            {
+//                // ignore the rest
+//                SkipElement();
+//            }
+//        }
+//        else if( mReader->getNodeType() == irr::io::EXN_ELEMENT_END){
+//            if (mReader->getNodeName() == curElem)
+//                break;
+//        }
+//    }
+}
+
+
 MovingObject Parser::CreateFromJSONMovingObject(std::string fileName) {
     rapidjson::Document d = Parser::openJSON(fileName);
     std::string type = d["type"].GetString();
+
+//    if(d["newparam"].GetString() == "newparam")	{
+//        // save ID
+//        int attrSID = GetAttribute( "sid");
+//        std::string sid = mReader->getAttributeValue( attrSID);
+//        pEffect.mParams[sid] = EffectParam();
+//        ReadEffectParam( pEffect.mParams[sid]);
+//    }
+//    else if( d["technique"].GetString() == "technique" || d["extra"].GetString() == "extra")
+//    {
+//        // just syntactic sugar
+//    }
+
+//    if( d["phong"].GetString() == "phong")
+//        pEffect.mShadeType = Shade_Phong;
+//    else if( d["constant"].GetString() == "constant")
+//        pEffect.mShadeType = Shade_Constant;
+//    else if( d["lambert"].GetString() == "lambert")
+//        pEffect.mShadeType = Shade_Lambert;
+//    else if( d["blinn"].GetString() == "blinn")
+//        pEffect.mShadeType = Shade_Blinn;
+
+//    else if( d["emission"].GetString() == "emission")
+//        ReadEffectColor( pEffect.mEmissive, pEffect.mTexEmissive);
+//    else if( IsElement( "ambient"))
+//        ReadEffectColor( pEffect.mAmbient, pEffect.mTexAmbient);
+//    else if( IsElement( "diffuse"))
+//        ReadEffectColor( pEffect.mDiffuse, pEffect.mTexDiffuse);
+//    else if( IsElement( "specular"))
+//        ReadEffectColor( pEffect.mSpecular, pEffect.mTexSpecular);
+//    else if( IsElement( "reflective")) {
+//        ReadEffectColor( pEffect.mReflective, pEffect.mTexReflective);
+//    }
+//    else if( IsElement( "transparent")) {
+//        ReadEffectColor( pEffect.mTransparent,pEffect.mTexTransparent);
+//    }
+//    else if( IsElement( "shininess"))
+//        ReadEffectFloat( pEffect.mShininess);
+//    else if( IsElement( "reflectivity"))
+//        ReadEffectFloat( pEffect.mReflectivity);
+//
+//    else if( IsElement( "transparency"))
+//        ReadEffectFloat( pEffect.mTransparency);
+//    else if( IsElement( "index_of_refraction"))
+//        ReadEffectFloat( pEffect.mRefractIndex);
+
+        // FCOLLADA extensions
+        // -------------------------------------------------------
+//    if( d["bump"].GetString() == "bump") {
+//        aiColor4D dummy;
+//        ReadEffectColor( dummy,pEffect.mTexBump);
+//    }
 
     if(type == "object3D") {
         glm::vec3 tempScale(d["scaleX"].GetFloat(), d["scaleY"].GetFloat(), d["scaleZ"].GetFloat());

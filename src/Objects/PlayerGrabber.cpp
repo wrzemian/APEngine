@@ -62,6 +62,10 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
         _velocity.z = 0.0f;
     }
 
+    if(_velocity.x!=0 || _velocity.z!=0) {
+        _transform._rotation.y = -atan2(_velocity.z, _velocity.x);
+    }
+
     if (inputSystem->GetKeyDown(GLFW_KEY_KP_2) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_X)) {
         if(haveBattery)
         {
@@ -96,6 +100,9 @@ void PlayerGrabber::onCollision(Object3D *other) {
 
     if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
+
+        this->switchAnimationWalk();
+        this->switchAnimationStand();
         _velocity.y = 0;
         jumpCount = 0;
     }
@@ -108,6 +115,8 @@ void PlayerGrabber::onCollision(Object3D *other) {
 void PlayerGrabber::Jump() {
     if (jumpCount == 0 && this->_velocity.y <= 0&& this->_velocity.y <= 0)
     {
+        walking = 0;
+        recentlyMoved = 0;
         this->AddVelocity(glm::vec3(0.0f, 4.0f, 0.0f));
         jumpCount += 1;
     }
@@ -117,6 +126,7 @@ void PlayerGrabber::Grab() {
     if (haveBattery)
     {
         grabber->Grab();
+        this->switchAnimationGrab();
     }
 }
 
@@ -130,4 +140,34 @@ void PlayerGrabber::onCollisionExit(Object3D *other) {
 
 PlayerGrabber::PlayerGrabber() {
     IGui::setWindowName("player grabber");
+    //TODO: fix this xddd
+    _transform._scale.x = 0.02f;
+    _transform._scale.y = 0.02f;
+    _transform._scale.z = 0.02f;
+}
+
+void PlayerGrabber::switchAnimationWalk() {
+    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
+        this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+        this->recentlyMoved = 0;
+        this->walking = 1;
+    }
+}
+
+void PlayerGrabber::switchAnimationJump() {
+    if(jumpCount == 0){
+        this->loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
+    }
+}
+
+void PlayerGrabber::switchAnimationStand() {
+    if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
+        this->loadAnimation("res/models/Players/Cr4nk/crank_standing_with_breathing.dae");
+        this->recentlyMoved = 1;
+        this->walking = 0;
+    }
+}
+
+void PlayerGrabber::switchAnimationGrab() {
+        this->loadAnimation("res/models/Players/Cr4nk/crank_hooking_final.dae");
 }

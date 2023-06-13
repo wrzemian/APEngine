@@ -119,13 +119,15 @@ namespace Game {
     Background background;
 
     void Start() {
-        std::cout << Engine::Init() << "\n";
+        spdlog::info("init engine");
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
         LevelManager::getInstance().ShowImgui();
 
+
         shadows.initShaders();
+        spdlog::info("shader");
         Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         lightShader = tempLightShader;
         lightShader.use();
@@ -134,11 +136,20 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
+        spdlog::info("init jumper");
         playerJumper.initPlayer(&inputSystem);
+        spdlog::info("init grabber");
         playerGrabber.initPlayer(&inputSystem);
+
+//        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
+//        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        playerJumper.loadAnimation("res/models/Players/Mich3l/animation/michel_movement.dae");
+//        Animation temp(daePath, &*_model);
+
 
 //        hud.initAnimation();
 //        hud.initImage("res/textures/tlo.png");
+        spdlog::info("init text");
         hud2.initText("res/fonts/Arialn.ttf");
 
 
@@ -152,6 +163,7 @@ namespace Game {
         //player1.tag = "player";
         //player2.tag = "player";
 
+        spdlog::info("loading ant");
         ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
         ant.tag = "ant";
 
@@ -166,9 +178,11 @@ namespace Game {
         //p2Hitbox.calculateFromModel(player2._model);
 
 
+
         //currentLevel = LevelManager.getInstance().
 
         background.initBackground(5,-420.4079584,210.2039792,&shader);//-525.509948
+
 
 //        battery.loadModel("../../res/models/Assets/battery/battery.obj");
 //        battery.tag = "battery";
@@ -280,6 +294,7 @@ namespace Game {
         hud.renderImage(imgMOv);
 
         //player1.Move();
+
         Engine::moveObjects();
 
         //Engine::renderLights(lightShader, camera);
@@ -292,7 +307,7 @@ namespace Game {
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
 
-        background.Move(-50*Engine::deltaTime);
+    //    background.Move(-50*Engine::deltaTime);
 
 
         Engine::renderHitboxes(projection * view);
@@ -338,6 +353,7 @@ namespace Game {
             spotLight.ShowImgui();
             camera.ShowImgui();
             shadows.ShowImgui();
+            playerGrabber.ShowImgui();
         }
         ImGui::Render();
     }
@@ -348,8 +364,23 @@ namespace Game {
             playerJumper.Jump();
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
+			playerGrabber.switchAnimationJump();
+
             playerGrabber.Jump();
+
         }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_UP)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_DOWN)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_LEFT)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
+//        if (inputSystem.GetKeyDown(GLFW_KEY_RIGHT)) {
+//            playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+//        }
 
 //        player1.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X), player1._velocity.y, inputSystem.getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)));
 //        player2.SetVelocity(glm::vec3(inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X),player2._velocity.y,inputSystem.getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)));

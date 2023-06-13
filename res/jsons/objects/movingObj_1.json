@@ -1,8 +1,8 @@
 {
     "type": "object3D",
-    "scaleX": 0.5,
-    "scaleY": 0.5,
-    "scaleZ": 0.5,
+    "scaleX": 0.2,
+    "scaleY": 0.2,
+    "scaleZ": 0.2,
     "rotationX": 0.0,
     "rotationY": 0.0,
     "rotationZ": 0.0,
@@ -12,5 +12,5 @@
     "velocityX": 0.0,
     "velocityY": 0.0,
     "velocityZ": 0.0,
-    "model": "../../res/models/Players/Cr4nk/crank.obj"
+    "model": "res/models/Players/Cr4nk/crank_jumping_final.dae"
 }

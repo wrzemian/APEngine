@@ -1,6 +1,8 @@
 #include "glm/fwd.hpp"
 #include "glm/glm.hpp"
 #include "Animation.h"
+#ifndef ANIMATOR_H
+#define ANIMATOR_H
 
 class Animator
 {
@@ -17,11 +19,14 @@ public:
             m_FinalBoneMatrices.push_back(glm::mat4(1.0f));
     }
 
+    Animator() {}
+
     void UpdateAnimation(float dt)
     {
         m_DeltaTime = dt;
         if (m_CurrentAnimation)
         {
+            //spdlog::error("idk: {}", m_CurrentAnimation->GetTicksPerSecond());
             m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt;
             m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
             CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
@@ -72,3 +77,4 @@ private:
     float m_CurrentTime;
     float m_DeltaTime;
 };
+#endif
