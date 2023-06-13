@@ -37,6 +37,15 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     {
         direction.x = 0.0f;
     }
+    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X) != 0)
+    {
+        direction.z = inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X);
+    }
+    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) != 0)
+    {
+        direction.x = inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y);
+    }
+
 
     if(direction != glm::vec3(0.0f))
     {
@@ -53,7 +62,7 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
         _velocity.z = 0.0f;
     }
 
-    if (inputSystem->GetKeyDown(GLFW_KEY_KP_2)) {
+    if (inputSystem->GetKeyDown(GLFW_KEY_KP_2) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_X)) {
         if(haveBattery)
         {
             std::cout<< "drop the battery"<<std::endl;
@@ -67,7 +76,7 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
             std::cout<< "pick up battery"<<std::endl;
         }
     }
-    if (inputSystem->GetKeyDown(GLFW_KEY_KP_3)) {
+    if (inputSystem->GetKeyDown(GLFW_KEY_KP_3) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_Y)) {
         Grab();
     }
     /* if (inputSystem->GetKeyDown(GLFW_KEY_SPACE)) {

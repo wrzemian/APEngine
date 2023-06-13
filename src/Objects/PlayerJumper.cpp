@@ -34,6 +34,14 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     else {
         direction.x = 0.0f;
     }
+    if(inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X) != 0)
+    {
+        direction.z = inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X);
+    }
+    if(inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y) != 0)
+    {
+        direction.x = inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y);
+    }
     if(direction != glm::vec3(0.0f))
     {
         // normalize the direction vector to have a length of 1
@@ -49,7 +57,7 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
         _velocity.z = 0.0f;
     }
 
-    if (inputSystem->GetKeyDown(GLFW_KEY_E)) {
+    if (inputSystem->GetKeyDown(GLFW_KEY_E) || inputSystem->GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_X)) {
         if(haveBattery)
         {
             std::cout<< "drop the battery"<<std::endl;
