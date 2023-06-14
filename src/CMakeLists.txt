@@ -72,6 +72,14 @@ target_link_libraries(${PROJECT_NAME} AudioFile)
 #target_link_libraries(${PROJECT_NAME} openal)
 #target_link_libraries(${OPENAL_DIR}/resources/openal32.rc)
 
+set_target_properties(OpenAL
+		PROPERTIES
+		LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+set_target_properties(OpenAL
+		PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 				   COMMAND ${CMAKE_COMMAND} -E create_symlink 
 				   ${CMAKE_SOURCE_DIR}/res 
