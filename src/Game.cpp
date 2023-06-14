@@ -174,6 +174,10 @@ namespace Game {
         spdlog::info("init grabber");
         playerGrabber.initPlayer(&inputSystem);
 
+        playerGrabber.levelId = 0;
+        playerJumper.levelId = 0;
+        grabber.levelId = 0;
+
 //        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
 //        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
 //        playerJumper.loadAnimation("res/models/Players/Mich3l/animation/michel_movement.dae");
@@ -360,8 +364,14 @@ namespace Game {
     void onWin() {
         if(LevelManager::getInstance().nextLevel())
         {
+            playerGrabber.levelId = LevelManager::getInstance().currentLevel;
+            playerJumper.levelId = LevelManager::getInstance().currentLevel;
+            grabber.levelId = LevelManager::getInstance().currentLevel;
+
             playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
             playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+
+
             camera.MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
             if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty())
             {

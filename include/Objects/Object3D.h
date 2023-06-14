@@ -13,6 +13,7 @@
 
 class Object3D : public IGui {
 public:
+    int levelId = -1;
     Object3D();
     virtual ~Object3D();
     int id = -1;

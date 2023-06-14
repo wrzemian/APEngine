@@ -230,6 +230,9 @@ namespace Engine {
             deltaTime = 0.05f;
         }
         for(MovingObject* object: allMovingObjects) {
+            if(object->levelId != LevelManager::getInstance().currentLevel) {
+                continue;
+            }
             object->Move(deltaTime);
         }
     }
