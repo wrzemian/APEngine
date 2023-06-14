@@ -143,13 +143,15 @@ namespace Game {
         source->OnCreate();
         spdlog::info("source load data");
 
-        source->LoadAudioData("../../res/audio/portal_radio.wav", AudioType::Direct);
+        source->LoadAudioData("../../res/audio/walking_step.wav", AudioType::Direct);
         source->SetPositionOffset(glm::vec3(0.0f));
         source->SetDistanceMode(AudioDistanceMode::Continuous);
         source->SetMaxDistance(200.0f);
         source->SetCone({0.0f, 0.0f, 1.0f}, {110.0f, 200.0f});
         source->IsLooping(false);
+        source->SetGain(1.0f);
         //source->PlaySoundAfterStart(false);
+
 
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
