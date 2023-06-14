@@ -49,6 +49,7 @@
 #include "../include/Animations2/Animator.h"
 #include "../include/lights/Shadows.h"
 #include "../include/LevelManager.h"
+#include "../include/Audio/AudioManager.h"
 
 namespace Game {
     void processInput();
@@ -84,7 +85,6 @@ namespace Game {
 
     //animation testing
 
-
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
     Hitbox antHitbox("hitboxes/hitbox_2");
@@ -118,9 +118,28 @@ namespace Game {
 
     Background background;
 
+    AudioListener listener(camera, 0);
+    AudioSource source(playerGrabber, 0);
+
     void Start() {
         Engine::Init();
         spdlog::info("init engine");
+
+        AudioManager::GetInstance()->CheckAudioDevices();
+        //AudioManager::GetInstance()->InitializeAudioDevice();
+        listener.Start();
+        listener.OnCreate();
+        listener.SetGain(1.0f);
+        source.Start();
+        source.OnCreate();
+        source.LoadAudioData("../../res/audio/portal_radio.wav", AudioType::Direct);
+        source.SetPositionOffset(glm::vec3(0.0f));
+        source.SetDistanceMode(AudioDistanceMode::Continuous);
+        source.SetMaxDistance(200.0f);
+        source.SetCone({0.0f, 0.0f, 1.0f}, {110.0f, 200.0f});
+        source.IsLooping(false);
+        //source.PlaySoundAfterStart(false);
+
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
@@ -281,6 +300,9 @@ namespace Game {
         Engine::LoopStart();
 //        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
 
+        listener.Update();
+        source.Update();
+
         ImGui();
         imgMOv -= 0.1f;
         inputSystem.update();
@@ -376,6 +398,7 @@ namespace Game {
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
             playerGrabber.Jump();
             playerGrabber.switchAnimationJump();
+            source.PlaySound();
         }
     }
 
