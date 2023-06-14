@@ -1,9 +1,11 @@
 #include "../../include/Audio/AudioListener.h"
 #include "../../include/Audio/AudioManager.h"
+#include <memory>
 
 AudioListener::AudioListener(Camera &camera, int id) {
     this->parent = &camera;
     this->id = id;
+   // this->sharedPtr = std::make_shared<AudioListener>(this);
 }
 
 AudioListener::~AudioListener() = default;

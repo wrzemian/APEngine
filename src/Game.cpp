@@ -118,27 +118,38 @@ namespace Game {
 
     Background background;
 
-    AudioListener listener(camera, 0);
-    AudioSource source(playerGrabber, 0);
+    auto listener = std::make_shared<AudioListener>(camera, 0);
+    auto source = std::make_shared<AudioSource>(playerGrabber, 0);
 
     void Start() {
         Engine::Init();
         spdlog::info("init engine");
 
+        spdlog::info("check devices");
         AudioManager::GetInstance()->CheckAudioDevices();
-        //AudioManager::GetInstance()->InitializeAudioDevice();
-        listener.Start();
-        listener.OnCreate();
-        listener.SetGain(1.0f);
-        source.Start();
-        source.OnCreate();
-        source.LoadAudioData("../../res/audio/portal_radio.wav", AudioType::Direct);
-        source.SetPositionOffset(glm::vec3(0.0f));
-        source.SetDistanceMode(AudioDistanceMode::Continuous);
-        source.SetMaxDistance(200.0f);
-        source.SetCone({0.0f, 0.0f, 1.0f}, {110.0f, 200.0f});
-        source.IsLooping(false);
-        //source.PlaySoundAfterStart(false);
+        spdlog::info("initialize audio");
+        AudioManager::GetInstance()->InitializeAudio();
+        spdlog::info("start");
+        listener->Start();
+        spdlog::info("on create");
+        listener->OnCreate();
+        spdlog::info("set gain");
+        listener->SetGain(1.0f);
+        spdlog::info("source start");
+
+        source->Start();
+        spdlog::info("source on create");
+
+        source->OnCreate();
+        spdlog::info("source load data");
+
+        source->LoadAudioData("../../res/audio/portal_radio.wav", AudioType::Direct);
+        source->SetPositionOffset(glm::vec3(0.0f));
+        source->SetDistanceMode(AudioDistanceMode::Continuous);
+        source->SetMaxDistance(200.0f);
+        source->SetCone({0.0f, 0.0f, 1.0f}, {110.0f, 200.0f});
+        source->IsLooping(false);
+        //source->PlaySoundAfterStart(false);
 
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
@@ -300,8 +311,8 @@ namespace Game {
         Engine::LoopStart();
 //        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
 
-        listener.Update();
-        source.Update();
+        listener->Update();
+        source->Update();
 
         ImGui();
         imgMOv -= 0.1f;
@@ -398,7 +409,7 @@ namespace Game {
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
             playerGrabber.Jump();
             playerGrabber.switchAnimationJump();
-            source.PlaySound();
+            source->PlaySound();
         }
     }
 

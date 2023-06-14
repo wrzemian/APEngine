@@ -9,6 +9,7 @@
 
 class AudioListener : public std::enable_shared_from_this<AudioListener> {
 public:
+    std::shared_ptr<AudioListener> sharedPtr = nullptr;
     Camera* parent;
     glm::vec3 position = {};
     glm::vec3 velocity = {};
