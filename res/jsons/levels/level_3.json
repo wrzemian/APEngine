@@ -1,10 +1,10 @@
 {
-    "playerGrabPosX": 0.5,
-    "playerGrabPosY": 0.5,
-    "playerGrabPosZ": 0.5,
-    "playerJumpPosX": 0.0,
-    "playerJumpPosY": 0.0,
-    "playerJumpPosZ": 0.0,
+    "playerGrabPosX": 22.0,
+    "playerGrabPosY": 6.5,
+    "playerGrabPosZ": 6.5,
+    "playerJumpPosX": 22.0,
+    "playerJumpPosY": 6.5,
+    "playerJumpPosZ": 5.5,
     "cameraPositionX": 25.0,
     "cameraPositionY": 10.0,
     "cameraPositionZ": 20.0

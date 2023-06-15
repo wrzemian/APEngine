@@ -97,15 +97,6 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
 }
 
 void PlayerGrabber::onCollision(Object3D *other) {
-
-    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
-    {
-
-        this->switchAnimationWalk();
-        this->switchAnimationStand();
-        _velocity.y = 0;
-        jumpCount = 0;
-    }
     if(other->tag == "battery")
     {
         canPickUpBattery = true;
@@ -170,4 +161,17 @@ void PlayerGrabber::switchAnimationStand() {
 
 void PlayerGrabber::switchAnimationGrab() {
         this->loadAnimation("res/models/Players/Cr4nk/crank_hooking_final.dae");
+}
+
+void PlayerGrabber::onCollisionY(Object3D *other) {
+    MovingObject::onCollisionY(other);
+    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform"))
+    {
+        this->switchAnimationWalk();
+        this->switchAnimationStand();
+        _velocity.y = 0;
+        jumpCount = 0;
+
+    }
+
 }
