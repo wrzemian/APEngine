@@ -1,15 +1,15 @@
 # Blender 3.5.1 MTL File: 'level1.blend'
 # www.blender.org
 
-newmtl Material.002
+newmtl Misc
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.000000 0.000000 0.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd ../../Assets/Misc.png
 
 newmtl back_wallMaterial.004
 Ka 1.000000 1.000000 1.000000
@@ -34,16 +34,6 @@ map_Kd ../../Assets/chest1/untitled_box1_BaseColor.png
 map_Ns ../../Assets/chest1/untitled_box1_Roughness.png
 map_refl ../../Assets/chest1/untitled_box1_Metallic.png
 map_Bump -bm 1.000000 ../../Assets/chest1/untitled_box1_Normal.png
-
-newmtl czerwony_znak
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 1.000000 0.000000 0.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
 
 newmtl decoboxMaterial.005
 Ka 1.000000 1.000000 1.000000
@@ -102,16 +92,6 @@ map_Ns ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Roughness.png
 map_refl ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Normal.png
-
-newmtl napis_EXIT
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
 
 newmtl niewidzialnosc.004
 Ns 250.000000
