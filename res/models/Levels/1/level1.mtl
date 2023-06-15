@@ -1,25 +1,15 @@
-# Blender 3.5.1 MTL File: 'collada_crank_animations.blend'
+# Blender 3.5.1 MTL File: 'level1.blend'
 # www.blender.org
 
-newmtl Cables_Material.007
-Ns 57.358215
-Ka 1.000000 1.000000 1.000000
-Kd 0.000000 0.000000 0.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
-newmtl Material.003
+newmtl Misc
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.000000 0.000000 0.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd ../../Assets/Misc.png
 
 newmtl back_wallMaterial.004
 Ka 1.000000 1.000000 1.000000
@@ -84,7 +74,7 @@ map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_floorMaterial_Normal
 newmtl kable
 Ns 360.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Kd 0.281205 0.002147 0.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000

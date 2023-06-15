@@ -117,6 +117,7 @@ void PlayerGrabber::Jump() {
     {
         walking = 0;
         recentlyMoved = 0;
+        this->switchAnimationJump();
         this->AddVelocity(glm::vec3(0.0f, 4.0f, 0.0f));
         jumpCount += 1;
     }
@@ -148,7 +149,7 @@ PlayerGrabber::PlayerGrabber() {
 
 void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
-        this->loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
         this->recentlyMoved = 0;
         this->walking = 1;
     }
@@ -156,18 +157,18 @@ void PlayerGrabber::switchAnimationWalk() {
 
 void PlayerGrabber::switchAnimationJump() {
     if(jumpCount == 0){
-        this->loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_JUMPING.dae");
     }
 }
 
 void PlayerGrabber::switchAnimationStand() {
     if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
-        this->loadAnimation("res/models/Players/Cr4nk/crank_standing_with_breathing.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_STANDING.dae");
         this->recentlyMoved = 1;
         this->walking = 0;
     }
 }
 
 void PlayerGrabber::switchAnimationGrab() {
-        this->loadAnimation("res/models/Players/Cr4nk/crank_hooking_final.dae");
+        this->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
 }
