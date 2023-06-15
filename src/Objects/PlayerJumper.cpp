@@ -129,7 +129,7 @@ void PlayerJumper::onCollisionExit(Object3D *other) {
 
 void PlayerJumper::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
-        this->loadAnimation("res/models/Players/Mich3l/untitled.dae");
+        this->loadAnimation("res/models/Players/Mich3l/michel_jumping.dae");
         this->recentlyMoved = 0;
         this->walking = 1;
     }
@@ -137,14 +137,14 @@ void PlayerJumper::switchAnimationWalk() {
 
 void PlayerJumper::switchAnimationJump() {
     if(jumpCount == 0){
-        this->loadAnimation("res/models/Players/Mich3l/untitled.dae");
+        this->loadAnimation("res/models/Players/Mich3l/michel_jumping.dae");
     }
 
 }
 
 void PlayerJumper::switchAnimationStand() {
     if(_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
-        this->loadAnimation("res/models/Players/Mich3l/untitled.dae`");
+        this->loadAnimation("res/models/Players/Mich3l/michel_jumping.dae");
         this->recentlyMoved = 1;
         this->walking = 0;
     }
