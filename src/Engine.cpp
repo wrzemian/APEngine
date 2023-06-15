@@ -211,7 +211,6 @@ namespace Engine {
         }
     }
 
-
     void logTextures() {
         for(Object3D* object: allObjects) {
             spdlog::info("OBJECT {}", object->_path);

@@ -323,7 +323,7 @@ namespace Game {
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
 
-    //    background.Move(-50*Engine::deltaTime);
+        background.Move(-50*Engine::deltaTime);
 
 
         Engine::renderHitboxes(projection * view);
