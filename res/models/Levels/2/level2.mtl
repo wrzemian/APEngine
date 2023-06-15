@@ -45,7 +45,7 @@ map_Ns ../../Assets/boxTextures/untitled_box2_Roughness.png
 map_refl ../../Assets/boxTextures/untitled_box2_Metallic.png
 map_Bump -bm 1.000000 ../../Assets/boxTextures/untitled_box2_Normal.png
 
-newmtl decoboxMaterial
+newmtl decoboxMaterial.005
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
