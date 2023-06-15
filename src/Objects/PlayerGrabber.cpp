@@ -106,6 +106,7 @@ void PlayerGrabber::onCollision(Object3D *other) {
 void PlayerGrabber::Jump() {
     if (jumpCount == 0 && this->_velocity.y <= 0&& this->_velocity.y <= 0)
     {
+        this->switchAnimationJump();
         walking = 0;
         recentlyMoved = 0;
         this->AddVelocity(glm::vec3(0.0f, 4.0f, 0.0f));
