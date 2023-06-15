@@ -39,6 +39,9 @@ public:
     virtual void onCollisionExit(Object3D* other);
     virtual rapidjson::Document ParseToJSON();
 
+
+    virtual void unusualCollision(Object3D* other);
+
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;
 

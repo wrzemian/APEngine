@@ -165,7 +165,7 @@ void PlayerGrabber::switchAnimationGrab() {
 
 void PlayerGrabber::onCollisionY(Object3D *other) {
     MovingObject::onCollisionY(other);
-    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform"))
+    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform" || other->tag == "box"))
     {
         this->switchAnimationWalk();
         this->switchAnimationStand();
@@ -174,4 +174,10 @@ void PlayerGrabber::onCollisionY(Object3D *other) {
 
     }
 
+}
+
+void PlayerGrabber::unusualCollision(Object3D *other) {
+    Object3D::unusualCollision(other);
+    _velocity.y = 0;
+    jumpCount = 0;
 }

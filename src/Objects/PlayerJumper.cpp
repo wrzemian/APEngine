@@ -129,12 +129,21 @@ void PlayerJumper::onCollisionExit(Object3D *other) {
 
 void PlayerJumper::onCollisionY(Object3D *other) {
     MovingObject::onCollisionY(other);
-    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform"))
+    if(other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform" )
     {
         _velocity.y = 0;
         jumpCount = 0;
-
     }
+    if(other->tag == "box")
+    {
+        std::cout << "jd z gory gracz" << std::endl;
+    }
+}
+
+void PlayerJumper::unusualCollision(Object3D *other) {
+    Object3D::unusualCollision(other);
+    _velocity.y = 0;
+    jumpCount = 0;
 }
 
 //void PlayerJumper::switchAnimationWalk() {

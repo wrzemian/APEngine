@@ -169,6 +169,8 @@ namespace Game {
 
         p2Hitbox.draw = false;
         p1Hitbox.draw = false;
+        p1Hitbox.tag = "player";
+        p2Hitbox.tag = "player";
         antBigHitbox.draw = false;
 
 

@@ -33,6 +33,7 @@ public:
     void onCollision(Object3D* other) override;
     void onCollisionExit(Object3D* other) override;
     void onCollisionY(Object3D *other) override;
+    void unusualCollision(Object3D *other) override;
     void switchAnimationWalk();
     void switchAnimationJump();
     void switchAnimationStand();

@@ -18,7 +18,7 @@ void Box::onCollisionY(Object3D *other) {
     {
         if(other->tag == "player")
         {
-            //std::cout << "jd z gory gracz" << std::endl;
+            other->unusualCollision(this);
         }
     }
 }
