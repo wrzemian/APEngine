@@ -375,7 +375,6 @@ namespace Game {
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
             playerGrabber.Jump();
-            playerGrabber.switchAnimationJump();
         }
     }
 
