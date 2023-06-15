@@ -30,6 +30,8 @@ void AudioManager::InitializeAudio() {
     deviceChanger = std::jthread(CheckAudioDevice, &audioDevice);
 }
 
+
+
 void AudioManager::CheckAudioDevices() {
     // Get the list of available audio devices
     const ALCchar* deviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
@@ -48,38 +50,32 @@ void AudioManager::CheckAudioDevices() {
     }
 }
 
-void AudioManager::InitializeAudioDevice(const char* deviceName) {
-    // Open the specified audio device
-    ALCdevice* audioDevice = alcOpenDevice(deviceName);
-    if (audioDevice == nullptr) {
-        spdlog::error("Failed to open audio device: {}", deviceName);
-        return;
-    }
+void AudioManager::CreateAll(Camera camera, Object3D player) {
+    auto listener = std::make_shared<AudioListener>(camera, 0);
+    listener->Start();
+    listener->OnCreate();
+    listener->SetGain(1.0f);
 
-    // Create an audio context
-    ALCcontext* audioContext = alcCreateContext(audioDevice, nullptr);
-    if (audioContext == nullptr) {
-        spdlog::error("Failed to create audio context.");
-        alcCloseDevice(audioDevice);
-        return;
-    }
+    auto source = std::make_shared<AudioSource>(player, 0);
+    source->Start();
+    source->OnCreate();
+    source->LoadAudioData("../../res/audio/walking_step.wav", AudioType::Direct);
+    source->IsLooping(false);
+    source->SetGain(1.0f);
 
-    // Make the audio context current
-    if (!alcMakeContextCurrent(audioContext)) {
-        spdlog::error("Failed to make audio context current.");
-        alcDestroyContext(audioContext);
-        alcCloseDevice(audioDevice);
-        return;
-    }
-
-    // Print information about the audio device
-    spdlog::info("Successfully initialized audio device: {}", alcGetString(audioDevice, ALC_ALL_DEVICES_SPECIFIER));
-
-    // Clean up: Destroy the audio context and close the audio device
-    alcMakeContextCurrent(nullptr);
-    alcDestroyContext(audioContext);
-    alcCloseDevice(audioDevice);
 }
+
+void AudioManager::PlaySound(Audio name) {
+    audioSources.at(name)->PlaySound();
+}
+
+void AudioManager::Update() {
+    audioListener->Update();
+    for (auto& it: audioSources) {
+        it.second->Update();
+    }
+}
+
 
 void AudioManager::RemoveAudioSource(int componentId) {
     if (audioSources.contains(componentId)) {

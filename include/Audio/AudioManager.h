@@ -12,6 +12,10 @@
 
 #define AL_STOP_SOURCES_ON_DISCONNECT_SOFT 0x19AB
 
+enum Audio {
+    JUMP
+};
+
 class AudioManager {
 
     ALCdevice* audioDevice = nullptr;
@@ -36,8 +40,10 @@ public:
     void Free();
 
     void InitializeAudio();
-    void InitializeAudioDevice(const char* deviceName);
     void CheckAudioDevices();
+    void CreateAll(Camera camera, Object3D player);
+    void PlaySound(Audio name);
+    void Update();
     void RemoveAudioSource(int componentId);
 };
 
