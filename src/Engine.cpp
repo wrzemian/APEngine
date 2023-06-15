@@ -387,9 +387,9 @@ namespace Engine {
 
         // Check for collisions between dynamic and static hitboxes
         for(auto dynamicHitbox: dynamicHitboxes) {
-            for(auto staticHitbox: LevelManager::getInstance().getCurrentLevel()->hitboxes) {
-                if(dynamicHitbox->TestForIntersection(staticHitbox.get())) {
-                    currentCollisions.push_back({dynamicHitbox, staticHitbox.get()});
+            for(auto staticHitbox: staticHitboxes) {
+                if(dynamicHitbox->TestForIntersection(staticHitbox)) {
+                    currentCollisions.push_back({dynamicHitbox, staticHitbox});
                 }
             }
         }

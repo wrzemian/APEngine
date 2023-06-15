@@ -248,6 +248,8 @@ void Level::calculateHitboxes() {
             case 'E': { // Box
                 // TODO: change to Box implementation
                 auto box = std::make_shared<Box>();
+                box->_transform._position.y += 0.1f;
+                box->StopMoving();
                 box->ShowImgui();
                 box->levelId = levelId;
                 boxes.push_back(box);
@@ -273,6 +275,8 @@ void Level::calculateHitboxes() {
 
             case 'P': { // Battery
                 auto battery = std::make_shared<Battery>();
+                battery->StopMoving();
+                battery->_transform._position.y += 0.1f;
                 battery->ShowImgui();
                 battery->levelId = levelId;
 
