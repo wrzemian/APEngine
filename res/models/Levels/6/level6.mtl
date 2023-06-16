@@ -1,6 +1,18 @@
 # Blender 3.5.1 MTL File: 'level1.blend'
 # www.blender.org
 
+newmtl Material.005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ../../Assets/batteryTextures/untitled_Material.002_BaseColor.png
+map_Ns ../../Assets/batteryTextures/untitled_Material.002_Roughness.png
+map_refl ../../Assets/batteryTextures/untitled_Material.002_Metallic.png
+map_Bump -bm 1.000000 ../../Assets/batteryTextures/untitled_Material.002_Normal.png
+
 newmtl Misc
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -23,19 +35,19 @@ map_refl ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Normal.png
 
-newmtl box2
+newmtl box1.003
 Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 1
-map_Kd ../../Assets/chest1/untitled_box1_BaseColor.png
-map_Ns ../../Assets/chest1/untitled_box1_Roughness.png
-map_refl ../../Assets/chest1/untitled_box1_Metallic.png
-map_Bump -bm 1.000000 ../../Assets/chest1/untitled_box1_Normal.png
+illum 2
+map_Kd ../../Assets/boxTextures/untitled_box2_BaseColor.png
+map_Ns ../../Assets/boxTextures/untitled_box2_Roughness.png
+map_refl ../../Assets/boxTextures/untitled_box2_Metallic.png
+map_Bump -bm 1.000000 ../../Assets/boxTextures/untitled_box2_Normal.png
 
-newmtl decoboxMaterial.005
+newmtl decoboxMaterial.003
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -71,7 +83,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_floorMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_floorMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_floorMaterial_Normal.png
 
-newmtl left_wallMaterial.004
+newmtl left_wallMaterial.002
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -93,7 +105,7 @@ Ni 1.450000
 d 0.261438
 illum 9
 
-newmtl platforma.007
+newmtl platforma.004
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -105,7 +117,7 @@ map_refl ../../Assets/platformTextures/wagonfajniutki2_platforma_Metallic.png
 map_Ke ../../Assets/platformTextures/wagonfajniutki2_platforma_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/platformTextures/wagonfajniutki2_platforma_Normal.png
 
-newmtl platforma2.004
+newmtl platforma2.002
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -117,7 +129,7 @@ map_refl ../../Assets/platformTextures/wagonfajniutki2_platforma_Metallic.png
 map_Ke ../../Assets/platformTextures/wagonfajniutki2_platforma_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/platformTextures/wagonfajniutki2_platforma_Normal.png
 
-newmtl plytka.004
+newmtl plytka.002
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -129,7 +141,7 @@ map_refl ../../Assets/buttonTextures/wagonfajniutki2_plytka_Metallic.png
 map_Ke ../../Assets/buttonTextures/wagonfajniutki2_plytka_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/buttonTextures/wagonfajniutki2_plytka_Normal.png
 
-newmtl przycisk.004
+newmtl przycisk.002
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
