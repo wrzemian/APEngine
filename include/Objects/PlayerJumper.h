@@ -35,6 +35,7 @@ public:
     void switchAnimationWalk();
     void switchAnimationJump();
     void switchAnimationStand();
+    void loadAnimations();
 };
 
 
