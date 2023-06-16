@@ -101,6 +101,7 @@ void PlayerJumper::Jump() {
     {
         walking = 0;
         recentlyMoved = 0;
+        this->switchAnimationJump();
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         this->_velocity.y = 4.0f;
         jumpCount += 1;
