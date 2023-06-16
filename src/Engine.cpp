@@ -30,8 +30,8 @@ namespace Engine {
     unsigned int displayCounter = 0;
     unsigned int totalCounter = 0;
 
-    int SCR_WIDTH = 1000;
-    int SCR_HEIGHT = 800;
+    int SCR_WIDTH = 1920;
+    int SCR_HEIGHT = 1080;
 
     bool frustum = true;
 
@@ -470,10 +470,12 @@ namespace Engine {
 #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
+        const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        SCR_WIDTH = mode->width;
+        SCR_HEIGHT = mode->height;
         // glfw window creation
         // --------------------
-        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Iron Outlaws", glfwGetPrimaryMonitor(), NULL);
         if (window == NULL)
         {
             std::cout << "Failed to create GLFW window" << std::endl;
