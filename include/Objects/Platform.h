@@ -28,6 +28,7 @@ public:
     void OnActivate();
     void OnDeactivate();
 
+
     void logFields();
 
     void ImGui() override;

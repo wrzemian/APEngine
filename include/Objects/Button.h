@@ -15,6 +15,7 @@ private:
     bool isPushed = false;
     float t = 1.0f;
     float timeToReset = 1.0f;
+
 public:
     Button(Platform* p, glm::vec3 position);
 
@@ -23,6 +24,13 @@ public:
     virtual void onCollisionExit(Object3D* other);
     void addPlatform(Platform* connectedPlatform);
     std::vector<Platform*> connectedPlatforms;
+
+    std::vector<std::shared_ptr<Button>> connectedButtons; // only when all buttons connected are inactive then the platform will be deactivated
+    void addConnectedButton(std::shared_ptr<Button> buttonToConnect);
+
+    std::vector<std::shared_ptr<Button>> conditionalButtons; // only when all conditional buttons are pressed then the platform will be activated
+    void addConditionalButton(std::shared_ptr<Button> buttonToAdd);
+
 
     void logFields();
 };

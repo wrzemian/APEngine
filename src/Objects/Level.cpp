@@ -329,6 +329,19 @@ void Level::assignTargetsAndPlatforms() {
         }
     }
 
+    /*if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
+    {
+        buttons[0]->addConnectedButton(buttons[1]);
+        buttons[1]->addConnectedButton(buttons[0]);
+    }
+    */
+    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of conditional buttons, meaning that only when both buttons are pressed they activate platform
+    {
+        buttons[0]->addConditionalButton(buttons[1]);
+        buttons[1]->addConditionalButton(buttons[0]);
+    }
+
+
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
