@@ -7,5 +7,15 @@
     "playerJumpPosZ": 0.0,
     "cameraPositionX": 0.0,
     "cameraPositionY": 10.0,
-    "cameraPositionZ": 20.0
+    "cameraPositionZ": 20.0,
+    "playerGrabWinLightPositionX": 0.0,
+    "playerGrabWinLightPositionY": 10.0,
+    "playerGrabWinLightPositionZ": 20.0,
+    "playerJumpWinLightPositionX": 0.0,
+    "playerJumpWinLightPositionY": 10.0,
+    "playerJumpWinLightPositionZ": 20.0,
+    "doesNeedConditionalLight" : 0.0,
+    "conditionalWinLightPositionX": 0.0,
+    "conditionalWinLightPositionY": 10.0,
+    "conditionalWinLightPositionZ": 20.0
 }
