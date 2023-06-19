@@ -42,6 +42,10 @@ void Button::onCollision(Object3D *other) {
                         platform->OnActivate();
                     }
                 }
+                if(isWinAreaConnected)
+                {
+                    winArea->OnActivate();
+                }
             }
         }
     }
@@ -70,30 +74,15 @@ void Button::onCollisionExit(Object3D *other) {
                     for (Platform* platform : connectedPlatforms) {
                         platform->OnDeactivate();
                     }
+                    if(isWinAreaConnected)
+                    {
+                        winArea->OnDeactivate();
+                    }
                 }
             }
         }
     }
 }
-/*
-void Button::Update(float dt) {
-    if(isPushed)
-    {
-        t -= dt;
-        if(t < 0)
-        {
-            std::cout << "przycisk powinien sie wylaczyc" << std::endl;
-            for (Platform* platform : connectedPlatforms) {
-                if(platform != nullptr)
-                {
-                    platform->OnDeactivate();
-                }
-            }
-            isPushed = false;
-            t = timeToReset;
-        }
-    }
-}*/
 
 void Button::logFields() {
     spdlog::info("Button Fields:");
@@ -116,6 +105,11 @@ void Button::addConnectedButton(std::shared_ptr<Button> buttonToConnect) {
 
 void Button::addConditionalButton(std::shared_ptr<Button> buttonToAdd) {
     conditionalButtons.push_back(buttonToAdd);
+}
+
+void Button::addWinArea(std::shared_ptr<WinArea> winAreaToAdd) {
+    isWinAreaConnected = true;
+    winArea = winAreaToAdd;
 }
 
 

@@ -25,6 +25,9 @@ public:
 
     std::string tag = "floor";
 
+    std::string type = "none";
+
+
     virtual void Draw(Shader &shader);
 
     void ImGui();

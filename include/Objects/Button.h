@@ -7,6 +7,7 @@
 
 #include "Object3D.h"
 #include "Platform.h"
+#include "WinArea.h"
 
 class Button : public Object3D {
 private:
@@ -31,6 +32,9 @@ public:
     std::vector<std::shared_ptr<Button>> conditionalButtons; // only when all conditional buttons are pressed then the platform will be activated
     void addConditionalButton(std::shared_ptr<Button> buttonToAdd);
 
+    bool isWinAreaConnected = false;
+    std::shared_ptr<WinArea> winArea;
+    void addWinArea(std::shared_ptr<WinArea> winAreaToAdd);
 
     void logFields();
 };

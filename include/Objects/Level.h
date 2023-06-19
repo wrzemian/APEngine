@@ -53,4 +53,9 @@ public:
     glm::vec3 cameraOffset = glm::vec3(-4.0f,10.0f,17.0f);
     glm::vec3 playerGrabberStartingPos = glm::vec3(-5,1,-1.0f);
     glm::vec3 playerJumperStartingPos = glm::vec3(-5,1,0);
+
+    glm::vec3 playerJumperLightPos = glm::vec3(0,0,0);
+    glm::vec3 playerGrabberLightPos = glm::vec3(0,0,0);
+    glm::vec3 winLightPos = glm::vec3(0,0,0);
+    bool hasConditionalLight = false;
 };

@@ -510,4 +510,20 @@ void Level::LoadDataFromJson(const Level& temp) {
     this->playerGrabberStartingPos = temp.playerGrabberStartingPos;
     this->playerJumperStartingPos = temp.playerJumperStartingPos;
     this->cameraOffset = temp.cameraOffset;
+
+    this->winArea->playerGrabberLightBulb = std::make_shared<LightBulb>();
+    this->winArea->playerGrabberLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+    this->playerGrabberLightPos = temp.playerGrabberLightPos;
+    this->winArea->playerGrabberLightBulb->_transform._position = playerGrabberLightPos;
+    this->winArea->playerJumperLightBulb = std::make_shared<LightBulb>();
+    this->winArea->playerJumperLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+    this->playerJumperLightPos = temp.playerJumperLightPos;
+    this->winArea->playerJumperLightBulb->_transform._position = playerJumperLightPos;
+    if(temp.hasConditionalLight)
+    {
+        this->winArea->activationLightBulb = std::make_shared<LightBulb>();
+        this->winArea->activationLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+        this->winLightPos = temp.winLightPos;
+        this->winArea->activationLightBulb->_transform._position = temp.winLightPos;
+    }
 }

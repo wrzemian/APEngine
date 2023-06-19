@@ -282,11 +282,20 @@ Level Parser::CreateFromJSONLevelData(std::string fileName) {
     glm::vec3 tempPlayerGrabPosition(d["playerGrabPosX"].GetFloat(), d["playerGrabPosY"].GetFloat(), d["playerGrabPosZ"].GetFloat());
     glm::vec3 tempPlayerJumpPosition(d["playerJumpPosX"].GetFloat(), d["playerJumpPosY"].GetFloat(), d["playerJumpPosZ"].GetFloat());
     glm::vec3 tempCameraPosition(d["cameraPositionX"].GetFloat(), d["cameraPositionY"].GetFloat(), d["cameraPositionZ"].GetFloat());
-
+    glm::vec3 tempPlayerGrabberLightPosition(d["playerGrabWinLightPositionX"].GetFloat(), d["playerGrabWinLightPositionY"].GetFloat(), d["playerGrabWinLightPositionZ"].GetFloat());
+    glm::vec3 tempPlayerJumperLightPosition(d["playerJumpWinLightPositionX"].GetFloat(), d["playerJumpWinLightPositionY"].GetFloat(), d["playerJumpWinLightPositionZ"].GetFloat());
     Level temp;
+    if(d["doesNeedConditionalLight"].GetFloat() != 0)
+    {
+        glm::vec3 tempconditionalWinLightPosition(d["conditionalWinLightPositionX"].GetFloat(), d["conditionalWinLightPositionY"].GetFloat(), d["conditionalWinLightPositionZ"].GetFloat());
+        temp.winLightPos = tempconditionalWinLightPosition;
+        temp.hasConditionalLight = true;
+    }
     temp.playerGrabberStartingPos = tempPlayerGrabPosition;
     temp.playerJumperStartingPos = tempPlayerJumpPosition;
     temp.cameraOffset = tempCameraPosition;
+    temp.playerGrabberLightPos = tempPlayerGrabberLightPosition;
+    temp.playerJumperStartingPos = tempPlayerJumperLightPosition;
     return temp;
 
 }

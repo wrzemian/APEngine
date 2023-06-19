@@ -7,6 +7,7 @@
 void PlayerJumper::initPlayer(InputSystem* inputSystem) {
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
     tag = "player";
+    type = "jumper";
     inputSystem->monitorKey(GLFW_KEY_W);
     inputSystem->monitorKey(GLFW_KEY_A);
     inputSystem->monitorKey(GLFW_KEY_S);
