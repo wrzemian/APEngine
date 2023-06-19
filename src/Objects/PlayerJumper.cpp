@@ -4,7 +4,7 @@
 
 #include "../../include/Objects/PlayerJumper.h"
 
-Animation walkA, stamdA, jumpA;
+//Animation walkA, stamdA, jumpA;
 
 void PlayerJumper::initPlayer(InputSystem* inputSystem) {
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));

@@ -146,6 +146,8 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
+
+
         spdlog::info("init jumper");
         playerJumper.initPlayer(&inputSystem);
         spdlog::info("init grabber");
@@ -158,6 +160,7 @@ namespace Game {
 //        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
 //        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
         playerJumper.loadAnimation("res/models/Players/Mich3l/michel_breathing_and_looking_around.dae");
+        playerGrabber.loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
 //        Animation temp(daePath, &*_model);
 
 
@@ -193,7 +196,12 @@ namespace Game {
         //p1Hitbox.calculateFromModel(player1._model);
         //p2Hitbox.calculateFromModel(player2._model);
 
-
+        playerGrabber.grabber = &grabber;
+        grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
+        grabberHitbox.draw = false;
+        grabberHitbox.isTrigger = true;
+        grabber.loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
+        grabber.LoadAnimations();
 
         //currentLevel = LevelManager.getInstance().
 
@@ -216,10 +224,7 @@ namespace Game {
         }
 
 
-        playerGrabber.grabber = &grabber;
-        grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
-        grabberHitbox.draw = false;
-        grabberHitbox.isTrigger = true;
+
 
 
 //        box.setShader(&shader);

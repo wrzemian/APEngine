@@ -13,6 +13,7 @@ Grabber::Grabber() {
     _transform._scale.y  = 0.3f;
     _transform._scale.z  = 0.3f;
     _gravity.y = 0;
+//    LoadAnimations();
 }
 
 void Grabber::onCollision(Object3D *other) {
@@ -83,4 +84,18 @@ void Grabber::UpdateGrabber(glm::vec3 pos,glm::vec3 rot) {
 
 void Grabber::SetPositionTarget(glm::vec3 targetPos) {
     positionTarget = targetPos;
+}
+
+void Grabber::LoadAnimations() {
+    //arm animations
+    Animation temp("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae", &*this->_model);
+    Animation temp2("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_JUMPING.dae", &*this->_model);
+    Animation temp3("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_STANDING.dae", &*this->_model);
+    Animation temp4("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae", &*this->_model);
+
+    walkA = temp;
+    stamdA = temp3;
+    jumpA = temp2;
+    hookingA = temp4;
+    animator.PlayAnimation(&temp);
 }

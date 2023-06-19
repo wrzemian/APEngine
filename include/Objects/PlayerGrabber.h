@@ -13,6 +13,7 @@
 
 class PlayerGrabber: public MovingObject {
 private:
+
     using super = MovingObject;
     int jumpCount = 0;
     bool haveBattery = false;
@@ -25,6 +26,7 @@ private:
     float padJoystickTolerance = 0.2f;
 public:
 
+    Animation walkP, standP, jumpP, hookingP;
     PlayerGrabber();
     Battery* battery;
     Grabber* grabber;
@@ -40,6 +42,7 @@ public:
     void switchAnimationGrab();
     void Jump();
     void Grab();
+    void loadAnimations();
 };
 
 

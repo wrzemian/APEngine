@@ -15,7 +15,9 @@ void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
     inputSystem->monitorKey(GLFW_KEY_KP_2);
     inputSystem->monitorKey(GLFW_KEY_KP_3);
     //inputSystem->monitorKey(GLFW_KEY_SPACE);
+    this->loadAnimations();
 }
+
 
 void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     if (inputSystem->GetKey(GLFW_KEY_UP)) {
@@ -142,8 +144,10 @@ PlayerGrabber::PlayerGrabber() {
 
 void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
-        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
-        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
+        this->animator.PlayAnimation(&walkP);
+        this->grabber->animator.PlayAnimation(&this->grabber->walkA);
+//        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
+//        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
         this->recentlyMoved = 0;
         this->walking = 1;
     }
@@ -151,23 +155,27 @@ void PlayerGrabber::switchAnimationWalk() {
 
 void PlayerGrabber::switchAnimationJump() {
     if(jumpCount == 0){
-        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_JUMPING.dae");
-        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_JUMPING.dae");
+        this->animator.PlayAnimation(&jumpP);
+        this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
     }
 }
 
 void PlayerGrabber::switchAnimationStand() {
     if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
-        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_STANDING.dae");
-        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_STANDING.dae");
+//        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_STANDING.dae");
+//        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_STANDING.dae");
+        this->animator.PlayAnimation(&standP);
+        this->grabber->animator.PlayAnimation(&this->grabber->stamdA);
         this->recentlyMoved = 1;
         this->walking = 0;
     }
 }
 
 void PlayerGrabber::switchAnimationGrab() {
-        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae");
-    this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
+//        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae");
+//    this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
+    this->animator.PlayAnimation(&hookingP);
+    this->grabber->animator.PlayAnimation(&this->grabber->hookingA);
 }
 
 void PlayerGrabber::onCollisionY(Object3D *other) {
@@ -188,3 +196,21 @@ void PlayerGrabber::unusualCollision(Object3D *other) {
     _velocity.y = 0;
     jumpCount = 0;
 }
+
+void PlayerGrabber::loadAnimations() {
+    //body animations
+    Animation temp5("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae", &*this->_model);
+    Animation temp6("res/models/Players/Cr4nk/REST_CRANK_JUMPING.dae", &*this->_model);
+    Animation temp7("res/models/Players/Cr4nk/REST_CRANK_STANDING.dae", &*this->_model);
+    Animation temp8("res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae", &*this->_model);
+
+    walkP = temp5;
+    standP = temp7;
+    jumpP = temp6;
+    hookingP = temp8;
+
+
+
+    this->animator.PlayAnimation(&temp5);
+}
+

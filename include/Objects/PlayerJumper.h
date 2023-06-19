@@ -12,6 +12,7 @@
 
 class PlayerJumper : public MovingObject {
 private:
+    Animation walkA, stamdA, jumpA;
     using super = MovingObject;
     int jumpCount = 0;
     bool haveBattery = false;

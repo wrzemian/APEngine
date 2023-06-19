@@ -10,6 +10,7 @@
 
 class Grabber : public MovingObject {
 private:
+
     bool moveToTarget = false;
     bool moveToOrigin = false;
     float t;
@@ -33,6 +34,8 @@ public:
     void SetPlayerOffset(glm::vec3 offset);
     void SetPositionTarget(glm::vec3 targetPos);
     void DropObject();
+    void LoadAnimations();
+    Animation stamdA, jumpA, hookingA, walkA;
 };
 
 
