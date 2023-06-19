@@ -295,7 +295,7 @@ Level Parser::CreateFromJSONLevelData(std::string fileName) {
     temp.playerJumperStartingPos = tempPlayerJumpPosition;
     temp.cameraOffset = tempCameraPosition;
     temp.playerGrabberLightPos = tempPlayerGrabberLightPosition;
-    temp.playerJumperStartingPos = tempPlayerJumperLightPosition;
+    temp.playerJumperLightPos = tempPlayerJumperLightPosition;
     return temp;
 
 }

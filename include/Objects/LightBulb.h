@@ -7,10 +7,13 @@
 #include "Object3D.h"
 
 class LightBulb : public Object3D {
-
+private:
+    Shader changingColorShader;
 public:
+    glm::vec3 materialColor = glm::vec3(0);
     LightBulb();
     void ChangeColor(glm::vec3 color);
+    void Draw(Shader &shader) override;
 };
 
 
