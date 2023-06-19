@@ -138,11 +138,16 @@ void PlayerJumper::onCollisionY(Object3D *other) {
     MovingObject::onCollisionY(other);
     if(other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform" )
     {
+        this->switchAnimationWalk();
+        this->switchAnimationStand();
         _velocity.y = 0;
         jumpCount = 0;
     }
     if(other->tag == "box")
     {
+        jumpCount = 0;
+        this->switchAnimationWalk();
+        this->switchAnimationStand();
         std::cout << "jd z gory gracz" << std::endl;
     }
 }
