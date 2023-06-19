@@ -217,7 +217,7 @@ namespace Game {
 
 
         playerGrabber.grabber = &grabber;
-        grabber.loadModel("../../res/models/Assets/battery/battery.obj");
+        grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
         grabberHitbox.draw = false;
         grabberHitbox.isTrigger = true;
 
