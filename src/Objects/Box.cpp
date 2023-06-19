@@ -11,3 +11,14 @@ Box::Box() {
     tag = "box";
     id = 5;
 }
+
+void Box::onCollisionY(Object3D *other) {
+    MovingObject::onCollisionY(other);
+    if(other->_transform._position.y > this->_transform._position.y)
+    {
+        if(other->tag == "player")
+        {
+            other->unusualCollision(this);
+        }
+    }
+}

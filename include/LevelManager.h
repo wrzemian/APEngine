@@ -22,10 +22,11 @@ public:
         }
 
         std::string line;
-
+        int levelId = 0;
         while (std::getline(file, line)) {
             spdlog::info("Loading level from path: {}", line);
             auto level = std::make_shared<Level>();
+            level->levelId = levelId++;
             level->loadModel(line);
             level->_transform._position.x = -7.039000034332275;
             level->_transform._position.y = 4.692999839782715;
@@ -116,12 +117,12 @@ public:
         }
     }
 
+    int currentLevel = 0;
 private:
     std::vector<LevelPtr> levels;
     std::vector<std::string> successfulPaths;
     std::vector<std::string> failedPaths;
     int levelCount = 0;
-    int currentLevel = 0;
 
     LevelManager() {
         setWindowName("Level Manager");

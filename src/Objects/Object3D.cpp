@@ -133,3 +133,7 @@ void Object3D::loadAnimation(const std::string& daePath) {
     animator = tempA;
 
 }
+
+void Object3D::unusualCollision(Object3D *other) {
+    spdlog::info("Object3D unusual collision called");
+}

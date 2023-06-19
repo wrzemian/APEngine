@@ -213,6 +213,8 @@ void Level::calculateHitboxes() {
                 spdlog::info("Moving platform position {}, {}, {}", _transform._position.x,_transform._position.y,_transform._position.z);
 
                 auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
+                platform->levelId = levelId;
+
                 platform->tag = "moving platform";
               //  platform->ShowImgui();
                 platform->id = totalId;
@@ -246,6 +248,10 @@ void Level::calculateHitboxes() {
             case 'E': { // Box
                 // TODO: change to Box implementation
                 auto box = std::make_shared<Box>();
+                box->_transform._position.y += 0.1f;
+                box->StopMoving();
+                box->ShowImgui();
+                box->levelId = levelId;
                 boxes.push_back(box);
                 box->tag = "box";
 
@@ -269,6 +275,11 @@ void Level::calculateHitboxes() {
 
             case 'P': { // Battery
                 auto battery = std::make_shared<Battery>();
+                battery->StopMoving();
+                battery->_transform._position.y += 0.1f;
+                battery->ShowImgui();
+                battery->levelId = levelId;
+
                 battery->tag = "battery";
                 batteries.push_back(battery);
 

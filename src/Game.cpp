@@ -49,6 +49,7 @@
 #include "../include/Animations2/Animator.h"
 #include "../include/lights/Shadows.h"
 #include "../include/LevelManager.h"
+#include "../include/Audio/AudioManager.h"
 
 namespace Game {
     void processInput();
@@ -84,7 +85,6 @@ namespace Game {
 
     //animation testing
 
-
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
     Hitbox antHitbox("hitboxes/hitbox_2");
@@ -118,9 +118,18 @@ namespace Game {
 
     Background background;
 
+
+
     void Start() {
         Engine::Init();
         spdlog::info("init engine");
+
+
+        spdlog::info("init audio");
+        AudioManager::GetInstance()->InitializeAudio();
+        AudioManager::GetInstance()->CreateAll(camera, playerGrabber);
+
+
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
@@ -142,6 +151,10 @@ namespace Game {
         spdlog::info("init grabber");
         playerGrabber.initPlayer(&inputSystem);
 
+        playerGrabber.levelId = 0;
+        playerJumper.levelId = 0;
+        grabber.levelId = 0;
+
 //        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
 //        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
         playerJumper.loadAnimation("res/models/Players/Mich3l/michel_breathing_and_looking_around.dae");
@@ -156,6 +169,8 @@ namespace Game {
 
         p2Hitbox.draw = false;
         p1Hitbox.draw = false;
+        p1Hitbox.tag = "player";
+        p2Hitbox.tag = "player";
         antBigHitbox.draw = false;
 
 
@@ -281,6 +296,8 @@ namespace Game {
         Engine::LoopStart();
 //        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
 
+        AudioManager::GetInstance()->Update();
+
         ImGui();
         imgMOv -= 0.1f;
         inputSystem.update();
@@ -308,7 +325,7 @@ namespace Game {
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
 
-    //    background.Move(-50*Engine::deltaTime);
+        background.Move(-50*Engine::deltaTime);
 
 
         Engine::renderHitboxes(projection * view);
@@ -325,8 +342,14 @@ namespace Game {
     void onWin() {
         if(LevelManager::getInstance().nextLevel())
         {
+            playerGrabber.levelId = LevelManager::getInstance().currentLevel;
+            playerJumper.levelId = LevelManager::getInstance().currentLevel;
+            grabber.levelId = LevelManager::getInstance().currentLevel;
+
             playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
             playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+
+
             camera.MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
             if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty())
             {
@@ -375,6 +398,7 @@ namespace Game {
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
             playerGrabber.Jump();
+            AudioManager::GetInstance()->PlaySound(Audio::JUMP);
         }
     }
 

@@ -13,6 +13,7 @@
 
 class Object3D : public IGui {
 public:
+    int levelId = -1;
     Object3D();
     virtual ~Object3D();
     int id = -1;
@@ -37,6 +38,9 @@ public:
     virtual void onCollision(Object3D* other);
     virtual void onCollisionExit(Object3D* other);
     virtual rapidjson::Document ParseToJSON();
+
+
+    virtual void unusualCollision(Object3D* other);
 
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;

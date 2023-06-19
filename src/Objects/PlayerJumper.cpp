@@ -109,7 +109,7 @@ void PlayerJumper::Jump() {
 }
 
 void PlayerJumper::onCollision(Object3D *other) {
-    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
+   /* if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
 
         this->switchAnimationWalk();
@@ -118,7 +118,7 @@ void PlayerJumper::onCollision(Object3D *other) {
 
         _velocity.y = 0;
         jumpCount = 0;
-    }
+    }*/
     if(other->tag == "battery")
     {
         canPickUpBattery = true;
@@ -133,12 +133,33 @@ void PlayerJumper::onCollisionExit(Object3D *other) {
     }
 }
 
-void PlayerJumper::switchAnimationWalk() {
-    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
+void PlayerJumper::onCollisionY(Object3D *other) {
+    MovingObject::onCollisionY(other);
+    if(other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform" )
+    {
+        _velocity.y = 0;
+        jumpCount = 0;
+    }
+    if(other->tag == "box")
+    {
+        std::cout << "jd z gory gracz" << std::endl;
+    }
+}
+
+void PlayerJumper::unusualCollision(Object3D *other) {
+    Object3D::unusualCollision(other);
+    _velocity.y = 0;
+    jumpCount = 0;
+}
+
+//void PlayerJumper::switchAnimationWalk() {
+//    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
 //        this->loadAnimation("res/models/Players/Mich3l/michel_running.dae");
 //Animator tempA(&walkA);
 //this->animator= tempA;
-animator.PlayAnimation(&walkA);
+void PlayerJumper::switchAnimationWalk() {
+    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
+		animator.PlayAnimation(&walkA);
         this->recentlyMoved = 0;
         this->walking = 1;
     }
