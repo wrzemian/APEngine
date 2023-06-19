@@ -68,12 +68,26 @@ void Level::calculateHitboxes() {
                     winArea->_model = std::make_shared<Model>();
                 }
                 winArea->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
+
+                auto areaTriggerHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                areaTriggerHitbox->calculateFromMesh(mesh);
+                areaTriggerHitbox->Create(winArea.get());
+                areaTriggerHitbox->tag = "winArea";
+                areaTriggerHitbox->_offset.x = -0.1f;
+                areaTriggerHitbox->_offset.y = 0.0f;
+                areaTriggerHitbox->_offset.z = 0.0f;
+                areaTriggerHitbox->_color.x = 0.5;
+                areaTriggerHitbox->_color.y = 1.0;
+                areaTriggerHitbox->_color.z = 1.0;
+                areaTriggerHitbox->_max.y  -= 0.5f;
+                areaTriggerHitbox->_min.x  -= 1.2f;
+                areaTriggerHitbox->isTrigger = true;
+                hitboxes.push_back(areaTriggerHitbox);
+
                 auto doorHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 doorHitbox->tag = "winArea";
                 doorHitbox->calculateFromMesh(mesh);
                 doorHitbox->Create(winArea.get());
-                doorHitbox->isTrigger = true;
-
                 hitboxes.push_back(doorHitbox);
 
                 //staticModel.meshes.push_back(mesh);
@@ -165,7 +179,7 @@ void Level::calculateHitboxes() {
 
                 button->_model = std::make_shared<Model>();
                 button->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
-                buttonHitbox->Create(button.get());
+                //buttonHitbox->Create(button.get());
                 button->id = totalId;
                 buttons.push_back(button);
 
@@ -329,6 +343,19 @@ void Level::assignTargetsAndPlatforms() {
         }
     }
 
+    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
+    {
+        buttons[0]->addConnectedButton(buttons[1]);
+        buttons[1]->addConnectedButton(buttons[0]);
+    }
+    /*
+    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of conditional buttons, meaning that only when both buttons are pressed they activate platform
+    {
+        buttons[0]->addConditionalButton(buttons[1]);
+        buttons[1]->addConditionalButton(buttons[0]);
+    }*/
+
+
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
@@ -483,4 +510,20 @@ void Level::LoadDataFromJson(const Level& temp) {
     this->playerGrabberStartingPos = temp.playerGrabberStartingPos;
     this->playerJumperStartingPos = temp.playerJumperStartingPos;
     this->cameraOffset = temp.cameraOffset;
+
+    this->winArea->playerGrabberLightBulb = std::make_shared<LightBulb>();
+    this->winArea->playerGrabberLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+    this->playerGrabberLightPos = temp.playerGrabberLightPos;
+    this->winArea->playerGrabberLightBulb->_transform._position = temp.playerGrabberLightPos;
+    this->winArea->playerJumperLightBulb = std::make_shared<LightBulb>();
+    this->winArea->playerJumperLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+    this->playerJumperLightPos = temp.playerJumperLightPos;
+    this->winArea->playerJumperLightBulb->_transform._position = temp.playerJumperLightPos;
+    if(temp.hasConditionalLight)
+    {
+        this->winArea->activationLightBulb = std::make_shared<LightBulb>();
+        this->winArea->activationLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+        this->winLightPos = temp.winLightPos;
+        this->winArea->activationLightBulb->_transform._position = temp.winLightPos;
+    }
 }

@@ -20,7 +20,7 @@ private:
     int walking;
     int recentlyMoved;
 
-    glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
+    glm::vec3 batteryOffset = glm::vec3(-0.2f, 1.2f, 0.0f);
     glm::vec3 direction =  glm::vec3(0.0f, 0.0f, 0.0f);
     float padJoystickTolerance = 0.2f;
 public:

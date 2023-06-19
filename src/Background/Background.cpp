@@ -12,7 +12,6 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
     {
         // xPosition = i * interval;
         //create new tiles here
-        std::cout << "stworzony tile" << std::endl;
         BackgroundTile *bTile = new BackgroundTile();
         bTile->HideImgui();
         backgroundTiles.push_back(bTile);

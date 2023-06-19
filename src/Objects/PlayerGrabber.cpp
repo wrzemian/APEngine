@@ -7,6 +7,7 @@
 void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
     tag = "player";
+    type = "grabber";
     inputSystem->monitorKey(GLFW_KEY_UP);
     inputSystem->monitorKey(GLFW_KEY_LEFT);
     inputSystem->monitorKey(GLFW_KEY_RIGHT);

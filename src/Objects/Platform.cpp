@@ -46,6 +46,7 @@ void Platform::onCollision(Object3D *other) {
     Object3D::onCollision(other);
 }
 
+
 void Platform::logFields() {
     spdlog::info("Platform Fields:");
     spdlog::info("- id: {}", id);
@@ -72,4 +73,5 @@ void Platform::ImGui() {
 
     ImGui::End();
 }
+
 
