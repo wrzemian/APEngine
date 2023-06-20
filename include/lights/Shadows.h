@@ -29,10 +29,11 @@ public:
     float time;
     Shader shader;
     Shader simpleDepthShader;
+    glm::vec3 cameraPosition;
 
     Shadows();
     Shadows(std::string fileName);
-    void initShaders();
+    void initShaders(Camera& camera);
     void renderShadows(Camera& camera);
 
     void ImGui() override;
