@@ -23,6 +23,8 @@ public:
     glm::vec3 boundingBoxMin{};
     glm::vec3 boundingBoxMax{};
 
+    glm::vec3 getMiddle();
+
     std::string tag = "floor";
 
     std::string type = "none";
