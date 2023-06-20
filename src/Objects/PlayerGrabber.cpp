@@ -98,7 +98,7 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
         battery->_velocity = glm::vec3(0.0f, 0.0f, 0.0f);
         glm::quat playerQuat = glm::quat(_transform._rotation); // Convert Euler angles to quaternion
         glm::mat4 rotationMat = glm::mat4_cast(playerQuat); // Convert quaternion to rotation matrix
-        battery->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(batteryOffset, 1.0f) )- battery->levelOffset;
+        battery->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(batteryOffset, 1.0f) )- battery->getMiddle();
     }
     grabber->UpdateGrabber(this->_transform._position,this->_transform._rotation);
 }

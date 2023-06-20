@@ -142,3 +142,7 @@ void Object3D::loadAnimation(const std::string& daePath) {
 void Object3D::unusualCollision(Object3D *other) {
     spdlog::info("Object3D unusual collision called");
 }
+
+glm::vec3 Object3D::getMiddle() {
+    return (boundingBoxMax + boundingBoxMin) * 0.5f;
+}

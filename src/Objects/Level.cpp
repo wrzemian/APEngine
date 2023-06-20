@@ -318,7 +318,6 @@ void Level::calculateHitboxes() {
                 hitboxes.push_back(test);
                 test->draw = true;
 
-                battery->levelOffset = test->_min;
 
 
                 spdlog::info("Battery created from {}", mesh._name);
