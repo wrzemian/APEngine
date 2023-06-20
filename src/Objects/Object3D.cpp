@@ -38,11 +38,13 @@ void Object3D::calculateBoundingBox() {
     boundingBox.Create(this);
     boundingBox.calculateFromModel(*_model);
 
-    boundingBoxMin = boundingBox._min;
-    boundingBoxMax = boundingBox._max;
+    modelMinVertex = boundingBox._min;
+    modelMaxVertex = boundingBox._max;
+    modelMiddle = (modelMaxVertex + modelMinVertex) * 0.5f;
+    size = modelMaxVertex - modelMinVertex;
     spdlog::info("Bounding box min({}, {}, {}), max({}, {}, {})",
-                 boundingBoxMin.x,  boundingBoxMin.y,  boundingBoxMin.z,
-                 boundingBoxMax.x,  boundingBoxMax.y,  boundingBoxMax.z);
+                 modelMinVertex.x, modelMinVertex.y, modelMinVertex.z,
+                 modelMaxVertex.x, modelMaxVertex.y, modelMaxVertex.z);
 }
 
 void Object3D::ImGui() {
@@ -141,8 +143,4 @@ void Object3D::loadAnimation(const std::string& daePath) {
 
 void Object3D::unusualCollision(Object3D *other) {
     spdlog::info("Object3D unusual collision called");
-}
-
-glm::vec3 Object3D::getMiddle() {
-    return (boundingBoxMax + boundingBoxMin) * 0.5f;
 }
