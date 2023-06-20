@@ -40,6 +40,7 @@ void Object3D::calculateBoundingBox() {
 
     boundingBoxMin = boundingBox._min;
     boundingBoxMax = boundingBox._max;
+    size = boundingBoxMax - boundingBoxMin;
     spdlog::info("Bounding box min({}, {}, {}), max({}, {}, {})",
                  boundingBoxMin.x,  boundingBoxMin.y,  boundingBoxMin.z,
                  boundingBoxMax.x,  boundingBoxMax.y,  boundingBoxMax.z);

@@ -22,6 +22,7 @@ public:
 
     glm::vec3 boundingBoxMin{};
     glm::vec3 boundingBoxMax{};
+    glm::vec3 size = {};
 
     glm::vec3 getMiddle();
 

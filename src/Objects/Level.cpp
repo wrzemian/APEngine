@@ -342,6 +342,11 @@ void Level::calculateHitboxes() {
 }
 
 void Level::assignTargetsAndPlatforms() {
+    size = boundingBoxMax - boundingBoxMin;
+    spdlog::info("Wagon min({}, {}, {}), max({}, {}, {}) size({}, {}, {})",
+                 boundingBoxMin.x, boundingBoxMin.y, boundingBoxMin.z,
+                 boundingBoxMax.x, boundingBoxMax.y, boundingBoxMax.z,
+                 size.x, size.y, size.z);
     for (const auto& button : buttons) {
         for (const auto& platform : movingPlatforms) {
             spdlog::info("Checking buttonId {} with platformId {} ({})", button->id, platform->id, platform->id % 100 == button->id % 100);
