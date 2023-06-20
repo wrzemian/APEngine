@@ -400,10 +400,11 @@ namespace Game {
     void processInput() {
         if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
             playerJumper.Jump();
+            AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
             playerGrabber.Jump();
-            AudioManager::GetInstance()->PlaySound(Audio::JUMP);
+            AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
         }
     }
 
