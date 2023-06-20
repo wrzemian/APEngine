@@ -9,9 +9,9 @@ Grabber::Grabber() {
     IGui::setWindowName("grabber");
 
     tag = "grabber";
-    _transform._scale.x  = 0.3f;
-    _transform._scale.y  = 0.3f;
-    _transform._scale.z  = 0.3f;
+    _transform._scale.x  = 0.2f;
+    _transform._scale.y  = 0.2f;
+    _transform._scale.z  = 0.2f;
     _gravity.y = 0;
 //    LoadAnimations();
 }

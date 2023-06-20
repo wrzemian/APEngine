@@ -124,6 +124,7 @@ void PlayerGrabber::Jump() {
     if (jumpCount == 0 && this->_velocity.y <= 0&& this->_velocity.y <= 0)
     {
         this->switchAnimationJump();
+        recentlyJumped = 0;
         walking = 0;
         recentlyMoved = 0;
         this->switchAnimationJump();
@@ -199,6 +200,10 @@ void PlayerGrabber::onCollisionY(Object3D *other) {
     MovingObject::onCollisionY(other);
     if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform" || other->tag == "box"))
     {
+        if(recentlyJumped == 0){
+            AudioManager::GetInstance()->PlaySound(Audio::CRANK_LAND);
+            recentlyJumped = 1;
+        }
         this->switchAnimationWalk();
         this->switchAnimationStand();
         _velocity.y = 0;
