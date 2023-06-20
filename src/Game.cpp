@@ -191,8 +191,8 @@ namespace Game {
         grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
         grabberHitbox.draw = false;
         grabberHitbox.isTrigger = true;
-        grabber.loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
-        grabber.LoadAnimations();
+//        grabber.loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
+//        grabber.LoadAnimations();
 
         //currentLevel = LevelManager.getInstance().
 
