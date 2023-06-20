@@ -30,15 +30,20 @@ void Object3D::Draw(Shader &shader) {
 void Object3D::loadModel(const std::string& path) {
     _path = path;
     _model = AssetManager::getInstance().getModel(path);
+    calculateBoundingBox();
+}
 
+void Object3D::calculateBoundingBox() {
     auto boundingBox = Hitbox(Hitbox::BOUNDING_BOX);
     boundingBox.Create(this);
     boundingBox.calculateFromModel(*_model);
 
     boundingBoxMin = boundingBox._min;
     boundingBoxMax = boundingBox._max;
+    spdlog::info("Bounding box min({}, {}, {}), max({}, {}, {})",
+                 boundingBoxMin.x,  boundingBoxMin.y,  boundingBoxMin.z,
+                 boundingBoxMax.x,  boundingBoxMax.y,  boundingBoxMax.z);
 }
-
 
 void Object3D::ImGui() {
     ImGui::Begin(getWindowName().c_str());

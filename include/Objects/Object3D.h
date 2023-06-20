@@ -54,4 +54,6 @@ public:
     Shader* _shader = nullptr;
 
     std::string _path;
+
+    void calculateBoundingBox();
 };

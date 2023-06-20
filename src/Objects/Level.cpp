@@ -359,13 +359,20 @@ void Level::assignTargetsAndPlatforms() {
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
+            platform->calculateBoundingBox();
             //TODO: reconsider with graphic designers
             Hitbox test(Hitbox::STATIC);
             test.Create(platform.get());
             test.calculateFromModel(*platform->_model);
-            auto middle = (test._min + test._max) * 0.5f;
-            spdlog::info("Platform id {} in the middle in ({}, {}, {}) has target ({}, {}, {})", platform->id, middle.x, middle.y, middle.z, it->second.x, it->second.y, it->second.z);
-            platform->positionTarget = it->second - middle + _transform._position;
+            auto edge = test._max; // (test._min + test._max) * 0.5f;
+            spdlog::info("Platform id {} in the edge in ({}, {}, {}) min({}, {}, {}), max({}, {}, {}), has target ({}, {}, {})",
+                         platform->id,
+                         edge.x, edge.y, edge.z,
+                         platform->boundingBoxMin.x, platform->boundingBoxMin.y, platform->boundingBoxMin.z,
+                         platform->boundingBoxMax.x, platform->boundingBoxMax.y, platform->boundingBoxMax.z,
+                         it->second.x, it->second.y, it->second.z);
+            platform->positionTarget = it->second - edge + _transform._position;
+            platform->positionTarget.z += (platform->boundingBoxMax.z - platform->boundingBoxMin.z);
             spdlog::info("assigned target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
