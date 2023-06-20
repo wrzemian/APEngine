@@ -138,7 +138,7 @@ void Level::calculateHitboxes() {
                 wall->_transform._position = _transform._position; // Set the wall's position
                 wall->_model = std::make_shared<Model>(); // Create a new model for the wall
                 wall->_model->meshes.push_back(mesh); // Add the current mesh to the wall's model
-                wall->tag = "static platform"; // Tag the wall
+                wall->tag = "wall"; // Tag the wall
 
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 hitbox->calculateFromMesh(mesh);
