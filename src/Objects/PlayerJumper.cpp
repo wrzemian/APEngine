@@ -157,6 +157,8 @@ void PlayerJumper::onCollisionY(Object3D *other) {
 void PlayerJumper::unusualCollision(Object3D *other) {
     Object3D::unusualCollision(other);
     _velocity.y = 0;
+    this->switchAnimationWalk();
+    this->switchAnimationStand();
     jumpCount = 0;
 }
 
