@@ -136,7 +136,7 @@ namespace Game {
         LevelManager::getInstance().ShowImgui();
 
 
-        shadows.initShaders();
+        shadows.initShaders(camera);
         spdlog::info("shader");
         Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         lightShader = tempLightShader;
