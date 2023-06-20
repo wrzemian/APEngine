@@ -19,7 +19,7 @@ private:
     float backSpeed = 3.0f;
     glm::vec3 positionOrigin = glm::vec3(0);
     glm::vec3 positionTarget = glm::vec3(3,3,0);
-    glm::vec3 playerOffset = glm::vec3(0.2f,1,0.2f);
+    glm::vec3 playerOffset = glm::vec3(0.0f,0.75f,0.75f);
     glm::vec3 grabbedObjectOffset = glm::vec3(0);
     glm::vec3 playerPos = glm::vec3(0);
     glm::vec3 playerRot = glm::vec3(0);
