@@ -79,16 +79,12 @@ namespace Game {
     PlayerJumper playerJumper;
     PlayerGrabber playerGrabber;
 
-    Ant ant;
-
     Camera camera("camera");
 
     //animation testing
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
-    Hitbox antHitbox("hitboxes/hitbox_2");
-    SimpleHitbox antBigHitbox("hitboxes/hitbox_3");
 
 //    Battery battery;
 //    Hitbox batteryHitbox("hitboxes/hitbox_battery");
@@ -174,17 +170,12 @@ namespace Game {
         p1Hitbox.draw = false;
         p1Hitbox.tag = "player";
         p2Hitbox.tag = "player";
-        antBigHitbox.draw = false;
-
 
         //player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
         //player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
         //player1.tag = "player";
         //player2.tag = "player";
 
-        spdlog::info("loading ant");
-        ant.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_2"));
-        ant.tag = "ant";
 
 
         //camera = Engine::parser.CreateFromJSONCam("camera");
