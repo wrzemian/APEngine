@@ -68,6 +68,7 @@ void Level::calculateHitboxes() {
                     winArea->_model = std::make_shared<Model>();
                 }
                 winArea->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
+                winArea->calculateBoundingBox();
 
                 auto areaTriggerHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 areaTriggerHitbox->calculateFromMesh(mesh);
@@ -179,6 +180,8 @@ void Level::calculateHitboxes() {
 
                 button->_model = std::make_shared<Model>();
                 button->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
+                button->calculateBoundingBox();
+
                 //buttonHitbox->Create(button.get());
                 button->id = totalId;
                 buttons.push_back(button);
@@ -236,6 +239,8 @@ void Level::calculateHitboxes() {
                 platform->_transform._position = _transform._position;
                 platform->_model = std::make_shared<Model>();
                 platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                platform->calculateBoundingBox();
+
                 platform-> speed = 1;
                 movingPlatforms.push_back(platform);
 
@@ -280,6 +285,8 @@ void Level::calculateHitboxes() {
                 box->_transform._position = _transform._position;
                 box->_model = std::make_shared<Model>();
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                box->calculateBoundingBox();
+
                 box->_transform._position = _transform._position;
 
                 spdlog::info("Box created from {}", mesh._name);
@@ -300,6 +307,7 @@ void Level::calculateHitboxes() {
                 battery->_transform._position = _transform._position;
                 battery->_model = std::make_shared<Model>();
                 battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                battery->calculateBoundingBox();
 
                 auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->tag = "battery";
@@ -359,7 +367,6 @@ void Level::assignTargetsAndPlatforms() {
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
-            platform->calculateBoundingBox();
             //TODO: reconsider with graphic designers
             Hitbox test(Hitbox::STATIC);
             test.Create(platform.get());
