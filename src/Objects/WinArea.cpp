@@ -77,3 +77,18 @@ void WinArea::OnDeactivate() {
         activationLightBulb->ChangeColor(powerInactiveLightColor);
     }
 }
+
+void WinArea::SetLights() {
+    if(playerGrabberLightBulb != nullptr)
+    {
+        playerGrabberLightBulb->ChangeColor(inactiveLightColor);
+    }
+    if(playerJumperLightBulb != nullptr)
+    {
+        playerJumperLightBulb->ChangeColor(inactiveLightColor);
+    }
+    if(activationLightBulb != nullptr)
+    {
+        activationLightBulb->ChangeColor(powerInactiveLightColor);
+    }
+}

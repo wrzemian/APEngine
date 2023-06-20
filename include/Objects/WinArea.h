@@ -15,10 +15,10 @@ private:
     bool playerGrabberInRange = false;
     bool playerJumperInRange = false;
 
-    glm::vec3 activeLightColor = glm::vec3(0.0f,1.0f,0.0f);
-    glm::vec3 inactiveLightColor = glm::vec3(0);
-    glm::vec3 powerActiveLightColor = glm::vec3(0);
-    glm::vec3 powerInactiveLightColor = glm::vec3(0);
+    glm::vec3 activeLightColor = glm::vec3(0.01f,1.0f,0.0f);
+    glm::vec3 inactiveLightColor = glm::vec3(1.0f,0.0f,0.0f);
+    glm::vec3 powerActiveLightColor = glm::vec3(1.0f,1.0f,0.0f);
+    glm::vec3 powerInactiveLightColor = glm::vec3(0.8f,0.8f,0.0f);
 
     bool canWin = true; //by default true and has to be set false if there is a button connected to winArea
 public:
@@ -30,6 +30,7 @@ public:
     void OnActivate();
     void OnDeactivate();
 
+    void SetLights();
     std::shared_ptr<LightBulb> playerGrabberLightBulb;
     std::shared_ptr<LightBulb> playerJumperLightBulb;
     std::shared_ptr<LightBulb> activationLightBulb;

@@ -1,0 +1,21 @@
+{
+    "playerGrabPosX": 36.0,
+    "playerGrabPosY": 6.5,
+    "playerGrabPosZ": 6.5,
+    "playerJumpPosX": 36.0,
+    "playerJumpPosY": 6.5,
+    "playerJumpPosZ": 5.5,
+    "cameraPositionX": 37.0,
+    "cameraPositionY": 10.0,
+    "cameraPositionZ": 20.0,
+    "playerGrabWinLightPositionX": 10.0,
+    "playerGrabWinLightPositionY": 10.0,
+    "playerGrabWinLightPositionZ": 20.0,
+    "playerJumpWinLightPositionX": 10.0,
+    "playerJumpWinLightPositionY": 10.0,
+    "playerJumpWinLightPositionZ": 20.0,
+    "doesNeedConditionalLight" : 0.0,
+    "conditionalWinLightPositionX": 20.0,
+    "conditionalWinLightPositionY": 20.0,
+    "conditionalWinLightPositionZ": 20.0
+}

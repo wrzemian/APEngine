@@ -215,7 +215,9 @@ void Level::calculateHitboxes() {
 
                 staticModel.meshes.push_back(mesh);
 
+
                 hitbox->tag = "static platform";
+
 
                 spdlog::info("Platform created {}", mesh._name);
 
@@ -540,4 +542,5 @@ void Level::LoadDataFromJson(const Level& temp) {
         this->winLightPos = temp.winLightPos;
         this->winArea->activationLightBulb->_transform._position = temp.winLightPos;
     }
+    this->winArea->SetLights();
 }

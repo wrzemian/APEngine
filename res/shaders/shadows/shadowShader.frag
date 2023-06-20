@@ -57,6 +57,7 @@ uniform sampler2D emissiveMap;
 uniform float time;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
+uniform vec3 inColor;
 uniform DirLight dirLight;
 uniform SpotLight spotLight;
 uniform PointLight pointLight;
@@ -125,8 +126,14 @@ void main()
     emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.5;
     lighting += emission;
 
-
-    FragColor = vec4(lighting, 1.0);
+    if(inColor.x != 0)
+    {
+        FragColor = vec4(inColor, 1.0);
+    }
+    else
+    {
+      FragColor = vec4(lighting, 1.0);
+    }
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
