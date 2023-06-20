@@ -13,7 +13,9 @@
 #define AL_STOP_SOURCES_ON_DISCONNECT_SOFT 0x19AB
 
 enum Audio {
-    JUMP
+    CRANK_JUMP, CRANK_LAND, CRANK_MOVE,
+    MICHEL_JUMP, MICHEL_LAND, MICHEL_WALK,
+    CHEST_LAND, PLATFORM_MOVE, TRAIN_AMBIENT
 };
 
 class AudioManager {
@@ -43,6 +45,7 @@ public:
     void CheckAudioDevices();
     void CreateAll(Camera camera, Object3D player);
     void PlaySound(Audio name);
+    void PauseSound(Audio name);
     void Update();
     void RemoveAudioSource(int componentId);
 };

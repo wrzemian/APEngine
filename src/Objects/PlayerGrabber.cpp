@@ -3,6 +3,9 @@
 //
 
 #include "../../include/Objects/PlayerGrabber.h"
+#include "../../include/Audio/AudioManager.h"
+
+int recentlyJumped = 0;
 
 void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
@@ -22,6 +25,7 @@ void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
 void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     if (inputSystem->GetKey(GLFW_KEY_UP)) {
         direction.z = -1.0f;
+
     }
     else if (inputSystem->GetKey(GLFW_KEY_DOWN)) {
         direction.z = 1.0f;
@@ -33,6 +37,9 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     else
     {
         direction.z = 0.0f;
+        if(_velocity.x == 0){
+            AudioManager::GetInstance()->PauseSound(Audio::CRANK_MOVE);
+        }
     }
     if (inputSystem->GetKey(GLFW_KEY_LEFT)) {
         direction.x = -1.0f;
@@ -47,6 +54,9 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     else
     {
         direction.x = 0.0f;
+        if(_velocity.z == 0) {
+            AudioManager::GetInstance()->PauseSound(Audio::CRANK_MOVE);
+        }
     }
 
 
@@ -148,6 +158,8 @@ PlayerGrabber::PlayerGrabber() {
 
 void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
+        AudioManager::GetInstance()->PlaySound(Audio::CRANK_MOVE);
+
         this->animator.PlayAnimation(&walkP);
         this->grabber->animator.PlayAnimation(&this->grabber->walkA);
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
@@ -181,6 +193,7 @@ void PlayerGrabber::switchAnimationGrab() {
     this->animator.PlayAnimation(&hookingP);
     this->grabber->animator.PlayAnimation(&this->grabber->hookingA);
 }
+
 
 void PlayerGrabber::onCollisionY(Object3D *other) {
     MovingObject::onCollisionY(other);

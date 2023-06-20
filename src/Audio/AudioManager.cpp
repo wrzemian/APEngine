@@ -59,14 +59,66 @@ void AudioManager::CreateAll(Camera camera, Object3D player) {
     auto source = std::make_shared<AudioSource>(player, 0);
     source->Start();
     source->OnCreate();
-    source->LoadAudioData("../../res/audio/walking_step.wav", AudioType::Direct);
+    source->LoadAudioData("../../res/audio/crank_jump.wav", AudioType::Direct);
     source->IsLooping(false);
     source->SetGain(1.0f);
+    auto source2 = std::make_shared<AudioSource>(player, 1);
+    source2->Start();
+    source2->OnCreate();
+    source2->LoadAudioData("../../res/audio/crank_falling.wav", AudioType::Direct);
+    source2->IsLooping(false);
+    source2->SetGain(1.0f);
+    auto source3 = std::make_shared<AudioSource>(player, 2);
+    source3->Start();
+    source3->OnCreate();
+    source3->LoadAudioData("../../res/audio/crank_movement.wav", AudioType::Direct);
+    source3->IsLooping(true);
+    source3->SetGain(1.0f);
+    auto source4 = std::make_shared<AudioSource>(player, 3);
+    source4->Start();
+    source4->OnCreate();
+    source4->LoadAudioData("../../res/audio/jetpack.wav", AudioType::Direct);
+    source4->IsLooping(false);
+    source4->SetGain(1.0f);
+    auto source5 = std::make_shared<AudioSource>(player, 4);
+    source5->Start();
+    source5->OnCreate();
+    source5->LoadAudioData("../../res/audio/michel_falling.wav", AudioType::Direct);
+    source5->IsLooping(false);
+    source5->SetGain(1.0f);
+    auto source6 = std::make_shared<AudioSource>(player, 5);
+    source6->Start();
+    source6->OnCreate();
+    source6->LoadAudioData("../../res/audio/michel_steps.wav", AudioType::Direct);
+    source6->IsLooping(false);
+    source6->SetGain(1.0f);
+    auto source7 = std::make_shared<AudioSource>(player, 6);
+    source7->Start();
+    source7->OnCreate();
+    source7->LoadAudioData("../../res/audio/chest_falling.wav", AudioType::Direct);
+    source7->IsLooping(false);
+    source7->SetGain(1.0f);
+    auto source8 = std::make_shared<AudioSource>(player, 7);
+    source8->Start();
+    source8->OnCreate();
+    source8->LoadAudioData("../../res/audio/platforms.wav", AudioType::Direct);
+    source8->IsLooping(false);
+    source8->SetGain(1.0f);
+    auto source9 = std::make_shared<AudioSource>(player, 8);
+    source9->Start();
+    source9->OnCreate();
+    source9->LoadAudioData("../../res/audio/train.wav", AudioType::Direct);
+    source9->IsLooping(false);
+    source9->SetGain(1.0f);
 
 }
 
 void AudioManager::PlaySound(Audio name) {
     audioSources.at(name)->PlaySound();
+}
+
+void AudioManager::PauseSound(Audio name) {
+    audioSources.at(name)->StopSound();
 }
 
 void AudioManager::Update() {
