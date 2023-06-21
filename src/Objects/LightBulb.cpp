@@ -27,17 +27,11 @@ void LightBulb::Draw(Shader &shader) {
         spdlog::error("null model in {}", tag);
         return;
     }
-    /*changingColorShader.use();
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 16 / 9, 0.1f, 100.0f);
-    glm::mat4 view = camera.GetViewMatrix();
-    changingColorShader.setMat4("projection", projection);
-    changingColorShader.setMat4("view", view);
-    changingColorShader.setVec3("inputColor",materialColor);*/
-    //shader.setVec3("inColor",materialColor);
-    //_transform.updateWorldTransform(glm::mat4(1.0f), shader);
-    //_model->Draw(shader);
+    shader.setVec3("inColor",materialColor);
+    _transform.updateWorldTransform(glm::mat4(1.0f), shader);
+    _model->Draw(shader);
 
-    //shader.setVec3("inColor", glm::vec3(0));
+    shader.setVec3("inColor", glm::vec3(0));
 
 }
 
