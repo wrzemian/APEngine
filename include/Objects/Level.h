@@ -57,6 +57,5 @@ public:
     glm::vec3 playerJumperLightPos = glm::vec3(0,0,0);
     glm::vec3 playerGrabberLightPos = glm::vec3(0,0,0);
     glm::vec3 winLightPos = glm::vec3(0,0,0);
-
     bool hasConditionalLight = false;
 };

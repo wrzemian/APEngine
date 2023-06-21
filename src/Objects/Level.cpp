@@ -271,7 +271,7 @@ void Level::calculateHitboxes() {
                 auto box = std::make_shared<Box>();
                 box->_transform._position.y += 0.1f;
                 box->StopMoving();
-                //box->ShowImgui();
+                box->ShowImgui();
                 box->levelId = levelId;
                 boxes.push_back(box);
                 box->tag = "box";
@@ -300,7 +300,7 @@ void Level::calculateHitboxes() {
                 auto battery = std::make_shared<Battery>();
                 battery->StopMoving();
                 battery->_transform._position.y += 0.1f;
-                //battery->ShowImgui();
+                battery->ShowImgui();
                 battery->levelId = levelId;
 
                 battery->tag = "battery";
@@ -342,10 +342,6 @@ void Level::calculateHitboxes() {
 }
 
 void Level::assignTargetsAndPlatforms() {
-    spdlog::info("Wagon min({}, {}, {}), max({}, {}, {}) size({}, {}, {})",
-                 modelMinVertex.x, modelMinVertex.y, modelMinVertex.z,
-                 modelMaxVertex.x, modelMaxVertex.y, modelMaxVertex.z,
-                 size.x, size.y, size.z);
     for (const auto& button : buttons) {
         for (const auto& platform : movingPlatforms) {
             spdlog::info("Checking buttonId {} with platformId {} ({})", button->id, platform->id, platform->id % 100 == button->id % 100);
@@ -383,11 +379,11 @@ void Level::assignTargetsAndPlatforms() {
             spdlog::info("Platform id {} in the edge in ({}, {}, {}) min({}, {}, {}), max({}, {}, {}), has target ({}, {}, {})",
                          platform->id,
                          edge.x, edge.y, edge.z,
-                         platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z,
-                         platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z,
+                         platform->boundingBoxMin.x, platform->boundingBoxMin.y, platform->boundingBoxMin.z,
+                         platform->boundingBoxMax.x, platform->boundingBoxMax.y, platform->boundingBoxMax.z,
                          it->second.x, it->second.y, it->second.z);
             platform->positionTarget = it->second - edge + _transform._position;
-            platform->positionTarget.z += (platform->modelMaxVertex.z - platform->modelMinVertex.z);
+            platform->positionTarget.z += (platform->boundingBoxMax.z - platform->boundingBoxMin.z);
             spdlog::info("assigned target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);

@@ -20,10 +20,10 @@ public:
     bool rendered = true;
     bool animated = false;
 
-    glm::vec3 modelMinVertex{};
-    glm::vec3 modelMaxVertex{};
-    glm::vec3 modelMiddle{};
-    glm::vec3 size = {};
+    glm::vec3 boundingBoxMin{};
+    glm::vec3 boundingBoxMax{};
+
+    glm::vec3 getMiddle();
 
     std::string tag = "floor";
 
