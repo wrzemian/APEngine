@@ -12,11 +12,12 @@
 
 class PlayerJumper : public MovingObject {
 private:
+    Animation walkA, stamdA, jumpA;
     using super = MovingObject;
     int jumpCount = 0;
     bool haveBattery = false;
     bool canPickUpBattery = false;
-    glm::vec3 batteryOffset = glm::vec3(-0.2f, 0.2f, 0.0f);
+    glm::vec3 batteryOffset = glm::vec3(-0.25f, 1.0f, 0.0f);
 
     glm::vec3 direction =  glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -32,6 +33,8 @@ public:
     void Jump();
     void onCollision(Object3D* other) override;
     void onCollisionExit(Object3D* other) override;
+    void onCollisionY(Object3D *other) override;
+    void unusualCollision(Object3D *other) override;
     void switchAnimationWalk();
     void switchAnimationJump();
     void switchAnimationStand();

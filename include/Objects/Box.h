@@ -10,6 +10,7 @@
 class Box : public MovingObject {
 public:
     Box();
+    void onCollisionY(Object3D *other) override;
 };
 
 

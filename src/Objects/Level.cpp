@@ -68,12 +68,27 @@ void Level::calculateHitboxes() {
                     winArea->_model = std::make_shared<Model>();
                 }
                 winArea->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
+                winArea->calculateBoundingBox();
+
+                auto areaTriggerHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                areaTriggerHitbox->calculateFromMesh(mesh);
+                areaTriggerHitbox->Create(winArea.get());
+                areaTriggerHitbox->tag = "winArea";
+                areaTriggerHitbox->_offset.x = -0.1f;
+                areaTriggerHitbox->_offset.y = 0.0f;
+                areaTriggerHitbox->_offset.z = 0.0f;
+                areaTriggerHitbox->_color.x = 0.5;
+                areaTriggerHitbox->_color.y = 1.0;
+                areaTriggerHitbox->_color.z = 1.0;
+                areaTriggerHitbox->_max.y  -= 0.5f;
+                areaTriggerHitbox->_min.x  -= 1.2f;
+                areaTriggerHitbox->isTrigger = true;
+                hitboxes.push_back(areaTriggerHitbox);
+
                 auto doorHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 doorHitbox->tag = "winArea";
                 doorHitbox->calculateFromMesh(mesh);
                 doorHitbox->Create(winArea.get());
-                doorHitbox->isTrigger = true;
-
                 hitboxes.push_back(doorHitbox);
 
                 //staticModel.meshes.push_back(mesh);
@@ -165,7 +180,9 @@ void Level::calculateHitboxes() {
 
                 button->_model = std::make_shared<Model>();
                 button->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
-                buttonHitbox->Create(button.get());
+                button->calculateBoundingBox();
+
+                //buttonHitbox->Create(button.get());
                 button->id = totalId;
                 buttons.push_back(button);
 
@@ -198,7 +215,9 @@ void Level::calculateHitboxes() {
 
                 staticModel.meshes.push_back(mesh);
 
+
                 hitbox->tag = "static platform";
+
 
                 spdlog::info("Platform created {}", mesh._name);
 
@@ -213,6 +232,8 @@ void Level::calculateHitboxes() {
                 spdlog::info("Moving platform position {}, {}, {}", _transform._position.x,_transform._position.y,_transform._position.z);
 
                 auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
+                platform->levelId = levelId;
+
                 platform->tag = "moving platform";
               //  platform->ShowImgui();
                 platform->id = totalId;
@@ -220,6 +241,8 @@ void Level::calculateHitboxes() {
                 platform->_transform._position = _transform._position;
                 platform->_model = std::make_shared<Model>();
                 platform->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                platform->calculateBoundingBox();
+
                 platform-> speed = 1;
                 movingPlatforms.push_back(platform);
 
@@ -246,6 +269,10 @@ void Level::calculateHitboxes() {
             case 'E': { // Box
                 // TODO: change to Box implementation
                 auto box = std::make_shared<Box>();
+                box->_transform._position.y += 0.1f;
+                box->StopMoving();
+                //box->ShowImgui();
+                box->levelId = levelId;
                 boxes.push_back(box);
                 box->tag = "box";
 
@@ -260,6 +287,8 @@ void Level::calculateHitboxes() {
                 box->_transform._position = _transform._position;
                 box->_model = std::make_shared<Model>();
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                box->calculateBoundingBox();
+
                 box->_transform._position = _transform._position;
 
                 spdlog::info("Box created from {}", mesh._name);
@@ -269,12 +298,18 @@ void Level::calculateHitboxes() {
 
             case 'P': { // Battery
                 auto battery = std::make_shared<Battery>();
+                battery->StopMoving();
+                battery->_transform._position.y += 0.1f;
+                //battery->ShowImgui();
+                battery->levelId = levelId;
+
                 battery->tag = "battery";
                 batteries.push_back(battery);
 
                 battery->_transform._position = _transform._position;
                 battery->_model = std::make_shared<Model>();
                 battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+                battery->calculateBoundingBox();
 
                 auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->tag = "battery";
@@ -282,6 +317,8 @@ void Level::calculateHitboxes() {
                 test->Create(battery.get());
                 hitboxes.push_back(test);
                 test->draw = true;
+
+
 
                 spdlog::info("Battery created from {}", mesh._name);
 
@@ -305,6 +342,10 @@ void Level::calculateHitboxes() {
 }
 
 void Level::assignTargetsAndPlatforms() {
+    spdlog::info("Wagon min({}, {}, {}), max({}, {}, {}) size({}, {}, {})",
+                 modelMinVertex.x, modelMinVertex.y, modelMinVertex.z,
+                 modelMaxVertex.x, modelMaxVertex.y, modelMaxVertex.z,
+                 size.x, size.y, size.z);
     for (const auto& button : buttons) {
         for (const auto& platform : movingPlatforms) {
             spdlog::info("Checking buttonId {} with platformId {} ({})", button->id, platform->id, platform->id % 100 == button->id % 100);
@@ -318,6 +359,19 @@ void Level::assignTargetsAndPlatforms() {
         }
     }
 
+    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
+    {
+        buttons[0]->addConnectedButton(buttons[1]);
+        buttons[1]->addConnectedButton(buttons[0]);
+    }
+    /*
+    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of conditional buttons, meaning that only when both buttons are pressed they activate platform
+    {
+        buttons[0]->addConditionalButton(buttons[1]);
+        buttons[1]->addConditionalButton(buttons[0]);
+    }*/
+
+
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
@@ -325,9 +379,15 @@ void Level::assignTargetsAndPlatforms() {
             Hitbox test(Hitbox::STATIC);
             test.Create(platform.get());
             test.calculateFromModel(*platform->_model);
-            auto middle = (test._min + test._max) * 0.5f;
-            spdlog::info("Platform id {} in the middle in ({}, {}, {}) has target ({}, {}, {})", platform->id, middle.x, middle.y, middle.z, it->second.x, it->second.y, it->second.z);
-            platform->positionTarget = it->second - middle + _transform._position;
+            auto edge = test._max; // (test._min + test._max) * 0.5f;
+            spdlog::info("Platform id {} in the edge in ({}, {}, {}) min({}, {}, {}), max({}, {}, {}), has target ({}, {}, {})",
+                         platform->id,
+                         edge.x, edge.y, edge.z,
+                         platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z,
+                         platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z,
+                         it->second.x, it->second.y, it->second.z);
+            platform->positionTarget = it->second - edge + _transform._position;
+            platform->positionTarget.z += (platform->modelMaxVertex.z - platform->modelMinVertex.z);
             spdlog::info("assigned target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
@@ -472,4 +532,21 @@ void Level::LoadDataFromJson(const Level& temp) {
     this->playerGrabberStartingPos = temp.playerGrabberStartingPos;
     this->playerJumperStartingPos = temp.playerJumperStartingPos;
     this->cameraOffset = temp.cameraOffset;
+
+    this->winArea->playerGrabberLightBulb = std::make_shared<LightBulb>();
+    this->winArea->playerGrabberLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+    this->playerGrabberLightPos = temp.playerGrabberLightPos;
+    this->winArea->playerGrabberLightBulb->_transform._position = temp.playerGrabberLightPos;
+    this->winArea->playerJumperLightBulb = std::make_shared<LightBulb>();
+    this->winArea->playerJumperLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+    this->playerJumperLightPos = temp.playerJumperLightPos;
+    this->winArea->playerJumperLightBulb->_transform._position = temp.playerJumperLightPos;
+    if(temp.hasConditionalLight)
+    {
+        this->winArea->activationLightBulb = std::make_shared<LightBulb>();
+        this->winArea->activationLightBulb->loadModel("../../res/models/Assets/lightBulb/untitled.obj");
+        this->winLightPos = temp.winLightPos;
+        this->winArea->activationLightBulb->_transform._position = temp.winLightPos;
+    }
+    this->winArea->SetLights();
 }

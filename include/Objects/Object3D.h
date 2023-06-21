@@ -13,16 +13,22 @@
 
 class Object3D : public IGui {
 public:
+    int levelId = -1;
     Object3D();
     virtual ~Object3D();
     int id = -1;
     bool rendered = true;
     bool animated = false;
 
-    glm::vec3 boundingBoxMin{};
-    glm::vec3 boundingBoxMax{};
+    glm::vec3 modelMinVertex{};
+    glm::vec3 modelMaxVertex{};
+    glm::vec3 modelMiddle{};
+    glm::vec3 size = {};
 
     std::string tag = "floor";
+
+    std::string type = "none";
+
 
     virtual void Draw(Shader &shader);
 
@@ -38,6 +44,9 @@ public:
     virtual void onCollisionExit(Object3D* other);
     virtual rapidjson::Document ParseToJSON();
 
+
+    virtual void unusualCollision(Object3D* other);
+
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;
 
@@ -47,4 +56,6 @@ public:
     Shader* _shader = nullptr;
 
     std::string _path;
+
+    void calculateBoundingBox();
 };

@@ -4,11 +4,12 @@
 
 #include "../../include/Objects/PlayerJumper.h"
 
-Animation walkA, stamdA, jumpA;
+//Animation walkA, stamdA, jumpA;
 
 void PlayerJumper::initPlayer(InputSystem* inputSystem) {
     loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
     tag = "player";
+    type = "jumper";
     inputSystem->monitorKey(GLFW_KEY_W);
     inputSystem->monitorKey(GLFW_KEY_A);
     inputSystem->monitorKey(GLFW_KEY_S);
@@ -82,8 +83,10 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     }*/
    if(haveBattery)
    {
-       battery->_transform._position=this->_transform._position+batteryOffset;
        battery->_velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+       glm::quat playerQuat = glm::quat(_transform._rotation); // Convert Euler angles to quaternion
+       glm::mat4 rotationMat = glm::mat4_cast(playerQuat); // Convert quaternion to rotation matrix
+       battery->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(batteryOffset, 1.0f) )- battery->modelMiddle;
    }
 }
 
@@ -109,7 +112,7 @@ void PlayerJumper::Jump() {
 }
 
 void PlayerJumper::onCollision(Object3D *other) {
-    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
+   /* if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
 
         this->switchAnimationWalk();
@@ -118,7 +121,7 @@ void PlayerJumper::onCollision(Object3D *other) {
 
         _velocity.y = 0;
         jumpCount = 0;
-    }
+    }*/
     if(other->tag == "battery")
     {
         canPickUpBattery = true;
@@ -133,12 +136,40 @@ void PlayerJumper::onCollisionExit(Object3D *other) {
     }
 }
 
-void PlayerJumper::switchAnimationWalk() {
-    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
+void PlayerJumper::onCollisionY(Object3D *other) {
+    MovingObject::onCollisionY(other);
+    if(other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform" )
+    {
+        this->switchAnimationWalk();
+        this->switchAnimationStand();
+        _velocity.y = 0;
+        jumpCount = 0;
+    }
+    if(other->tag == "box")
+    {
+        jumpCount = 0;
+        this->switchAnimationWalk();
+        this->switchAnimationStand();
+        std::cout << "jd z gory gracz" << std::endl;
+    }
+}
+
+void PlayerJumper::unusualCollision(Object3D *other) {
+    Object3D::unusualCollision(other);
+    _velocity.y = 0;
+    this->switchAnimationWalk();
+    this->switchAnimationStand();
+    jumpCount = 0;
+}
+
+//void PlayerJumper::switchAnimationWalk() {
+//    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
 //        this->loadAnimation("res/models/Players/Mich3l/michel_running.dae");
 //Animator tempA(&walkA);
 //this->animator= tempA;
-animator.PlayAnimation(&walkA);
+void PlayerJumper::switchAnimationWalk() {
+    if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
+		animator.PlayAnimation(&walkA);
         this->recentlyMoved = 0;
         this->walking = 1;
     }

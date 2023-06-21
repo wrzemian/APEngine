@@ -30,8 +30,8 @@ namespace Engine {
     unsigned int displayCounter = 0;
     unsigned int totalCounter = 0;
 
-    int SCR_WIDTH = 1000;
-    int SCR_HEIGHT = 800;
+    int SCR_WIDTH = 1920;
+    int SCR_HEIGHT = 1080;
 
     bool frustum = true;
 
@@ -211,7 +211,6 @@ namespace Engine {
         }
     }
 
-
     void logTextures() {
         for(Object3D* object: allObjects) {
             spdlog::info("OBJECT {}", object->_path);
@@ -230,6 +229,9 @@ namespace Engine {
             deltaTime = 0.05f;
         }
         for(MovingObject* object: allMovingObjects) {
+            if(object->levelId != LevelManager::getInstance().currentLevel) {
+                continue;
+            }
             object->Move(deltaTime);
         }
     }
@@ -384,9 +386,9 @@ namespace Engine {
 
         // Check for collisions between dynamic and static hitboxes
         for(auto dynamicHitbox: dynamicHitboxes) {
-            for(auto staticHitbox: LevelManager::getInstance().getCurrentLevel()->hitboxes) {
-                if(dynamicHitbox->TestForIntersection(staticHitbox.get())) {
-                    currentCollisions.push_back({dynamicHitbox, staticHitbox.get()});
+            for(auto staticHitbox: staticHitboxes) {
+                if(dynamicHitbox->TestForIntersection(staticHitbox)) {
+                    currentCollisions.push_back({dynamicHitbox, staticHitbox});
                 }
             }
         }
@@ -468,10 +470,12 @@ namespace Engine {
 #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
+        const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        SCR_WIDTH = mode->width;
+        SCR_HEIGHT = mode->height;
         // glfw window creation
         // --------------------
-        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Iron Outlaws", glfwGetPrimaryMonitor(), NULL);
         if (window == NULL)
         {
             std::cout << "Failed to create GLFW window" << std::endl;

@@ -77,7 +77,7 @@ public:
 
     Entity(Object3D& object) : pModel{ object._model.get() }
     {
-        boundingVolume = std::make_unique<AABB>(object.boundingBoxMin, object.boundingBoxMax);
+        boundingVolume = std::make_unique<AABB>(object.modelMinVertex, object.modelMaxVertex);
         //boundingVolume = std::make_unique<Sphere>(generateSphereBV(model));
     }
 

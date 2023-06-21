@@ -40,7 +40,7 @@ Shadows::Shadows(std::string fileName) {
         spdlog::error("no JSON file found");
 }
 
-void Shadows::initShaders() {
+void Shadows::initShaders(Camera& camera) {
     Shader temp("../../res/shaders/shadows/shadowShader.vert", "../../res/shaders/shadows/shadowShader.frag");
     shader = temp;
     Shader tempSimpleDepthShader("../../res/shaders/shadows/depthShader.vert", "../../res/shaders/shadows/depthShader.frag");
@@ -62,7 +62,7 @@ void Shadows::initShaders() {
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
+    cameraPosition = camera.Position;
     shader.use();
     shader.setInt("diffuseTexture", 0);
     shader.setInt("shadowMap", 31);
@@ -151,6 +151,16 @@ void Shadows::renderShadows(Camera& camera) {
     shader.setMat4("view", view);
     // set light uniforms
     shader.setVec3("viewPos", camera.Position);
+
+    glm::vec3 deltaPos(0.0f);
+    if(camera.Position != cameraPosition) {
+        deltaPos = cameraPosition - camera.Position;
+        position -= deltaPos;
+        //lookAt -= deltaPos;
+        idk -= deltaPos;
+        cameraPosition = camera.Position;
+    }
+
     shader.setVec3("lightPos", position);
     shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
 

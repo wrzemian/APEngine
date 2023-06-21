@@ -1,8 +1,8 @@
 {
     "type": "shadows",
-    "posX": -1.5759999752044678,
-    "posY": 8.630000114440918,
-    "posZ": 4.171000003814697,
+    "posX": -0.890999972820282,
+    "posY": 9.3149995803833,
+    "posZ": 2.115999937057495,
     "idkX": 0.0,
     "idkY": 0.0,
     "idkZ": 0.0,
@@ -11,10 +11,10 @@
     "lookAtZ": 0.0,
     "nearPlane": 0.10000000149011612,
     "farPlane": 30.5,
-    "orthoHorX": -10.0,
-    "orthoHorY": 10.0,
+    "orthoHorX": -31.232999801635743,
+    "orthoHorY": 18.2189998626709,
     "orthoVerX": -10.0,
-    "orthoVerY": 10.0,
+    "orthoVerY": 4.795000076293945,
     "SHADOW_WIDTH": 2048,
     "SHADOW_HEIGHT": 2048
 }

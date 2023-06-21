@@ -30,15 +30,22 @@ void Object3D::Draw(Shader &shader) {
 void Object3D::loadModel(const std::string& path) {
     _path = path;
     _model = AssetManager::getInstance().getModel(path);
+    calculateBoundingBox();
+}
 
+void Object3D::calculateBoundingBox() {
     auto boundingBox = Hitbox(Hitbox::BOUNDING_BOX);
     boundingBox.Create(this);
     boundingBox.calculateFromModel(*_model);
 
-    boundingBoxMin = boundingBox._min;
-    boundingBoxMax = boundingBox._max;
+    modelMinVertex = boundingBox._min;
+    modelMaxVertex = boundingBox._max;
+    modelMiddle = (modelMaxVertex + modelMinVertex) * 0.5f;
+    size = modelMaxVertex - modelMinVertex;
+    spdlog::info("Bounding box min({}, {}, {}), max({}, {}, {})",
+                 modelMinVertex.x, modelMinVertex.y, modelMinVertex.z,
+                 modelMaxVertex.x, modelMaxVertex.y, modelMaxVertex.z);
 }
-
 
 void Object3D::ImGui() {
     ImGui::Begin(getWindowName().c_str());
@@ -96,19 +103,19 @@ rapidjson::Document Object3D::ParseToJSON() {
 }
 
 void Object3D::onCollisionX(Object3D *other) {
-    spdlog::warn("Object3D empty onCollisionX");
+    //spdlog::warn("Object3D empty onCollisionX");
 }
 
 void Object3D::onCollisionY(Object3D *other) {
-    spdlog::warn("Object3D empty onCollisionY");
+    //spdlog::warn("Object3D empty onCollisionY");
 }
 
 void Object3D::onCollisionZ(Object3D *other) {
-    spdlog::warn("Object3D empty onCollisionZ");
+    //spdlog::warn("Object3D empty onCollisionZ");
 }
 
 void Object3D::onCollision(Object3D *other) {
-    spdlog::warn("Object3D empty onCollision");
+    //spdlog::warn("Object3D empty onCollision");
     this->onCollisionX(other);
     this->onCollisionY(other);
     this->onCollisionZ(other);
@@ -132,4 +139,8 @@ void Object3D::loadAnimation(const std::string& daePath) {
     Animator tempA(&animation);
     animator = tempA;
 
+}
+
+void Object3D::unusualCollision(Object3D *other) {
+    spdlog::info("Object3D unusual collision called");
 }

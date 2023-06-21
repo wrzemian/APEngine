@@ -6,7 +6,7 @@
 
 void Battery::onCollision(Object3D *other) {
     //Object3D::onCollision(other);
-    if(other->tag == "floor" && _velocity.y != 0)
+    if((other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform") && _velocity.y != 0)
     {
         _velocity.y = 0;
     }

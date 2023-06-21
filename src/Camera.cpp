@@ -98,6 +98,8 @@ void Camera::Update(float deltaTime) {
 }
 
 void Camera::MoveToTarget(glm::vec3 targetPosition) {
+    positionOrigin = Position;
     positionTarget = targetPosition;
+    t = 0;
     moveToTarget = true;
 }

@@ -8,6 +8,8 @@
 #include "WinArea.h"
 #include <memory>
 #include <vector>
+#include "Box.h"
+
 
 class Level : public Object3D {
 public:
@@ -21,7 +23,7 @@ public:
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
     std::vector<std::shared_ptr<Platform>> movingPlatforms;
     std::vector<std::shared_ptr<Button>> buttons;
-    std::vector<std::shared_ptr<Object3D>> boxes; //TODO: add class Box
+    std::vector<std::shared_ptr<Box>> boxes; //TODO: add class Box
     std::vector<std::shared_ptr<Battery>> batteries;
     std::vector<std::shared_ptr<Object3D>> walls;
 
@@ -51,4 +53,10 @@ public:
     glm::vec3 cameraOffset = glm::vec3(-4.0f,10.0f,17.0f);
     glm::vec3 playerGrabberStartingPos = glm::vec3(-5,1,-1.0f);
     glm::vec3 playerJumperStartingPos = glm::vec3(-5,1,0);
+
+    glm::vec3 playerJumperLightPos = glm::vec3(0,0,0);
+    glm::vec3 playerGrabberLightPos = glm::vec3(0,0,0);
+    glm::vec3 winLightPos = glm::vec3(0,0,0);
+
+    bool hasConditionalLight = false;
 };
