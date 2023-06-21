@@ -1,0 +1,38 @@
+# Blender 3.5.1 MTL File: 'lokomotywa.blend'
+# www.blender.org
+
+newmtl decoboxMaterial.005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ../decoBoxTextures/decoBox_decoboxMaterial_BaseColor.png
+map_Ns ../decoBoxTextures/decoBox_decoboxMaterial_Roughness.png
+map_refl ../decoBoxTextures/decoBox_decoboxMaterial_Metallic.png
+map_Ke ../decoBoxTextures/decoBox_decoboxMaterial_Emissive.png
+map_Bump -bm 1.000000 ../decoBoxTextures/decoBox_decoboxMaterial_Normal.png
+
+newmtl floorMaterial.004
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ../wagonTextures/wagonPusty_floorMaterial_BaseColor.png
+map_Ns ../wagonTextures/wagonPusty_floorMaterial_Roughness.png
+map_refl ../wagonTextures/wagonPusty_floorMaterial_Metallic.png
+map_Ke ../wagonTextures/wagonPusty_floorMaterial_Emissive.png
+map_Bump -bm 1.000000 ../wagonTextures/wagonPusty_floorMaterial_Normal.png
+
+newmtl right_wallMaterial.004
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ../wagonTextures/wagonPusty_right_wallMaterial_BaseColor.png
+map_Ns ../wagonTextures/wagonPusty_right_wallMaterial_Roughness.png
+map_refl ../wagonTextures/wagonPusty_right_wallMaterial_Metallic.png
+map_Ke ../wagonTextures/wagonPusty_right_wallMaterial_Emissive.png
+map_Bump -bm 1.000000 ../wagonTextures/wagonPusty_right_wallMaterial_Normal.png
