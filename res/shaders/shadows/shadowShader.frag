@@ -126,14 +126,7 @@ void main()
     emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.5;
     lighting += emission;
 
-    /*if(inColor.x != 0)
-    {
-        FragColor = vec4(inColor, 1.0);
-    }
-    else
-    {*/
-      FragColor = vec4(lighting, 1.0);
-   // }
+    FragColor = vec4(lighting, 1.0);
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)

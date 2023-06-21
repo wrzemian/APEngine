@@ -21,23 +21,23 @@ void LightBulb::ChangeColor(glm::vec3 color) {
     std::cout << "light bulb changed color to : " << color.x << ", " <<  color.y << ", " << color.z << std::endl;
     materialColor = color;
 }
-
+/*
 void LightBulb::Draw(Shader &shader) {
     if(_model == nullptr) {
         spdlog::error("null model in {}", tag);
         return;
     }
-    /*changingColorShader.use();
+    changingColorShader.use();
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 16 / 9, 0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
     changingColorShader.setMat4("projection", projection);
     changingColorShader.setMat4("view", view);
-    changingColorShader.setVec3("inputColor",materialColor);*/
+    changingColorShader.setVec3("inputColor",materialColor);
     //shader.setVec3("inColor",materialColor);
     //_transform.updateWorldTransform(glm::mat4(1.0f), shader);
-    //_model->Draw(shader);
+   // _model->Draw(shader);
 
     //shader.setVec3("inColor", glm::vec3(0));
 
-}
+}*/
 
