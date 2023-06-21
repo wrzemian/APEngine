@@ -13,7 +13,6 @@ Grabber::Grabber() {
     _transform._scale.y  = 0.2f;
     _transform._scale.z  = 0.2f;
     _gravity.y = 0;
-    ShowImgui();
 //    LoadAnimations();
 }
 
@@ -61,7 +60,6 @@ void Grabber::Move(float deltaTime) {
     glm::vec3 target = playerPos + glm::vec3(rotationMat * glm::vec4(positionTarget+playerOffset, 1.0f));
     _transform._position = (1.0f - t) * origin + t * target;
     _transform._rotation = playerRot;
-    _transform._rotation.x = playerRot.x - 1.57079632679f;
 }
 
 void Grabber::Grab() {
