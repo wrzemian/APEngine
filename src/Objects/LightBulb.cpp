@@ -9,12 +9,11 @@ LightBulb::LightBulb() {
     _transform._scale.y = 0.5f;
     _transform._scale.z = 0.5f;
     _transform._rotation.z = 1.57079632679f;
-    //Shader temp("../../res/shaders/colorShader.vert", "../../res/shaders/colorShader.frag");
-    //changingColorShader = temp;
-    //_shader = &temp;
+    Shader temp("../../res/shaders/colorShader.vert", "../../res/shaders/colorShader.frag");
+    changingColorShader = temp;
+    _shader = &temp;
     ChangeColor(glm::vec3(0,0,1));
 
-    ShowImgui();
     IGui::setWindowName("Light Bulb ");
 }
 
