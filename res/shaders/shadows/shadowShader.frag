@@ -57,7 +57,7 @@ uniform sampler2D emissiveMap;
 uniform float time;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
-uniform vec3 inColor;
+//uniform vec3 inColor;
 uniform DirLight dirLight;
 uniform SpotLight spotLight;
 uniform PointLight pointLight;
