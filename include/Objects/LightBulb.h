@@ -13,7 +13,7 @@ public:
     glm::vec3 materialColor = glm::vec3(0);
     LightBulb();
     void ChangeColor(glm::vec3 color);
-    //void Draw(Shader &shader) override;
+    void Draw(Shader &shader) override;
 };
 
 
