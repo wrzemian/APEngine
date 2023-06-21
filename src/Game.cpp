@@ -129,7 +129,7 @@ namespace Game {
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
-        LevelManager::getInstance().ShowImgui();
+//        LevelManager::getInstance().ShowImgui();
 
 
         shadows.initShaders(camera);
@@ -367,21 +367,21 @@ namespace Game {
         ImGui::NewFrame();
         {
             Engine::renderImgui();
-            Engine::ImGui();
-            dirLight.ShowImgui();
-            pointLight.ShowImgui();
-            spotLight.ShowImgui();
-            camera.ShowImgui();
-            shadows.ShowImgui();
-            playerGrabber.ShowImgui();
+//            Engine::ImGui();
+//            dirLight.ShowImgui();
+//            pointLight.ShowImgui();
+//            spotLight.ShowImgui();
+//            camera.ShowImgui();
+//            shadows.ShowImgui();
+//            playerGrabber.ShowImgui();
         }
 
 
-        ImGui::Begin("DevTools");
-        ImGui::SetWindowSize(ImVec2(250, 100));
-        if (ImGui::Button("Next Level"))
-            onWin();
-        ImGui::End();
+//        ImGui::Begin("DevTools");
+//        ImGui::SetWindowSize(ImVec2(250, 100));
+//        if (ImGui::Button("Next Level"))
+//            onWin();
+//        ImGui::End();
 
 
         ImGui::Render();
