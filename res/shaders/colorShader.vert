@@ -9,9 +9,7 @@ out vec3 Normal;
 out vec2 TexCoords;
 
 uniform mat4 model;
-uniform  mat4 projectionView;
-uniform mat4 rotation;
-uniform mat4 translation;
+uniform mat4 projectionView;
 
 void main()
 {
