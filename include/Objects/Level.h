@@ -23,11 +23,13 @@ public:
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
     std::vector<std::shared_ptr<Platform>> movingPlatforms;
     std::vector<std::shared_ptr<Button>> buttons;
-    std::vector<std::shared_ptr<Box>> boxes; //TODO: add class Box
+    std::vector<std::shared_ptr<Box>> boxes;
     std::vector<std::shared_ptr<Battery>> batteries;
     std::vector<std::shared_ptr<Object3D>> walls;
 
     std::shared_ptr<WinArea> winArea = nullptr;
+
+    std::shared_ptr<Button> doorButton = nullptr;
 
     std::unordered_map<int, glm::vec3> targetPositions;
 

@@ -325,6 +325,28 @@ void Level::calculateHitboxes() {
                 break;
             }
 
+            case 'K': { // door doorButton
+                auto buttonHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                buttonHitbox->tag = "button";
+                hitboxes.push_back(buttonHitbox);
+
+                doorButton = std::make_shared<Button>(nullptr, glm::vec3(0));
+                doorButton->tag = "button";
+                // doorButton->ShowImgui();
+                doorButton->_transform._position = _transform._position;
+
+                doorButton->_model = std::make_shared<Model>();
+                doorButton->_model->meshes.push_back(mesh); // Add the current mesh to the doorButton's model
+                doorButton->calculateBoundingBox();
+
+                buttonHitbox->calculateFromMesh(mesh);
+                buttonHitbox->Create(doorButton.get());
+                buttonHitbox->isTrigger = true;
+
+                spdlog::info("Door button created {}", mesh._name);
+                break;
+            }
+
             default: { // Default behavior
                 spdlog::warn("unrecognized mesh name: {}", mesh._name);
 
