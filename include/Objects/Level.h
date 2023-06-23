@@ -26,6 +26,7 @@ public:
     std::vector<std::shared_ptr<Box>> boxes;
     std::vector<std::shared_ptr<Battery>> batteries;
     std::vector<std::shared_ptr<Object3D>> walls;
+    std::vector<std::shared_ptr<Cable>> cables;
 
     std::shared_ptr<WinArea> winArea = nullptr;
 
