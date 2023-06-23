@@ -19,7 +19,7 @@ uniform mat4 view;
 uniform mat4 model;
 uniform mat4 lightSpaceMatrix;
 uniform bool animated;
-const int MAX_BONES = 100;
+const int MAX_BONES = 10;
 const int MAX_BONE_INFLUENCE = 4;
 uniform mat4 finalBonesMatrices[MAX_BONES];
 
@@ -27,19 +27,11 @@ void main()
 {
     if(animated) {
         vec4 totalPosition = vec4(0.0f);
-        for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
-        {
-            if(boneIds[i] == -1)
-            continue;
-            if(boneIds[i] >=MAX_BONES)
-            {
-                totalPosition = vec4(aPos,1.0f);
-                break;
-            }
-            vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
-            totalPosition += localPosition * weights[i];
-            vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
-        }
+        totalPosition += finalBonesMatrices[boneIds[0]] * vec4(aPos,1.0f) * weights[0];
+        totalPosition += finalBonesMatrices[boneIds[1]] * vec4(aPos,1.0f) * weights[1];
+        totalPosition += finalBonesMatrices[boneIds[2]] * vec4(aPos,1.0f) * weights[2];
+        totalPosition += finalBonesMatrices[boneIds[3]] * vec4(aPos,1.0f) * weights[3];
+
 
         vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
         vs_out.Normal = transpose(inverse(mat3(model))) * aNormal;

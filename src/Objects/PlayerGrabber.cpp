@@ -223,10 +223,10 @@ void PlayerGrabber::unusualCollision(Object3D *other) {
 
 void PlayerGrabber::loadAnimations() {
     //body animations
-    Animation temp5("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae", &*this->_model);
-    Animation temp6("res/models/Players/Cr4nk/REST_CRANK_JUMPING.dae", &*this->_model);
-    Animation temp7("res/models/Players/Cr4nk/REST_CRANK_STANDING.dae", &*this->_model);
-    Animation temp8("res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae", &*this->_model);
+    Animation temp5("../../res/models/Players/Cr4nk/REST_CRANK_WALKING.dae", &*this->_model);
+    Animation temp6("../../res/models/Players/Cr4nk/REST_CRANK_JUMPING.dae", &*this->_model);
+    Animation temp7("../../res/models/Players/Cr4nk/REST_CRANK_STANDING.dae", &*this->_model);
+    Animation temp8("../../res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae", &*this->_model);
 
     walkP = temp5;
     standP = temp7;

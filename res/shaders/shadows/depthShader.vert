@@ -15,18 +15,10 @@ void main()
 {
     if(animated) {
         vec4 totalPosition = vec4(0.0f);
-        for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
-        {
-            if(boneIds[i] == -1)
-            continue;
-            if(boneIds[i] >=MAX_BONES)
-            {
-                totalPosition = vec4(aPos,1.0f);
-                break;
-            }
-            vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
-            totalPosition += localPosition * weights[i];
-        }
+            totalPosition += finalBonesMatrices[boneIds[0]] * vec4(aPos,1.0f) * weights[0];
+            totalPosition += finalBonesMatrices[boneIds[1]] * vec4(aPos,1.0f) * weights[1];
+            totalPosition += finalBonesMatrices[boneIds[2]] * vec4(aPos,1.0f) * weights[2];
+            totalPosition += finalBonesMatrices[boneIds[3]] * vec4(aPos,1.0f) * weights[3];
         gl_Position = lightSpaceMatrix * model * totalPosition;
     } else {
         gl_Position = lightSpaceMatrix * model * vec4(aPos, 1.0);
