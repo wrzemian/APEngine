@@ -66,6 +66,8 @@ void Level::calculateHitboxes() {
                     //winArea->ShowImgui();
                     winArea->_transform._position = _transform._position;
                     winArea->_model = std::make_shared<Model>();
+                    winArea->_path = mesh._name;
+
                 }
                 winArea->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
                 winArea->calculateBoundingBox();
@@ -116,6 +118,7 @@ void Level::calculateHitboxes() {
                 wall->_model = std::make_shared<Model>(); // Create a new model for the wall
                 wall->_model->meshes.push_back(mesh); // Add the current mesh to the wall's model
                 wall->tag = "wall"; // Tag the wall
+                wall->_path = mesh._name;
 
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 hitbox->calculateFromMesh(mesh);
@@ -139,6 +142,7 @@ void Level::calculateHitboxes() {
                 wall->_model = std::make_shared<Model>(); // Create a new model for the wall
                 wall->_model->meshes.push_back(mesh); // Add the current mesh to the wall's model
                 wall->tag = "wall"; // Tag the wall
+                wall->_path = mesh._name;
 
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 hitbox->calculateFromMesh(mesh);
@@ -181,6 +185,7 @@ void Level::calculateHitboxes() {
                 button->_model = std::make_shared<Model>();
                 button->_model->meshes.push_back(mesh); // Add the current mesh to the button's model
                 button->calculateBoundingBox();
+                button->_path = mesh._name;
 
                 //buttonHitbox->Create(button.get());
                 button->id = totalId;
@@ -215,9 +220,7 @@ void Level::calculateHitboxes() {
 
                 staticModel.meshes.push_back(mesh);
 
-
                 hitbox->tag = "static platform";
-
 
                 spdlog::info("Platform created {}", mesh._name);
 
@@ -233,6 +236,7 @@ void Level::calculateHitboxes() {
 
                 auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
                 platform->levelId = levelId;
+                platform->_path = mesh._name;
 
                 platform->tag = "moving platform";
               //  platform->ShowImgui();
@@ -275,6 +279,7 @@ void Level::calculateHitboxes() {
                 box->levelId = levelId;
                 boxes.push_back(box);
                 box->tag = "box";
+                box->_path = mesh._name;
 
                 auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->calculateFromMesh(mesh);
@@ -302,6 +307,7 @@ void Level::calculateHitboxes() {
                 battery->_transform._position.y += 0.1f;
                 //battery->ShowImgui();
                 battery->levelId = levelId;
+                battery->_path = mesh._name;
 
                 battery->tag = "battery";
                 batteries.push_back(battery);
@@ -332,6 +338,7 @@ void Level::calculateHitboxes() {
 
                 doorButton = std::make_shared<Button>(nullptr, glm::vec3(0));
                 doorButton->tag = "button";
+                doorButton->_path = mesh._name;
                 // doorButton->ShowImgui();
                 doorButton->_transform._position = _transform._position;
 
@@ -350,6 +357,7 @@ void Level::calculateHitboxes() {
             case 'J': { // Cable
                 auto cable = std::make_shared<Cable>();
                 cable->tag = "cable";
+                cable->_path = mesh._name;
                 // cable->ShowImgui();
                 cable->_transform._position = _transform._position;
 
