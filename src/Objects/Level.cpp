@@ -382,6 +382,10 @@ void Level::assignTargetsAndPlatforms() {
         }
     }
 
+    if (doorButton != nullptr) {
+        winArea->OnDeactivate(); // TODO: verify logic
+        doorButton->addWinArea(winArea);
+    }
 //    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
 //    {
 //        buttons[0]->addConnectedButton(buttons[1]);
