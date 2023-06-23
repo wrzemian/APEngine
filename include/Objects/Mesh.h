@@ -16,7 +16,7 @@
 #include <string>
 #include <vector>
 
-#define MAX_BONE_INFLUENCE 4
+#define MAX_BONE_INFLUENCE 10
 
 struct Vertex {
     // position

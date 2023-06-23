@@ -13,6 +13,16 @@ map_Ns ../../Assets/batteryTextures/untitled_Material.002_Roughness.png
 map_refl ../../Assets/batteryTextures/untitled_Material.002_Metallic.png
 map_Bump -bm 1.000000 ../../Assets/batteryTextures/untitled_Material.002_Normal.png
 
+newmtl Material.009
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
 newmtl Misc
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -46,18 +56,6 @@ map_Kd ../../Assets/boxTextures/untitled_box2_BaseColor.png
 map_Ns ../../Assets/boxTextures/untitled_box2_Roughness.png
 map_refl ../../Assets/boxTextures/untitled_box2_Metallic.png
 map_Bump -bm 1.000000 ../../Assets/boxTextures/untitled_box2_Normal.png
-
-newmtl box2
-Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 1
-map_Kd ../../Assets/chest1/untitled_box1_BaseColor.png
-map_Ns ../../Assets/chest1/untitled_box1_Roughness.png
-map_refl ../../Assets/chest1/untitled_box1_Metallic.png
-map_Bump -bm 1.000000 ../../Assets/chest1/untitled_box1_Normal.png
 
 newmtl decoboxMaterial.003
 Ka 1.000000 1.000000 1.000000
@@ -126,16 +124,6 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd ../../Assets/levelNumber.png
-
-newmtl niewidzialnosc.004
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 0.261438
-illum 9
 
 newmtl platforma.004
 Ka 1.000000 1.000000 1.000000
