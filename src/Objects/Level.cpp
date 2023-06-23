@@ -420,6 +420,10 @@ void Level::assignTargetsAndPlatforms() {
                 spdlog::info("connected cable {} to button", cable->id, button->id);
             }
         }
+        if (cable->id % 100 == doorButton->id % 100) {
+            doorButton->connectCable(cable);
+            spdlog::info("connected cable {} to door button", cable->id, doorButton->id);
+        }
     }
 
 //    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
