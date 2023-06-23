@@ -46,6 +46,11 @@ void Button::onCollision(Object3D *other) {
                 {
                     winArea->OnActivate();
                 }
+                if(connectedCable != nullptr) {
+                    connectedCable->isActive = true;
+                } else {
+                    spdlog::error("button has no connected cable");
+                }
             }
         }
     }
@@ -79,6 +84,11 @@ void Button::onCollisionExit(Object3D *other) {
                         winArea->OnDeactivate();
                     }
                 }
+                if(connectedCable != nullptr) {
+                    connectedCable->isActive = false;
+                } else {
+                    spdlog::error("button has no connected cable");
+                }
             }
         }
     }
@@ -110,6 +120,10 @@ void Button::addConditionalButton(std::shared_ptr<Button> buttonToAdd) {
 void Button::addWinArea(std::shared_ptr<WinArea> winAreaToAdd) {
     isWinAreaConnected = true;
     winArea = winAreaToAdd;
+}
+
+void Button::connectCable(const std::shared_ptr<Cable> &cable) {
+    connectedCable = cable;
 }
 
 

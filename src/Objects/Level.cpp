@@ -325,11 +325,52 @@ void Level::calculateHitboxes() {
                 break;
             }
 
+            case 'K': { // door doorButton
+                auto buttonHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+                buttonHitbox->tag = "button";
+                hitboxes.push_back(buttonHitbox);
+
+                doorButton = std::make_shared<Button>(nullptr, glm::vec3(0));
+                doorButton->tag = "button";
+                // doorButton->ShowImgui();
+                doorButton->_transform._position = _transform._position;
+
+                doorButton->_model = std::make_shared<Model>();
+                doorButton->_model->meshes.push_back(mesh); // Add the current mesh to the doorButton's model
+                doorButton->calculateBoundingBox();
+
+                buttonHitbox->calculateFromMesh(mesh);
+                buttonHitbox->Create(doorButton.get());
+                buttonHitbox->isTrigger = true;
+
+                spdlog::info("Door button created {}", mesh._name);
+                break;
+            }
+
+            case 'J': { // Cable
+                auto cable = std::make_shared<Cable>();
+                cable->tag = "cable";
+                // cable->ShowImgui();
+                cable->_transform._position = _transform._position;
+
+                cable->_model = std::make_shared<Model>();
+                cable->_model->meshes.push_back(mesh); // Add the current mesh to the cable's model
+                cable->calculateBoundingBox();
+
+                //buttonHitbox->Create(cable.get());
+                cable->id = totalId;
+                cables.push_back(cable);
+
+                spdlog::info("Cable created {}", mesh._name);
+                break;
+            }
+
             default: { // Default behavior
-                hitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
-                hitbox->calculateFromMesh(mesh);
-                hitbox->Create(this);
                 spdlog::warn("unrecognized mesh name: {}", mesh._name);
+
+//                hitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
+//                hitbox->calculateFromMesh(mesh);
+//                hitbox->Create(this);
 
                 break;
             }
@@ -359,11 +400,15 @@ void Level::assignTargetsAndPlatforms() {
         }
     }
 
-    //if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
-    //{
-        //buttons[0]->addConnectedButton(buttons[1]);
-        //buttons[1]->addConnectedButton(buttons[0]);
-    //}
+    if (doorButton != nullptr) {
+        winArea->OnDeactivate(); // TODO: verify logic
+        doorButton->addWinArea(winArea);
+    }
+//    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
+//    {
+//        buttons[0]->addConnectedButton(buttons[1]);
+//        buttons[1]->addConnectedButton(buttons[0]);
+//    }
     /*
     if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of conditional buttons, meaning that only when both buttons are pressed they activate platform
     {

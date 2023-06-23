@@ -8,6 +8,7 @@
 #include "Object3D.h"
 #include "Platform.h"
 #include "WinArea.h"
+#include "Cable.h"
 
 class Button : public Object3D {
 private:
@@ -16,10 +17,11 @@ private:
     bool isPushed = false;
     float t = 1.0f;
     float timeToReset = 1.0f;
+    std::shared_ptr<Cable> connectedCable = nullptr;
 
 public:
     Button(Platform* p, glm::vec3 position);
-
+    void connectCable(const std::shared_ptr<Cable>& cable);
    // void Update(float dt);
     virtual void onCollision(Object3D* other);
     virtual void onCollisionExit(Object3D* other);
