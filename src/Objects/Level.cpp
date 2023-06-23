@@ -347,6 +347,24 @@ void Level::calculateHitboxes() {
                 break;
             }
 
+            case 'J': { // Cable
+                auto cable = std::make_shared<Cable>();
+                cable->tag = "cable";
+                // cable->ShowImgui();
+                cable->_transform._position = _transform._position;
+
+                cable->_model = std::make_shared<Model>();
+                cable->_model->meshes.push_back(mesh); // Add the current mesh to the cable's model
+                cable->calculateBoundingBox();
+
+                //buttonHitbox->Create(cable.get());
+                cable->id = totalId;
+                cables.push_back(cable);
+
+                spdlog::info("Cable created {}", mesh._name);
+                break;
+            }
+
             default: { // Default behavior
                 spdlog::warn("unrecognized mesh name: {}", mesh._name);
 
