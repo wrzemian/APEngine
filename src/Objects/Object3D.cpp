@@ -42,9 +42,9 @@ void Object3D::calculateBoundingBox() {
     modelMaxVertex = boundingBox._max;
     modelMiddle = (modelMaxVertex + modelMinVertex) * 0.5f;
     size = modelMaxVertex - modelMinVertex;
-    spdlog::info("Bounding box min({}, {}, {}), max({}, {}, {})",
-                 modelMinVertex.x, modelMinVertex.y, modelMinVertex.z,
-                 modelMaxVertex.x, modelMaxVertex.y, modelMaxVertex.z);
+//    spdlog::info("Bounding box min({}, {}, {}), max({}, {}, {})",
+//                 modelMinVertex.x, modelMinVertex.y, modelMinVertex.z,
+//                 modelMaxVertex.x, modelMaxVertex.y, modelMaxVertex.z);
 }
 
 void Object3D::ImGui() {

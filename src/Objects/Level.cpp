@@ -389,7 +389,7 @@ void Level::assignTargetsAndPlatforms() {
                  size.x, size.y, size.z);
     for (const auto& button : buttons) {
         for (const auto& platform : movingPlatforms) {
-            spdlog::info("Checking buttonId {} with platformId {} ({})", button->id, platform->id, platform->id % 100 == button->id % 100);
+//            spdlog::info("Checking buttonId {} with platformId {} ({})", button->id, platform->id, platform->id % 100 == button->id % 100);
             if (platform->id % 100 == button->id % 100) {
                 button->addPlatform(platform.get());
                 spdlog::info("Button {} connected to Platform {}", button->id, platform->id);
@@ -404,6 +404,16 @@ void Level::assignTargetsAndPlatforms() {
         winArea->OnDeactivate(); // TODO: verify logic
         doorButton->addWinArea(winArea);
     }
+
+    for (const auto& cable: cables) { // TODO: verify if works in all cases, change if necessary
+        for (const auto& button: buttons) {
+            if (cable->id % 100 == button->id % 100) {
+                button->connectCable(cable);
+                spdlog::info("connected cable {} to button", cable->id, button->id);
+            }
+        }
+    }
+
 //    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
 //    {
 //        buttons[0]->addConnectedButton(buttons[1]);
@@ -425,15 +435,15 @@ void Level::assignTargetsAndPlatforms() {
             test.Create(platform.get());
             test.calculateFromModel(*platform->_model);
             auto edge = test._max; // (test._min + test._max) * 0.5f;
-            spdlog::info("Platform id {} in the edge in ({}, {}, {}) min({}, {}, {}), max({}, {}, {}), has target ({}, {}, {})",
-                         platform->id,
-                         edge.x, edge.y, edge.z,
-                         platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z,
-                         platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z,
-                         it->second.x, it->second.y, it->second.z);
+//            spdlog::info("Platform id {} in the edge in ({}, {}, {}) min({}, {}, {}), max({}, {}, {}), has target ({}, {}, {})",
+//                         platform->id,
+//                         edge.x, edge.y, edge.z,
+//                         platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z,
+//                         platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z,
+//                         it->second.x, it->second.y, it->second.z);
             platform->positionTarget = it->second - edge + _transform._position;
             platform->positionTarget.z += (platform->modelMaxVertex.z - platform->modelMinVertex.z);
-            spdlog::info("assigned target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
+//            spdlog::info("assigned target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
         }

@@ -64,12 +64,6 @@ void Platform::ImGui() {
     ImGui::Checkbox("move to origin", &moveToOrigin);
     ImGui::Checkbox("move to target", &moveToTarget);
 
-    //TODO: delete those ifs, they are for debugging only
-    /*if(moveToOrigin) {
-        _transform._position = positionOrigin;
-    } else if(moveToTarget) {
-        _transform._position = positionTarget;
-    }*/
 
     ImGui::End();
 }
