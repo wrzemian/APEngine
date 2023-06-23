@@ -404,6 +404,16 @@ void Level::assignTargetsAndPlatforms() {
         winArea->OnDeactivate(); // TODO: verify logic
         doorButton->addWinArea(winArea);
     }
+
+    for (const auto& cable: cables) { // TODO: verify if works in all cases, change if necessary
+        for (const auto& button: buttons) {
+            if (cable->id % 100 == button->id % 100) {
+                button->connectCable(cable);
+                spdlog::info("connected cable {} to button", cable->id, button->id);
+            }
+        }
+    }
+
 //    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
 //    {
 //        buttons[0]->addConnectedButton(buttons[1]);
