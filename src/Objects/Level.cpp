@@ -339,6 +339,8 @@ void Level::calculateHitboxes() {
                 doorButton = std::make_shared<Button>(nullptr, glm::vec3(0));
                 doorButton->tag = "button";
                 doorButton->_path = mesh._name;
+                doorButton->id = totalId;
+
                 // doorButton->ShowImgui();
                 doorButton->_transform._position = _transform._position;
 
@@ -420,7 +422,7 @@ void Level::assignTargetsAndPlatforms() {
                 spdlog::info("connected cable {} to button", cable->id, button->id);
             }
         }
-        if (cable->id % 100 == doorButton->id % 100) {
+        if (doorButton != nullptr && cable->id % 100 == doorButton->id % 100) { // the second operand is not evaluated if the first operand is false
             doorButton->connectCable(cable);
             spdlog::info("connected cable {} to door button", cable->id, doorButton->id);
         }
