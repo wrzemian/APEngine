@@ -45,7 +45,7 @@ void Level::calculateHitboxes() {
     spdlog::info("CALCULATE HITBOXES for {}", _model->directory);
 
     for (const Mesh& mesh : _model->meshes) {
-        spdlog::warn("MESH NAME = {}", mesh._name);
+        spdlog::warn("MESH NAME = {}, vertices count = {}", mesh._name, mesh.vertices.size());
     }
 
     for (const Mesh& mesh : _model->meshes) {
@@ -273,7 +273,6 @@ void Level::calculateHitboxes() {
             case 'E': { // Box
                 // TODO: change to Box implementation
                 auto box = std::make_shared<Box>();
-                box->_transform._position.y += 0.1f;
                 box->StopMoving();
                 //box->ShowImgui();
                 box->levelId = levelId;
@@ -281,34 +280,26 @@ void Level::calculateHitboxes() {
                 box->tag = "box";
                 box->_path = mesh._name;
 
-                auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
-                test->calculateFromMesh(mesh);
-
-                test->Create(box.get());
-                test->draw = true;
-                hitboxes.push_back(test);
-                test->tag = "box";
-
                 box->_transform._position = _transform._position;
                 box->_model = std::make_shared<Model>();
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
+
+                auto middle = box->modelMiddle;
+                spdlog::warn("box middle at {}, {}, {}", middle.x, middle.y, middle.z);
+                spdlog::warn("box vertices: {}", box->_model->meshes.at(0).vertices.size());
+
+                box->changeVertexPositions(-middle);
                 box->calculateBoundingBox();
 
-//                auto middle = box->modelMiddle;
-//                spdlog::warn("box middle at {}, {}, {}", middle.x, middle.y, middle.z);
-//                spdlog::warn("box vertices: {}", box->_model->meshes.at(0).vertices.size());
-//
-//                for (auto& vertex: box->_model->meshes.at(0).vertices) {
-//                    spdlog::warn("old vertex position at {}, {}, {}", vertex.Position.x, vertex.Position.y, vertex.Position.z);
-//                    vertex.Position -= middle;
-//                }
-//                for (auto& vertex: box->_model->meshes.at(0).vertices) {
-//
-//                    spdlog::warn("new vertex position at {}, {}, {}", vertex.Position.x, vertex.Position.y, vertex.Position.z);
-//                }
-//                box->_transform._position += middle;
-
                 box->_transform._position = _transform._position;
+                box->_transform._position += middle;
+
+                auto boxHitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
+                boxHitbox->calculateFromModel(*box->_model);
+
+                boxHitbox->Create(box.get());
+                hitboxes.push_back(boxHitbox);
+                boxHitbox->tag = "box";
 
                 spdlog::info("Box created from {}", mesh._name);
 

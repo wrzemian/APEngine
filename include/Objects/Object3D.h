@@ -59,4 +59,6 @@ public:
     std::string _path;
 
     void calculateBoundingBox();
+
+    void changeVertexPositions(const glm::vec3 &offset);
 };

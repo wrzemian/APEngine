@@ -103,6 +103,11 @@ public:
             ImGui::SliderInt("Current Level", &currentLevel, 0, levels.size() - 1);
         }
 
+        for(auto& level: levels) {
+            level->HideImgui();
+        }
+        getCurrentLevel()->ShowImgui();
+
         ImGui::End();
     }
 
