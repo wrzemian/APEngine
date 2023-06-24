@@ -429,7 +429,6 @@ void Level::assignTargetsAndPlatforms() {
             spdlog::info("connected cable {} to door button", cable->id, doorButton->id);
         }
     }
-
 //    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
 //    {
 //        buttons[0]->addConnectedButton(buttons[1]);
@@ -442,33 +441,12 @@ void Level::assignTargetsAndPlatforms() {
         buttons[1]->addConditionalButton(buttons[0]);
     }*/
 
-
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
-            Hitbox test(Hitbox::STATIC);
-            test.Create(platform.get());
-            test.calculateFromModel(*platform->_model);
-            auto edge = test._max; // (test._min + test._max) * 0.5f;
-//            spdlog::info("Platform id {} in the edge in ({}, {}, {}) min({}, {}, {}), max({}, {}, {}), has target ({}, {}, {})",
-//                         platform->id,
-//                         edge.x, edge.y, edge.z,
-//                         platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z,
-//                         platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z,
-//                         it->second.x, it->second.y, it->second.z);
-            platform->positionTarget = it->second - edge + _transform._position;
-            platform->positionTarget.z += (platform->modelMaxVertex.z - platform->modelMinVertex.z);
 
-            spdlog::info("Target: ({}, {}, {})", it->second.x, it->second.y, it->second.z);
-            spdlog::info("Platform min: ({}, {}, {})", platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z);
-            spdlog::info("Platform max: ({}, {}, {})", platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z);
-            spdlog::info("Edge max: ({}, {}, {})", edge.x, edge.y, edge.z);
-            spdlog::info("Edge min: ({}, {}, {})", test._min.x, test._min.y, test._min.z);
-
-            spdlog::info("Platform position: ({}, {}, {})", platform->_transform._position.x, platform->_transform._position.y, platform->_transform._position.z);
-            spdlog::info("Origin: ({}, {}, {})", platform->positionOrigin.x, platform->positionOrigin.y, platform->positionOrigin.z);
-            spdlog::info("Target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
-
+            platform->positionTarget = it->second - platform->modelMaxVertex + _transform._position;
+            platform->positionTarget.z += platform->size.z;
 
 
         } else {
