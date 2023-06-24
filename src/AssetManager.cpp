@@ -47,9 +47,6 @@ void AssetManager::calculateFromMesh(const Mesh &mesh, ModelData& data) {
     float minZ = std::numeric_limits<float>::max();
     float maxZ = std::numeric_limits<float>::lowest();
 
-    const glm::vec3& minVertex = data.minVertex;
-    const glm::vec3& maxVertex = data.maxVertex;
-
     for (const auto& vertex : mesh.vertices) {
         const auto& position = vertex.Position;
         minX = std::min(position.x, minX);
@@ -60,16 +57,15 @@ void AssetManager::calculateFromMesh(const Mesh &mesh, ModelData& data) {
         maxZ = std::max(position.z, maxZ);
     }
 
-    data.minVertex = glm::vec3(std::min(minX, minVertex.x),
-                               std::min(minY, minVertex.y),
-                               std::min(minZ, minVertex.z));
-    data.maxVertex = glm::vec3(std::max(maxX, maxVertex.x),
-                               std::max(maxY, maxVertex.y),
-                               std::max(maxZ, maxVertex.z));
+    data.minVertex.x = minX < data.minVertex.x ? minX : data.minVertex.x;
+    data.minVertex.y = minY < data.minVertex.y ? minY : data.minVertex.y;
+    data.minVertex.z = minZ < data.minVertex.z ? minZ : data.minVertex.z;
 
-    data.middleVertex = (data.maxVertex + data.minVertex) * 0.5f;
+    data.maxVertex.x = maxX > data.maxVertex.x ? maxX : data.maxVertex.x;
+    data.maxVertex.y = maxY > data.maxVertex.y ? maxY : data.maxVertex.y;
+    data.maxVertex.z = maxZ > data.maxVertex.z ? maxZ : data.maxVertex.z;
 
-    data.size = data.maxVertex - data.minVertex;
+
 }
 
 
@@ -77,5 +73,8 @@ void AssetManager::calculateBoundingBox(ModelData& data) {
     for(auto const& mesh: data.modelPtr->meshes) {
         calculateFromMesh(mesh, data);
     }
+    data.middleVertex = (data.maxVertex + data.minVertex) * 0.5f;
+
+    data.size = data.maxVertex - data.minVertex;
 }
 
