@@ -62,6 +62,7 @@ uniform DirLight dirLight;
 uniform SpotLight spotLight;
 uniform PointLight pointLight;
 uniform Material material;
+uniform bool emissive;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -122,9 +123,12 @@ void main()
     lighting += CalcPointLight(pointLight, normal, fs_in.FragPos, viewDir);
     lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir);
 
-    vec3 emission = texture(emissiveMap, fs_in.TexCoords).rgb / 2;
-    emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.5;
-    lighting += emission;
+    if(emissive) {
+        vec3 emission = vec3(0,1,0);
+        //emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.5;
+        lighting += emission;
+    }
+
 
     if(inColor.x != 0)
     {

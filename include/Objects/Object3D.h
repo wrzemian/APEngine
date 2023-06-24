@@ -19,6 +19,7 @@ public:
     int id = -1;
     bool rendered = true;
     bool animated = false;
+    bool emissive = false;
 
     glm::vec3 modelMinVertex{};
     glm::vec3 modelMaxVertex{};

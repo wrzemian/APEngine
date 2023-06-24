@@ -23,10 +23,10 @@ void Cable::Deactivate() {
 
 void Cable::changeLook() {
     if(isActive) {
-        // TODO: add turning on emmisive
+        emissive = true;
         spdlog::info("Cable {} {} turned ON", id, _path);
     } else {
-        // TODO: add turning off emmisive
+        emissive = false;
         spdlog::info("Cable {} {} turned OFF", id, _path);
     }
 }

@@ -256,6 +256,7 @@ namespace Engine {
                     shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
                 object->animator.UpdateAnimation(Engine::deltaTime);
             }
+            shader.setBool("emissive", object->emissive);
 
 
 //                object->Draw();
