@@ -256,7 +256,6 @@ void Hitbox::calculateFromModel(const Model &model) {
     for(auto const& mesh: model.meshes) {
         calculateFromMesh(mesh);
     }
-//    spdlog::info("Calculated hitbox from model from({}, {}) to ({}, {})", _min.x, _min.y, _max.x, _max.y);
 }
 
 void Hitbox::calculateFromMesh(const Mesh &mesh) {

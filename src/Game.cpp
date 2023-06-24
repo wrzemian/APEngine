@@ -184,8 +184,8 @@ namespace Game {
         //p1Hitbox.Create(&playerJumper);
         //p2Hitbox.Create(&playerGrabber);
 
-        //p1Hitbox.calculateFromModel(player1._model);
-        //p2Hitbox.calculateFromModel(player2._model);
+        //p1Hitbox.calculateBoundingBox(player1._model);
+        //p2Hitbox.calculateBoundingBox(player2._model);
 
         playerGrabber.grabber = &grabber;
         grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
