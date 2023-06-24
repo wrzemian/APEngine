@@ -446,38 +446,18 @@ void Level::assignTargetsAndPlatforms() {
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
-
-            glm::vec3 target = it->second;
-            target.x = platform->modelMaxVertex.x;
-
-            std::cout<<target.z << '\n';
-            std::cout<<platform->modelMinVertex.z << '\n';
-            std::cout<<abs(target.z - platform->modelMinVertex.z) << '\n';
-
-            if (abs(target.z - platform->modelMinVertex.z) < 0.01) {
-                std::cout<<"Z jak min\n";
-                target.z = platform->modelMaxVertex.z;
-            }
-//            else {//if (abs(it->second.z - platform->modelMinVertex.z) < 0.01) {
-//                target.z = platform->modelMaxVertex.z;
-//            }
-//            else {
-//                spdlog::error("PLATFORM TARGET SHIT HIMSELF");
-//            }
-            platform->positionTarget = platform->positionOrigin + (target - platform->modelMaxVertex);
-
-            spdlog::info("Target: ({}, {}, {})", it->second.x, it->second.y, it->second.z);
-            spdlog::info("Platform min: ({}, {}, {})", platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z);
-            spdlog::info("Platform max: ({}, {}, {})", platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z);
-            spdlog::info("Target new: ({}, {}, {})", target.x, target.y, target.z);
-            spdlog::info("Platform position: ({}, {}, {})", platform->_transform._position.x, platform->_transform._position.y, platform->_transform._position.z);
-            spdlog::info("Origin: ({}, {}, {})", platform->positionOrigin.x, platform->positionOrigin.y, platform->positionOrigin.z);
-            spdlog::info("Target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
-
-
-
-            //platform->positionTarget = it->second - platform->modelMaxVertex + platform->_transform._position;
-          //  platform->positionTarget.z += (platform->size.z) * 0.5f; // TODO: fix lol
+            Hitbox test(Hitbox::STATIC);
+            test.Create(platform.get());
+            test.calculateFromModel(*platform->_model);
+            auto edge = test._max; // (test._min + test._max) * 0.5f;
+//            spdlog::info("Platform id {} in the edge in ({}, {}, {}) min({}, {}, {}), max({}, {}, {}), has target ({}, {}, {})",
+//                         platform->id,
+//                         edge.x, edge.y, edge.z,
+//                         platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z,
+//                         platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z,
+//                         it->second.x, it->second.y, it->second.z);
+            platform->positionTarget = it->second - edge + _transform._position;
+            platform->positionTarget.z += (platform->modelMaxVertex.z - platform->modelMinVertex.z);
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
         }
