@@ -42,7 +42,10 @@ void Object3D::changeVertexPositions(const glm::vec3& offset) {
 }
 
 void Object3D::loadModel(const std::string& path) {
-    _path = path;
+//    _path = path;
+//    _model = AssetManager::getInstance().getModel(path);
+//    calculateBoundingBox();
+
     auto modelData = AssetManager::getInstance().getData(path);
     _model = modelData.modelPtr;
     modelMinVertex = modelData.minVertex;
@@ -52,6 +55,15 @@ void Object3D::loadModel(const std::string& path) {
 }
 
 void Object3D::calculateBoundingBox() {
+//    auto boundingBox = Hitbox(Hitbox::BOUNDING_BOX);
+//    boundingBox.Create(this);
+//    boundingBox.calculateFromModel(*_model);
+//
+//    modelMinVertex = boundingBox._min;
+//    modelMaxVertex = boundingBox._max;
+//    modelMiddle = (modelMaxVertex + modelMinVertex) * 0.5f;
+//    size = modelMaxVertex - modelMinVertex;
+
     AssetManager::ModelData modelData {_model};
     AssetManager::getInstance().calculateBoundingBox(modelData);
     modelMinVertex = modelData.minVertex;

@@ -429,7 +429,6 @@ void Level::assignTargetsAndPlatforms() {
             spdlog::info("connected cable {} to door button", cable->id, doorButton->id);
         }
     }
-
 //    if(buttons[1] != nullptr && buttons[0] != nullptr) // only for testing and example of connected buttons
 //    {
 //        buttons[0]->addConnectedButton(buttons[1]);
@@ -442,13 +441,12 @@ void Level::assignTargetsAndPlatforms() {
         buttons[1]->addConditionalButton(buttons[0]);
     }*/
 
-
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
-
             platform->positionTarget = it->second - platform->modelMaxVertex + _transform._position;
-            platform->positionTarget.z += (platform->modelMaxVertex.z - platform->modelMinVertex.z);
+            platform->positionTarget.z += platform->size.z;
+          
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
         }
