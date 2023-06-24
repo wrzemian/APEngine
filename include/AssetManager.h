@@ -8,12 +8,13 @@
 class AssetManager {
 
 public:
-    typedef std::shared_ptr<Model> ModelPtr;
+    using ModelPtr = std::shared_ptr<Model>;
+    using floatLimit = std::numeric_limits<float>;
 
     struct ModelData {
         ModelPtr modelPtr;
-        glm::vec3 minVertex;
-        glm::vec3 maxVertex;
+        glm::vec3 minVertex = {floatLimit::max(), floatLimit::max(), floatLimit::max()};
+        glm::vec3 maxVertex = {floatLimit::lowest(), floatLimit::lowest(), floatLimit::lowest()};
         glm::vec3 middleVertex;
         glm::vec3 size;
     };
