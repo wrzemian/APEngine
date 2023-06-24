@@ -24,7 +24,21 @@ void Object3D::Draw(Shader &shader) {
     // shader.setMat4("model", _transform.getModel());
 
     _model->Draw(shader);
+}
 
+void Object3D::changeVertexPositions(const glm::vec3& offset) {
+    if (_model) {
+        for (auto& mesh : _model->meshes) {
+            auto& vertices = mesh.vertices;
+            for (size_t i = 0; i < vertices.size(); ++i) {
+                vertices[i].Position += offset;
+            }
+
+            glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        }
+    }
 }
 
 void Object3D::loadModel(const std::string& path) {

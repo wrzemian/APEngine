@@ -9,10 +9,14 @@
 //#include "Button.h"
 
 class Cable : public Object3D {
-public:
+private:
     bool isActive = false;
-//    std::shared_ptr<Button> connectedButton = nullptr;
-//    void connectToButton(const std::shared_ptr<Button>& button);
+    void changeLook();
+
+public:
+    void Activate();
+    void Deactivate();
+
 };
 
 

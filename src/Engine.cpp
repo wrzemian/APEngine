@@ -20,8 +20,8 @@
 
 namespace Engine {
     GLFWwindow* window;
-
     Parser parser("../../res/jsons");
+
 
     float frameEnd = 0;
     float frameStart = 0;
@@ -53,13 +53,23 @@ namespace Engine {
     int renderedStatic = -1;
     int renderedDynamic = -1;
 
+
+    std::shared_ptr<Camera> camera = std::make_shared<Camera>("camera");
+
     int Init() {
         if (initGLandImGui() == -1) {
             return -1;
         }
-
+        frameStart = glfwGetTime();
         return 0;
     }
+
+    void finishedLoading() {
+        frameEnd = glfwGetTime();
+        spdlog::info("Window opened in {} seconds", frameStart);
+        spdlog::info("Loading finished in {} seconds", frameEnd);
+    }
+
 
     int getObject3DIndex(Object3D* obj) {
         auto it = find(allObjects.begin(), allObjects.end(), obj);
@@ -256,6 +266,7 @@ namespace Engine {
                     shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
                 object->animator.UpdateAnimation(Engine::deltaTime);
             }
+            shader.setBool("emissive", object->emissive);
 
 
 //                object->Draw();
@@ -363,6 +374,8 @@ namespace Engine {
         glEnable(GL_LIGHT0);
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     }
+
+
 
     void renderImgui() {
         for(IGui* gui: allImgui) {

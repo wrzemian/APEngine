@@ -19,6 +19,7 @@ public:
     int id = -1;
     bool rendered = true;
     bool animated = false;
+    bool emissive = false;
 
     glm::vec3 modelMinVertex{};
     glm::vec3 modelMaxVertex{};
@@ -58,4 +59,6 @@ public:
     std::string _path;
 
     void calculateBoundingBox();
+
+    void changeVertexPositions(const glm::vec3 &offset);
 };

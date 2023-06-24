@@ -1,6 +1,8 @@
 //
 // Created by tomek on 26.03.2023.
 //
+#pragma once
+
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
@@ -27,6 +29,7 @@ namespace Engine {
     extern int SCR_WIDTH;
     extern int SCR_HEIGHT;
     extern bool frustum;
+    extern std::shared_ptr<Camera> camera;
 
     void ImGui();
     int Init();
@@ -98,5 +101,8 @@ namespace Engine {
     int initGLandImGui();
 
     GLFWwindow* getWindow();
+
+    void finishedLoading();
+
 
 }

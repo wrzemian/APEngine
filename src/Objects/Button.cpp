@@ -48,8 +48,7 @@ void Button::onCollision(Object3D *other) {
                 }
                 // activate connected cable // TODO: check for bugs with multiple buttons/cables
                 if(connectedCable != nullptr) {
-                    connectedCable->isActive = true;
-                    spdlog::info("Cable {} {} activated", connectedCable->id, connectedCable->_path);
+                    connectedCable->Activate();
                 } else {
                     spdlog::error("button has no connected cable");
                 }
@@ -85,15 +84,14 @@ void Button::onCollisionExit(Object3D *other) {
                     {
                         winArea->OnDeactivate();
                     }
+                    // deactivate connected cable // TODO: check for bugs with multiple buttons/cables
+                    if(connectedCable != nullptr) {
+                        connectedCable->Deactivate();
+                    } else {
+                        spdlog::error("button has no connected cable");
+                    }
                 }
-                // deactivate connected cable // TODO: check for bugs with multiple buttons/cables
-                if(connectedCable != nullptr) {
-                    connectedCable->isActive = false;
-                    spdlog::info("Cable {} {} deactivated", connectedCable->id, connectedCable->_path);
 
-                } else {
-                    spdlog::error("button has no connected cable");
-                }
             }
         }
     }

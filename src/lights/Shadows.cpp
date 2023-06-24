@@ -71,7 +71,7 @@ void Shadows::initShaders(Camera& camera) {
 
 void Shadows::ImGui()  {
     ImGui::Begin(getWindowName().c_str());
-    ImGui::SetWindowSize(ImVec2(250, 400));
+    ImGui::SetWindowSize(ImVec2(250, 430));
 
     ImGui::SliderFloat("lightX", &position.x, -50.0f, 50.0f);
     ImGui::SliderFloat("lightY", &position.y, -50.0f, 50.0f);
@@ -90,7 +90,6 @@ void Shadows::ImGui()  {
     ImGui::SliderFloat("orthoVerY", &orthoVer.y, -50.0f, 50.0f);
 
     if (ImGui::Button("SAVE SHADOWS")) {
-
         Engine::parser.SaveJSON(this->ParseToJSON(), "lights/shadows");
     }
     ImGui::End();

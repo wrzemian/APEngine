@@ -103,10 +103,13 @@ public:
         glActiveTexture(GL_TEXTURE0);
     }
 
+// render data
+    unsigned int VBO;
 private:
     // render data
-    unsigned int VBO, EBO;
+    unsigned int EBO;
 
+public:
     // initializes all the buffer objects/arrays
     void setupMesh()
     {

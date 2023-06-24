@@ -15,6 +15,6 @@
     "orthoHorY": 18.2189998626709,
     "orthoVerX": -10.0,
     "orthoVerY": 4.795000076293945,
-    "SHADOW_WIDTH": 2048,
-    "SHADOW_HEIGHT": 2048
+    "SHADOW_WIDTH": 4096,
+    "SHADOW_HEIGHT": 4096
 }

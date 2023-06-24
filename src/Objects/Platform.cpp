@@ -11,7 +11,7 @@ Platform::Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s) {
     _transform._position = pOrigin;
 
     setWindowName("Platform");
-    logFields();
+    //logFields();
 }
 
 void Platform::Move(float deltaTime) {
