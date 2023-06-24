@@ -458,6 +458,19 @@ void Level::assignTargetsAndPlatforms() {
 //                         it->second.x, it->second.y, it->second.z);
             platform->positionTarget = it->second - edge + _transform._position;
             platform->positionTarget.z += (platform->modelMaxVertex.z - platform->modelMinVertex.z);
+
+            spdlog::info("Target: ({}, {}, {})", it->second.x, it->second.y, it->second.z);
+            spdlog::info("Platform min: ({}, {}, {})", platform->modelMinVertex.x, platform->modelMinVertex.y, platform->modelMinVertex.z);
+            spdlog::info("Platform max: ({}, {}, {})", platform->modelMaxVertex.x, platform->modelMaxVertex.y, platform->modelMaxVertex.z);
+            spdlog::info("Edge max: ({}, {}, {})", edge.x, edge.y, edge.z);
+            spdlog::info("Edge min: ({}, {}, {})", test._min.x, test._min.y, test._min.z);
+
+            spdlog::info("Platform position: ({}, {}, {})", platform->_transform._position.x, platform->_transform._position.y, platform->_transform._position.z);
+            spdlog::info("Origin: ({}, {}, {})", platform->positionOrigin.x, platform->positionOrigin.y, platform->positionOrigin.z);
+            spdlog::info("Target position: ({}, {}, {})", platform->positionTarget.x, platform->positionTarget.y, platform->positionTarget.z);
+
+
+
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
         }
