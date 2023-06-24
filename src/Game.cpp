@@ -280,7 +280,7 @@ namespace Game {
 //        Animator animator(&danceAnimation);
 
 
-
+        Engine::finishedLoading();
       //  Engine::logTextures();
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();

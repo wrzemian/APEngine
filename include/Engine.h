@@ -102,4 +102,7 @@ namespace Engine {
 
     GLFWwindow* getWindow();
 
+    void finishedLoading();
+
+
 }

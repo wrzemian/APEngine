@@ -60,9 +60,16 @@ namespace Engine {
         if (initGLandImGui() == -1) {
             return -1;
         }
-
+        frameStart = glfwGetTime();
         return 0;
     }
+
+    void finishedLoading() {
+        frameEnd = glfwGetTime();
+        spdlog::info("Window opened in {} seconds", frameStart);
+        spdlog::info("Loading finished in {} seconds", frameEnd);
+    }
+
 
     int getObject3DIndex(Object3D* obj) {
         auto it = find(allObjects.begin(), allObjects.end(), obj);
@@ -367,6 +374,8 @@ namespace Engine {
         glEnable(GL_LIGHT0);
         glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     }
+
+
 
     void renderImgui() {
         for(IGui* gui: allImgui) {
