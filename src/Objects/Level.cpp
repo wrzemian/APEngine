@@ -444,11 +444,9 @@ void Level::assignTargetsAndPlatforms() {
     for (const auto& platform : movingPlatforms) {
         auto it = targetPositions.find(platform->id);
         if (it != targetPositions.end()) {
-
             platform->positionTarget = it->second - platform->modelMaxVertex + _transform._position;
             platform->positionTarget.z += platform->size.z;
-
-
+          
         } else {
             spdlog::warn("No target position found for platform {}", platform->id);
         }
