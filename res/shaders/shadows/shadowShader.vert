@@ -31,6 +31,7 @@ void main()
         totalPosition += finalBonesMatrices[boneIds[1]] * vec4(aPos,1.0f) * weights[1];
         totalPosition += finalBonesMatrices[boneIds[2]] * vec4(aPos,1.0f) * weights[2];
         totalPosition += finalBonesMatrices[boneIds[3]] * vec4(aPos,1.0f) * weights[3];
+        //vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
 
 
         vs_out.FragPos = vec3(model * vec4(aPos, 1.0));

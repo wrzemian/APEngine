@@ -78,21 +78,29 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     float closestDepth = texture(shadowMap, projCoords.xy).r;
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
-    float bias = 0.005;
+    vec3 normal = normalize(fs_in.Normal);
+    vec3 lightDir = normalize(lightPos - fs_in.FragPos);
+    //float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+    // check whether current frag pos is in shadow
+    // float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+    // PCF
     float shadow = 0.0;
+    float bias = 0.009;
     vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
     for(int x = -1; x <= 1; ++x)
     {
         for(int y = -1; y <= 1; ++y)
         {
             float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;
         }
     }
     shadow /= 9.0;
-
+//    float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
     if(projCoords.z > 1.0)
         shadow = 0.0;
+//    if(shadow < 0.5 && shadow > 0.2)
+//        shadow = 0.0;
 
     return shadow;
 }
@@ -124,6 +132,7 @@ void main()
     lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir);
 
     if(emissive) {
+//        vec3 emission = texture(emissiveMap, fs_in.TexCoords).rgb / 2;
         vec3 emission = vec3(0,1,0);
         //emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.5;
         lighting += emission;
