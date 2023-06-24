@@ -63,7 +63,7 @@ Camera::Camera(glm::vec3 position, float yaw, float pitch, float zoom)
     updateCameraVectors();
 }
 
-Camera::Camera(std::string fileName) {
+Camera::Camera(const std::string& fileName) {
     spdlog::info("camera JSON constructor");
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();

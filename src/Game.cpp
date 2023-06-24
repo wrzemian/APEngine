@@ -9,7 +9,7 @@
 #include "../include/Objects/MovingObject.h"
 
 #include "../include/lights/DirectionalLight.h"
-#include "../include/Camera.h"
+#include "../include/camera.h"
 #include "../include/Objects/DebugShape.h"
 
 #include "../include/lights/SpotLight.h"
@@ -58,7 +58,7 @@ namespace Game {
 
     void ImGui();
 
-    void renderScene(Shader shader, const Camera &camera);
+    void renderScene(Shader shader, Camera camera);
 
     Shader simpleDepthShader;
     Shader debugDepthQuad;
@@ -79,7 +79,6 @@ namespace Game {
     PlayerJumper playerJumper;
     PlayerGrabber playerGrabber;
 
-    Camera camera("camera");
 
     //animation testing
 
@@ -120,10 +119,11 @@ namespace Game {
         Engine::Init();
         spdlog::info("init engine");
 
+        Engine::camera->ShowImgui();
 
         spdlog::info("init audio");
         AudioManager::GetInstance()->InitializeAudio();
-        AudioManager::GetInstance()->CreateAll(camera, playerGrabber);
+        AudioManager::GetInstance()->CreateAll(*Engine::camera, playerGrabber);
 
 
 
@@ -132,7 +132,7 @@ namespace Game {
         LevelManager::getInstance().ShowImgui();
 
 
-        shadows.initShaders(camera);
+        shadows.initShaders(*Engine::camera);
         spdlog::info("shader");
         Shader tempLightShader("../../res/shaders/shader.vert", "../../res/shaders/shader.frag");
         lightShader = tempLightShader;
@@ -178,8 +178,8 @@ namespace Game {
 
 
 
-        //camera = Engine::parser.CreateFromJSONCam("camera");
-        camera.ShowImgui();;
+        //*Engine::camera = Engine::parser.CreateFromJSONCam("*Engine::camera");
+        Engine::camera->ShowImgui();;
 
         //p1Hitbox.Create(&playerJumper);
         //p2Hitbox.Create(&playerGrabber);
@@ -241,7 +241,7 @@ namespace Game {
 //        winHitbox.isTrigger = true;
 //        winArea.text = &texToDisplay;
 
-        shader.setMat4("projectionView", camera.getViewProjection());
+        shader.setMat4("projectionView", Engine::camera->getViewProjection());
 
         glm::mat4 model = glm::mat4(1.0f);
         shader.setMat4("model", model);
@@ -311,12 +311,12 @@ namespace Game {
 
         Engine::moveObjects();
 
-        //Engine::renderLights(lightShader, camera);
-        shadows.renderShadows(camera);
-        camera.Update(Engine::deltaTime);
+        //Engine::renderLights(lightShader, *Engine::camera);
+        shadows.renderShadows(*Engine::camera);
+        Engine::camera->Update(Engine::deltaTime);
         //glm::mat4 projection = glm::mat4(1.0f);
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();
+        glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 view = Engine::camera->GetViewMatrix();
 //
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
@@ -326,7 +326,7 @@ namespace Game {
 
         Engine::renderHitboxes(projection * view);
 
-//       camera.followObject(player1);
+//       *Engine::camera.followObject(player1);
         Engine::resolveCollisions();
 
         hud2.renderText(texToDisplay, 100, 0, 2, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -346,7 +346,7 @@ namespace Game {
             playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
 
 
-            camera.MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
+            Engine::camera->MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
             if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty())
             {
                 playerJumper.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
@@ -371,7 +371,7 @@ namespace Game {
             dirLight.ShowImgui();
             pointLight.ShowImgui();
             spotLight.ShowImgui();
-            camera.ShowImgui();
+            Engine::camera->ShowImgui();
             shadows.ShowImgui();
             playerGrabber.ShowImgui();
         }

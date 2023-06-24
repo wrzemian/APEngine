@@ -20,8 +20,8 @@
 
 namespace Engine {
     GLFWwindow* window;
-
     Parser parser("../../res/jsons");
+
 
     float frameEnd = 0;
     float frameStart = 0;
@@ -52,6 +52,9 @@ namespace Engine {
 
     int renderedStatic = -1;
     int renderedDynamic = -1;
+
+
+    std::shared_ptr<Camera> camera = std::make_shared<Camera>("camera");
 
     int Init() {
         if (initGLandImGui() == -1) {
