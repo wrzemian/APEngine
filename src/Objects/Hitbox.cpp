@@ -260,45 +260,30 @@ void Hitbox::calculateFromModel(const Model &model) {
 }
 
 void Hitbox::calculateFromMesh(const Mesh &mesh) {
-    float minX = mesh.vertices.at(0).Position.x;
-    float maxX = mesh.vertices.at(0).Position.x;
+    float minX = std::numeric_limits<float>::max();
+    float maxX = std::numeric_limits<float>::lowest();
+    float minY = std::numeric_limits<float>::max();
+    float maxY = std::numeric_limits<float>::lowest();
+    float minZ = std::numeric_limits<float>::max();
+    float maxZ = std::numeric_limits<float>::lowest();
 
-    float minY = mesh.vertices.at(0).Position.y;
-    float maxY = mesh.vertices.at(0).Position.y;
-
-    float minZ = mesh.vertices.at(0).Position.z;
-    float maxZ = mesh.vertices.at(0).Position.z;
-
-    for(auto const& vertex: mesh.vertices) {
-        if(vertex.Position.x > maxX) {
-            maxX = vertex.Position.x;
-        }
-        if(vertex.Position.x < minX) {
-            minX = vertex.Position.x;
-        }
-
-        if(vertex.Position.y > maxY) {
-            maxY = vertex.Position.y;
-        }
-        if(vertex.Position.y < minY) {
-            minY = vertex.Position.y;
-        }
-
-        if(vertex.Position.z > maxZ) {
-            maxZ = vertex.Position.z;
-        }
-        if(vertex.Position.z < minZ) {
-            minZ = vertex.Position.z;
-        }
+    for (const auto& vertex : mesh.vertices) {
+        const auto& position = vertex.Position;
+        minX = position.x < minX ? position.x : minX;
+        maxX = position.x > maxX ? position.x : maxX;
+        minY = position.y < minY ? position.y : minY;
+        maxY = position.y > maxY ? position.y : maxY;
+        minZ = position.z < minZ ? position.z : minZ;
+        maxZ = position.z > maxZ ? position.z : maxZ;
     }
 
-    minX < _min.x ? _min.x = minX : _min.x = _min.x;
-    minY < _min.y ? _min.y = minY : _min.y = _min.y;
-    minZ < _min.z ? _min.z = minZ : _min.z = _min.z;
+    _min.x = minX < _min.x ? minX : _min.x;
+    _min.y = minY < _min.y ? minY : _min.y;
+    _min.z = minZ < _min.z ? minZ : _min.z;
 
-    maxX > _max.x ? _max.x = maxX : _max.x = _max.x;
-    maxY > _max.y ? _max.y = maxY : _max.y = _max.y;
-    maxZ > _max.z ? _max.z = maxZ : _max.z = _max.z;
+    _max.x = maxX > _max.x ? maxX : _max.x;
+    _max.y = maxY > _max.y ? maxY : _max.y;
+    _max.z = maxZ > _max.z ? maxZ : _max.z;
 }
 
 glm::vec3 Hitbox::currentMin() {
