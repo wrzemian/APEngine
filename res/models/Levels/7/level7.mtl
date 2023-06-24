@@ -1,7 +1,7 @@
 # Blender 3.5.1 MTL File: 'None'
 # www.blender.org
 
-newmtl Material.011
+newmtl Material.022
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -13,7 +13,7 @@ map_refl ../../Assets/batteryTextures/untitled_Material.002_Metallic.png
 map_Ke ../../Assets/battery/untitled_Material.002_Emission.png
 map_Bump -bm 1.000000 ../../Assets/batteryTextures/untitled_Material.002_Normal.png
 
-newmtl Material.012
+newmtl Material.023
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.000000 0.000000 0.000000
@@ -23,7 +23,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Misc.007
+newmtl Misc.015
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -33,7 +33,7 @@ illum 2
 map_Kd ../../Assets/kable.png
 map_Ke ../../Assets/kable_emiss.png
 
-newmtl back_wallMaterial.008
+newmtl back_wallMaterial.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -45,7 +45,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Normal.png
 
-newmtl box1.007
+newmtl box1.014
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -57,7 +57,7 @@ map_Ns ../../Assets/boxTextures/untitled_box2_Roughness.png
 map_refl ../../Assets/boxTextures/untitled_box2_Metallic.png
 map_Bump -bm 1.000000 ../../Assets/boxTextures/untitled_box2_Normal.png
 
-newmtl decoboxMaterial.007
+newmtl decoboxMaterial.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -69,7 +69,7 @@ map_refl ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_Metallic.png
 map_Ke ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_Normal.png
 
-newmtl drzwi.011
+newmtl drzwi.019
 Ka 1.000000 1.000000 1.000000
 Ks 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -81,7 +81,7 @@ map_refl ../../Assets/doorTextures/drzwi_drzwi_Metallic.png
 map_Ke ../../Assets/doorTextures/drzwi_drzwi_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/doorTextures/drzwi_drzwi_Normal.png
 
-newmtl exitSign.007
+newmtl exitSign.015
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -91,7 +91,7 @@ d 1.000000
 illum 2
 map_Kd ../../Assets/exitSign.png
 
-newmtl floorMaterial.008
+newmtl floorMaterial.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -103,7 +103,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_floorMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_floorMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_floorMaterial_Normal.png
 
-newmtl left_wallMaterial.008
+newmtl left_wallMaterial.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -115,7 +115,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Normal.png
 
-newmtl levelNumber.007
+newmtl levelNumber.015
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -125,7 +125,7 @@ d 1.000000
 illum 2
 map_Kd ../../Assets/levelNumber.png
 
-newmtl platforma.006
+newmtl platforma.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -137,7 +137,7 @@ map_refl ../../Assets/platformTextures/wagonfajniutki2_platforma_Metallic.png
 map_Ke ../../Assets/platformTextures/wagonfajniutki2_platforma_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/platformTextures/wagonfajniutki2_platforma_Normal.png
 
-newmtl platforma2.008
+newmtl platforma2.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -149,7 +149,7 @@ map_refl ../../Assets/platformTextures/wagonfajniutki2_platforma_Metallic.png
 map_Ke ../../Assets/platformTextures/wagonfajniutki2_platforma_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/platformTextures/wagonfajniutki2_platforma_Normal.png
 
-newmtl plytka.008
+newmtl plytka.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -161,7 +161,7 @@ map_refl ../../Assets/buttonTextures/wagonfajniutki2_plytka_Metallic.png
 map_Ke ../../Assets/buttonTextures/wagonfajniutki2_plytka_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/buttonTextures/wagonfajniutki2_plytka_Normal.png
 
-newmtl przycisk.008
+newmtl przycisk.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -173,7 +173,7 @@ map_refl ../../Assets/buttonTextures/wagonfajniutki2_przycisk_Metallic.png
 map_Ke ../../Assets/buttonTextures/wagonfajniutki2_przycisk_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/buttonTextures/wagonfajniutki2_przycisk_Normal.png
 
-newmtl right_wallMaterial.008
+newmtl right_wallMaterial.015
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -185,7 +185,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_right_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_right_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_right_wallMaterial_Normal.png
 
-newmtl roofMaterial.014
+newmtl roofMaterial.025
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
