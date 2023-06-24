@@ -45,7 +45,7 @@ void Object3D::loadModel(const std::string& path) {
 //    _path = path;
 //    _model = AssetManager::getInstance().getModel(path);
 //    calculateBoundingBox();
-
+    _path = path;
     auto modelData = AssetManager::getInstance().getData(path);
     _model = modelData.modelPtr;
     modelMinVertex = modelData.minVertex;
