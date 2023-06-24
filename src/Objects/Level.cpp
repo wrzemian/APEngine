@@ -294,6 +294,20 @@ void Level::calculateHitboxes() {
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
                 box->calculateBoundingBox();
 
+//                auto middle = box->modelMiddle;
+//                spdlog::warn("box middle at {}, {}, {}", middle.x, middle.y, middle.z);
+//                spdlog::warn("box vertices: {}", box->_model->meshes.at(0).vertices.size());
+//
+//                for (auto& vertex: box->_model->meshes.at(0).vertices) {
+//                    spdlog::warn("old vertex position at {}, {}, {}", vertex.Position.x, vertex.Position.y, vertex.Position.z);
+//                    vertex.Position -= middle;
+//                }
+//                for (auto& vertex: box->_model->meshes.at(0).vertices) {
+//
+//                    spdlog::warn("new vertex position at {}, {}, {}", vertex.Position.x, vertex.Position.y, vertex.Position.z);
+//                }
+//                box->_transform._position += middle;
+
                 box->_transform._position = _transform._position;
 
                 spdlog::info("Box created from {}", mesh._name);
