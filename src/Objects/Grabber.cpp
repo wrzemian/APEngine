@@ -53,7 +53,7 @@ void Grabber::Move(float deltaTime) {
     }
     if(grabbed)
     {
-        grabbedBox->_transform._position = grabbedObjectOffset + _transform._position;
+        grabbedBox->_transform._position = grabbedObjectOffset + _transform._position - grabbedBox->modelMiddle;
     }
     glm::quat playerQuat = glm::quat(playerRot); // Convert Euler angles to quaternion
     glm::mat4 rotationMat = glm::mat4_cast(playerQuat); // Convert quaternion to rotation matrix
