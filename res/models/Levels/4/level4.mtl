@@ -1,7 +1,7 @@
-# Blender 3.5.1 MTL File: 'None'
+# Blender 3.5.1 MTL File: 'level1.blend'
 # www.blender.org
 
-newmtl Material.005
+newmtl Material.001
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
@@ -59,7 +59,7 @@ map_Ns ../../Assets/chest1/untitled_box1_Roughness.png
 map_refl ../../Assets/chest1/untitled_box1_Metallic.png
 map_Bump -bm 1.000000 ../../Assets/chest1/untitled_box1_Normal.png
 
-newmtl decoboxMaterial.005
+newmtl decoboxMaterial.001
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000

@@ -1,4 +1,4 @@
-# Blender 3.5.1 MTL File: 'None'
+# Blender 3.5.1 MTL File: 'level1.blend'
 # www.blender.org
 
 newmtl Material.010
@@ -45,7 +45,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Normal.png
 
-newmtl box1.003
+newmtl box1.007
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
