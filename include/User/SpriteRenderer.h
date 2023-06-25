@@ -10,17 +10,16 @@
 
 class SpriteRenderer {
 public:
+    bool isVisable = true;
     SpriteRenderer();
-
     SpriteRenderer(Shader &shader);
     ~SpriteRenderer();
-
     void DrawSprite(glm::vec3 position, glm::vec2 size, float rotate);
-
     void initRenderData(const char *path);
+    void renderUI();
 
 private:
-    bool isVisable = true;
+
     GLuint imageVAO, imageVBO, imageTexture;
     Shader shader;
     unsigned int quadVAO;

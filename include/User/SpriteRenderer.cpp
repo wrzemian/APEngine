@@ -6,6 +6,7 @@
 #include "glm/ext/matrix_transform.hpp"
 #include "stb_image.h"
 #include "glm/ext/matrix_clip_space.hpp"
+#include "../LevelManager.h"
 
 void SpriteRenderer::DrawSprite(glm::vec3 position,
                                 glm::vec2 size, float rotate)
@@ -14,15 +15,18 @@ void SpriteRenderer::DrawSprite(glm::vec3 position,
 
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
     glm::mat4 model = glm::mat4(1.0f);
-//        if(isVisable == true) {
+        if(isVisable == true) {
     model = glm::translate(model, position);
     model = glm::scale(model, glm::vec3(size, 1.0f));
 
     model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
     model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-//        }
-//        else;
+        }
+        else{
+
+        };
+
     shader.setMat4("projection", projection);
     shader.setMat4("model", model);
 
@@ -105,4 +109,8 @@ SpriteRenderer::SpriteRenderer() {
 }
 
 SpriteRenderer::~SpriteRenderer() {
+}
+
+void SpriteRenderer::renderUI() {
+    LevelManager::getInstance().getCurrentLevel()->levelId;
 }
