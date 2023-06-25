@@ -289,9 +289,9 @@ namespace Game {
         hud = hud1;
         hud.initImage("res/textures/tlo.png");
 
-        SpriteRenderer jumpingUI(imageShader);
-        jumpUI = jumpingUI;
-        jumpUI.initRenderData("res/UI/jumping_hint.png");
+//        SpriteRenderer jumpingUI(imageShader);
+//        jumpUI = jumpingUI;
+////        jumpUI.initRenderData("res/UI/jumping_hint.png");
 
         for(int i = 0; i< 3; i++){
             UITips[i] = SpriteRenderer(imageShader);
@@ -389,6 +389,9 @@ namespace Game {
         }
         if(LevelManager::getInstance().currentLevel==1){
             UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/walking_with_chest.png");
+        }
+        if(LevelManager::getInstance().currentLevel==2){
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/skills.png");
         }
         if(LevelManager::getInstance().currentLevel>=3) {
             for (int i = 0; i < 3; i++) {
