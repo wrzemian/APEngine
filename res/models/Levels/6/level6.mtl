@@ -45,7 +45,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Normal.png
 
-newmtl box1.006
+newmtl box1.002
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
