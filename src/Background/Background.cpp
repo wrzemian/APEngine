@@ -8,6 +8,7 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
     leftBoarder = maxLeft;
     tilesNumber = tilesAmount;
     interval = shiftAmount;
+
     for(int i = -1 ;i < tilesAmount-1;i++)
     {
         // xPosition = i * interval;

@@ -298,6 +298,8 @@ void Level::calculateHitboxes() {
                 hitboxes.push_back(boxHitbox);
                 boxHitbox->tag = "box";
 
+                boxPositions.push_back(box->_transform._position);
+
                 spdlog::info("Box created from {}", mesh._name);
 
                 break;
@@ -319,6 +321,23 @@ void Level::calculateHitboxes() {
                 battery->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
                 battery->calculateBoundingBox();
 
+                auto testTrigger = std::make_shared<Hitbox>(Hitbox::STATIC);
+                testTrigger->tag = "battery";
+                testTrigger->isTrigger = true;
+                testTrigger->calculateFromMesh(mesh);
+                testTrigger->Create(battery.get());
+                testTrigger->_color.x = 0.5;
+                testTrigger->_color.y = 1.0;
+                testTrigger->_color.z = 1.0;
+                testTrigger->_max.x  += 0.5f;
+                testTrigger->_max.y  += 0.5f;
+                testTrigger->_max.z  += 0.5f;
+                testTrigger->_min.x  -= 0.5f;
+                testTrigger->_min.y  -= 0.5f;
+                testTrigger->_min.z  -= 0.5f;
+                hitboxes.push_back(testTrigger);
+                testTrigger->draw = true;
+
                 auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->tag = "battery";
                 test->calculateFromMesh(mesh);
@@ -326,6 +345,7 @@ void Level::calculateHitboxes() {
                 hitboxes.push_back(test);
                 test->draw = true;
 
+                batteryPositions.push_back(battery->_transform._position);
 
 
                 spdlog::info("Battery created from {}", mesh._name);
@@ -607,4 +627,19 @@ void Level::LoadDataFromJson(const Level& temp) {
         this->winArea->activationLightBulb->_transform._position = temp.winLightPos;
     }
     this->winArea->SetLights();
+}
+
+void Level::ResetPositions() {
+    int i = 0;
+    for(std::shared_ptr<Box> box : boxes)
+    {
+        box->_transform._position = boxPositions[i];
+        i++;
+    }
+    i = 0;
+    for(std::shared_ptr<Battery> battery : batteries)
+    {
+        battery->_transform._position = batteryPositions[i];
+        i++;
+    }
 }

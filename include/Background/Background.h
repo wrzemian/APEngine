@@ -13,6 +13,7 @@ private:
     float interval = 10.0f;
     float leftBoarder = 100.0f; //the boarder after which tile moves back to the start of the tiles
     int tilesNumber;
+    std::shared_ptr<Object3D> backgroundSkybox;
 public:
     void initBackground(int tilesAmount,float maxLeft, float shiftAmount,Shader* shader);  // used to load tile obj
 

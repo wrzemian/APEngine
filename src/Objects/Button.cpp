@@ -16,7 +16,7 @@ Button::Button(Platform* p, glm::vec3 position)
 }
 
 void Button::onCollision(Object3D *other) {
-    if(other->tag == "player" || other->tag == "box" || other->tag == "battery")
+    if(other->tag == "player" || other->tag == "box")//|| other->tag == "battery"
     {
         if (std::find(objectsWithContact.begin(), objectsWithContact.end(), other) == objectsWithContact.end()) {
             objectsWithContact.push_back(other);
@@ -59,7 +59,7 @@ void Button::onCollision(Object3D *other) {
 
 void Button::onCollisionExit(Object3D *other) {
     Object3D::onCollisionExit(other);
-    if(other->tag == "player" || other->tag == "box" || other->tag == "battery")
+    if(other->tag == "player" || other->tag == "box")//|| other->tag == "battery"
     {
         objectsWithContact.erase(std::remove(objectsWithContact.begin(), objectsWithContact.end(), other), objectsWithContact.end());
         //std::cout << "przycisk odcisniety" << std::endl;
