@@ -256,8 +256,8 @@ namespace Game {
         shader.setMat4("model", model);
 
         dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
-        spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
-        pointLight = Engine::parser.CreateFromJSONPoint("lights/pointLight");
+//        spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
+//        pointLight = Engine::parser.CreateFromJSONPoint("lights/pointLight");
 
         spdlog::info("ImGui");
         ImGui();
@@ -402,8 +402,8 @@ namespace Game {
             Engine::renderImgui();
             Engine::ImGui();
             dirLight.ShowImgui();
-            pointLight.ShowImgui();
-            spotLight.ShowImgui();
+//            pointLight.ShowImgui();
+//            spotLight.ShowImgui();
             Engine::camera->ShowImgui();
             shadows.ShowImgui();
             playerGrabber.ShowImgui();
