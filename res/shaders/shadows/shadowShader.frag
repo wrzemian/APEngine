@@ -132,8 +132,8 @@ void main()
     lighting += CalcSpotLight(spotLight, normal, fs_in.FragPos, viewDir);
 
     if(emissive) {
-//        vec3 emission = texture(emissiveMap, fs_in.TexCoords).rgb / 2;
-        vec3 emission = vec3(0,1,0);
+        vec3 emission = texture(emissiveMap, fs_in.TexCoords).rgb / 2;
+//        vec3 emission = vec3(0,1,0);
         //emission = emission * (sin(time/2) * 0.5 + 0.5) * 1.5;
         lighting += emission;
     }
