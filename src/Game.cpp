@@ -338,6 +338,8 @@ namespace Game {
     void onWin() {
         if(LevelManager::getInstance().nextLevel())
         {
+            playerGrabber.DropBattery();
+            playerJumper.DropBattery();
             playerGrabber.levelId = LevelManager::getInstance().currentLevel;
             playerJumper.levelId = LevelManager::getInstance().currentLevel;
             grabber.levelId = LevelManager::getInstance().currentLevel;
@@ -358,6 +360,13 @@ namespace Game {
         {
             spdlog::info("Player has won the game!");
         }
+    }
+
+    void ResetLevel() {
+        playerGrabber.DropBattery();
+        playerJumper.DropBattery();
+        playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+        playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
     }
 
 
@@ -381,6 +390,8 @@ namespace Game {
         ImGui::SetWindowSize(ImVec2(250, 100));
         if (ImGui::Button("Next Level"))
             onWin();
+        if (ImGui::Button("Reset Level"))
+            ResetLevel();
         ImGui::End();
 
 

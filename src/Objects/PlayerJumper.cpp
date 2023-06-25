@@ -63,13 +63,8 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
     }
 
     if (inputSystem->GetKeyDown(GLFW_KEY_E) || inputSystem->GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_X)) {
-        if(haveBattery)
-        {
-            std::cout<< "drop the battery"<<std::endl;
-            haveBattery = false;
-            canPickUpBattery= false;
-        }
-        else if (canPickUpBattery)
+        DropBattery();
+        if (canPickUpBattery)
         {
             haveBattery = true;
             canPickUpBattery= false;
@@ -205,6 +200,15 @@ void PlayerJumper::loadAnimations() {
     jumpA = temp2;
     this->animator.PlayAnimation(&temp);
 
+}
+
+void PlayerJumper::DropBattery() {
+    if(haveBattery)
+    {
+        std::cout<< "drop the battery"<<std::endl;
+        haveBattery = false;
+        canPickUpBattery= false;
+    }
 }
 
 

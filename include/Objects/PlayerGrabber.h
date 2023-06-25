@@ -43,6 +43,7 @@ public:
     void Jump();
     void Grab();
     void loadAnimations();
+    void DropBattery();
 };
 
 

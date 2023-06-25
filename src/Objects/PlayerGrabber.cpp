@@ -80,13 +80,8 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     }
 
     if (inputSystem->GetKeyDown(GLFW_KEY_KP_2) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_X)) {
-        if(haveBattery)
-        {
-            std::cout<< "drop the battery"<<std::endl;
-            haveBattery = false;
-            canPickUpBattery= false;
-        }
-        else if (canPickUpBattery)
+        DropBattery();
+        if (canPickUpBattery)
         {
             haveBattery = true;
             canPickUpBattery= false;
@@ -236,5 +231,14 @@ void PlayerGrabber::loadAnimations() {
 
 
     this->animator.PlayAnimation(&temp5);
+}
+
+void PlayerGrabber::DropBattery() {
+    if(haveBattery)
+    {
+        std::cout<< "drop the battery"<<std::endl;
+        haveBattery = false;
+        canPickUpBattery= false;
+    }
 }
 

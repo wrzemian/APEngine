@@ -25,4 +25,6 @@ namespace Game {
     void Update();
 
     void onWin();
+
+    void ResetLevel();
 }
