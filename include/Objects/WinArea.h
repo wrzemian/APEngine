@@ -16,9 +16,9 @@ private:
     bool playerJumperInRange = false;
 
     glm::vec3 activeLightColor = glm::vec3(0.01f,1.0f,0.0f);
-    glm::vec3 inactiveLightColor = glm::vec3(1.0f,0.0f,0.0f);
-    glm::vec3 powerActiveLightColor = glm::vec3(1.0f,1.0f,0.0f);
-    glm::vec3 powerInactiveLightColor = glm::vec3(0.8f,0.8f,0.0f);
+    glm::vec3 inactiveLightColor = glm::vec3(0.6f,0.0f,0.0f);
+    glm::vec3 powerActiveLightColor = glm::vec3(0.01f,1.0f,0.0f);
+    glm::vec3 powerInactiveLightColor = glm::vec3(0.1f, 0.8f, 0.4f);
 
     bool canWin = true; //by default true and has to be set false if there is a button connected to winArea
 public:

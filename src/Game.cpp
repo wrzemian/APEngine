@@ -50,6 +50,7 @@
 #include "../include/lights/Shadows.h"
 #include "../include/LevelManager.h"
 #include "../include/Audio/AudioManager.h"
+#include "../include/User/SpriteRenderer.h"
 
 namespace Game {
     void processInput();
@@ -62,7 +63,10 @@ namespace Game {
 
     Shader simpleDepthShader;
     Shader debugDepthQuad;
+    Shader spriteShader;
 
+
+    SpriteRenderer jumpUI;
 
     float movImage = 0;
     HUD hud;
@@ -101,6 +105,11 @@ namespace Game {
     Level* currentLevel;
 
     GLfloat movementSpeed = 3.0f;
+
+    SpriteRenderer  UITips[3];
+//    char Paths[7][255];
+
+
 
 
     DirectionalLight dirLight;
@@ -247,8 +256,8 @@ namespace Game {
         shader.setMat4("model", model);
 
         dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
-        spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
-        pointLight = Engine::parser.CreateFromJSONPoint("lights/pointLight");
+//        spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
+//        pointLight = Engine::parser.CreateFromJSONPoint("lights/pointLight");
 
         spdlog::info("ImGui");
         ImGui();
@@ -264,6 +273,13 @@ namespace Game {
         animation = animation1;
         animation.initAnimation();
 
+        Shader UIShader("include/User/spriteShader.vert","include/User/spriteShader.frag");
+
+
+
+
+
+
         Constant constant1(animationShader);
         constant = constant1;
         constant.initConstant();
@@ -272,6 +288,15 @@ namespace Game {
         HUD hud1(imageShader);
         hud = hud1;
         hud.initImage("res/textures/tlo.png");
+
+//        SpriteRenderer jumpingUI(imageShader);
+//        jumpUI = jumpingUI;
+////        jumpUI.initRenderData("res/UI/jumping_hint.png");
+
+        for(int i = 0; i< 3; i++){
+            UITips[i] = SpriteRenderer(imageShader);
+        }
+        UITips[0].initRenderData("res/UI/jumping_hint.png");
 
 
 //        Model ourModel("include/Animations2/testing/first_character.dae");
@@ -290,6 +315,8 @@ namespace Game {
     void Update() {
 
         Engine::LoopStart();
+
+//        jumpUI.DrawSprite("res/UI/A.png",glm::vec3(grabber.playerPos.x,grabber.playerPos.y,17.2), glm::vec2(10.f,10.f), 0, glm::vec3(1.f,1.f,1.f));
 //        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
 
         AudioManager::GetInstance()->Update();
@@ -303,9 +330,7 @@ namespace Game {
         movImage -= 0.1;
 
         float time = static_cast<float>(glfwGetTime());
-        animation.renderAnimation(time, 2, 520, 1);
-        constant.renderConstant(2, 550, 1);
-        hud.renderImage(imgMOv);
+
 
         //player1.Move();
 
@@ -317,19 +342,20 @@ namespace Game {
         //glm::mat4 projection = glm::mat4(1.0f);
         glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = Engine::camera->GetViewMatrix();
+
 //
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
-
         background.Move(-50*Engine::deltaTime);
-
+//        hud.renderImage(imgMOv);
+//        jumpUI.DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(300.f,250.f), 0);
+        UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 300.f, 1.f), glm::vec2(250.f,300.f), 0);
 
         Engine::renderHitboxes(projection * view);
 
 //       *Engine::camera.followObject(player1);
         Engine::resolveCollisions();
 
-        hud2.renderText(texToDisplay, 100, 0, 2, glm::vec3(1.0f, 1.0f, 1.0f));
 
         Engine::LoopEnd();
 
@@ -338,6 +364,7 @@ namespace Game {
     void onWin() {
         if(LevelManager::getInstance().nextLevel())
         {
+
             playerGrabber.DropBattery();
             playerJumper.DropBattery();
             playerGrabber.levelId = LevelManager::getInstance().currentLevel;
@@ -360,6 +387,17 @@ namespace Game {
         {
             spdlog::info("Player has won the game!");
         }
+        if(LevelManager::getInstance().currentLevel==1){
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/walking_with_chest.png");
+        }
+        if(LevelManager::getInstance().currentLevel==2){
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/skills.png");
+        }
+        if(LevelManager::getInstance().currentLevel>=3) {
+            for (int i = 0; i < 3; i++) {
+                UITips[i].isVisible = false;
+            }
+        }
     }
 
     void ResetLevel() {
@@ -379,8 +417,8 @@ namespace Game {
             Engine::renderImgui();
             Engine::ImGui();
             dirLight.ShowImgui();
-            pointLight.ShowImgui();
-            spotLight.ShowImgui();
+//            pointLight.ShowImgui();
+//            spotLight.ShowImgui();
             Engine::camera->ShowImgui();
             shadows.ShowImgui();
             playerGrabber.ShowImgui();
@@ -402,10 +440,12 @@ namespace Game {
 
     void processInput() {
         if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
+//            jumpUI.isVisable = false;
             playerJumper.Jump();
             AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
+//            jumpUI.isVisable = false;
             playerGrabber.Jump();
             AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
         }

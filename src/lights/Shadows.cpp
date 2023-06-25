@@ -66,7 +66,7 @@ void Shadows::initShaders(Camera& camera) {
     shader.use();
     shader.setInt("diffuseTexture", 0);
     shader.setInt("shadowMap", 31);
-    shader.setInt("emissiveMap", 2);
+    shader.setInt("emissiveMap", 1);
 }
 
 void Shadows::ImGui()  {
