@@ -349,7 +349,7 @@ namespace Game {
         background.Move(-50*Engine::deltaTime);
 //        hud.renderImage(imgMOv);
 //        jumpUI.DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(300.f,250.f), 0);
-        UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(250.f,250.f), 0);
+        UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 300.f, 1.f), glm::vec2(250.f,300.f), 0);
 
         Engine::renderHitboxes(projection * view);
 
