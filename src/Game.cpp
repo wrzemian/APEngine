@@ -296,6 +296,7 @@ namespace Game {
         for(int i = 0; i< 3; i++){
             UITips[i] = SpriteRenderer(imageShader);
         }
+        UITips[0].initRenderData("res/UI/jumping_hint.png");
 
 
 //        Model ourModel("include/Animations2/testing/first_character.dae");
@@ -386,11 +387,8 @@ namespace Game {
         {
             spdlog::info("Player has won the game!");
         }
-        if(LevelManager::getInstance().currentLevel==0){
-            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/jumping_hint.png");
-        }
         if(LevelManager::getInstance().currentLevel==1){
-            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/menu.mkv.png");
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/walking_with_chest.png");
         }
         if(LevelManager::getInstance().currentLevel>=3) {
             for (int i = 0; i < 3; i++) {
