@@ -106,6 +106,11 @@ namespace Game {
 
     GLfloat movementSpeed = 3.0f;
 
+    SpriteRenderer  UITips[7];
+//    char Paths[7][255];
+    
+
+
 
     DirectionalLight dirLight;
     SpotLight spotLight;
@@ -274,6 +279,7 @@ namespace Game {
 
 
 
+
         Constant constant1(animationShader);
         constant = constant1;
         constant.initConstant();
@@ -285,7 +291,13 @@ namespace Game {
 
         SpriteRenderer jumpingUI(imageShader);
         jumpUI = jumpingUI;
-        jumpUI.initRenderData("res/UI/A.png");
+        jumpUI.initRenderData("res/UI/jumping_hint.png");
+
+        for(int i = 0; i< 7; i++){
+            UITips[i] = SpriteRenderer(imageShader);
+        }
+
+
 //        Model ourModel("include/Animations2/testing/first_character.dae");
 //        Animation danceAnimation("include/Animations2/testing/first_character.dae",
 //                                 &ourModel);
@@ -335,7 +347,7 @@ namespace Game {
 //        shader.setMat4("projectionView", projection * view);
         background.Move(-50*Engine::deltaTime);
 //        hud.renderImage(imgMOv);
-//        jumpUI.DrawSprite(glm::vec3(grabber.playerPos.x + 400.f, grabber.playerPos.y + 300.f, 1.f), glm::vec2(30.f,30.f), 0);
+        jumpUI.DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(300.f,250.f), 0);
 
         Engine::renderHitboxes(projection * view);
 
@@ -413,10 +425,12 @@ namespace Game {
 
     void processInput() {
         if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
+            jumpUI.isVisable = false;
             playerJumper.Jump();
             AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
+            jumpUI.isVisable = false;
             playerGrabber.Jump();
             AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
         }
