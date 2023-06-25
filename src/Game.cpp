@@ -106,9 +106,9 @@ namespace Game {
 
     GLfloat movementSpeed = 3.0f;
 
-    SpriteRenderer  UITips[7];
+    SpriteRenderer  UITips[3];
 //    char Paths[7][255];
-    
+
 
 
 
@@ -293,7 +293,7 @@ namespace Game {
         jumpUI = jumpingUI;
         jumpUI.initRenderData("res/UI/jumping_hint.png");
 
-        for(int i = 0; i< 7; i++){
+        for(int i = 0; i< 3; i++){
             UITips[i] = SpriteRenderer(imageShader);
         }
 
@@ -347,7 +347,8 @@ namespace Game {
 //        shader.setMat4("projectionView", projection * view);
         background.Move(-50*Engine::deltaTime);
 //        hud.renderImage(imgMOv);
-        jumpUI.DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(300.f,250.f), 0);
+//        jumpUI.DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(300.f,250.f), 0);
+        UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(250.f,250.f), 0);
 
         Engine::renderHitboxes(projection * view);
 
@@ -362,6 +363,7 @@ namespace Game {
     void onWin() {
         if(LevelManager::getInstance().nextLevel())
         {
+
             playerGrabber.DropBattery();
             playerJumper.DropBattery();
             playerGrabber.levelId = LevelManager::getInstance().currentLevel;
@@ -383,6 +385,17 @@ namespace Game {
         else
         {
             spdlog::info("Player has won the game!");
+        }
+        if(LevelManager::getInstance().currentLevel==0){
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/jumping_hint.png");
+        }
+        if(LevelManager::getInstance().currentLevel==1){
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/menu.mkv.png");
+        }
+        if(LevelManager::getInstance().currentLevel>=3) {
+            for (int i = 0; i < 3; i++) {
+                UITips[i].isVisible = false;
+            }
         }
     }
 
@@ -425,12 +438,12 @@ namespace Game {
 
     void processInput() {
         if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
-            jumpUI.isVisable = false;
+//            jumpUI.isVisable = false;
             playerJumper.Jump();
             AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
         }
         if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
-            jumpUI.isVisable = false;
+//            jumpUI.isVisable = false;
             playerGrabber.Jump();
             AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
         }

@@ -15,7 +15,7 @@ void SpriteRenderer::DrawSprite(glm::vec3 position,
 
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
     glm::mat4 model = glm::mat4(1.0f);
-        if(isVisable == true) {
+        if(isVisible == true) {
     model = glm::translate(model, position);
     model = glm::scale(model, glm::vec3(size, 1.0f));
 

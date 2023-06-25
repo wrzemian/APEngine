@@ -10,7 +10,7 @@
 
 class SpriteRenderer {
 public:
-    bool isVisable = true;
+    bool isVisible = true;
     SpriteRenderer();
     SpriteRenderer(Shader &shader);
     ~SpriteRenderer();
