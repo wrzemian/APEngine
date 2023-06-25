@@ -24,7 +24,9 @@ public:
     std::vector<std::shared_ptr<Platform>> movingPlatforms;
     std::vector<std::shared_ptr<Button>> buttons;
     std::vector<std::shared_ptr<Box>> boxes;
+    std::vector<glm::vec3> boxPositions;
     std::vector<std::shared_ptr<Battery>> batteries;
+    std::vector<glm::vec3> batteryPositions;
     std::vector<std::shared_ptr<Object3D>> walls;
     std::vector<std::shared_ptr<Cable>> cables;
 
@@ -51,6 +53,7 @@ public:
 
     Model staticModel;
 
+    void ResetPositions();
 
     void LoadDataFromJson(const Level& temp);
     glm::vec3 cameraOffset = glm::vec3(-4.0f,10.0f,17.0f);

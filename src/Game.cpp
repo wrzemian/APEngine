@@ -367,6 +367,7 @@ namespace Game {
         playerJumper.DropBattery();
         playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
         playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+        LevelManager::getInstance().getCurrentLevel()->ResetPositions();
     }
 
 
