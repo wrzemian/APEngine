@@ -49,9 +49,11 @@ in VS_OUT {
     vec3 Normal;
     vec2 TexCoords;
     vec4 FragPosLightSpace;
+    mat3 TBN;
 } fs_in;
 
 uniform sampler2D diffuseTexture;
+uniform sampler2D normalMap;
 uniform sampler2D shadowMap;
 uniform sampler2D emissiveMap;
 uniform float time;
@@ -108,7 +110,16 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 void main()
 {
     vec3 color = texture(diffuseTexture, fs_in.TexCoords).rgb;
-    vec3 normal = normalize(fs_in.Normal);
+    vec3 normal = vec3(0);
+    if (fs_in.Normal == vec3(0,0,0)) {
+        normal = texture(normalMap, fs_in.TexCoords).rgb;
+        normal = normal * 2.0 - 1.0;
+        normal = normalize(fs_in.TBN * normal);
+    }
+    else {
+        normal = normalize(fs_in.Normal);
+    }
+
     vec3 lightColor = vec3(0.5);
     // ambient
     vec3 ambient = 0.3 * lightColor;
