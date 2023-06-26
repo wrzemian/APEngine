@@ -3,6 +3,7 @@
 //
 
 #include "../../include/Objects/PlayerJumper.h"
+#include "../../include/Audio/AudioManager.h"
 
 //Animation walkA, stamdA, jumpA;
 
@@ -94,6 +95,7 @@ void PlayerJumper::Jump() {
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         this->_velocity.y = 4.0f;
         jumpCount += 1;
+        recentlyJumped = 0;
     }
     else if (jumpCount == 0 && this->_velocity.y <= 0)
     {
@@ -103,6 +105,7 @@ void PlayerJumper::Jump() {
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
         this->_velocity.y = 4.0f;
         jumpCount += 1;
+        recentlyJumped = 0;
     }
 }
 
@@ -135,6 +138,11 @@ void PlayerJumper::onCollisionY(Object3D *other) {
     MovingObject::onCollisionY(other);
     if(other->tag == "floor" || other->tag == "platform" || other->tag == "moving platform" )
     {
+        if(recentlyJumped == 0){
+            AudioManager::GetInstance()->PauseSound(Audio::MICHEL_JUMP);
+            AudioManager::GetInstance()->PlaySound(Audio::MICHEL_WALK);
+            recentlyJumped = 1;
+        }
         this->switchAnimationWalk();
         this->switchAnimationStand();
         _velocity.y = 0;
@@ -165,6 +173,7 @@ void PlayerJumper::unusualCollision(Object3D *other) {
 void PlayerJumper::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
 		animator.PlayAnimation(&walkA);
+        AudioManager::GetInstance()->PlaySound(Audio::MICHEL_LAND);
         this->recentlyMoved = 0;
         this->walking = 1;
     }
@@ -175,6 +184,7 @@ void PlayerJumper::switchAnimationJump() {
 //        this->loadAnimation("res/models/Players/Mich3l/michel_jumping.dae");
 //        Animator tempA(&jumpA);
 //        this->animator= tempA;
+        AudioManager::GetInstance()->PauseSound(Audio::MICHEL_LAND);
         this->animator.PlayAnimation(&jumpA);
     }
 
@@ -182,6 +192,7 @@ void PlayerJumper::switchAnimationJump() {
 
 void PlayerJumper::switchAnimationStand() {
     if(_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
+        AudioManager::GetInstance()->PauseSound(Audio::MICHEL_LAND);
 //        this->loadAnimation("res/models/Players/Mich3l/michel_breathing_and_looking_around.dae");
         Animator tempA(&stamdA);
         this->animator= tempA;

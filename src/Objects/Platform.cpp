@@ -3,6 +3,7 @@
 //
 
 #include "../../include/Objects/Platform.h"
+#include "../../include/Audio/AudioManager.h"
 
 Platform::Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s) {
     this->positionOrigin = pOrigin;
@@ -20,6 +21,7 @@ void Platform::Move(float deltaTime) {
         if (t >= 1.0f) {
             t = 1.0f;
             moveToTarget = false;
+            AudioManager::GetInstance()->PauseSound(Audio::PLATFORM_MOVE);
         }
     }
     else if(moveToOrigin){
@@ -27,17 +29,20 @@ void Platform::Move(float deltaTime) {
         if (t <= 0.0f) {
             t = 0.0f;
             moveToOrigin = false;
+            AudioManager::GetInstance()->PauseSound(Audio::PLATFORM_MOVE);
         }
     }
     _transform._position = (1.0f - t) * positionOrigin + t * positionTarget;
 }
 
 void Platform::OnActivate() {
+    AudioManager::GetInstance()->PlaySound(Audio::PLATFORM_MOVE);
     moveToTarget = true;
     moveToOrigin = false;
 }
 
 void Platform::OnDeactivate() {
+    AudioManager::GetInstance()->PlaySound(Audio::PLATFORM_MOVE);
     moveToTarget = false;
     moveToOrigin = true;
 }

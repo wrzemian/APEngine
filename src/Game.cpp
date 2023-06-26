@@ -333,6 +333,7 @@ namespace Game {
         }
         else {
             AudioManager::GetInstance()->Update();
+            AudioManager::GetInstance()->PlaySound(Audio::TRAIN_AMBIENT);
 
             ImGui();
             imgMOv -= 0.1f;
