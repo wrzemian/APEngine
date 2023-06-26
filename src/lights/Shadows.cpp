@@ -166,8 +166,9 @@ void Shadows::renderShadows(Camera& camera) {
     glm::mat4 model = glm::mat4 (1.0f);
     shader.setMat4("model", model);
     shader.setInt("material.diffuse", 0);
-    shader.setInt("material.specular", 1);
+    shader.setInt("material.specular", 3);
     shader.setFloat("material.shininess", 32.0f);
+    shader.setInt("normalMap", 1);
     time += 0.05;
     shader.setFloat("time", time);
     glActiveTexture(GL_TEXTURE31);
