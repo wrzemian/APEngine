@@ -73,6 +73,7 @@ namespace Game {
     HUD hud;
     HUD hud2;
     Menu menu;
+    Menu menuPause;
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
@@ -304,6 +305,10 @@ namespace Game {
         menu = menu1;
         menu.initMenu("res/UI/menu_screen.png");
 
+        Menu menu2(imageShader,true);
+        menuPause = menu2;
+        menuPause.initMenu("res/UI/battery.png");
+
 
 //        Model ourModel("include/Animations2/testing/first_character.dae");
 //        Animation danceAnimation("include/Animations2/testing/first_character.dae",
@@ -330,6 +335,11 @@ namespace Game {
             menu.processInput(&inputSystem);
             menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,700.f),0.f);
 
+        }
+        else if(menuPause.isVisible1()){
+            inputSystem.update();
+            menuPause.processInput(&inputSystem);
+            menuPause.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,700.f),0.f);
         }
         else {
             AudioManager::GetInstance()->Update();
@@ -464,6 +474,9 @@ namespace Game {
 //            jumpUI.isVisable = false;
                 playerGrabber.Jump();
                 AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
+            }
+            if(inputSystem.GetKeyDown(GLFW_KEY_O) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
+                menuPause.isVisible = true;
             }
         }
 

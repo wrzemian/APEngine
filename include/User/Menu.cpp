@@ -15,7 +15,13 @@ void Menu::pickMenu(int chosen) {
             break;
 
         case 1:
-            isVisible = false;
+            if(isPause == true){
+                Game::ResetLevel();
+                isVisible = false;
+            }
+            else {
+                isVisible = false;
+            }
             break;
 
         case 2:
@@ -164,6 +170,7 @@ Menu::Menu(const Shader &shader) : shader(shader) {
     markPos[1] = glm::vec3(370.f,50.f,1.f);
     markPos[2] = glm::vec3(620.f,50.f,1.f);
     markPosHelper = markPos[0];
+    isPause = false;
 }
 
 Menu::Menu() {}
@@ -175,4 +182,16 @@ Menu::~Menu() {
 bool Menu::isVisible1() const {
     return isVisible;
 
+}
+
+Menu::Menu(const Shader &shader, bool isPause) : shader(shader), isPause(isPause) {
+
+    SpriteRenderer mark1(this->shader);
+    mark = mark1;
+    markPos[0] = glm::vec3(130.f,50.f,1.f);
+    markPos[1] = glm::vec3(370.f,50.f,1.f);
+    markPos[2] = glm::vec3(620.f,50.f,1.f);
+    markPosHelper = markPos[0];
+    isPause = true;
+    isVisible = false;
 }
