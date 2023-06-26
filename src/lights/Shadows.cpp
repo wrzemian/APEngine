@@ -67,8 +67,13 @@ void Shadows::initShaders(Camera& camera) {
     cameraPosition = camera.Position;
     shader.use();
     shader.setInt("diffuseTexture", 0);
-    shader.setInt("shadowMap", 31);
+    shader.setInt("material.diffuse", 0);
+    shader.setInt("normalMap", 1);
     shader.setInt("emissiveMap", 2);
+    shader.setInt("material.specular", 3);
+    shader.setFloat("material.shininess", 32.0f);
+    shader.setInt("shadowMap", 31);
+
 }
 
 void Shadows::ImGui()  {
@@ -165,10 +170,6 @@ void Shadows::renderShadows(Camera& camera) {
 
     glm::mat4 model = glm::mat4 (1.0f);
     shader.setMat4("model", model);
-    shader.setInt("material.diffuse", 0);
-    shader.setInt("material.specular", 3);
-    shader.setFloat("material.shininess", 32.0f);
-    shader.setInt("normalMap", 1);
     time += 0.05;
     shader.setFloat("time", time);
     glActiveTexture(GL_TEXTURE31);
