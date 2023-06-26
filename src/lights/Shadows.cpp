@@ -43,6 +43,8 @@ Shadows::Shadows(std::string fileName) {
 void Shadows::initShaders(Camera& camera) {
     Shader temp("../../res/shaders/shadows/shadowShader.vert", "../../res/shaders/shadows/shadowShader.frag");
     shader = temp;
+//    Shader tempAnim("../../res/shaders/shadows/shadowAnimShader.vert", "../../res/shaders/shadows/shadowAnimShader.frag");
+//    animShader = tempAnim;
     Shader tempSimpleDepthShader("../../res/shaders/shadows/depthShader.vert", "../../res/shaders/shadows/depthShader.frag");
     simpleDepthShader = tempSimpleDepthShader;
     glGenFramebuffers(1, &depthMapFBO);
@@ -148,14 +150,12 @@ void Shadows::renderShadows(Camera& camera) {
     glm::mat4 view = camera.GetViewMatrix();
     shader.setMat4("projection", projection);
     shader.setMat4("view", view);
-    // set light uniforms
     shader.setVec3("viewPos", camera.Position);
 
     glm::vec3 deltaPos(0.0f);
     if(camera.Position != cameraPosition) {
         deltaPos = cameraPosition - camera.Position;
         position -= deltaPos;
-        //lookAt -= deltaPos;
         idk -= deltaPos;
         cameraPosition = camera.Position;
     }
@@ -175,8 +175,6 @@ void Shadows::renderShadows(Camera& camera) {
     Engine::drawObjects(shader, camera);
 
     Engine::renderDirLights(shader);
-    Engine::renderPointLights(shader);
-    Engine::renderSpotLights(shader);
 }
 
 

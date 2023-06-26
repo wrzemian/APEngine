@@ -61,6 +61,8 @@ namespace Engine {
             return -1;
         }
         frameStart = glfwGetTime();
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+
         return 0;
     }
 
@@ -258,12 +260,13 @@ namespace Engine {
             if(object->_model == nullptr) {
                 spdlog::error("object {}/{} has null model", object->tag, object->getWindowName());
             }
-
             shader.setBool("animated", object->animated);
             if(object->animated) {
                 auto transforms = object->animator.GetFinalBoneMatrices();
-                for (int i = 0; i < transforms.size(); ++i)
+                for (int i = 0; i < transforms.size(); ++i) {
                     shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+                }
+
                 object->animator.UpdateAnimation(Engine::deltaTime);
             }
             shader.setBool("emissive", object->emissive);
@@ -372,7 +375,7 @@ namespace Engine {
         glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_LIGHT0);
-        glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+//        glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     }
 
 

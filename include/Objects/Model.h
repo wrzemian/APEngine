@@ -102,7 +102,6 @@ private:
         }
         // retrieve the directory path of the filepath
         directory = path.substr(0, path.find_last_of('/'));
-
         // process ASSIMP's root node recursively
         processNode(scene->mRootNode, scene);
     }
@@ -238,6 +237,7 @@ private:
 
     void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
     {
+//        spdlog::info("LOGGING BONES");
         for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
         {
             int boneID = -1;
@@ -265,6 +265,7 @@ private:
                 int vertexId = weights[weightIndex].mVertexId;
                 float weight = weights[weightIndex].mWeight;
                 assert(vertexId <= vertices.size());
+//                spdlog::warn("boneID: {} weight: {}", boneID, weight);
                 SetVertexBoneData(vertices[vertexId], boneID, weight);
             }
         }
