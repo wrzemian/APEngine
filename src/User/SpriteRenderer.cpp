@@ -2,11 +2,11 @@
 // Created by tomek on 25.06.2023.
 //
 
-#include "SpriteRenderer.h"
+#include "../../include/User/SpriteRenderer.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "stb_image.h"
 #include "glm/ext/matrix_clip_space.hpp"
-#include "../LevelManager.h"
+#include "../../include/LevelManager.h"
 
 void SpriteRenderer::DrawSprite(glm::vec3 position,
                                 glm::vec2 size, float rotate)
