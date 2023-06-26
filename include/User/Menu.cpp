@@ -27,13 +27,19 @@ void Menu::pickMenu(int chosen) {
 
 void Menu::processInput(InputSystem* inputSystem) {
     int i;
-    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) >= padJoystickTolerance){
-        this->counter--;
+    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X)  < -0.2|| inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_LEFT)){
+        if(joystickMoved == false) {
+            this->counter--;
+            joystickMoved = true;
+        }
         i = abs(counter%3);
         markPosHelper = markPos[i];
     }
-    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) <= -padJoystickTolerance){
-        this->counter++;
+    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X) > 0.2 || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_RIGHT)){
+        if(joystickMoved == false) {
+            this->counter++;
+            joystickMoved = true;
+        }
         i = abs(counter%3);
         markPosHelper = markPos[i];
     }
@@ -47,9 +53,14 @@ void Menu::processInput(InputSystem* inputSystem) {
         i = abs(counter%3);
         markPosHelper = markPos[i];
     }
-    else if(inputSystem->GetKeyDown(GLFW_KEY_SPACE)){
+    else if(inputSystem->GetKeyDown(GLFW_KEY_SPACE) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)){
         this->pickMenu(abs(counter%3));
     }
+    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) < 0.2 && inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)> -0.2 )
+    {
+        joystickMoved = false;
+    }
+
 }
 
 void Menu::initMenu(const char *filePath) {

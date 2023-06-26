@@ -11,10 +11,11 @@ class Menu {
 private:
     GLuint imageVAO, imageVBO, imageTexture;
     Shader shader;
-    float padJoystickTolerance = 0.5f;
+    float padJoystickTolerance = 0.2f;
     SpriteRenderer mark;
     glm::vec3 markPos[3];
     glm::vec3 markPosHelper;
+    bool joystickMoved = false;
 
 public:
     bool isVisible1() const;
