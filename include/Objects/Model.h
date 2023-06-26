@@ -55,6 +55,7 @@ public:
     Model(std::string const &path, bool gamma = false) : gammaCorrection(gamma)
     {
         loadModel(path);
+
     }
 
     // draws the model, and thus all its meshes
@@ -192,6 +193,27 @@ private:
         // specular: texture_specularN
         // normal: texture_normalN
 
+        for (unsigned int i = 0; i < AI_TEXTURE_TYPE_MAX; i++) {
+            aiTextureType textureType = static_cast<aiTextureType>(i);
+            unsigned int textureCount = material->GetTextureCount(textureType);
+
+            if (textureCount > 0) {
+                // Print the texture type
+                std::cout << "Texture Type: " << aiTextureTypeToString(textureType) << ", " << textureType << ", " << i << std::endl;
+
+                // Iterate over the textures of the current texture type
+                for (unsigned int j = 0; j < textureCount; j++) {
+                    aiString texturePath;
+                    if (material->GetTexture(textureType, j, &texturePath) == AI_SUCCESS) {
+                        // Print the texture path
+                        std::cout << "Texture Path: " << texturePath.C_Str() << std::endl;
+                    }
+                }
+            }
+        }
+
+
+
         // 1. diffuse maps
         std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -202,12 +224,13 @@ private:
         std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
         textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
         // 4. height maps
-        std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");        textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+        std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
         // 5. emissive maps
         std::vector<Texture> emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive");
         textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
         // 6. roughness maps
-        std::vector<Texture> roughnessMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE_ROUGHNESS, "texture_rough");
+        std::vector<Texture> roughnessMaps = loadMaterialTextures(material, aiTextureType_SHININESS, "texture_rough");
         textures.insert(textures.end(), roughnessMaps.begin(), roughnessMaps.end());
         // 7. metalic maps
         std::vector<Texture> metalicMaps = loadMaterialTextures(material, aiTextureType_METALNESS, "texture_metal");
@@ -273,11 +296,9 @@ private:
 
 
 public:
-    std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
-    {
-
-
+    std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, const std::string& typeName) {
         std::vector<Texture> textures;
+        spdlog::info("Trying to load {} texture, with count = {}", type, mat->GetTextureCount(type));
         for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
         {
             aiString str;
@@ -300,9 +321,12 @@ public:
                 texture.type = typeName;
                 texture.path = str.C_Str();
                 textures.push_back(texture);
+                spdlog::info("loaded texture {} from {}", typeName, str.C_Str());
+
                 textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
             }
         }
+
         return textures;
     }
 
