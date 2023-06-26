@@ -18,6 +18,7 @@ public:
     void initRenderData(const char *path);
     void renderUI();
 
+
 private:
 
     GLuint imageVAO, imageVBO, imageTexture;

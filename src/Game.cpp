@@ -51,6 +51,7 @@
 #include "../include/LevelManager.h"
 #include "../include/Audio/AudioManager.h"
 #include "../include/User/SpriteRenderer.h"
+#include "../include/User/Menu.h"
 
 namespace Game {
     void processInput();
@@ -71,6 +72,7 @@ namespace Game {
     float movImage = 0;
     HUD hud;
     HUD hud2;
+    Menu menu;
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
@@ -298,6 +300,10 @@ namespace Game {
         }
         UITips[0].initRenderData("res/UI/jumping_hint.png");
 
+        Menu menu1(imageShader);
+        menu = menu1;
+        menu.initMenu("res/UI/menu_screen.png");
+
 
 //        Model ourModel("include/Animations2/testing/first_character.dae");
 //        Animation danceAnimation("include/Animations2/testing/first_character.dae",
@@ -318,45 +324,55 @@ namespace Game {
 
 //        jumpUI.DrawSprite("res/UI/A.png",glm::vec3(grabber.playerPos.x,grabber.playerPos.y,17.2), glm::vec2(10.f,10.f), 0, glm::vec3(1.f,1.f,1.f));
 //        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
+        if(menu.isVisible1()){
+//            menu.isVisible = false;
+            inputSystem.update();
+            menu.processInput(&inputSystem);
+            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,700.f),0.f);
 
-        AudioManager::GetInstance()->Update();
+        }
+        else {
+            AudioManager::GetInstance()->Update();
 
-        ImGui();
-        imgMOv -= 0.1f;
-        inputSystem.update();
-        processInput();
-        playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
-        playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
-        movImage -= 0.1;
+            ImGui();
+            imgMOv -= 0.1f;
+            inputSystem.update();
+            processInput();
+            playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
+            playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
+            movImage -= 0.1;
 
-        float time = static_cast<float>(glfwGetTime());
+            float time = static_cast<float>(glfwGetTime());
 
 
-        //player1.Move();
+            //player1.Move();
 
-        Engine::moveObjects();
+            Engine::moveObjects();
 
-        //Engine::renderLights(lightShader, *Engine::camera);
-        shadows.renderShadows(*Engine::camera);
-        Engine::camera->Update(Engine::deltaTime);
-        //glm::mat4 projection = glm::mat4(1.0f);
-        glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom), (float)Engine::SCR_WIDTH / (float)Engine::SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = Engine::camera->GetViewMatrix();
+            //Engine::renderLights(lightShader, *Engine::camera);
+            shadows.renderShadows(*Engine::camera);
+            Engine::camera->Update(Engine::deltaTime);
+            //glm::mat4 projection = glm::mat4(1.0f);
+            glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom),
+                                                    (float) Engine::SCR_WIDTH / (float) Engine::SCR_HEIGHT, 0.1f,
+                                                    100.0f);
+            glm::mat4 view = Engine::camera->GetViewMatrix();
 
 //
 //        shader.use();
 //        shader.setMat4("projectionView", projection * view);
-        background.Move(-50*Engine::deltaTime);
+            background.Move(-50 * Engine::deltaTime);
 //        hud.renderImage(imgMOv);
 //        jumpUI.DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(300.f,250.f), 0);
-        UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 300.f, 1.f), glm::vec2(250.f,300.f), 0);
+            UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 300.f, 1.f),
+                                                                        glm::vec2(250.f, 300.f), 0);
 
-        Engine::renderHitboxes(projection * view);
+            Engine::renderHitboxes(projection * view);
 
 //       *Engine::camera.followObject(player1);
-        Engine::resolveCollisions();
+            Engine::resolveCollisions();
 
-
+        }
         Engine::LoopEnd();
 
     }
@@ -439,16 +455,15 @@ namespace Game {
 
 
     void processInput() {
-        if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
+            if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
+                    playerJumper.Jump();
+                    AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
+            }
+            if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
 //            jumpUI.isVisable = false;
-            playerJumper.Jump();
-            AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
+                playerGrabber.Jump();
+                AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
+            }
         }
-        if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
-//            jumpUI.isVisable = false;
-            playerGrabber.Jump();
-            AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
-        }
-    }
 
 };
