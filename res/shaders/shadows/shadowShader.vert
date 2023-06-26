@@ -2,8 +2,8 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoords;
-layout(location = 5) in ivec4 boneIds;
-layout(location = 6) in vec4 weights;
+layout (location = 5) in ivec4 boneIds;
+layout (location = 6) in vec4 weights;
 
 out vec2 TexCoords;
 
@@ -27,11 +27,19 @@ void main()
 {
     if(animated) {
         vec4 totalPosition = vec4(0.0f);
-        totalPosition += finalBonesMatrices[boneIds[0]] * vec4(aPos,1.0f) * weights[0];
-        totalPosition += finalBonesMatrices[boneIds[1]] * vec4(aPos,1.0f) * weights[1];
-        totalPosition += finalBonesMatrices[boneIds[2]] * vec4(aPos,1.0f) * weights[2];
-        totalPosition += finalBonesMatrices[boneIds[3]] * vec4(aPos,1.0f) * weights[3];
-        //vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
+        for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
+        {
+            if(boneIds[i] == -1)
+            continue;
+            if(boneIds[i] >=MAX_BONES)
+            {
+                totalPosition = vec4(aPos,1.0f);
+                break;
+            }
+            vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
+            totalPosition += localPosition * weights[i];
+//            vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
+        }
 
 
         vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
