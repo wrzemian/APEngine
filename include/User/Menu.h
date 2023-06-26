@@ -16,11 +16,14 @@ private:
     glm::vec3 markPos[3];
     glm::vec3 markPosHelper;
     bool joystickMoved = false;
+    bool isPause = false;
 
 public:
     bool isVisible1() const;
     Menu(const Shader &shader);
     Menu();
+
+    Menu(const Shader &shader, bool isPause);
 
     virtual ~Menu();
 
@@ -32,6 +35,7 @@ public:
 
     int counter = 99999999;
     bool isVisible = true;
+
 };
 
 #endif //APENGINE_MENU_H
