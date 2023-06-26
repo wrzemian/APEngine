@@ -1,4 +1,4 @@
-# Blender 3.5.1 MTL File: 'level1.blend'
+# Blender 3.5.1 MTL File: 'None'
 # www.blender.org
 
 newmtl Material.004
@@ -24,14 +24,15 @@ map_Ke ../../Assets/battery/untitled_Material.002_Emission.png
 map_Bump -bm 1.000000 ../../Assets/batteryTextures/untitled_Material.002_Normal.png
 
 newmtl Misc.007
-Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
 d 1.000000
 illum 2
 map_Kd ../../Assets/kable.png
+map_Ns ../../Assets/roughness_basic.png
 map_Ke ../../Assets/kable_emiss.png
+map_Bump -bm 1.000000 ../../Assets/normal_basic.png
 
 newmtl back_wallMaterial.003
 Ka 1.000000 1.000000 1.000000
@@ -45,7 +46,7 @@ map_refl ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Normal.png
 
-newmtl box1.002
+newmtl box1.003
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -94,7 +95,6 @@ map_Ke ../../Assets/doorTextures/drzwi_drzwi_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/doorTextures/drzwi_drzwi_Normal.png
 
 newmtl exitSign.007
-Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -102,6 +102,8 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd ../../Assets/exitSign.png
+map_Ns ../../Assets/roughness_basic.png
+map_Bump -bm 1.000000 ../../Assets/normal_basic.png
 
 newmtl floorMaterial.003
 Ka 1.000000 1.000000 1.000000
@@ -128,7 +130,6 @@ map_Ke ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Normal.png
 
 newmtl levelNumber.007
-Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -136,6 +137,8 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd ../../Assets/levelNumber.png
+map_Ns ../../Assets/roughness_basic.png
+map_Bump -bm 1.000000 ../../Assets/normal_basic.png
 
 newmtl niewidzialnosc.001
 Ns 250.000000
