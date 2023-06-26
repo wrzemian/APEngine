@@ -8,7 +8,10 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
     leftBoarder = maxLeft;
     tilesNumber = tilesAmount;
     interval = shiftAmount;
-
+    backgroundSkybox = std::make_shared<Object3D>();
+    backgroundSkybox->loadModel("../../res/models/World/sky/skyPlane.obj");
+    backgroundSkybox->_shader = shader;
+    backgroundSkybox->_transform._position.z -= 65.0f;
     for(int i = -1 ;i < tilesAmount-1;i++)
     {
         // xPosition = i * interval;
