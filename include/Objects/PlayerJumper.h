@@ -23,6 +23,7 @@ private:
 
     int walking;
     int recentlyMoved;
+    int recentlyJumped = 0;
 
     float padJoystickTolerance = 0.2f;
 
