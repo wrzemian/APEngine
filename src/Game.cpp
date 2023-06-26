@@ -325,10 +325,10 @@ namespace Game {
 //        jumpUI.DrawSprite("res/UI/A.png",glm::vec3(grabber.playerPos.x,grabber.playerPos.y,17.2), glm::vec2(10.f,10.f), 0, glm::vec3(1.f,1.f,1.f));
 //        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
         if(menu.isVisible1()){
-            menu.isVisible = false;
+//            menu.isVisible = false;
             inputSystem.update();
             menu.processInput(&inputSystem);
-            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(500.f,500.f),0.f);
+            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,700.f),0.f);
 
         }
         else {
