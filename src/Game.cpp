@@ -312,7 +312,7 @@ namespace Game {
 
 
         Engine::finishedLoading();
-      //  Engine::logTextures();
+        Engine::logTextures();
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
