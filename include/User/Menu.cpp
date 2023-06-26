@@ -26,20 +26,28 @@ void Menu::pickMenu(int chosen) {
 }
 
 void Menu::processInput(InputSystem* inputSystem) {
+    int i;
     if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) >= padJoystickTolerance){
         this->counter--;
+        i = abs(counter%3);
+        markPosHelper = markPos[i];
     }
     else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) <= -padJoystickTolerance){
         this->counter++;
+        i = abs(counter%3);
+        markPosHelper = markPos[i];
     }
     else if (inputSystem->GetKeyDown(GLFW_KEY_LEFT)) {
         this->counter--;
+        i = abs(counter%3);
+        markPosHelper = markPos[i];
     }
     else if (inputSystem->GetKeyDown(GLFW_KEY_RIGHT)) {
         this->counter++;
+        i = abs(counter%3);
+        markPosHelper = markPos[i];
     }
     else if(inputSystem->GetKeyDown(GLFW_KEY_SPACE)){
-        std::cout<<"halo kurwa menu dzialaj";
         this->pickMenu(abs(counter%3));
     }
 }
@@ -103,11 +111,14 @@ void Menu::initMenu(const char *filePath) {
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    mark.initRenderData("res/UI/battery.png");
 }
 
 void Menu::drawMenu(glm::vec3 position,
                     glm::vec2 size, float rotate) {
     {
+        mark.DrawSprite(markPosHelper,glm::vec2(50.f,50.f),0.f);
         shader.use();
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
@@ -131,11 +142,17 @@ void Menu::drawMenu(glm::vec3 position,
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindTexture(GL_TEXTURE_2D, 0);
         glBindVertexArray(0);
+
     };
 }
 
 Menu::Menu(const Shader &shader) : shader(shader) {
-
+    SpriteRenderer mark1(this->shader);
+    mark = mark1;
+    markPos[0] = glm::vec3(130.f,50.f,1.f);
+    markPos[1] = glm::vec3(370.f,50.f,1.f);
+    markPos[2] = glm::vec3(620.f,50.f,1.f);
+    markPosHelper = markPos[0];
 }
 
 Menu::Menu() {}
@@ -146,4 +163,5 @@ Menu::~Menu() {
 
 bool Menu::isVisible1() const {
     return isVisible;
+
 }

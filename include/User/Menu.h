@@ -5,15 +5,16 @@
 #include "glad/glad.h"
 #include "../Shader.h"
 #include "InputSystem.h"
+#include "SpriteRenderer.h"
 
 class Menu {
 private:
     GLuint imageVAO, imageVBO, imageTexture;
     Shader shader;
-
-
-private:
     float padJoystickTolerance = 0.5f;
+    SpriteRenderer mark;
+    glm::vec3 markPos[3];
+    glm::vec3 markPosHelper;
 
 public:
     bool isVisible1() const;
@@ -28,7 +29,7 @@ public:
     void drawMenu(glm::vec3 position,
                   glm::vec2 size, float rotate);
 
-    int counter = 0;
+    int counter = 99999999;
     bool isVisible = true;
 };
 
