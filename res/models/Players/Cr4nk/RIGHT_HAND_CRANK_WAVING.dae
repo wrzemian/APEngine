@@ -2,7 +2,7 @@
 <COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <asset>
     <contributor>
-      <author>Blender User</author>
+      <author>Kamil Jozwicki</author>
       <authoring_tool>Blender 3.5.1 commit date:2023-04-24, commit time:18:11, hash:e1ccd9d4a1d3</authoring_tool>
     </contributor>
     <created>2023-06-13T17:29:41</created>
@@ -10,106 +10,259 @@
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
-  <library_effects>
-    <effect id="Material_007-effect">
+      <library_effects>
+    <effect id="robot-effect" name="robot">
       <profile_COMMON>
-        <newparam sid="untitled_Material_001_BaseColor_png-surface">
+        <newparam sid="BaseColor1-surface">
           <surface type="2D">
-            <init_from>untitled_Material_001_BaseColor_png</init_from>
+            <init_from>BaseColor1-image</init_from>
           </surface>
         </newparam>
-        <newparam sid="untitled_Material_001_BaseColor_png-sampler">
+        <newparam sid="BaseColor1-sampler">
           <sampler2D>
-            <source>untitled_Material_001_BaseColor_png-surface</source>
+            <source>BaseColor1-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Emission1-surface">
+          <surface type="2D">
+            <init_from>Emission1-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Emission1-sampler">
+          <sampler2D>
+            <source>Emission1-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Metallic1-surface">
+          <surface type="2D">
+            <init_from>Metallic1-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Metallic1-sampler">
+          <sampler2D>
+            <source>Metallic1-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Roughness1-surface">
+          <surface type="2D">
+            <init_from>Roughness1-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Roughness1-sampler">
+          <sampler2D>
+            <source>Roughness1-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Height1-surface">
+          <surface type="2D">
+            <init_from>Height1-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Height1-sampler">
+          <sampler2D>
+            <source>Height1-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Normal1-surface">
+          <surface type="2D">
+            <init_from>Normal1-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Normal1-sampler">
+          <sampler2D>
+            <source>Normal1-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
           </sampler2D>
         </newparam>
         <technique sid="common">
-          <lambert>
+          <phong>
             <emission>
-              <color sid="emission">0 0 0 1</color>
+              <texture texture="Emission1-sampler" texcoord="UVMap"/>
             </emission>
             <diffuse>
-              <texture texture="untitled_Material_001_BaseColor_png-sampler" texcoord="Plane_005-mesh-map-0"/>
+              <texture texture="BaseColor1-sampler" texcoord="UVMap"/>
             </diffuse>
+	    <specular>
+	      <texture texture="Metallic1-sampler" texcoord="UVMap"/>
+	    </specular>
+	    <shininess>
+	       <texture texture="Roughness1-sampler" texcoord="UVMap"/>
+	    </shininess>
             <index_of_refraction>
               <float sid="ior">1.45</float>
             </index_of_refraction>
-          </lambert>
+          </phong>
+	  <extra>
+ 	    <technique profile="FCOLLADA">
+              <bump>
+                <texture texture= "Normal1-sampler" texcoord="UVMap" />
+              </bump>
+            </technique>
+          </extra>
         </technique>
       </profile_COMMON>
     </effect>
-    <effect id="robot_011-effect">
+
+    <effect id="pasek-effect" name="pasek">
       <profile_COMMON>
-        <newparam sid="untitled_Material_001_BaseColor_png-surface">
+        <newparam sid="BaseColor2-surface">
           <surface type="2D">
-            <init_from>untitled_Material_001_BaseColor_png</init_from>
+            <init_from>BaseColor2-image</init_from>
           </surface>
         </newparam>
-        <newparam sid="untitled_Material_001_BaseColor_png-sampler">
+        <newparam sid="BaseColor2-sampler">
           <sampler2D>
-            <source>untitled_Material_001_BaseColor_png-surface</source>
+            <source>BaseColor2-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Emission2-surface">
+          <surface type="2D">
+            <init_from>Emission2-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Emission2-sampler">
+          <sampler2D>
+            <source>Emission2-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Metallic2-surface">
+          <surface type="2D">
+            <init_from>Metallic2-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Metallic2-sampler">
+          <sampler2D>
+            <source>Metallic2-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Roughness2-surface">
+          <surface type="2D">
+            <init_from>Roughness2-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Roughness2-sampler">
+          <sampler2D>
+            <source>Roughness2-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Height2-surface">
+          <surface type="2D">
+            <init_from>Height2-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Height2-sampler">
+          <sampler2D>
+            <source>Height2-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
+          </sampler2D>
+        </newparam>
+        <newparam sid="Normal2-surface">
+          <surface type="2D">
+            <init_from>Normal2-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Normal2-sampler">
+          <sampler2D>
+            <source>Normal2-surface</source>
+            <minfilter>LINEAR</minfilter>
+            <magfilter>LINEAR</magfilter>
           </sampler2D>
         </newparam>
         <technique sid="common">
-          <lambert>
+          <phong>
             <emission>
-              <color sid="emission">0 0 0 1</color>
+              <texture texture="Emission2-sampler" texcoord="UVMap"/>
             </emission>
             <diffuse>
-              <texture texture="untitled_Material_001_BaseColor_png-sampler" texcoord="Plane_005-mesh-map-0"/>
+              <texture texture="BaseColor2-sampler" texcoord="UVMap"/>
             </diffuse>
+	    <specular>
+	      <texture texture="Metallic2-sampler" texcoord="UVMap"/>
+	    </specular>
+	    <shininess>
+	       <texture texture="Roughness2-sampler" texcoord="UVMap"/>
+	    </shininess>
             <index_of_refraction>
               <float sid="ior">1.45</float>
             </index_of_refraction>
-          </lambert>
-        </technique>
-      </profile_COMMON>
-    </effect>
-    <effect id="Material_008-effect">
-      <profile_COMMON>
-        <newparam sid="DefaultMaterial_BaseColor_png-surface">
-          <surface type="2D">
-            <init_from>DefaultMaterial_BaseColor_png</init_from>
-          </surface>
-        </newparam>
-        <newparam sid="DefaultMaterial_BaseColor_png-sampler">
-          <sampler2D>
-            <source>DefaultMaterial_BaseColor_png-surface</source>
-          </sampler2D>
-        </newparam>
-        <technique sid="common">
-          <lambert>
-            <emission>
-              <color sid="emission">0 0 0 1</color>
-            </emission>
-            <diffuse>
-              <texture texture="DefaultMaterial_BaseColor_png-sampler" texcoord="Plane_005-mesh-map-0"/>
-            </diffuse>
-            <index_of_refraction>
-              <float sid="ior">1.45</float>
-            </index_of_refraction>
-          </lambert>
+          </phong>
+	  <extra>
+            <technique profile="FCOLLADA">
+              <bump bumptype="NORMALMAP">
+                <texture texture="Normal2-sampler" texcoord="UVMap" />
+              </bump>
+            </technique>
+          </extra>
         </technique>
       </profile_COMMON>
     </effect>
   </library_effects>
+
   <library_images>
-    <image id="DefaultMaterial_BaseColor_png" name="DefaultMaterial_BaseColor_png">
+    <image id="BaseColor2-image" name="BaseColor2">
       <init_from>DefaultMaterial_BaseColor.png</init_from>
     </image>
-    <image id="untitled_Material_001_BaseColor_png" name="untitled_Material_001_BaseColor_png">
+    <image id="Roughness2-image" name="Roughness2">
+      <init_from>DefaultMaterial_Roughness.png</init_from>
+    </image>
+    <image id="Normal2-image" name="Normal2">
+      <init_from>DefaultMaterial_Normal.png</init_from>
+    </image>
+    <image id="Emission2-image" name="Emission2">
+      <init_from>DefaultMaterial_Emission.png</init_from>
+    </image>
+    <image id="Metallic2-image" name="Metallic2">
+      <init_from>DefaultMaterial_Metallic.png</init_from>
+    </image>
+    <image id="Height2-image" name="Height2">
+      <init_from>DefaultMaterial_Displacement.png</init_from>
+    </image>
+    <image id="BaseColor1-image" name="BaseColor1">
       <init_from>untitled_Material.001_BaseColor.png</init_from>
     </image>
+    <image id="Roughness1-image" name="Roughness1">
+      <init_from>untitled_Material.001_Roughness.png</init_from>
+    </image>
+    <image id="Emission1-image" name="Emission1">
+      <init_from>untitled_Material.001_Emmisive.png</init_from>
+    </image>
+    <image id="Metallic1-image" name="Metallic1">
+      <init_from>untitled_Material.001_Metallic.png</init_from>
+    </image>
+    <image id="Height1-image" name="Height1">
+      <init_from>untitled_Material.001_Height.png</init_from>
+    </image>
+    <image id="Normal1-image" name="Normal1">
+      <init_from>untitled_Material.001_Normal.png</init_from>
+    </image>
   </library_images>
+
   <library_materials>
-    <material id="Material_007-material" name="Material.007">
-      <instance_effect url="#Material_007-effect"/>
+    <material id="robot-material" name="robot">
+      <instance_effect url="#robot-effect"/>
     </material>
-    <material id="robot_011-material" name="robot.011">
-      <instance_effect url="#robot_011-effect"/>
-    </material>
-    <material id="Material_008-material" name="Material.008">
-      <instance_effect url="#Material_008-effect"/>
+    <material id="pasek-material" name="pasek">
+      <instance_effect url="#pasek-effect"/>
     </material>
   </library_materials>
   <library_geometries>
