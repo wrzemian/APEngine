@@ -39,7 +39,6 @@ void Menu::processInput(InputSystem* inputSystem) {
     if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X)  < -0.2|| inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_LEFT)){
         if(joystickMoved == false) {
             this->counter--;
-            std::cout<<counter;
             joystickMoved = true;
         }
         i = abs(counter%3);
@@ -149,8 +148,13 @@ void Menu::initMenu(const char *filePath) {
 void Menu::drawMenu(glm::vec3 position,
                     glm::vec2 size, float rotate) {
     {
+        if(!isPause) {
             mark[abs(counter % 3)].DrawSprite(markPosHelper, glm::vec2(250.f, 130.f), 0.f);
-        shader.use();
+        }
+        else{
+            mark[abs(counter % 3)].DrawSprite(markPosHelper, glm::vec2(250.f, 155.f), 0.f);
+        }
+            shader.use();
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
         glm::mat4 model = glm::mat4(1.0f);
@@ -207,9 +211,9 @@ this->counter  = 999;
         SpriteRenderer mark1(this->shader);
         mark[i] = mark1;
     }
-    markPos[0] = glm::vec3(20.f,40.f,1.f);
-    markPos[1] = glm::vec3(270.f,40.f,1.f);
-    markPos[2] = glm::vec3(530.f,40.f,1.f);
+    markPos[0] = glm::vec3(20.f,20.f,1.f);
+    markPos[1] = glm::vec3(270.f,20.f,1.f);
+    markPos[2] = glm::vec3(530.f,20.f,1.f);
     markPosHelper = markPos[0];
     isPause = true;
     isVisible = false;
