@@ -160,12 +160,12 @@ void Level::calculateHitboxes() {
             }
 
             case 'R': { // Roof
-                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                hitbox->calculateFromMesh(mesh);
-                hitbox->Create(this);
-
+//                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+//                hitbox->calculateFromMesh(mesh);
+//                hitbox->Create(this);
+//
+//                hitbox->tag = "roof";
                 staticModel.meshes.push_back(mesh);
-                hitbox->tag = "roof";
 
                 spdlog::info("Roof created {}", mesh._name);
 
