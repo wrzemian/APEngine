@@ -188,6 +188,18 @@ map_refl ../../Assets/wagonTextures/wagonPusty_right_wallMaterial_Metallic.png
 map_Ke ../../Assets/wagonTextures/wagonPusty_right_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_right_wallMaterial_Normal.png
 
+newmtl roofMaterial.027
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ../../Assets/wagonTextures/wagonPusty_roofMaterial_BaseColor.png
+map_Ns ../../Assets/wagonTextures/wagonPusty_roofMaterial_Roughness.png
+map_refl ../../Assets/wagonTextures/wagonPusty_roofMaterial_Metallic.png
+map_Ke ../../Assets/wagonTextures/wagonPusty_roofMaterial_Emissive.png
+map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_roofMaterial_Normal.png
+
 newmtl roofMaterial.028
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
