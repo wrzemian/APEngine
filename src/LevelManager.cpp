@@ -42,6 +42,7 @@ void LevelManager::loadAllLevels(const std::string& pathToFile) {
 }
 
 void LevelManager::loadLocomotive() {
+    spdlog::info("loading locomotive");
     locomotive = std::make_shared<Object3D>();
     locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj"); // TODO: make sure this path is valid
     locomotive->_transform._position = defaultPosition;
@@ -49,6 +50,7 @@ void LevelManager::loadLocomotive() {
 }
 
 void LevelManager::loadInvisibleWalls() {
+    spdlog::info("loading invisible walls");
     Model allWalls("../../res/models/Levels/additionalHitboxes.obj");
     for (auto& mesh: allWalls.meshes) {
         auto hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);

@@ -189,16 +189,22 @@ namespace Game {
         }
         UITips[0].initRenderData("res/UI/jumping_hint.png");
 
+//        spdlog::info("menu1 before constructor");
         Menu menu1(imageShader);
+//        spdlog::info("menu1 after constructor");
         menu = menu1;
-        menu.initMenu("res/UI/menu_screen.png");
+//        spdlog::info("before init1");
+        menu.initMenu("../../res/UI/menu_screen.png");
+//        spdlog::info("after init1");
 
+        spdlog::info("menu2");
         Menu menu2(imageShader,true);
         menuPause = menu2;
-        menuPause.initMenu("res/UI/pause_screen1.png");
+        menuPause.initMenu("../../res/UI/pause_screen1.png");
 
-
+        spdlog::info("before finished loading");
         Engine::finishedLoading();
+        spdlog::info("after");
 
         spdlog::info("ImGui");
         ImGui();
