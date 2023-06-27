@@ -56,8 +56,6 @@
 namespace Game {
     void processInput();
 
-    float imgMOv = 0;
-
     void ImGui();
 
     void renderScene(Shader shader, Camera camera);
@@ -65,7 +63,6 @@ namespace Game {
     Shader simpleDepthShader;
     Shader debugDepthQuad;
     Shader spriteShader;
-
 
     SpriteRenderer jumpUI;
 
@@ -79,31 +76,21 @@ namespace Game {
     HudAnimation animation;
     Shadows shadows("lights/shadows");
     Shader lightShader;
-//    Animation animation;
     Constant constant;
-//    Image image;
 
 
     PlayerJumper playerJumper;
     PlayerGrabber playerGrabber;
 
 
-    //animation testing
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
 
-//    Battery battery;
-//    Hitbox batteryHitbox("hitboxes/hitbox_battery");
+
 
     Grabber grabber;
     Hitbox grabberHitbox("hitboxes/hitbox_grabber");
-
-   // Box box;
-   // Hitbox boxHitbox("hitboxes/hitbox_box1");
-
-//    WinArea winArea;
-//    Hitbox winHitbox("hitboxes/hitbox_win");
 
 
     Level* currentLevel;
@@ -111,14 +98,8 @@ namespace Game {
     GLfloat movementSpeed = 3.0f;
 
     SpriteRenderer  UITips[3];
-//    char Paths[7][255];
-
-
-
 
     DirectionalLight dirLight;
-    SpotLight spotLight;
-    PointLight pointLight;
 
     InputSystem inputSystem;
 
@@ -127,23 +108,18 @@ namespace Game {
     Background background;
 
 
-
     void Start() {
-        Engine::Init();
         spdlog::info("init engine");
-
-        Engine::camera->ShowImgui();
+        Engine::Init();
 
         spdlog::info("init audio");
         AudioManager::GetInstance()->InitializeAudio();
         AudioManager::GetInstance()->CreateAll(*Engine::camera, playerGrabber);
 
 
-
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
         LevelManager::getInstance().ShowImgui();
-
 
         shadows.initShaders(*Engine::camera);
         spdlog::info("shader");
@@ -156,7 +132,6 @@ namespace Game {
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
 
-
         spdlog::info("init jumper");
         playerJumper.initPlayer(&inputSystem);
         spdlog::info("init grabber");
@@ -166,15 +141,10 @@ namespace Game {
         playerJumper.levelId = 0;
         grabber.levelId = 0;
 
-//        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_jumping_final.dae");
-//        playerGrabber.loadAnimation("res/models/Players/Cr4nk/crank_movement_final.dae");
+
         playerJumper.loadAnimation("res/models/Players/Mich3l/michel_breathing_and_looking_around.dae");
         playerGrabber.loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
-//        Animation temp(daePath, &*_model);
 
-
-//        hud.initAnimation();
-//        hud.initImage("res/textures/tlo.png");
         spdlog::info("init text");
         hud2.initText("res/fonts/Arialn.ttf");
 
@@ -184,75 +154,22 @@ namespace Game {
         p1Hitbox.tag = "player";
         p2Hitbox.tag = "player";
 
-        //player1.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_0"));
-        //player2.loadFromJSON(Engine::parser.CreateFromJSONMovingObject("objects/movingObj_1"));
-        //player1.tag = "player";
-        //player2.tag = "player";
-
-
-
-        //*Engine::camera = Engine::parser.CreateFromJSONCam("*Engine::camera");
         Engine::camera->ShowImgui();;
 
-        //p1Hitbox.Create(&playerJumper);
-        //p2Hitbox.Create(&playerGrabber);
-
-        //p1Hitbox.calculateBoundingBox(player1._model);
-        //p2Hitbox.calculateBoundingBox(player2._model);
 
         playerGrabber.grabber = &grabber;
         grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
         grabberHitbox.draw = false;
         grabberHitbox.isTrigger = true;
-//        grabber.loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
-//        grabber.LoadAnimations();
-
-        //currentLevel = LevelManager.getInstance().
 
         background.initBackground(5,-420.4079584,210.2039792,&shader);//-525.509948
 
 
-//        battery.loadModel("../../res/models/Assets/battery/battery.obj");
-//        battery.tag = "battery";
-//        //batteryHitbox.Create(&battery);
-//        batteryHitbox.draw = true;
-//        battery._transform._position.x = -8;
-//        battery._transform._position.y = 7;
-//        battery._transform._position.z = 6;
-//        battery._transform._scale.x = 0.2f;
-//        battery._transform._scale.y = 0.2f;
-//        battery._transform._scale.z = 0.2f;
         if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty()) { // TODO: fix this tomfoolery
             playerJumper.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
             playerGrabber.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
         }
 
-
-
-
-
-//        box.setShader(&shader);
-//        box.loadModel("../../res/models/Assets/chest1/box1.obj");
-//        box._transform._position.x = -4.2f;
-//        box._transform._position.y = 8.5f;
-//        box._transform._position.z = 8.0f;
-//        box._transform._scale.x=0.5f;
-//        box._transform._scale.z=0.5f;
-//        box.ShowImgui();
-//        //boxHitbox.draw = true;
-//        boxHitbox.ShowImgui();
-
-//        winArea.setShader(&shader);
-//        winArea.loadModel("../../res/models/Assets/chest1/box1.obj");
-//        winArea.rendered = false;
-//        winArea._transform._position.x = -1.5f;
-//        winArea._transform._position.y = 8.0f;
-//        winArea._transform._position.z = 8.0f;
-//        winArea.ShowImgui();
-//        winHitbox.draw = false;
-//        winHitbox.ShowImgui();
-//        winHitbox.isTrigger = true;
-//        winArea.text = &texToDisplay;
 
         shader.setMat4("projectionView", Engine::camera->getViewProjection());
 
@@ -260,16 +177,7 @@ namespace Game {
         shader.setMat4("model", model);
 
         dirLight = Engine::parser.CreateFromJSONDir("lights/dirLight");
-//        spotLight = Engine::parser.CreateFromJSONSpot("lights/spotLight");
-//        pointLight = Engine::parser.CreateFromJSONPoint("lights/pointLight");
 
-        spdlog::info("ImGui");
-        ImGui();
-        spdlog::info("ResolveCollisions");
-        Engine::resolveCollisions();
-        //Engine::logStaticHitboxes();
-        //Engine::logDynamicHitboxes();
-        spdlog::info("loop");
 
 
         Shader animationShader("../../res/shaders/animationsShader.vert", "../../res/shaders/animationsShader.frag");
@@ -279,11 +187,6 @@ namespace Game {
 
         Shader UIShader("include/User/spriteShader.vert","include/User/spriteShader.frag");
 
-
-
-
-
-
         Constant constant1(animationShader);
         constant = constant1;
         constant.initConstant();
@@ -292,10 +195,6 @@ namespace Game {
         HUD hud1(imageShader);
         hud = hud1;
         hud.initImage("res/textures/tlo.png");
-
-//        SpriteRenderer jumpingUI(imageShader);
-//        jumpUI = jumpingUI;
-////        jumpUI.initRenderData("res/UI/jumping_hint.png");
 
         for(int i = 0; i< 3; i++){
             UITips[i] = SpriteRenderer(imageShader);
@@ -311,30 +210,23 @@ namespace Game {
         menuPause.initMenu("res/UI/pause_screen1.png");
 
 
-
-
-
-//        Model ourModel("include/Animations2/testing/first_character.dae");
-//        Animation danceAnimation("include/Animations2/testing/first_character.dae",
-//                                 &ourModel);
-//        Animator animator(&danceAnimation);
-
-
         Engine::finishedLoading();
-       // Engine::logTextures();
+
+        spdlog::info("ImGui");
+        ImGui();
+        spdlog::info("ResolveCollisions");
+        Engine::resolveCollisions();
+        spdlog::info("loop");
+
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
     }
 
     void Update() {
-
         Engine::LoopStart();
 
-//        jumpUI.DrawSprite("res/UI/A.png",glm::vec3(grabber.playerPos.x,grabber.playerPos.y,17.2), glm::vec2(10.f,10.f), 0, glm::vec3(1.f,1.f,1.f));
-//        std::this_thread::sleep_for(std::chrono::duration<double>(1.0 / 30.0)); // to slow down frame rate for fewer collisions detection
         if(menu.isVisible1()){
-//            menu.isVisible = false;
             inputSystem.update();
             menu.processInput(&inputSystem);
             menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,600.f),0.f);
@@ -350,47 +242,34 @@ namespace Game {
             AudioManager::GetInstance()->PlaySound(Audio::TRAIN_AMBIENT);
 
             ImGui();
-            imgMOv -= 0.1f;
             inputSystem.update();
             processInput();
             playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
             playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
             movImage -= 0.1;
 
-            float time = static_cast<float>(glfwGetTime());
-
-
-            //player1.Move();
 
             Engine::moveObjects();
 
-            //Engine::renderLights(lightShader, *Engine::camera);
             shadows.renderShadows(*Engine::camera);
             Engine::camera->Update(Engine::deltaTime);
-            //glm::mat4 projection = glm::mat4(1.0f);
             glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom),
                                                     (float) Engine::SCR_WIDTH / (float) Engine::SCR_HEIGHT, 0.1f,
                                                     100.0f);
             glm::mat4 view = Engine::camera->GetViewMatrix();
 
-//
-//        shader.use();
-//        shader.setMat4("projectionView", projection * view);
+
             background.Move(-50 * Engine::deltaTime);
-//        hud.renderImage(imgMOv);
-//        jumpUI.DrawSprite(glm::vec3(300.f, 350.f, 1.f), glm::vec2(300.f,250.f), 0);
+
             UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 300.f, 1.f),
                                                                         glm::vec2(250.f, 300.f), 0);
 
-
-
             Engine::renderHitboxes(projection * view);
 
-//       *Engine::camera.followObject(player1);
             Engine::resolveCollisions();
         }
-        Engine::LoopEnd();
 
+        Engine::LoopEnd();
     }
 
     void onWin() {
@@ -449,14 +328,7 @@ namespace Game {
         {
             Engine::renderImgui();
             Engine::ImGui();
-            dirLight.ShowImgui();
-//            pointLight.ShowImgui();
-//            spotLight.ShowImgui();
-            Engine::camera->ShowImgui();
-            shadows.ShowImgui();
-            playerGrabber.ShowImgui();
         }
-
 
         ImGui::Begin("DevTools");
         ImGui::SetWindowSize(ImVec2(250, 100));
@@ -465,7 +337,6 @@ namespace Game {
         if (ImGui::Button("Reset Level"))
             ResetLevel();
         ImGui::End();
-
 
         ImGui::Render();
     }
@@ -476,7 +347,6 @@ namespace Game {
                     playerJumper.Jump();
             }
             if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
-//            jumpUI.isVisable = false;
                 playerGrabber.Jump();
 
             }
