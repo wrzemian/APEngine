@@ -90,6 +90,8 @@ void PlayerJumper::Jump() {
     if (jumpCount == 1 && haveBattery)
     {
         this->switchAnimationJump();
+        AudioManager::GetInstance()->PauseSound(Audio::MICHEL_JUMP);
+        AudioManager::GetInstance()->PlaySound(Audio::JETPACK);
         walking = 0;
         recentlyMoved = 0;
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
@@ -103,6 +105,7 @@ void PlayerJumper::Jump() {
         recentlyMoved = 0;
         this->switchAnimationJump();
         //this->AddVelocity(glm::vec3(0.0f, 5.0f, 0.0f));
+        AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
         this->_velocity.y = 4.0f;
         jumpCount += 1;
         recentlyJumped = 0;

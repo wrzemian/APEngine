@@ -119,6 +119,7 @@ void PlayerGrabber::Jump() {
     if (jumpCount == 0 && this->_velocity.y <= 0&& this->_velocity.y <= 0)
     {
         this->switchAnimationJump();
+        AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
         recentlyJumped = 0;
         walking = 0;
         recentlyMoved = 0;

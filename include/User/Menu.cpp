@@ -129,13 +129,15 @@ void Menu::initMenu(const char *filePath) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    mark.initRenderData("res/UI/battery.png");
+    mark[0].initRenderData("res/UI/start.png");
+    mark[1].initRenderData("res/UI/load.png");
+    mark[2].initRenderData("res/UI/exit.png");
 }
 
 void Menu::drawMenu(glm::vec3 position,
                     glm::vec2 size, float rotate) {
     {
-        mark.DrawSprite(markPosHelper,glm::vec2(50.f,50.f),0.f);
+        mark[abs(counter%3)].DrawSprite(markPosHelper,glm::vec2(250.f,130.f),0.f);
         shader.use();
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
@@ -164,11 +166,13 @@ void Menu::drawMenu(glm::vec3 position,
 }
 
 Menu::Menu(const Shader &shader) : shader(shader) {
-    SpriteRenderer mark1(this->shader);
-    mark = mark1;
-    markPos[0] = glm::vec3(130.f,50.f,1.f);
-    markPos[1] = glm::vec3(370.f,50.f,1.f);
-    markPos[2] = glm::vec3(620.f,50.f,1.f);
+    for(int i=0; i<3;i++) {
+        SpriteRenderer mark1(this->shader);
+        mark[i] = mark1;
+    }
+    markPos[0] = glm::vec3(20.f,0.f,1.f);
+    markPos[1] = glm::vec3(275.f,0.f,1.f);
+    markPos[2] = glm::vec3(520.f,0.f,1.f);
     markPosHelper = markPos[0];
     isPause = false;
 }
@@ -186,11 +190,13 @@ bool Menu::isVisible1() const {
 
 Menu::Menu(const Shader &shader, bool isPause) : shader(shader), isPause(isPause) {
 
-    SpriteRenderer mark1(this->shader);
-    mark = mark1;
-    markPos[0] = glm::vec3(130.f,50.f,1.f);
-    markPos[1] = glm::vec3(370.f,50.f,1.f);
-    markPos[2] = glm::vec3(620.f,50.f,1.f);
+    for(int i=0; i<3;i++) {
+        SpriteRenderer mark1(this->shader);
+        mark[i] = mark1;
+    }
+    markPos[0] = glm::vec3(0.f,0.f,1.f);
+    markPos[1] = glm::vec3(275.f,0.f,1.f);
+    markPos[2] = glm::vec3(520.f,0.f,1.f);
     markPosHelper = markPos[0];
     isPause = true;
     isVisible = false;

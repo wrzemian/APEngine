@@ -110,6 +110,12 @@ void AudioManager::CreateAll(Camera camera, Object3D player) {
     source9->LoadAudioData("../../res/audio/train.wav", AudioType::Direct);
     source9->IsLooping(true);
     source9->SetGain(1.0f);
+    auto source10 = std::make_shared<AudioSource>(player, 9);
+    source10->Start();
+    source10->OnCreate();
+    source10->LoadAudioData("../../res/audio/jetpack1.wav", AudioType::Direct);
+    source10->IsLooping(false);
+    source10->SetGain(1.0f);
 
 }
 

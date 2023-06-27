@@ -333,7 +333,7 @@ namespace Game {
 //            menu.isVisible = false;
             inputSystem.update();
             menu.processInput(&inputSystem);
-            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,700.f),0.f);
+            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,600.f),0.f);
 
         }
         else if(menuPause.isVisible1()){
@@ -468,12 +468,11 @@ namespace Game {
     void processInput() {
             if (inputSystem.GetKeyDown(GLFW_KEY_SPACE) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)) {
                     playerJumper.Jump();
-                    AudioManager::GetInstance()->PlaySound(Audio::MICHEL_JUMP);
             }
             if (inputSystem.GetKeyDown(GLFW_KEY_KP_1) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
 //            jumpUI.isVisable = false;
                 playerGrabber.Jump();
-                AudioManager::GetInstance()->PlaySound(Audio::CRANK_JUMP);
+
             }
             if(inputSystem.GetKeyDown(GLFW_KEY_O) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
                 menuPause.isVisible = true;

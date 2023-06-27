@@ -12,7 +12,7 @@ private:
     GLuint imageVAO, imageVBO, imageTexture;
     Shader shader;
     float padJoystickTolerance = 0.2f;
-    SpriteRenderer mark;
+    SpriteRenderer mark[3];
     glm::vec3 markPos[3];
     glm::vec3 markPosHelper;
     bool joystickMoved = false;
