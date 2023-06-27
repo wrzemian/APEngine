@@ -58,6 +58,8 @@ public:
 
     std::string _path;
 
+    bool canBePickedUp = true;
+
     void calculateBoundingBox();
 
     void changeVertexPositions(const glm::vec3 &offset);
