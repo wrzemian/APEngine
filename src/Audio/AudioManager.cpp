@@ -77,7 +77,7 @@ void AudioManager::CreateAll(Camera camera, Object3D player) {
     auto source4 = std::make_shared<AudioSource>(player, 3);
     source4->Start();
     source4->OnCreate();
-    source4->LoadAudioData("../../res/audio/jetpack.wav", AudioType::Direct);
+    source4->LoadAudioData("../../res/audio/jetpack1.wav", AudioType::Direct);
     source4->IsLooping(false);
     source4->SetGain(1.0f);
     auto source5 = std::make_shared<AudioSource>(player, 4);
