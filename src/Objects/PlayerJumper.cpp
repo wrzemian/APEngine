@@ -16,6 +16,7 @@ void PlayerJumper::initPlayer(InputSystem* inputSystem) {
     inputSystem->monitorKey(GLFW_KEY_S);
     inputSystem->monitorKey(GLFW_KEY_D);
     inputSystem->monitorKey(GLFW_KEY_E);
+    inputSystem->monitorKey(GLFW_KEY_T);
     //inputSystem->monitorKey(GLFW_KEY_SPACE);
 
     loadAnimations();
@@ -72,6 +73,19 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
             std::cout<< "pick up battery"<<std::endl;
         }
     }
+    if (inputSystem->GetKeyDown(GLFW_KEY_T) || inputSystem->GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_B)) {
+        if(!pickedUpBox && lastTouchedBox != nullptr)
+        {
+            pickedUpBox = true;
+            lastTouchedBoxOffset = _transform._position - lastTouchedBox->modelMiddle - lastTouchedBox->_transform._position;
+            lastTouchedBox->SwitchGravity(false);
+        }
+        else
+        {
+            pickedUpBox = false;
+            lastTouchedBox->SwitchGravity(true);
+        }
+    }
    /* if (inputSystem->GetKeyDown(GLFW_KEY_SPACE)) {
         Jump();
         std::cout<<_velocity.y<<std::endl;
@@ -82,7 +96,13 @@ void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
        battery->_velocity = glm::vec3(0.0f, 0.0f, 0.0f);
        glm::quat playerQuat = glm::quat(_transform._rotation); // Convert Euler angles to quaternion
        glm::mat4 rotationMat = glm::mat4_cast(playerQuat); // Convert quaternion to rotation matrix
-       battery->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(batteryOffset, 1.0f) )- battery->modelMiddle;
+       battery->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(lastTouchedBoxOffset, 1.0f) )- battery->modelMiddle;
+   }
+   if(pickedUpBox)
+   {
+        glm::quat playerQuat = glm::quat(_transform._rotation); // Convert Euler angles to quaternion
+        glm::mat4 rotationMat = glm::mat4_cast(playerQuat); // Convert quaternion to rotation matrix
+        lastTouchedBox->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(lastTouchedBoxOffset, 1.0f) )- lastTouchedBox->modelMiddle;
    }
 }
 
@@ -126,6 +146,10 @@ void PlayerJumper::onCollision(Object3D *other) {
     if(other->tag == "battery")
     {
         canPickUpBattery = true;
+    }
+    if(other->tag == "box")
+    {
+        lastTouchedBox = other;
     }
 }
 

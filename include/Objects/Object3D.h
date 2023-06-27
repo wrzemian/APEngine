@@ -61,4 +61,6 @@ public:
     void calculateBoundingBox();
 
     void changeVertexPositions(const glm::vec3 &offset);
+
+    virtual void SwitchGravity(bool state);
 };

@@ -36,6 +36,8 @@ public:
     void onCollisionX(Object3D *other) override;
     void onCollisionY(Object3D *other) override;
     void onCollisionZ(Object3D *other) override;
+
+    void SwitchGravity(bool state) override;
 };
 
 

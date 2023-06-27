@@ -28,6 +28,10 @@ private:
     float padJoystickTolerance = 0.2f;
 
 public:
+    Object3D* lastTouchedBox;
+    bool pickedUpBox = false;
+    glm::vec3 lastTouchedBoxOffset = {};
+
     Battery* battery;
     void initPlayer(InputSystem* inputSystem);
     void UpdatePlayer(InputSystem* inputSystem, float movementSpeed);

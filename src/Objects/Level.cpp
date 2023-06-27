@@ -84,6 +84,8 @@ void Level::calculateHitboxes() {
                 areaTriggerHitbox->_color.z = 1.0;
                 areaTriggerHitbox->_max.y  -= 0.5f;
                 areaTriggerHitbox->_min.x  -= 1.2f;
+                areaTriggerHitbox->_max.z  += 0.7f;
+                areaTriggerHitbox->_min.z  -= 0.7f;
                 areaTriggerHitbox->isTrigger = true;
                 hitboxes.push_back(areaTriggerHitbox);
 
@@ -290,6 +292,24 @@ void Level::calculateHitboxes() {
 
                 box->_transform._position = _transform._position;
                 box->_transform._position += middle;
+
+                auto testTrigger = std::make_shared<Hitbox>(Hitbox::STATIC);
+                testTrigger->tag = "box";
+                testTrigger->isTrigger = true;
+                testTrigger->calculateFromMesh(mesh);
+                testTrigger->Create(box.get());
+                testTrigger->_color.x = 0.5;
+                testTrigger->_color.y = 1.0;
+                testTrigger->_color.z = 1.0;
+                testTrigger->_max.x  += 0.5f;
+                testTrigger->_max.y  += 0.5f;
+                testTrigger->_max.z  += 0.5f;
+                testTrigger->_min.x  -= 0.5f;
+                testTrigger->_min.y  -= 0.5f;
+                testTrigger->_min.z  -= 0.5f;
+                hitboxes.push_back(testTrigger);
+                testTrigger->draw = true;
+
 
                 auto boxHitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 boxHitbox->calculateFromModel(*box->_model);

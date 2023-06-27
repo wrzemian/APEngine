@@ -25,6 +25,9 @@ private:
     glm::vec3 direction =  glm::vec3(0.0f, 0.0f, 0.0f);
     float padJoystickTolerance = 0.2f;
 public:
+    Object3D* lastTouchedBox;
+    bool pickedUpBox = false;
+    glm::vec3 lastTouchedBoxOffset = {};
 
     Animation walkP, standP, jumpP, hookingP;
     PlayerGrabber();
