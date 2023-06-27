@@ -77,20 +77,14 @@ namespace Game {
     Shader lightShader;
     Constant constant;
 
-
-    PlayerJumper playerJumper;
     PlayerGrabber playerGrabber;
-
-
+    PlayerJumper playerJumper;
 
     Hitbox p1Hitbox("hitboxes/hitbox_0");
     Hitbox p2Hitbox("hitboxes/hitbox_1");
 
-
-
     Grabber grabber;
     Hitbox grabberHitbox("hitboxes/hitbox_grabber");
-
 
     Level* currentLevel;
 
@@ -115,7 +109,6 @@ namespace Game {
         AudioManager::GetInstance()->InitializeAudio();
         AudioManager::GetInstance()->CreateAll(*Engine::camera, playerGrabber);
 
-
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
         LevelManager::getInstance().ShowImgui();
@@ -129,7 +122,6 @@ namespace Game {
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
-
 
         spdlog::info("init jumper");
         playerJumper.initPlayer(&inputSystem);
@@ -147,22 +139,19 @@ namespace Game {
         spdlog::info("init text");
         hud2.initText("res/fonts/Arialn.ttf");
 
-
-        p2Hitbox.draw = false;
-        p1Hitbox.draw = false;
         p1Hitbox.tag = "player";
         p2Hitbox.tag = "player";
 
-        Engine::camera->ShowImgui();;
+        p1Hitbox.ShowImgui();
+        p2Hitbox.ShowImgui();
 
+        Engine::camera->ShowImgui();
 
         playerGrabber.grabber = &grabber;
         grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
-        grabberHitbox.draw = false;
         grabberHitbox.isTrigger = true;
 
         background.initBackground(5,-420.4079584,210.2039792,&shader);//-525.509948
-
 
         if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty()) { // TODO: fix this tomfoolery
             playerJumper.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();

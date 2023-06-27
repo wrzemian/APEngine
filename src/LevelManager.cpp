@@ -45,6 +45,7 @@ void LevelManager::loadLocomotive() {
     locomotive = std::make_shared<Object3D>();
     locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj"); // TODO: make sure this path is valid
     locomotive->_transform._position = defaultPosition;
+    locomotive->_transform._position.x = levels.at(levels.size()-1)->modelMaxVertex.x;
 }
 
 void LevelManager::loadInvisibleWalls() {
