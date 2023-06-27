@@ -36,6 +36,19 @@ void LevelManager::loadAllLevels(const std::string& pathToFile) {
             spdlog::info("Successfully loaded level {}. Total levels loaded: {}", line, levelCount);
         }
     }
+
+    loadLocomotive();
+}
+
+void LevelManager::loadLocomotive() {
+    locomotive = std::make_shared<Object3D>();
+    locomotive->loadModel("../res/models/Assets/loco/lokomotywa.obj");
+    locomotive->loadModel(R"(..\res\models\Assets\loco\lokomotywa.obj)");
+
+    locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj");
+    locomotive->loadModel(R"(D:\POLIBUDA\APEngine\res\models\Assets\loco\lokomotywa.obj)");
+
+    locomotive->_transform._position = levels.at(0)->_transform._position;
 }
 
 void LevelManager::loadAllLevelsData(const std::string& pathToFile) {

@@ -24,3 +24,4 @@ map_Ns ../wagonTextures/wagonPusty_floorMaterial_Roughness.png
 map_refl ../wagonTextures/wagonPusty_floorMaterial_Metallic.png
 map_Ke ../wagonTextures/wagonPusty_floorMaterial_Emissive.png
 map_Bump -bm 1.000000 ../wagonTextures/wagonPusty_floorMaterial_Normal.png
+
