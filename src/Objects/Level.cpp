@@ -336,14 +336,12 @@ void Level::calculateHitboxes() {
                 testTrigger->_min.y  -= 0.5f;
                 testTrigger->_min.z  -= 0.5f;
                 hitboxes.push_back(testTrigger);
-                testTrigger->draw = true;
 
                 auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->tag = "battery";
                 test->calculateFromMesh(mesh);
                 test->Create(battery.get());
                 hitboxes.push_back(test);
-                test->draw = true;
 
                 batteryPositions.push_back(battery->_transform._position);
 
@@ -594,15 +592,12 @@ void Level::loadFromJSON(const Level& temp) {
 };
 
 void Level::Draw(Shader &shader) {
-    //shader.use();
     if(_model == nullptr) {
         spdlog::error("null model in {}", tag);
         return;
     }
 
     _transform.updateWorldTransform(glm::mat4(1.0f), shader);
-    // shader.setMat4("model", _transform.getModel());
-
     staticModel.Draw(shader);
 }
 
@@ -631,13 +626,13 @@ void Level::LoadDataFromJson(const Level& temp) {
 
 void Level::ResetPositions() {
     int i = 0;
-    for(std::shared_ptr<Box> box : boxes)
+    for(const std::shared_ptr<Box>& box : boxes)
     {
         box->_transform._position = boxPositions[i];
         i++;
     }
     i = 0;
-    for(std::shared_ptr<Battery> battery : batteries)
+    for(const std::shared_ptr<Battery>& battery : batteries)
     {
         battery->_transform._position = batteryPositions[i];
         i++;

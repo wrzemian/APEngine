@@ -81,7 +81,7 @@ void Hitbox::Create(Object3D* object, glm::vec3 offset) {
     debugShape.Initialize();
 }
 
-void Hitbox::Draw(glm::mat4 projectionView) {
+void Hitbox::Draw(glm::mat4 projectionView) const {
     if(!draw) {
         return;
     }

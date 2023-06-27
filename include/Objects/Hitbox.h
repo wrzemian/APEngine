@@ -49,7 +49,7 @@ public:
     DebugShape debugShape;
 
     void Create(Object3D* object, glm::vec3 offset = glm::vec3(0));
-    void Draw(glm::mat4 projectionView);
+    void Draw(glm::mat4 projectionView) const;
     void ImGui() override;
 
     void calculateFromMesh(const Mesh& mesh);
