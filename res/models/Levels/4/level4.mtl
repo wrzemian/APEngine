@@ -1,4 +1,4 @@
-# Blender 3.5.1 MTL File: 'None'
+# Blender 3.6.0 MTL File: 'level1NEW.blend'
 # www.blender.org
 
 newmtl Material.001
@@ -14,15 +14,14 @@ map_Ke ../../Assets/battery/untitled_Material.002_Emission.png
 map_Bump -bm 1.000000 ../../Assets/battery/untitled_Material.002_Normal.png
 
 newmtl Misc.005
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ni 1.450000
 d 1.000000
 illum 2
 map_Kd ../../Assets/kable.png
-map_Ns ../../Assets/roughness_basic.png
 map_Ke ../../Assets/kable_emiss.png
-map_Bump -bm 1.000000 ../../Assets/normal_basic.png
 
 newmtl back_wallMaterial.005
 Ka 1.000000 1.000000 1.000000
@@ -85,15 +84,14 @@ map_Ke ../../Assets/doorTextures/drzwi_drzwi_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/doorTextures/drzwi_drzwi_Normal.png
 
 newmtl exitSign.005
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd ../../Assets/exitSign.png
-map_Ns ../../Assets/roughness_basic.png
-map_Bump -bm 1.000000 ../../Assets/normal_basic.png
+map_Kd ../../Assets/levelNumber.png
 
 newmtl floorMaterial.005
 Ka 1.000000 1.000000 1.000000
@@ -120,6 +118,7 @@ map_Ke ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Emissive.png
 map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_left_wallMaterial_Normal.png
 
 newmtl levelNumber.005
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -127,8 +126,6 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd ../../Assets/levelNumber.png
-map_Ns ../../Assets/roughness_basic.png
-map_Bump -bm 1.000000 ../../Assets/normal_basic.png
 
 newmtl platforma.005
 Ka 1.000000 1.000000 1.000000
