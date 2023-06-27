@@ -21,8 +21,9 @@ d 1.000000
 illum 2
 map_Kd ../../Assets/kable.png
 map_Ns ../../Assets/roughness_basic.png
+map_Pm ../../Assets/wagonTextures/wagonPusty_back_wallMaterial_Metallic.png
 map_Ke ../../Assets/kable_emiss.png
-map_Bump -bm 1.000000 ../../Assets/normal_basic.png
+map_bump -bm 1.000000 ../../Assets/normal_basic.png
 
 newmtl back_wallMaterial.016
 Ka 1.000000 1.000000 1.000000

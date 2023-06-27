@@ -52,7 +52,6 @@ in VS_OUT {
     mat3 TBN;
 } fs_in;
 
-uniform sampler2D diffuseTexture;
 uniform sampler2D normalMap;
 uniform sampler2D shadowMap;
 uniform sampler2D emissiveMap;
@@ -109,7 +108,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 
 void main()
 {
-    vec3 color = texture(diffuseTexture, fs_in.TexCoords).rgb;
+    vec3 color = texture(material.diffuse, fs_in.TexCoords).rgb;
     vec3 normal = vec3(0);
     if (fs_in.Normal == vec3(0,0,0)) {
         normal = texture(normalMap, fs_in.TexCoords).rgb;
