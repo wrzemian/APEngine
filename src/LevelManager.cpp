@@ -1,5 +1,7 @@
 #include "../include/LevelManager.h"
 
+const glm::vec3 defaultPosition = {-7.039000034332275, 4.692999839782715, 4.35699987411499};
+
 LevelManager& LevelManager::getInstance() {
     static LevelManager instance;
     return instance;
@@ -20,9 +22,7 @@ void LevelManager::loadAllLevels(const std::string& pathToFile) {
         auto level = std::make_shared<Level>();
         level->levelId = levelId++;
         level->loadModel(line);
-        level->_transform._position.x = -7.039000034332275;
-        level->_transform._position.y = 4.692999839782715;
-        level->_transform._position.z = 4.35699987411499;
+        level->_transform._position = defaultPosition;
         level->calculateHitboxes();
 
         std::ifstream checkFile(line);
@@ -44,7 +44,7 @@ void LevelManager::loadAllLevels(const std::string& pathToFile) {
 void LevelManager::loadLocomotive() {
     locomotive = std::make_shared<Object3D>();
     locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj"); // TODO: make sure this path is valid
-    locomotive->_transform._position = levels.at(0)->_transform._position;
+    locomotive->_transform._position = defaultPosition;
 }
 
 void LevelManager::loadInvisibleWalls() {

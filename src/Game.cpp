@@ -66,7 +66,6 @@ namespace Game {
 
     SpriteRenderer jumpUI;
 
-    float movImage = 0;
     HUD hud;
     HUD hud2;
     Menu menu;
@@ -246,7 +245,6 @@ namespace Game {
             processInput();
             playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
             playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
-            movImage -= 0.1;
 
 
             Engine::moveObjects();
