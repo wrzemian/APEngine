@@ -1,4 +1,4 @@
-# Blender 3.5.1 MTL File: 'None'
+# Blender 3.6.0 MTL File: 'level1NEW.blend'
 # www.blender.org
 
 newmtl Material.013
@@ -46,6 +46,18 @@ map_Ns ../../Assets/chest2/untitled_box2_Roughness.png
 map_refl ../../Assets/chest2/untitled_box2_Metallic.png
 map_Bump -bm 1.000000 ../../Assets/chest2/untitled_box2_Normal.png
 
+newmtl decoboxMaterial.005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_BaseColor.png
+map_Ns ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_Roughness.png
+map_refl ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_Metallic.png
+map_Ke ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_Emissive.png
+map_Bump -bm 1.000000 ../../Assets/decoBoxTextures/decoBox_decoboxMaterial_Normal.png
+
 newmtl decoboxMaterial.012
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -92,6 +104,18 @@ illum 2
 map_Kd ../../Assets/exitSign.png
 map_Ns ../../Assets/roughness_basic.png
 map_Bump -bm 1.000000 ../../Assets/normal_basic.png
+
+newmtl floorMaterial.004
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ../../Assets/wagonTextures/wagonPusty_floorMaterial_BaseColor.png
+map_Ns ../../Assets/wagonTextures/wagonPusty_floorMaterial_Roughness.png
+map_refl ../../Assets/wagonTextures/wagonPusty_floorMaterial_Metallic.png
+map_Ke ../../Assets/wagonTextures/wagonPusty_floorMaterial_Emissive.png
+map_Bump -bm 1.000000 ../../Assets/wagonTextures/wagonPusty_floorMaterial_Normal.png
 
 newmtl floorMaterial.012
 Ka 1.000000 1.000000 1.000000
