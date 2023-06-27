@@ -17,6 +17,8 @@ private:
     glm::vec3 markPosHelper;
     bool joystickMoved = false;
     bool isPause = false;
+    bool isEnd = false;
+    int counter;
 
 public:
     bool isVisible1() const;
@@ -33,7 +35,7 @@ public:
     void drawMenu(glm::vec3 position,
                   glm::vec2 size, float rotate);
 
-    int counter = 99999999;
+
     bool isVisible = true;
 
 };

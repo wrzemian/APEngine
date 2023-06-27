@@ -33,9 +33,13 @@ void Menu::pickMenu(int chosen) {
 
 void Menu::processInput(InputSystem* inputSystem) {
     int i;
+    if(counter == 0){
+        counter = 9999;
+    }
     if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X)  < -0.2|| inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_LEFT)){
         if(joystickMoved == false) {
             this->counter--;
+            std::cout<<counter;
             joystickMoved = true;
         }
         i = abs(counter%3);
@@ -60,7 +64,8 @@ void Menu::processInput(InputSystem* inputSystem) {
         markPosHelper = markPos[i];
     }
     else if(inputSystem->GetKeyDown(GLFW_KEY_SPACE) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)){
-        this->pickMenu(abs(counter%3));
+
+         this->pickMenu(abs(counter%3));
     }
     else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) < 0.2 && inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)> -0.2 )
     {
@@ -129,15 +134,22 @@ void Menu::initMenu(const char *filePath) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    mark[0].initRenderData("res/UI/start.png");
-    mark[1].initRenderData("res/UI/load.png");
-    mark[2].initRenderData("res/UI/exit.png");
+    if (!isPause) {
+        mark[0].initRenderData("res/UI/start.png");
+        mark[1].initRenderData("res/UI/load.png");
+        mark[2].initRenderData("res/UI/exit.png");
+    }
+    else if(isPause){
+        mark[0].initRenderData("res/UI/resume.png");
+        mark[1].initRenderData("res/UI/reset.png");
+        mark[2].initRenderData("res/UI/exit.png");
+    }
 }
 
 void Menu::drawMenu(glm::vec3 position,
                     glm::vec2 size, float rotate) {
     {
-        mark[abs(counter%3)].DrawSprite(markPosHelper,glm::vec2(250.f,130.f),0.f);
+            mark[abs(counter % 3)].DrawSprite(markPosHelper, glm::vec2(250.f, 130.f), 0.f);
         shader.use();
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600));
@@ -166,13 +178,14 @@ void Menu::drawMenu(glm::vec3 position,
 }
 
 Menu::Menu(const Shader &shader) : shader(shader) {
-    for(int i=0; i<3;i++) {
+    this->counter = 999;
+    for(int i=0; i<sizeof(mark);i++) {
         SpriteRenderer mark1(this->shader);
         mark[i] = mark1;
     }
-    markPos[0] = glm::vec3(20.f,0.f,1.f);
-    markPos[1] = glm::vec3(275.f,0.f,1.f);
-    markPos[2] = glm::vec3(520.f,0.f,1.f);
+    markPos[0] = glm::vec3(20.f,20.f,1.f);
+    markPos[1] = glm::vec3(275.f,20.f,1.f);
+    markPos[2] = glm::vec3(520.f,20.f,1.f);
     markPosHelper = markPos[0];
     isPause = false;
 }
@@ -189,14 +202,14 @@ bool Menu::isVisible1() const {
 }
 
 Menu::Menu(const Shader &shader, bool isPause) : shader(shader), isPause(isPause) {
-
-    for(int i=0; i<3;i++) {
+this->counter  = 999;
+    for(int i=0; i<sizeof(mark);i++) {
         SpriteRenderer mark1(this->shader);
         mark[i] = mark1;
     }
-    markPos[0] = glm::vec3(0.f,0.f,1.f);
-    markPos[1] = glm::vec3(275.f,0.f,1.f);
-    markPos[2] = glm::vec3(520.f,0.f,1.f);
+    markPos[0] = glm::vec3(20.f,40.f,1.f);
+    markPos[1] = glm::vec3(270.f,40.f,1.f);
+    markPos[2] = glm::vec3(530.f,40.f,1.f);
     markPosHelper = markPos[0];
     isPause = true;
     isVisible = false;

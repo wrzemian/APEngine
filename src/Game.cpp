@@ -74,6 +74,7 @@ namespace Game {
     HUD hud2;
     Menu menu;
     Menu menuPause;
+    SpriteRenderer endingScreen;
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
@@ -307,7 +308,10 @@ namespace Game {
 
         Menu menu2(imageShader,true);
         menuPause = menu2;
-        menuPause.initMenu("res/UI/battery.png");
+        menuPause.initMenu("res/UI/pause_screen1.png");
+
+
+
 
 
 //        Model ourModel("include/Animations2/testing/first_character.dae");
@@ -378,11 +382,12 @@ namespace Game {
             UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 300.f, 1.f),
                                                                         glm::vec2(250.f, 300.f), 0);
 
+
+
             Engine::renderHitboxes(projection * view);
 
 //       *Engine::camera.followObject(player1);
             Engine::resolveCollisions();
-
         }
         Engine::LoopEnd();
 
@@ -423,6 +428,7 @@ namespace Game {
         if(LevelManager::getInstance().currentLevel>=3) {
             for (int i = 0; i < 3; i++) {
                 UITips[i].isVisible = false;
+
             }
         }
     }
