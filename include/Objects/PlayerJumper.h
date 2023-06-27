@@ -19,7 +19,7 @@ private:
     bool canPickUpBattery = false;
     glm::vec3 batteryOffset = glm::vec3(-0.25f, 1.0f, 0.0f);
 
-    glm::vec3 boxOffset = glm::vec3(1.0f, 1.0f, 0.0f);
+    glm::vec3 boxOffset = glm::vec3(0.7f, 0.45f, 0.0f);
 
     glm::vec3 direction =  glm::vec3(0.0f, 0.0f, 0.0f);
 
