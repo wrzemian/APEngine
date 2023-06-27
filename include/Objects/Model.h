@@ -197,19 +197,18 @@ private:
             aiTextureType textureType = static_cast<aiTextureType>(i);
             unsigned int textureCount = material->GetTextureCount(textureType);
 
-            if (textureCount > 0) {
-                // Print the texture type
-                std::cout << "Texture Type: " << aiTextureTypeToString(textureType) << ", " << textureType << ", " << i << std::endl;
-
-                // Iterate over the textures of the current texture type
-                for (unsigned int j = 0; j < textureCount; j++) {
-                    aiString texturePath;
-                    if (material->GetTexture(textureType, j, &texturePath) == AI_SUCCESS) {
-                        // Print the texture path
-                        std::cout << "Texture Path: " << texturePath.C_Str() << std::endl;
-                    }
-                }
-            }
+//            if (textureCount > 0) {
+//                //Print the texture type
+//                std::cout << "Texture Type: " << aiTextureTypeToString(textureType) << ", " << textureType << ", " << i << std::endl;
+//                //Iterate over the textures of the current texture type
+//                for (unsigned int j = 0; j < textureCount; j++) {
+//                    aiString texturePath;
+//                    if (material->GetTexture(textureType, j, &texturePath) == AI_SUCCESS) {
+//                        // Print the texture path
+//                        std::cout << "Texture Path: " << texturePath.C_Str() << std::endl;
+//                    }
+//                }
+//            }
         }
 
 
@@ -298,7 +297,7 @@ private:
 public:
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, const std::string& typeName) {
         std::vector<Texture> textures;
-        spdlog::info("Trying to load {} texture, with count = {}", type, mat->GetTextureCount(type));
+        //spdlog::info("Trying to load {} texture, with count = {}", type, mat->GetTextureCount(type));
         for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
         {
             aiString str;

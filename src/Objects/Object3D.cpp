@@ -167,5 +167,5 @@ void Object3D::loadAnimation(const std::string& daePath) {
 }
 
 void Object3D::unusualCollision(Object3D *other) {
-    spdlog::info("Object3D unusual collision called");
+    //spdlog::info("Object3D unusual collision called");
 }
