@@ -1,0 +1,15 @@
+{
+    "type": "dirLight",
+    "ambientX": -1.0,
+    "ambientY": -1.0,
+    "ambientZ": -1.0,
+    "diffuseX": 0.4000000059604645,
+    "diffuseY": 0.4000000059604645,
+    "diffuseZ": 0.4000000059604645,
+    "specularX": 0.5,
+    "specularY": 0.5,
+    "specularZ": 0.5,
+    "directionX": -0.20000000298023225,
+    "directionY": -0.0860000029206276,
+    "directionZ": -0.30000001192092898
+}
