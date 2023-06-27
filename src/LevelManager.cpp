@@ -38,17 +38,27 @@ void LevelManager::loadAllLevels(const std::string& pathToFile) {
     }
 
     loadLocomotive();
+    loadInvisibleWalls();
 }
 
 void LevelManager::loadLocomotive() {
     locomotive = std::make_shared<Object3D>();
-    locomotive->loadModel("../res/models/Assets/loco/lokomotywa.obj");
-    locomotive->loadModel(R"(..\res\models\Assets\loco\lokomotywa.obj)");
-
-    locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj");
-    locomotive->loadModel(R"(D:\POLIBUDA\APEngine\res\models\Assets\loco\lokomotywa.obj)");
-
+    locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj"); // TODO: make sure this path is valid
     locomotive->_transform._position = levels.at(0)->_transform._position;
+}
+
+void LevelManager::loadInvisibleWalls() {
+    Model allWalls("../../res/models/Levels/additionalHitboxes.obj");
+    for (auto& mesh: allWalls.meshes) {
+        auto hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+        hitbox->Create(levels.at(0).get()); // jezu ale to obrzydliwe
+        hitbox->calculateFromMesh(mesh);
+        hitboxes.push_back(hitbox);
+        spdlog::info("Invisible wall from mesh {}, min = ({},{},{}), max = ({}, {},{})", mesh._name,
+            hitbox->currentMin().x, hitbox->currentMin().y, hitbox->currentMin().z,
+            hitbox->currentMax().x, hitbox->currentMax().y, hitbox->currentMax().z
+        );
+    }
 }
 
 void LevelManager::loadAllLevelsData(const std::string& pathToFile) {
@@ -133,3 +143,4 @@ LevelManager::LevelManager() {
 LevelManager::~LevelManager() {
     clearLevels();
 }
+
