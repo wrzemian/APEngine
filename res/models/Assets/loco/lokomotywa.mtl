@@ -1,7 +1,19 @@
 # Blender 3.6.0 MTL File: 'None'
 # www.blender.org
 
-newmtl decoboxMaterial.005
+newmtl lok
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd untitled_floorMaterial.004_BaseColor.png
+map_Ns untitled_floorMaterial.004_Roughness.png
+map_refl untitled_floorMaterial.004_Metallic.png
+map_Bump -bm 1.000000 untitled_floorMaterial.004_Normal.png
+
+newmtl okn
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -12,17 +24,3 @@ map_Kd untitled_decoboxMaterial.005_BaseColor.png
 map_Ns untitled_decoboxMaterial.005_Roughness.png
 map_refl untitled_decoboxMaterial.005_Metallic.png
 map_Bump -bm 1.000000 untitled_decoboxMaterial.005_Normal.png
-
-newmtl floorMaterial.004
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd ../wagonTextures/wagonPusty_floorMaterial_BaseColor.png
-map_Ns ../wagonTextures/wagonPusty_floorMaterial_Roughness.png
-map_refl ../wagonTextures/wagonPusty_floorMaterial_Metallic.png
-map_Ke ../wagonTextures/wagonPusty_floorMaterial_Emissive.png
-map_Bump -bm 1.000000 ../wagonTextures/wagonPusty_floorMaterial_Normal.png
-
