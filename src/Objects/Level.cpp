@@ -84,6 +84,8 @@ void Level::calculateHitboxes() {
                 areaTriggerHitbox->_color.z = 1.0;
                 areaTriggerHitbox->_max.y  -= 0.5f;
                 areaTriggerHitbox->_min.x  -= 1.2f;
+                areaTriggerHitbox->_max.z  += 0.7f;
+                areaTriggerHitbox->_min.z  -= 0.7f;
                 areaTriggerHitbox->isTrigger = true;
                 hitboxes.push_back(areaTriggerHitbox);
 
@@ -160,12 +162,12 @@ void Level::calculateHitboxes() {
             }
 
             case 'R': { // Roof
-                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                hitbox->calculateFromMesh(mesh);
-                hitbox->Create(this);
-
+//                hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+//                hitbox->calculateFromMesh(mesh);
+//                hitbox->Create(this);
+//
+//                hitbox->tag = "roof";
                 staticModel.meshes.push_back(mesh);
-                hitbox->tag = "roof";
 
                 spdlog::info("Roof created {}", mesh._name);
 
@@ -291,6 +293,24 @@ void Level::calculateHitboxes() {
                 box->_transform._position = _transform._position;
                 box->_transform._position += middle;
 
+                auto testTrigger = std::make_shared<Hitbox>(Hitbox::STATIC);
+                testTrigger->tag = "box";
+                testTrigger->isTrigger = true;
+                testTrigger->calculateFromMesh(mesh);
+                testTrigger->Create(box.get());
+                testTrigger->_color.x = 0.5;
+                testTrigger->_color.y = 1.0;
+                testTrigger->_color.z = 1.0;
+                testTrigger->_max.x  += 0.5f;
+                testTrigger->_max.y  += 0.5f;
+                testTrigger->_max.z  += 0.5f;
+                testTrigger->_min.x  -= 0.5f;
+                testTrigger->_min.y  -= 0.5f;
+                testTrigger->_min.z  -= 0.5f;
+                hitboxes.push_back(testTrigger);
+                testTrigger->draw = true;
+
+
                 auto boxHitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 boxHitbox->calculateFromModel(*box->_model);
 
@@ -336,14 +356,12 @@ void Level::calculateHitboxes() {
                 testTrigger->_min.y  -= 0.5f;
                 testTrigger->_min.z  -= 0.5f;
                 hitboxes.push_back(testTrigger);
-                testTrigger->draw = true;
 
                 auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->tag = "battery";
                 test->calculateFromMesh(mesh);
                 test->Create(battery.get());
                 hitboxes.push_back(test);
-                test->draw = true;
 
                 batteryPositions.push_back(battery->_transform._position);
 
@@ -594,15 +612,12 @@ void Level::loadFromJSON(const Level& temp) {
 };
 
 void Level::Draw(Shader &shader) {
-    //shader.use();
     if(_model == nullptr) {
         spdlog::error("null model in {}", tag);
         return;
     }
 
     _transform.updateWorldTransform(glm::mat4(1.0f), shader);
-    // shader.setMat4("model", _transform.getModel());
-
     staticModel.Draw(shader);
 }
 
@@ -631,13 +646,13 @@ void Level::LoadDataFromJson(const Level& temp) {
 
 void Level::ResetPositions() {
     int i = 0;
-    for(std::shared_ptr<Box> box : boxes)
+    for(const std::shared_ptr<Box>& box : boxes)
     {
         box->_transform._position = boxPositions[i];
         i++;
     }
     i = 0;
-    for(std::shared_ptr<Battery> battery : batteries)
+    for(const std::shared_ptr<Battery>& battery : batteries)
     {
         battery->_transform._position = batteryPositions[i];
         i++;

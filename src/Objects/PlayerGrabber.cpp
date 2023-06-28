@@ -17,6 +17,7 @@ void PlayerGrabber::initPlayer(InputSystem* inputSystem) {
     inputSystem->monitorKey(GLFW_KEY_DOWN);
     inputSystem->monitorKey(GLFW_KEY_KP_2);
     inputSystem->monitorKey(GLFW_KEY_KP_3);
+    inputSystem->monitorKey(GLFW_KEY_KP_4);
     //inputSystem->monitorKey(GLFW_KEY_SPACE);
     this->loadAnimations();
 }
@@ -91,6 +92,20 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
     if (inputSystem->GetKeyDown(GLFW_KEY_KP_3) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_Y)) {
         Grab();
     }
+    if (inputSystem->GetKeyDown(GLFW_KEY_KP_4) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_B)) {
+        if(!pickedUpBox && lastTouchedBox != nullptr && lastTouchedBox->canBePickedUp)
+        {
+            pickedUpBox = true;
+            lastTouchedBox->SwitchGravity(false);
+            lastTouchedBox->canBePickedUp = false;
+        }
+        else if(pickedUpBox && lastTouchedBox != nullptr && !lastTouchedBox->canBePickedUp)
+        {
+            pickedUpBox = false;
+            lastTouchedBox->SwitchGravity(true);
+            lastTouchedBox->canBePickedUp = true;
+        }
+    }
     /* if (inputSystem->GetKeyDown(GLFW_KEY_SPACE)) {
          Jump();
          std::cout<<_velocity.y<<std::endl;
@@ -106,12 +121,22 @@ void PlayerGrabber::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) 
         battery->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(batteryOffset, 1.0f) )- battery->modelMiddle;
     }
     grabber->UpdateGrabber(this->_transform._position,this->_transform._rotation);
+    if(pickedUpBox)
+    {
+        glm::quat playerQuat = glm::quat(_transform._rotation); // Convert Euler angles to quaternion
+        glm::mat4 rotationMat = glm::mat4_cast(playerQuat); // Convert quaternion to rotation matrix
+        lastTouchedBox->_transform._position = _transform._position + glm::vec3(rotationMat * glm::vec4(boxOffset, 1.0f) )  - lastTouchedBox->modelMiddle;
+    }
 }
 
 void PlayerGrabber::onCollision(Object3D *other) {
     if(other->tag == "battery")
     {
         canPickUpBattery = true;
+    }
+    if(other->tag == "box")
+    {
+        lastTouchedBox = other;
     }
 }
 
@@ -143,6 +168,13 @@ void PlayerGrabber::onCollisionExit(Object3D *other) {
     {
         canPickUpBattery = false;
     }
+    if(other->tag == "box")
+    {
+        if(other == lastTouchedBox && !pickedUpBox)
+        {
+            lastTouchedBox = nullptr;
+        }
+    }
 }
 
 PlayerGrabber::PlayerGrabber() {
@@ -157,8 +189,15 @@ void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
         AudioManager::GetInstance()->PlaySound(Audio::CRANK_MOVE);
 
-        this->animator.PlayAnimation(&walkP);
-//        this->grabber->animator.PlayAnimation(&this->grabber->walkA);
+        currentAnimation = walkP;
+        previousAnimation = standP;
+        blendFactor = 0;
+        animator.PlayAnimation(&walkP);
+
+        this->grabber->currentAnimation = this->grabber->walkA;
+        this->grabber->previousAnimation = this->grabber->stamdA;
+        this->grabber->blendFactor = 0;
+        this->grabber->animator.PlayAnimation(&this->grabber->walkA);
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
 //        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
         this->recentlyMoved = 0;
@@ -168,7 +207,19 @@ void PlayerGrabber::switchAnimationWalk() {
 
 void PlayerGrabber::switchAnimationJump() {
     if(jumpCount == 0){
+        currentAnimation = jumpP;
+        this->grabber->currentAnimation = this->grabber->jumpA;
+        if(this->walking == 1) {
+            previousAnimation = walkP;
+            this->grabber->previousAnimation = this->grabber->walkA;
+        } else {
+            previousAnimation = standP;
+            this->grabber->previousAnimation = this->grabber->stamdA;
+        }
+        blendFactor = 1;
+        this->grabber->blendFactor = 0;
         this->animator.PlayAnimation(&jumpP);
+        this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
 //        this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
     }
 }
@@ -177,8 +228,20 @@ void PlayerGrabber::switchAnimationStand() {
     if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_STANDING.dae");
 //        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_STANDING.dae");
+        currentAnimation = standP;
+        this->grabber->currentAnimation = this->grabber->stamdA;
+        if(this->walking == 1) {
+            previousAnimation = walkP;
+            this->grabber->previousAnimation = this->grabber->walkA;
+        } else {
+            previousAnimation = standP;
+            this->grabber->previousAnimation = this->grabber->stamdA;
+        }
+        blendFactor = 0;
+        this->grabber->blendFactor = 0;
         this->animator.PlayAnimation(&standP);
         this->grabber->animator.PlayAnimation(&this->grabber->stamdA);
+        //this->grabber->animator.PlayAnimation(&this->grabber->stamdA);
         this->recentlyMoved = 1;
         this->walking = 0;
     }
@@ -187,8 +250,15 @@ void PlayerGrabber::switchAnimationStand() {
 void PlayerGrabber::switchAnimationGrab() {
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae");
 //    this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
-    this->animator.PlayAnimation(&hookingP);
-//    this->grabber->animator.PlayAnimation(&this->grabber->hookingA);
+    this->grabber->currentAnimation = hookingP;
+    if(this->walking == 1) {
+        this->grabber->previousAnimation = this->grabber->walkA;
+    } else {
+        this->grabber->previousAnimation = this->grabber->stamdA;
+    }
+    blendFactor = 0;
+    this->grabber->blendFactor = 0;
+    this->grabber->animator.PlayAnimation(&hookingP);
 }
 
 
@@ -242,4 +312,6 @@ void PlayerGrabber::DropBattery() {
         canPickUpBattery= false;
     }
 }
+
+
 

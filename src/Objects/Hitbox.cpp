@@ -81,7 +81,7 @@ void Hitbox::Create(Object3D* object, glm::vec3 offset) {
     debugShape.Initialize();
 }
 
-void Hitbox::Draw(glm::mat4 projectionView) {
+void Hitbox::Draw(glm::mat4 projectionView) const {
     if(!draw) {
         return;
     }
@@ -107,17 +107,17 @@ void Hitbox::ImGui()  {
     ImGui::Begin(getWindowName().c_str());
     ImGui::SetWindowSize(ImVec2(300, 420));
 
-    ImGui::SliderFloat("min X", &_min.x, -20.0f, 20.0f);
-    ImGui::SliderFloat("min Y", &_min.y, -20.0f, 20.0f);
-    ImGui::SliderFloat("min Z", &_min.z, -20.0f, 20.0f);
+    ImGui::SliderFloat("min X", &_min.x, -2.0f, 2.0f);
+    ImGui::SliderFloat("min Y", &_min.y, -2.0f, 2.0f);
+    ImGui::SliderFloat("min Z", &_min.z, -2.0f, 2.0f);
 
-    ImGui::SliderFloat("max X", &_max.x, -20.0f, 20.0f);
-    ImGui::SliderFloat("max Y", &_max.y, -20.0f, 20.0f);
-    ImGui::SliderFloat("max Z", &_max.z, -20.0f, 20.0f);
+    ImGui::SliderFloat("max X", &_max.x, -2.0f, 2.0f);
+    ImGui::SliderFloat("max Y", &_max.y, -2.0f, 2.0f);
+    ImGui::SliderFloat("max Z", &_max.z, -2.0f, 2.0f);
 
-    ImGui::SliderFloat("offset X", &_offset.x, -5, 5);
-    ImGui::SliderFloat("offset Y", &_offset.y, -5, 5);
-    ImGui::SliderFloat("offset Z", &_offset.z, -5, 5);
+    ImGui::SliderFloat("offset X", &_offset.x, -2, 2);
+    ImGui::SliderFloat("offset Y", &_offset.y, -2, 2);
+    ImGui::SliderFloat("offset Z", &_offset.z, -2, 2);
 
     ImGui::SliderFloat("R", &_color.x, 0, 1);
     ImGui::SliderFloat("G", &_color.y, 0, 1);

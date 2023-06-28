@@ -10,6 +10,7 @@
 class LevelManager : public IGui {
 public:
     typedef std::shared_ptr<Level> LevelPtr;
+    typedef std::shared_ptr<Hitbox> HitboxPtr;
 
     static LevelManager& getInstance();
 
@@ -24,7 +25,12 @@ public:
     int currentLevel = 0;
 
 private:
+    void loadLocomotive();
+    void loadInvisibleWalls();
+
+    std::shared_ptr<Object3D> locomotive = nullptr;
     std::vector<LevelPtr> levels;
+    std::vector<HitboxPtr> hitboxes;
     std::vector<std::string> successfulPaths;
     std::vector<std::string> failedPaths;
     int levelCount = 0;

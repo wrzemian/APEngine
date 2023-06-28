@@ -1,5 +1,7 @@
 #include "../include/LevelManager.h"
 
+const glm::vec3 defaultPosition = {-7.039000034332275, 4.692999839782715, 4.35699987411499};
+
 LevelManager& LevelManager::getInstance() {
     static LevelManager instance;
     return instance;
@@ -20,9 +22,7 @@ void LevelManager::loadAllLevels(const std::string& pathToFile) {
         auto level = std::make_shared<Level>();
         level->levelId = levelId++;
         level->loadModel(line);
-        level->_transform._position.x = -7.039000034332275;
-        level->_transform._position.y = 4.692999839782715;
-        level->_transform._position.z = 4.35699987411499;
+        level->_transform._position = defaultPosition;
         level->calculateHitboxes();
 
         std::ifstream checkFile(line);
@@ -35,6 +35,32 @@ void LevelManager::loadAllLevels(const std::string& pathToFile) {
             levelCount++;
             spdlog::info("Successfully loaded level {}. Total levels loaded: {}", line, levelCount);
         }
+    }
+
+    loadLocomotive();
+    loadInvisibleWalls();
+}
+
+void LevelManager::loadLocomotive() {
+    spdlog::info("loading locomotive");
+    locomotive = std::make_shared<Object3D>();
+    locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj"); // TODO: make sure this path is valid
+    locomotive->_transform._position = defaultPosition;
+    locomotive->_transform._position.x = levels.at(levels.size()-1)->modelMaxVertex.x;
+}
+
+void LevelManager::loadInvisibleWalls() {
+    spdlog::info("loading invisible walls");
+    Model allWalls("../../res/models/Levels/additionalHitboxes.obj");
+    for (auto& mesh: allWalls.meshes) {
+        auto hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+        hitbox->Create(levels.at(0).get()); // jezu ale to obrzydliwe
+        hitbox->calculateFromMesh(mesh);
+        hitboxes.push_back(hitbox);
+        spdlog::info("Invisible wall from mesh {}, min = ({},{},{}), max = ({}, {},{})", mesh._name,
+            hitbox->currentMin().x, hitbox->currentMin().y, hitbox->currentMin().z,
+            hitbox->currentMax().x, hitbox->currentMax().y, hitbox->currentMax().z
+        );
     }
 }
 
@@ -120,3 +146,4 @@ LevelManager::LevelManager() {
 LevelManager::~LevelManager() {
     clearLevels();
 }
+

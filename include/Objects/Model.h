@@ -197,19 +197,18 @@ private:
             aiTextureType textureType = static_cast<aiTextureType>(i);
             unsigned int textureCount = material->GetTextureCount(textureType);
 
-            if (textureCount > 0) {
-                // Print the texture type
-                std::cout << "Texture Type: " << aiTextureTypeToString(textureType) << ", " << textureType << ", " << i << std::endl;
-
-                // Iterate over the textures of the current texture type
-                for (unsigned int j = 0; j < textureCount; j++) {
-                    aiString texturePath;
-                    if (material->GetTexture(textureType, j, &texturePath) == AI_SUCCESS) {
-                        // Print the texture path
-                        std::cout << "Texture Path: " << texturePath.C_Str() << std::endl;
-                    }
-                }
-            }
+//            if (textureCount > 0) {
+//                //Print the texture type
+//                std::cout << "Texture Type: " << aiTextureTypeToString(textureType) << ", " << textureType << ", " << i << std::endl;
+//                //Iterate over the textures of the current texture type
+//                for (unsigned int j = 0; j < textureCount; j++) {
+//                    aiString texturePath;
+//                    if (material->GetTexture(textureType, j, &texturePath) == AI_SUCCESS) {
+//                        // Print the texture path
+//                        std::cout << "Texture Path: " << texturePath.C_Str() << std::endl;
+//                    }
+//                }
+//            }
         }
 
 
@@ -217,24 +216,16 @@ private:
         // 1. diffuse maps
         std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-//         2. specular maps
-        std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
         // 3. normal maps
         std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
         textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-        // 4. height maps
-        std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
-        textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
-        // 5. emissive maps
-        std::vector<Texture> emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive");
-        textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
-        // 6. roughness maps
-        std::vector<Texture> roughnessMaps = loadMaterialTextures(material, aiTextureType_SHININESS, "texture_rough");
-        textures.insert(textures.end(), roughnessMaps.begin(), roughnessMaps.end());
         // 7. metalic maps
         std::vector<Texture> metalicMaps = loadMaterialTextures(material, aiTextureType_METALNESS, "texture_metal");
         textures.insert(textures.end(), metalicMaps.begin(), metalicMaps.end());
+        // 5. emissive maps
+        std::vector<Texture> emissiveMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "texture_emissive");
+        textures.insert(textures.end(), emissiveMaps.begin(), emissiveMaps.end());
+
 
 
         // return a mesh object created from the extracted mesh data
@@ -298,7 +289,7 @@ private:
 public:
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, const std::string& typeName) {
         std::vector<Texture> textures;
-        spdlog::info("Trying to load {} texture, with count = {}", type, mat->GetTextureCount(type));
+        //spdlog::info("Trying to load {} texture, with count = {}", type, mat->GetTextureCount(type));
         for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
         {
             aiString str;

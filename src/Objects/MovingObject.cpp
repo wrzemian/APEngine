@@ -124,6 +124,18 @@ void MovingObject::loadFromJSON(MovingObject temp) {
     this->_velocity = temp._velocity;
 }
 
+void MovingObject::SwitchGravity(bool state) {
+    Object3D::SwitchGravity(state);
+    if(state)
+    {
+        _gravity = glm::vec3(0, -10, 0);
+    }
+    else if(!state)
+    {
+        _gravity = glm::vec3(0, 0, 0);
+    }
+}
+
 
 
 

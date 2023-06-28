@@ -51,14 +51,22 @@ public:
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;
 
-    Model animatedModel;
     Animation animation;
+    Animation currentAnimation;
+    Animation previousAnimation;
     Animator animator;
     Shader* _shader = nullptr;
 
     std::string _path;
 
+    bool canBePickedUp = true;
+
+    float blendFactor = 0;
+    float UpdateBlendFactor();
+
     void calculateBoundingBox();
 
     void changeVertexPositions(const glm::vec3 &offset);
+
+    virtual void SwitchGravity(bool state);
 };

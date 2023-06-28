@@ -20,7 +20,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd untitled_floorMaterial.004_BaseColor.png
-map_Ns untitled_floorMaterial.004_Roughness.png
-map_refl untitled_floorMaterial.004_Metallic.png
-map_Bump -bm 1.000000 untitled_floorMaterial.004_Normal.png
+map_Kd ../wagonTextures/wagonPusty_floorMaterial_BaseColor.png
+map_Ns ../wagonTextures/wagonPusty_floorMaterial_Roughness.png
+map_refl ../wagonTextures/wagonPusty_floorMaterial_Metallic.png
+map_Ke ../wagonTextures/wagonPusty_floorMaterial_Emissive.png
+map_Bump -bm 1.000000 ../wagonTextures/wagonPusty_floorMaterial_Normal.png
+

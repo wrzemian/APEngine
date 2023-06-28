@@ -183,14 +183,17 @@ void Menu::drawMenu(glm::vec3 position,
 
 Menu::Menu(const Shader &shader) : shader(shader) {
     this->counter = 999;
-    for(int i=0; i<sizeof(mark);i++) {
+    spdlog::info("test");
+    for(int i=0; i<3;i++) {
         SpriteRenderer mark1(this->shader);
         mark[i] = mark1;
     }
+    spdlog::info("test2");
     markPos[0] = glm::vec3(20.f,20.f,1.f);
     markPos[1] = glm::vec3(275.f,20.f,1.f);
     markPos[2] = glm::vec3(520.f,20.f,1.f);
     markPosHelper = markPos[0];
+    spdlog::info("test3");
     isPause = false;
 }
 
@@ -207,7 +210,7 @@ bool Menu::isVisible1() const {
 
 Menu::Menu(const Shader &shader, bool isPause) : shader(shader), isPause(isPause) {
 this->counter  = 999;
-    for(int i=0; i<sizeof(mark);i++) {
+    for(int i=0; i<3;i++) {
         SpriteRenderer mark1(this->shader);
         mark[i] = mark1;
     }
