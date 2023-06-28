@@ -23,6 +23,8 @@ public:
 
     int currentLevel = 0;
 
+    void setCurrentLevel(int currentLevel);
+
 private:
     void loadLocomotive();
     void loadInvisibleWalls();
@@ -34,6 +36,7 @@ private:
     std::vector<std::string> failedPaths;
     int levelCount = 0;
 
+private:
     LevelManager();
     ~LevelManager();
 

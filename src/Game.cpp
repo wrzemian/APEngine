@@ -59,7 +59,7 @@ namespace Game {
 //    void ImGui();
 
     void renderScene(Shader shader, Camera camera);
-
+    bool ended = false;
     Shader simpleDepthShader;
     Shader debugDepthQuad;
     Shader spriteShader;
@@ -102,7 +102,7 @@ namespace Game {
     float bgSpeed = -50.0f;
     bool slowdown = false;
 
-    float waitTime = 1.0f;
+    float waitTime = 0.3f;
     float waitTimer = 0.0f;
     bool nextLevel = false;
 
@@ -126,6 +126,8 @@ namespace Game {
 
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_SPACE);
+        inputSystem.monitorKey(GLFW_KEY_P);
+        inputSystem.monitorKey(GLFW_KEY_N);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
         spdlog::info("init jumper");
@@ -280,6 +282,8 @@ namespace Game {
 
 //                spdlog::info("ENDCREEN");
                 UITips[3].DrawSprite(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
+                ended = true;
+
             }
             if(LevelManager::getInstance().currentLevel<3){
                 UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
@@ -368,8 +372,31 @@ namespace Game {
                 playerGrabber.Jump();
 
             }
-            if(inputSystem.GetKeyDown(GLFW_KEY_O) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
+            if(inputSystem.GetKeyDown(GLFW_KEY_P) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
                 menuPause.isVisible = true;
+            }
+
+            if(inputSystem.GetKeyDown(GLFW_KEY_N) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
+            onWin();
+            }
+
+            if (ended == true && inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
+            menu.isVisible = true;
+            UITips[3].isVisible = false;
+                slowdown = false;
+                ended = false;
+
+                LevelManager::getInstance().setCurrentLevel(0);
+                playerGrabber.DropBattery();
+                playerJumper.DropBattery();
+                playerGrabber.levelId = LevelManager::getInstance().currentLevel;
+                playerJumper.levelId = LevelManager::getInstance().currentLevel;
+                grabber.levelId = LevelManager::getInstance().currentLevel;
+
+                playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+                playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+
+//                LevelManager::getInstance().getCurrentLevel()->ResetPositions();
             }
         }
 

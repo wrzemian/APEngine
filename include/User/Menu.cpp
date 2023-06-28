@@ -12,6 +12,7 @@
 void Menu::pickMenu(int chosen) {
     switch (chosen) {
         case 0:
+            LevelManager::getInstance().setCurrentLevel(0);
             isVisible = false;
             Engine::camera->MoveToTarget(glm::vec3(-3.91, 10.6, 17.3));
             break;

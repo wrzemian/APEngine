@@ -117,3 +117,8 @@ LevelManager::~LevelManager() {
     clearLevels();
 }
 
+void LevelManager::setCurrentLevel(int currentLevel) {
+    LevelManager::currentLevel = currentLevel;
+}
+
+
