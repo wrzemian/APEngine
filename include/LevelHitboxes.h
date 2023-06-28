@@ -23,19 +23,33 @@ class LevelHitboxes {
         }
 
         HitboxData getHitbox(const std::string& key, const std::string& levelName) {
-            char lastChar = levelName.back();  // Extract the last character from the levelName
-
-            // Find the correct map based on the last character
-            auto mapIter = hitboxMaps.find(lastChar);
-            if (mapIter != hitboxMaps.end()) {
-                // Find the hitbox in the map based on the key
-                auto hitboxIter = mapIter->second.find(key);
-                if (hitboxIter != mapIter->second.end()) {
-                    return hitboxIter->second;
+            std::string extension = ".obj";
+            std::string::size_type extensionPos = levelName.rfind(extension);
+            if (extensionPos != std::string::npos) {
+                std::string::size_type digitPos = extensionPos - 1;
+                while (digitPos > 0 && std::isdigit(levelName[digitPos])) {
+                    --digitPos;
                 }
+                char lastDigit = levelName[digitPos + 1];
+
+                // Find the correct map based on the last digit
+                auto mapIter = hitboxMaps.find(lastDigit);
+                if (mapIter != hitboxMaps.end()) {
+                    // Find the hitbox in the map based on the key
+                    auto hitboxIter = mapIter->second.find(key);
+                    if (hitboxIter != mapIter->second.end()) {
+                        return hitboxIter->second;
+                    } else {
+                        spdlog::error("no hitbox data found for {}!", key);
+                    }
+                } else {
+                    spdlog::error("no map found for digit {}!", lastDigit);
+                }
+            } else {
+                spdlog::error("no level found for {}!", levelName);
             }
 
-            // Return a default-constructed Hitbox if not found
+            // Return a default-constructed HitboxData if not found
             return HitboxData{};
         }
 
@@ -53,8 +67,24 @@ class LevelHitboxes {
                     {"S_chest_1.005", {glm::vec3(8.9499, 0.05832, 0.416962), glm::vec3(10.014, 0.55832, 1.48105)}},
                     {"S_chest_1.006", {glm::vec3(10.9575, 0.983554, 0.310734), glm::vec3(12.0142, 1.48355, 1.36742)}},
                     {"S_chest_1.007", {glm::vec3(9.93915, 0.082952, 0.32402), glm::vec3(11.0421, 0.582951, 1.42695)}},
-                    {"S_chest_1.008", {glm::vec3(9.95928, 0.582951, 0.407367), glm::vec3(10.9626, 1.08295, 1.41066)}}
-            };
+                    {"S_chest_1.008", {glm::vec3(9.95928, 0.582951, 0.407367), glm::vec3(10.9626, 1.08295, 1.41066)}},
+                    {"S_door_platform_1.003", {glm::vec3(6.96226, 1.3284, -3.33876), glm::vec3(12.135, 1.80396, 0.32176)}},
+                    {"W_back_wall_1.008", {glm::vec3(1.42026, 0.093881, -3.57776), glm::vec3(12.0855, 5.35, -3.32776)}},
+                    {"W_left_wall_1.008", {glm::vec3(1.16671, 0.093883, -3.57776), glm::vec3(1.42026, 5.97246, 3.61588)}},
+                    {"W_left_wall_inv_1.002", {glm::vec3(1.16671, 0.093882, -3.57776), glm::vec3(1.16671, 5.35, 3.61588)}},
+                    {"W_right_wall_down_1.008", {glm::vec3(12.0855, 2.10629, -3.57776), glm::vec3(12.3355, 5.10927, 3.61589)}},
+                    {"W_right_wall_left_1.008", {glm::vec3(12.0855, 0.093882, -3.57776), glm::vec3(12.3355, 2.10629, 1.66494)}},
+                    {"W_right_wall_right_1.009", {glm::vec3(12.0855, 0.093881, 3.10072), glm::vec3(12.3355, 2.10629, 3.61589)}},
+                    {"W_right_wall_up_1.008", {glm::vec3(12.0855, 5.10927, -3.57776), glm::vec3(12.3355, 5.35, 3.61588)}},
+                    {"Y_decoBox1_2.001", {glm::vec3(7.37637, 0.093883, -3.29159), glm::vec3(9.02124, 1.59139, -0.151759)}},
+                    {"Y_decoBox1_3.003", {glm::vec3(8.72666, 0.093883, -1.22171), glm::vec3(10.4958, 1.59139, 0.504027)}},
+                    {"Y_decoBox1_3.010", {glm::vec3(10.5684, 0.093883, -1.18357), glm::vec3(12.0831, 1.59139, 0.331132)}},
+                    {"Y_decoBox1_4.010", {glm::vec3(7.53589, 0.093883, 0.986698), glm::vec3(9.0883, 1.59139, 2.53911)}},
+                    {"Y_decoBox1_4.011", {glm::vec3(7.75497, 0.093898, 2.59471), glm::vec3(8.77324, 1.87321, 3.5251)}},
+                    {"Y_decoBox1_4.013", {glm::vec3(11.1254, 0.093898, 0.263445), glm::vec3(12.0477, 0.983554, 1.18104)}},
+                    {"Y_decoBox1_5.003", {glm::vec3(7.55388, 0.098955, -0.203811), glm::vec3(8.77367, 1.26344, 1.01598)}},
+                    {"Y_decoBox1_6.001", {glm::vec3(7.68733, 1.59139, 0.560333), glm::vec3(8.7287, 2.53498, 2.64513)}}
+                 };
 
             // Map 2
             hitboxMaps['2'] = {

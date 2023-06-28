@@ -3,7 +3,7 @@
 #include "../../include/Engine.h"
 #include "../../include/LevelHitboxes.h"
 
-bool recalculateHitboxes = true;
+const bool recalculateHitboxes = false;
 
 Level::Level() {
     IGui::setWindowName("Level");
