@@ -102,7 +102,7 @@ namespace Game {
     float bgSpeed = -50.0f;
     bool slowdown = false;
 
-    float waitTime = 0.3f;
+    float waitTime = 0.5f;
     float waitTimer = 0.0f;
     bool nextLevel = false;
 
@@ -276,12 +276,10 @@ namespace Game {
 
 
             if (slowdown && bgSpeed <= 0) {
-                bgSpeed += 0.05;
-//                spdlog::info("{}", bgSpeed);
+                bgSpeed += 0.08;
             }
             if (slowdown && bgSpeed >= 0.0) {
 
-//                spdlog::info("ENDCREEN");
                 UITips[3].DrawSprite(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
                 ended = true;
 
@@ -377,13 +375,14 @@ namespace Game {
                 menuPause.isVisible = true;
             }
 
-            if(inputSystem.GetKeyDown(GLFW_KEY_N) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
+            if(inputSystem.GetKeyDown(GLFW_KEY_N)){
             onWin();
             }
 
             if (ended == true && inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A) || inputSystem.GetKeyDown(GLFW_KEY_M)) {
             menu.isVisible = true;
             UITips[3].isVisible = false;
+                bgSpeed = -50.0f;
                 slowdown = false;
                 ended = false;
                 AudioManager::GetInstance()->SetAllGain(1.0);
@@ -396,7 +395,6 @@ namespace Game {
 
                 playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
                 playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
-
 //                LevelManager::getInstance().getCurrentLevel()->ResetPositions();
             }
         }
