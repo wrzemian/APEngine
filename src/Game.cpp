@@ -377,7 +377,7 @@ namespace Game {
                 menuPause.isVisible = true;
             }
 
-            if(inputSystem.GetKeyDown(GLFW_KEY_N) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
+            if(inputSystem.GetKeyDown(GLFW_KEY_N)){
             onWin();
             }
 
@@ -396,7 +396,6 @@ namespace Game {
 
                 playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
                 playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
-
 //                LevelManager::getInstance().getCurrentLevel()->ResetPositions();
             }
         }
