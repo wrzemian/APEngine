@@ -176,8 +176,8 @@ void AudioManager::CheckAudioDevice(const std::stop_token& token, ALCdevice** de
     }
 }
 
-void AudioManager::MuteAll() {
+void AudioManager::SetAllGain(float gain) {
     for (auto&& source: audioSources) {
-        source.second->SetGain(0.0f);
+        source.second->SetGain(gain);
     }
 }

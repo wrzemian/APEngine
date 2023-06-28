@@ -216,7 +216,7 @@ void PlayerGrabber::switchAnimationJump() {
             this->grabber->previousAnimation = this->grabber->stamdA;
         }
         blendFactor = 1;
-        this->grabber->blendFactor = 0;
+        this->grabber->blendFactor = 1;
         this->animator.PlayAnimation(&jumpP);
         this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
 //        this->grabber->animator.PlayAnimation(&this->grabber->jumpA);

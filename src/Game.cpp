@@ -321,7 +321,7 @@ namespace Game {
                     {
                         spdlog::info("Player has won the game!");
                         Engine::camera->MoveToTarget( glm::vec3(90, 10.6, 17.3));
-                        AudioManager::GetInstance()->MuteAll();
+                        AudioManager::GetInstance()->SetAllGain(0.0);
                         UITips[3].isVisible = true;
                         slowdown = true;
 
@@ -386,7 +386,7 @@ namespace Game {
             UITips[3].isVisible = false;
                 slowdown = false;
                 ended = false;
-
+                AudioManager::GetInstance()->SetAllGain(1.0);
                 LevelManager::getInstance().setCurrentLevel(0);
                 playerGrabber.DropBattery();
                 playerJumper.DropBattery();
