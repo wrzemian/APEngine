@@ -191,7 +191,7 @@ Menu::Menu(const Shader &shader) : shader(shader) {
     spdlog::info("test2");
     markPos[0] = glm::vec3(45.f,44.f,1.f);
     markPos[1] = glm::vec3(323.f,44.f,1.f);
-    markPos[2] = glm::vec3(607.f,44.f,1.f);
+    markPos[2] = glm::vec3(607.f,43.f,1.f);
     
     markScale[0]=glm::vec2(172,51);
     markScale[1]= glm::vec2 (159,54);

@@ -225,14 +225,14 @@ namespace Game {
     void Update() {
         Engine::LoopStart();
 
-        if(menu.isVisible1()){
-            ImGui();
-            inputSystem.update();
-            menu.processInput(&inputSystem);
-            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,600.f),0.f);
-
-        }
-        else if(menuPause.isVisible1()){
+//        if(menu.isVisible1()){
+//            ImGui();
+//            inputSystem.update();
+//            menu.processInput(&inputSystem);
+//            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,600.f),0.f);
+//
+//        }
+        if(menuPause.isVisible1()){
             ImGui();
 //            menuPause.ImGui();
             inputSystem.update();
@@ -325,6 +325,12 @@ namespace Game {
                 }
             }
 
+            if(menu.isVisible) {
+
+                inputSystem.update();
+                menu.processInput(&inputSystem);
+                menu.drawMenu(glm::vec3(0, 0, 1.f), glm::vec2(800.f, 600.f), 0.f);
+            }
 
             Engine::renderHitboxes(projection * view);
 
