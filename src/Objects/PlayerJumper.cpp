@@ -211,7 +211,7 @@ void PlayerJumper::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
         currentAnimation = walkA;
         previousAnimation = stamdA;
-        animationTimer = 0;
+        blendFactor = 0;
         animator.PlayAnimation(&walkA);
         AudioManager::GetInstance()->PlaySound(Audio::MICHEL_LAND);
         this->recentlyMoved = 0;
@@ -231,7 +231,7 @@ void PlayerJumper::switchAnimationJump() {
         } else {
             previousAnimation = stamdA;
         }
-        animationTimer = 0;
+        blendFactor = 0;
         this->animator.PlayAnimation(&jumpA);
 
     }
@@ -250,7 +250,7 @@ void PlayerJumper::switchAnimationStand() {
         } else {
             previousAnimation = stamdA;
         }
-        animationTimer = 0;
+        blendFactor = 0;
         this->animator.PlayAnimation(&stamdA);
         this->recentlyMoved = 1;
         this->walking = 0;

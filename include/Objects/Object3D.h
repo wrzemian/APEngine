@@ -61,8 +61,8 @@ public:
 
     bool canBePickedUp = true;
 
-    float animationTimer = 0;
-    float UpdateTimer();
+    float blendFactor = 0;
+    float UpdateBlendFactor();
 
     void calculateBoundingBox();
 

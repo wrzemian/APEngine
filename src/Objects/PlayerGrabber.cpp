@@ -191,12 +191,12 @@ void PlayerGrabber::switchAnimationWalk() {
 
         currentAnimation = walkP;
         previousAnimation = standP;
-        animationTimer = 0;
+        blendFactor = 0;
         animator.PlayAnimation(&walkP);
 
         this->grabber->currentAnimation = this->grabber->walkA;
         this->grabber->previousAnimation = this->grabber->stamdA;
-        this->grabber->animationTimer = 0;
+        this->grabber->blendFactor = 0;
         this->grabber->animator.PlayAnimation(&this->grabber->walkA);
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
 //        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
@@ -216,8 +216,8 @@ void PlayerGrabber::switchAnimationJump() {
             previousAnimation = standP;
             this->grabber->previousAnimation = this->grabber->stamdA;
         }
-        animationTimer = 0;
-        this->grabber->animationTimer = 0;
+        blendFactor = 1;
+        this->grabber->blendFactor = 0;
         this->animator.PlayAnimation(&jumpP);
         this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
 //        this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
@@ -237,8 +237,8 @@ void PlayerGrabber::switchAnimationStand() {
             previousAnimation = standP;
             this->grabber->previousAnimation = this->grabber->stamdA;
         }
-        animationTimer = 0;
-        this->grabber->animationTimer = 0;
+        blendFactor = 0;
+        this->grabber->blendFactor = 0;
         this->animator.PlayAnimation(&standP);
         this->grabber->animator.PlayAnimation(&this->grabber->stamdA);
         //this->grabber->animator.PlayAnimation(&this->grabber->stamdA);
@@ -256,8 +256,8 @@ void PlayerGrabber::switchAnimationGrab() {
     } else {
         this->grabber->previousAnimation = this->grabber->stamdA;
     }
-    animationTimer = 0;
-    this->grabber->animationTimer = 0;
+    blendFactor = 0;
+    this->grabber->blendFactor = 0;
     this->grabber->animator.PlayAnimation(&hookingP);
 }
 
