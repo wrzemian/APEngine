@@ -254,8 +254,8 @@ namespace Game {
 
             background.Move(-50 * Engine::deltaTime);
 
-                UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(530.f, 1.f, 1.f),
-                                                                            glm::vec2(275.f, 200.f),0);
+                UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
+                                                                            glm::vec2(250.f, 200.f),0);
 
             Engine::renderHitboxes(projection * view);
 
