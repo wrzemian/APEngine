@@ -20,6 +20,8 @@ void PlayerJumper::initPlayer(InputSystem* inputSystem) {
     //inputSystem->monitorKey(GLFW_KEY_SPACE);
 
     loadAnimations();
+    currentAnimation = stamdA;
+    previousAnimation = walkA;
 }
 
 void PlayerJumper::UpdatePlayer(InputSystem* inputSystem, float movementSpeed) {
@@ -207,7 +209,10 @@ void PlayerJumper::unusualCollision(Object3D *other) {
 //this->animator= tempA;
 void PlayerJumper::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
-		animator.PlayAnimation(&walkA);
+        currentAnimation = walkA;
+        previousAnimation = stamdA;
+        animationTimer = 0;
+        animator.PlayAnimation(&walkA);
         AudioManager::GetInstance()->PlaySound(Audio::MICHEL_LAND);
         this->recentlyMoved = 0;
         this->walking = 1;
@@ -220,7 +225,15 @@ void PlayerJumper::switchAnimationJump() {
 //        Animator tempA(&jumpA);
 //        this->animator= tempA;
         AudioManager::GetInstance()->PauseSound(Audio::MICHEL_LAND);
+        currentAnimation = jumpA;
+        if(this->walking == 1) {
+            previousAnimation = walkA;
+        } else {
+            previousAnimation = stamdA;
+        }
+        animationTimer = 0;
         this->animator.PlayAnimation(&jumpA);
+
     }
 
 }
@@ -229,8 +242,16 @@ void PlayerJumper::switchAnimationStand() {
     if(_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
         AudioManager::GetInstance()->PauseSound(Audio::MICHEL_LAND);
 //        this->loadAnimation("res/models/Players/Mich3l/michel_breathing_and_looking_around.dae");
-        Animator tempA(&stamdA);
-        this->animator= tempA;
+//        Animator tempA(&stamdA);
+//        this->animator= tempA;
+        currentAnimation = stamdA;
+        if(this->walking == 1) {
+            previousAnimation = walkA;
+        } else {
+            previousAnimation = stamdA;
+        }
+        animationTimer = 0;
+        this->animator.PlayAnimation(&stamdA);
         this->recentlyMoved = 1;
         this->walking = 0;
     }

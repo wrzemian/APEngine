@@ -189,8 +189,15 @@ void PlayerGrabber::switchAnimationWalk() {
     if(walking == 0 && (_velocity.x != 0 || _velocity.z != 0) ){
         AudioManager::GetInstance()->PlaySound(Audio::CRANK_MOVE);
 
-        this->animator.PlayAnimation(&walkP);
-//        this->grabber->animator.PlayAnimation(&this->grabber->walkA);
+        currentAnimation = walkP;
+        previousAnimation = standP;
+        animationTimer = 0;
+        animator.PlayAnimation(&walkP);
+
+        this->grabber->currentAnimation = this->grabber->walkA;
+        this->grabber->previousAnimation = this->grabber->stamdA;
+        this->grabber->animationTimer = 0;
+        this->grabber->animator.PlayAnimation(&this->grabber->walkA);
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_WALKING.dae");
 //        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_WALKING.dae");
         this->recentlyMoved = 0;
@@ -200,7 +207,19 @@ void PlayerGrabber::switchAnimationWalk() {
 
 void PlayerGrabber::switchAnimationJump() {
     if(jumpCount == 0){
+        currentAnimation = jumpP;
+        this->grabber->currentAnimation = this->grabber->jumpA;
+        if(this->walking == 1) {
+            previousAnimation = walkP;
+            this->grabber->previousAnimation = this->grabber->walkA;
+        } else {
+            previousAnimation = standP;
+            this->grabber->previousAnimation = this->grabber->stamdA;
+        }
+        animationTimer = 0;
+        this->grabber->animationTimer = 0;
         this->animator.PlayAnimation(&jumpP);
+        this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
 //        this->grabber->animator.PlayAnimation(&this->grabber->jumpA);
     }
 }
@@ -209,8 +228,20 @@ void PlayerGrabber::switchAnimationStand() {
     if (_velocity.x == 0 && _velocity.z == 0 && recentlyMoved == 0) {
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_STANDING.dae");
 //        this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_STANDING.dae");
+        currentAnimation = standP;
+        this->grabber->currentAnimation = this->grabber->stamdA;
+        if(this->walking == 1) {
+            previousAnimation = walkP;
+            this->grabber->previousAnimation = this->grabber->walkA;
+        } else {
+            previousAnimation = standP;
+            this->grabber->previousAnimation = this->grabber->stamdA;
+        }
+        animationTimer = 0;
+        this->grabber->animationTimer = 0;
         this->animator.PlayAnimation(&standP);
         this->grabber->animator.PlayAnimation(&this->grabber->stamdA);
+        //this->grabber->animator.PlayAnimation(&this->grabber->stamdA);
         this->recentlyMoved = 1;
         this->walking = 0;
     }
@@ -219,8 +250,14 @@ void PlayerGrabber::switchAnimationStand() {
 void PlayerGrabber::switchAnimationGrab() {
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae");
 //    this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
-    this->animator.PlayAnimation(&hookingP);
-//    this->grabber->animator.PlayAnimation(&this->grabber->hookingA);
+    this->grabber->currentAnimation = this->grabber->hookingA;
+    if(this->walking == 1) {
+        this->grabber->previousAnimation = this->grabber->walkA;
+    } else {
+        this->grabber->previousAnimation = this->grabber->stamdA;
+    }
+    this->grabber->animationTimer = 0;
+    this->grabber->animator.PlayAnimation(&this->grabber->hookingA);
 }
 
 
@@ -274,4 +311,5 @@ void PlayerGrabber::DropBattery() {
         canPickUpBattery= false;
     }
 }
+
 

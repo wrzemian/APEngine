@@ -51,14 +51,18 @@ public:
     Transform _transform;
     std::shared_ptr<Model> _model = nullptr;
 
-    Model animatedModel;
     Animation animation;
+    Animation currentAnimation;
+    Animation previousAnimation;
     Animator animator;
     Shader* _shader = nullptr;
 
     std::string _path;
 
     bool canBePickedUp = true;
+
+    float animationTimer = 0;
+    float UpdateTimer();
 
     void calculateBoundingBox();
 
