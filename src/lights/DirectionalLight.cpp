@@ -1,5 +1,4 @@
 #include "../../include/lights/DirectionalLight.h"
-#include "imgui_impl/imgui_impl_glfw.h"
 #include "../include/Engine.h"
 
 DirectionalLight::DirectionalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,

@@ -48,8 +48,6 @@ public:
 
     void SendToShader(Shader shader, std::string type) override;
 
-    void ImGui();
-
     SpotLight();
 
     rapidjson::Document ParseToJSON();

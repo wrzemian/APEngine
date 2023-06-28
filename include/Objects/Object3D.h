@@ -32,7 +32,6 @@ public:
 
     virtual void Draw(Shader &shader);
 
-    void ImGui();
     void loadModel(const std::string& path);
 
     void loadAnimation(const std::string& daePath);

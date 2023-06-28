@@ -43,7 +43,6 @@ public:
 
     void setQuadratic(float quadratic);
 
-    void ImGui();
 
     void SendToShader(Shader shader, std::string type) override;
 

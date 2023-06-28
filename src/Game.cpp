@@ -309,25 +309,6 @@ namespace Game {
     }
 
 
-    void ImGui() {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        {
-//            Engine::renderImgui();
-//            Engine::ImGui();
-        }
-
-//        ImGui::Begin("DevTools");
-//        ImGui::SetWindowSize(ImVec2(250, 100));
-//        if (ImGui::Button("Next Level"))
-//            onWin();
-//        if (ImGui::Button("Reset Level"))
-//            ResetLevel();
-//        ImGui::End();
-
-        ImGui::Render();
-    }
 
 
     void processInput() {

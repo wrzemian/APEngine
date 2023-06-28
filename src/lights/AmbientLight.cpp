@@ -3,7 +3,6 @@
 //
 
 #include "../../include/lights/AmbientLight.h"
-#include "imgui.h"
 
 AmbientLight::AmbientLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular) : ambient(ambient),
                                                                                               diffuse(diffuse),

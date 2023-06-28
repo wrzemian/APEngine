@@ -4,8 +4,7 @@
 
 #include "../../include/Engine.h"
 #include "../include/Objects/MovingObject.h"
-#include "../imgui_impl/imgui_impl_glfw.h"
-#include "../imgui_impl/imgui_impl_opengl3.h"
+
 
 MovingObject::MovingObject() {
     //_windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());

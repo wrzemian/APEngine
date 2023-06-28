@@ -4,8 +4,7 @@
 
 #include "../include/Objects/Hitbox.h"
 
-#include "../imgui_impl/imgui_impl_glfw.h"
-#include "../imgui_impl/imgui_impl_opengl3.h"
+
 #include "../../include/Engine.h"
 #include "../../include/Objects/Hitbox.h"
 

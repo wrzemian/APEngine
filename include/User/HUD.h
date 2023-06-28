@@ -131,15 +131,6 @@ public:
         glBindVertexArray(0);
     }
 
-    void ImGui(){
-
-        ImGui::Begin("hud");
-        ImGui::SetWindowSize(ImVec2(130, 50));
-
-        ImGui::Checkbox("show hud", &isVisable);
-
-        ImGui::End();
-    }
 
 
 //    void initText(const std::string& fontPath) {

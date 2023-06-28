@@ -1,6 +1,4 @@
 #include "../../include/lights/PointLight.h"
-#include "imgui_impl/imgui_impl_glfw.h"
-#include "imgui_impl/imgui_impl_opengl3.h"
 #include "../include/Engine.h"
 
 PointLight::PointLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
@@ -81,23 +79,7 @@ void PointLight::setSpecular(const glm::vec3 &specular) {
     AmbientLight::setSpecular(specular);
 }
 
-void PointLight::ImGui() {
-    ImGui::Begin("Point Lignt");
-    ImGui::SetWindowSize(ImVec2(250, 300));
 
-    ImGui::SliderFloat3("ambient", &ambient.x, -1.0f, 1.0f);
-    ImGui::SliderFloat3("diffuse", &diffuse.x, -1.0f, 1.0f);
-    ImGui::SliderFloat3("specular", &specular.x, -1.0f, 1.0f);
-    ImGui::SliderFloat3("position", &position.x, -25.0f, 25.0f);
-    ImGui::SliderFloat("constant", &constant, -1.0f, 1.0f);
-    ImGui::SliderFloat("linear", &linear, -1.0f, 1.0f);
-    ImGui::SliderFloat("quadratic", &quadratic, -1.0f, 1.0f);
-
-    if (ImGui::Button("SAVE")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/pointLight");
-    }
-    ImGui::End();
-}
 
 rapidjson::Document PointLight::ParseToJSON() {
     rapidjson::Document d;

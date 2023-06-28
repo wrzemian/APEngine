@@ -117,7 +117,6 @@ public:
         updateCameraVectors();
     }
 
-    void ImGui();
 
     rapidjson::Document ParseToJSON();
 

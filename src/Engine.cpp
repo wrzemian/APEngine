@@ -3,8 +3,6 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "imgui_impl/imgui_impl_glfw.h"
-#include "imgui_impl/imgui_impl_opengl3.h"
 #include "spdlog/spdlog.h"
 
 #include <vector>
@@ -56,7 +54,7 @@ namespace Engine {
     std::shared_ptr<Camera> camera = std::make_shared<Camera>("camera");
 
     int Init() {
-        if (initGLandImGui() == -1) {
+        if (initGL() == -1) {
             return -1;
         }
         frameStart = glfwGetTime();
@@ -308,38 +306,7 @@ namespace Engine {
     }
 
 
-    void ImGui() {
-        ImGui::Begin("Engine");
-        ImGui::SetWindowSize(ImVec2(250, 300));
-        //spdlog::info("deltaTime: ", Engine::deltaTime);
 
-        ImGui::Text("deltaTime: %f", Engine::deltaTime);
-        ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
-        ImGui::Text("displayed: %d", displayCounter);
-        ImGui::Text("total: %d", totalCounter);
-        ImGui::Checkbox("FRUSTUM", &frustum);
-
-        ImGui::SliderInt("Static", &renderedStatic, -1, (int)staticHitboxes.size() - 1);
-        ImGui::SliderInt("Dynamic", &renderedDynamic, -1, (int)dynamicHitboxes.size() - 1);
-
-        ImGui::Checkbox("Show static hitboxes", &renderStatic);
-        ImGui::Checkbox("Show dynamic hitboxes", &renderDynamic);
-
-        for (const auto& hitbox : staticHitboxes) {
-            hitbox->draw = renderStatic;
-        }
-        for (const auto& hitbox : dynamicHitboxes) {
-            hitbox->draw = renderDynamic;
-        }
-
-        if(renderedStatic >= 0)
-            staticHitboxes.at(renderedStatic)->draw = true;
-
-        if(renderedDynamic >= 0)
-            dynamicHitboxes.at(renderedDynamic)->draw = true;
-
-        ImGui::End();
-    }
 
 
     void LoopStart() {
@@ -455,7 +422,7 @@ namespace Engine {
         glViewport(0, 0, width, height);
     }
 
-    int initGLandImGui() {
+    int initGL() {
         // glfw: initialize and configure
         // ------------------------------
         glfwInit();
