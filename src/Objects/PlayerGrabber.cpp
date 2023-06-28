@@ -148,6 +148,7 @@ void PlayerGrabber::Jump() {
         recentlyJumped = 0;
         walking = 0;
         recentlyMoved = 0;
+        blendFactor = 1;
         this->switchAnimationJump();
         this->AddVelocity(glm::vec3(0.0f, 4.0f, 0.0f));
         jumpCount += 1;
