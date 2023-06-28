@@ -1,7 +1,9 @@
 #include "../include/Objects/Level.h"
 #include "spdlog/spdlog.h"
 #include "../../include/Engine.h"
-#include "../../include/Objects/Box.h"
+#include "../../include/LevelHitboxes.h"
+
+const bool recalculateHitboxes = false;
 
 Level::Level() {
     IGui::setWindowName("Level");
@@ -60,7 +62,7 @@ void Level::calculateHitboxes() {
         switch(type) {
             case 'D': { // Door
                 if(winArea == nullptr) {
-                    spdlog::info("created door object");
+//                    spdlog::info("created door object");
                     winArea = std::make_shared<WinArea>();
                     winArea->tag = "winArea";
                     //winArea->ShowImgui();
@@ -73,8 +75,8 @@ void Level::calculateHitboxes() {
                 winArea->calculateBoundingBox();
 
                 auto areaTriggerHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                areaTriggerHitbox->calculateFromMesh(mesh);
                 areaTriggerHitbox->Create(winArea.get());
+                areaTriggerHitbox->calculateFromMesh(mesh);
                 areaTriggerHitbox->tag = "winArea";
                 areaTriggerHitbox->_offset.x = -0.1f;
                 areaTriggerHitbox->_offset.y = 0.0f;
@@ -90,26 +92,55 @@ void Level::calculateHitboxes() {
                 hitboxes.push_back(areaTriggerHitbox);
 
                 auto doorHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+
+                if(recalculateHitboxes) {
+                    doorHitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                    << "\", {glm::vec3("
+                    << doorHitbox->_min.x << ", " << doorHitbox->_min.y << ", " << doorHitbox->_min.z
+                    << "), glm::vec3("
+                    << doorHitbox->_max.x << ", " << doorHitbox->_max.y << ", " << doorHitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    doorHitbox->_min = hitboxData.min;
+                    doorHitbox->_max = hitboxData.max;
+                }
+
                 doorHitbox->tag = "winArea";
-                doorHitbox->calculateFromMesh(mesh);
+
                 doorHitbox->Create(winArea.get());
                 hitboxes.push_back(doorHitbox);
 
                 //staticModel.meshes.push_back(mesh);
-                spdlog::info("Door created {}", mesh._name);
+//                spdlog::info("Door created {}", mesh._name);
 
                 break;
             }
 
             case 'F': { // Floor
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                hitbox->calculateFromMesh(mesh);
+                if(recalculateHitboxes) {
+                    hitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << hitbox->_min.x << ", " << hitbox->_min.y << ", " << hitbox->_min.z
+                        << "), glm::vec3("
+                        << hitbox->_max.x << ", " << hitbox->_max.y << ", " << hitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    hitbox->_min = hitboxData.min;
+                    hitbox->_max = hitboxData.max;
+                }
                 hitbox->Create(this);
 
                 staticModel.meshes.push_back(mesh);
                 hitbox->tag = "floor";
 
-                spdlog::info("Floor created {}", mesh._name);
+//                spdlog::info("Floor created {}", mesh._name);
 
                 break;
             }
@@ -123,7 +154,20 @@ void Level::calculateHitboxes() {
                 wall->_path = mesh._name;
 
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                hitbox->calculateFromMesh(mesh);
+                if(recalculateHitboxes) {
+                    hitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << hitbox->_min.x << ", " << hitbox->_min.y << ", " << hitbox->_min.z
+                        << "), glm::vec3("
+                        << hitbox->_max.x << ", " << hitbox->_max.y << ", " << hitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    hitbox->_min = hitboxData.min;
+                    hitbox->_max = hitboxData.max;
+                }
                 hitbox->Create(wall.get());
 
                 // Add the wall object to a suitable collection in your level
@@ -133,32 +177,37 @@ void Level::calculateHitboxes() {
                 staticModel.meshes.push_back(mesh);
                 hitbox->tag = "wall";
 
-                spdlog::info("Wall created {}", mesh._name);
+//                spdlog::info("Wall created {}", mesh._name);
 
                 break;
             }
 
             case 'Y': { // Wall
-                auto wall = std::make_shared<Object3D>(); // Create a new wall object
-                wall->_transform._position = _transform._position; // Set the wall's position
-                wall->_model = std::make_shared<Model>(); // Create a new model for the wall
-                wall->_model->meshes.push_back(mesh); // Add the current mesh to the wall's model
-                wall->tag = "wall"; // Tag the wall
-                wall->_path = mesh._name;
-
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                hitbox->calculateFromMesh(mesh);
-                hitbox->Create(wall.get());
-
-                // Add the wall object to a suitable collection in your level
-                walls.push_back(wall);
-
+                if(recalculateHitboxes) {
+                    hitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << hitbox->_min.x << ", " << hitbox->_min.y << ", " << hitbox->_min.z
+                        << "), glm::vec3("
+                        << hitbox->_max.x << ", " << hitbox->_max.y << ", " << hitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    hitbox->_min = hitboxData.min;
+                    hitbox->_max = hitboxData.max;
+                }
+                hitbox->Create(this);
 
                 staticModel.meshes.push_back(mesh);
-                hitbox->tag = "wall";
-                spdlog::info("Wall (pręt) created {}", mesh._name);
+
+                hitbox->tag = "static platform";
+
+//                spdlog::info("Platform created {}", mesh._name);
 
                 break;
+
             }
 
             case 'R': { // Roof
@@ -169,7 +218,7 @@ void Level::calculateHitboxes() {
 //                hitbox->tag = "roof";
                 staticModel.meshes.push_back(mesh);
 
-                spdlog::info("Roof created {}", mesh._name);
+//                spdlog::info("Roof created {}", mesh._name);
 
                 break;
             }
@@ -193,23 +242,36 @@ void Level::calculateHitboxes() {
                 button->id = totalId;
                 buttons.push_back(button);
 
-                buttonHitbox->calculateFromMesh(mesh);
+                if(recalculateHitboxes) {
+                    buttonHitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << buttonHitbox->_min.x << ", " << buttonHitbox->_min.y << ", " << buttonHitbox->_min.z
+                        << "), glm::vec3("
+                        << buttonHitbox->_max.x << ", " << buttonHitbox->_max.y << ", " << buttonHitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    buttonHitbox->_min = hitboxData.min;
+                    buttonHitbox->_max = hitboxData.max;
+                }
                 buttonHitbox->Create(button.get());
                 buttonHitbox->isTrigger = true;
 
-                spdlog::info("Button created {}", mesh._name);
+//                spdlog::info("Button created {}", mesh._name);
                 break;
             }
 
             case 'C': { // Decoration around button
-                spdlog::info("Decoration around button {}", mesh._name);
+//                spdlog::info("Decoration around button {}", mesh._name);
 
                 staticModel.meshes.push_back(mesh);
                 break;
             }
 
             case 'X': { // Decoration
-                spdlog::info("Other decoration {}", mesh._name);
+//                spdlog::info("Other decoration {}", mesh._name);
 
                 staticModel.meshes.push_back(mesh);
                 break;
@@ -217,14 +279,27 @@ void Level::calculateHitboxes() {
 
             case 'S': { // Static platform
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                hitbox->calculateFromMesh(mesh);
+                if(recalculateHitboxes) {
+                    hitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << hitbox->_min.x << ", " << hitbox->_min.y << ", " << hitbox->_min.z
+                        << "), glm::vec3("
+                        << hitbox->_max.x << ", " << hitbox->_max.y << ", " << hitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    hitbox->_min = hitboxData.min;
+                    hitbox->_max = hitboxData.max;
+                }
                 hitbox->Create(this);
 
                 staticModel.meshes.push_back(mesh);
 
                 hitbox->tag = "static platform";
 
-                spdlog::info("Platform created {}", mesh._name);
+//                spdlog::info("Platform created {}", mesh._name);
 
                 break;
             }
@@ -234,7 +309,7 @@ void Level::calculateHitboxes() {
                 platformHitbox->tag = "moving platform";
                 hitboxes.push_back(platformHitbox);
 
-                spdlog::info("Moving platform position {}, {}, {}", _transform._position.x,_transform._position.y,_transform._position.z);
+//                spdlog::info("Moving platform position {}, {}, {}", _transform._position.x,_transform._position.y,_transform._position.z);
 
                 auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
                 platform->levelId = levelId;
@@ -252,17 +327,30 @@ void Level::calculateHitboxes() {
                 platform-> speed = 1;
                 movingPlatforms.push_back(platform);
 
-                platformHitbox->calculateFromMesh(mesh);
+                if(recalculateHitboxes) {
+                    platformHitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << platformHitbox->_min.x << ", " << platformHitbox->_min.y << ", " << platformHitbox->_min.z
+                        << "), glm::vec3("
+                        << platformHitbox->_max.x << ", " << platformHitbox->_max.y << ", " << platformHitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    platformHitbox->_min = hitboxData.min;
+                    platformHitbox->_max = hitboxData.max;
+                }
                 platformHitbox->Create(platform.get());
 
-                spdlog::info("Moving platform created {}", mesh._name);
+//                spdlog::info("Moving platform created {}", mesh._name);
                 break;
             }
 
             case 'T': { // Target of moving platform
                 auto middle = (mesh.vertices.at(0).Position + mesh.vertices.at(0).Position) * 0.5f;
 
-                spdlog::info("Target position {} = {}, {}, {}", mesh._name, middle.x, middle.y, middle.z);
+//                spdlog::info("Target position {} = {}, {}, {}", mesh._name, middle.x, middle.y, middle.z);
 
                 targetPositions[totalId] = middle;
 
@@ -284,8 +372,8 @@ void Level::calculateHitboxes() {
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
 
                 auto middle = box->modelMiddle;
-                spdlog::warn("box middle at {}, {}, {}", middle.x, middle.y, middle.z);
-                spdlog::warn("box vertices: {}", box->_model->meshes.at(0).vertices.size());
+//                spdlog::warn("box middle at {}, {}, {}", middle.x, middle.y, middle.z);
+//                spdlog::warn("box vertices: {}", box->_model->meshes.at(0).vertices.size());
 
                 box->changeVertexPositions(-middle);
                 box->calculateBoundingBox();
@@ -296,8 +384,9 @@ void Level::calculateHitboxes() {
                 auto testTrigger = std::make_shared<Hitbox>(Hitbox::STATIC);
                 testTrigger->tag = "box";
                 testTrigger->isTrigger = true;
-                testTrigger->calculateFromMesh(mesh);
                 testTrigger->Create(box.get());
+                testTrigger->calculateFromMesh(mesh);
+
                 testTrigger->_color.x = 0.5;
                 testTrigger->_color.y = 1.0;
                 testTrigger->_color.z = 1.0;
@@ -305,14 +394,26 @@ void Level::calculateHitboxes() {
                 testTrigger->_max.y  += 0.5f;
                 testTrigger->_max.z  += 0.5f;
                 testTrigger->_min.x  -= 0.5f;
-                testTrigger->_min.y  -= 0.5f;
                 testTrigger->_min.z  -= 0.5f;
                 hitboxes.push_back(testTrigger);
                 testTrigger->draw = true;
 
 
                 auto boxHitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
-                boxHitbox->calculateFromModel(*box->_model);
+                if(recalculateHitboxes) {
+                    boxHitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << boxHitbox->_min.x << ", " << boxHitbox->_min.y << ", " << boxHitbox->_min.z
+                        << "), glm::vec3("
+                        << boxHitbox->_max.x << ", " << boxHitbox->_max.y << ", " << boxHitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    boxHitbox->_min = hitboxData.min;
+                    boxHitbox->_max = hitboxData.max;
+                }
 
                 boxHitbox->Create(box.get());
                 hitboxes.push_back(boxHitbox);
@@ -320,7 +421,7 @@ void Level::calculateHitboxes() {
 
                 boxPositions.push_back(box->_transform._position);
 
-                spdlog::info("Box created from {}", mesh._name);
+//                spdlog::info("Box created from {}", mesh._name);
 
                 break;
             }
@@ -344,8 +445,8 @@ void Level::calculateHitboxes() {
                 auto testTrigger = std::make_shared<Hitbox>(Hitbox::STATIC);
                 testTrigger->tag = "battery";
                 testTrigger->isTrigger = true;
-                testTrigger->calculateFromMesh(mesh);
                 testTrigger->Create(battery.get());
+                testTrigger->calculateFromMesh(mesh);
                 testTrigger->_color.x = 0.5;
                 testTrigger->_color.y = 1.0;
                 testTrigger->_color.z = 1.0;
@@ -359,14 +460,27 @@ void Level::calculateHitboxes() {
 
                 auto test = std::make_shared<Hitbox>(Hitbox::DYNAMIC);
                 test->tag = "battery";
-                test->calculateFromMesh(mesh);
+                if(recalculateHitboxes) {
+                    test->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << test->_min.x << ", " << test->_min.y << ", " << test->_min.z
+                        << "), glm::vec3("
+                        << test->_max.x << ", " << test->_max.y << ", " << test->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    test->_min = hitboxData.min;
+                    test->_max = hitboxData.max;
+                }
                 test->Create(battery.get());
                 hitboxes.push_back(test);
 
                 batteryPositions.push_back(battery->_transform._position);
 
 
-                spdlog::info("Battery created from {}", mesh._name);
+                //spdlog::info("Battery created from {}", mesh._name);
 
                 break;
             }
@@ -388,11 +502,24 @@ void Level::calculateHitboxes() {
                 doorButton->_model->meshes.push_back(mesh); // Add the current mesh to the doorButton's model
                 doorButton->calculateBoundingBox();
 
-                buttonHitbox->calculateFromMesh(mesh);
+                if(recalculateHitboxes) {
+                    buttonHitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                        << "\", {glm::vec3("
+                        << buttonHitbox->_min.x << ", " << buttonHitbox->_min.y << ", " << buttonHitbox->_min.z
+                        << "), glm::vec3("
+                        << buttonHitbox->_max.x << ", " << buttonHitbox->_max.y << ", " << buttonHitbox->_max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    buttonHitbox->_min = hitboxData.min;
+                    buttonHitbox->_max = hitboxData.max;
+                }
                 buttonHitbox->Create(doorButton.get());
                 buttonHitbox->isTrigger = true;
 
-                spdlog::info("Door button created {}", mesh._name);
+                //spdlog::info("Door button created {}", mesh._name);
                 break;
             }
 
@@ -411,7 +538,7 @@ void Level::calculateHitboxes() {
                 cable->id = totalId;
                 cables.push_back(cable);
 
-                spdlog::info("Cable created {}", mesh._name);
+                //::info("Cable created {}", mesh._name);
                 break;
             }
 
