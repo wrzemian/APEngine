@@ -76,6 +76,7 @@ void Level::calculateHitboxes() {
 
                 auto areaTriggerHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 areaTriggerHitbox->Create(winArea.get());
+                areaTriggerHitbox->calculateFromMesh(mesh);
                 areaTriggerHitbox->tag = "winArea";
                 areaTriggerHitbox->_offset.x = -0.1f;
                 areaTriggerHitbox->_offset.y = 0.0f;
@@ -182,13 +183,6 @@ void Level::calculateHitboxes() {
             }
 
             case 'Y': { // Wall
-                auto wall = std::make_shared<Object3D>(); // Create a new wall object
-                wall->_transform._position = _transform._position; // Set the wall's position
-                wall->_model = std::make_shared<Model>(); // Create a new model for the wall
-                wall->_model->meshes.push_back(mesh); // Add the current mesh to the wall's model
-                wall->tag = "wall"; // Tag the wall
-                wall->_path = mesh._name;
-
                 hitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
                 if(recalculateHitboxes) {
                     hitbox->calculateFromMesh(mesh);
@@ -204,17 +198,16 @@ void Level::calculateHitboxes() {
                     hitbox->_min = hitboxData.min;
                     hitbox->_max = hitboxData.max;
                 }
-                hitbox->Create(wall.get());
-
-                // Add the wall object to a suitable collection in your level
-                walls.push_back(wall);
-
+                hitbox->Create(this);
 
                 staticModel.meshes.push_back(mesh);
-                hitbox->tag = "wall";
-//                spdlog::info("Wall (pręt) created {}", mesh._name);
+
+                hitbox->tag = "static platform";
+
+//                spdlog::info("Platform created {}", mesh._name);
 
                 break;
+
             }
 
             case 'R': { // Roof
@@ -392,6 +385,8 @@ void Level::calculateHitboxes() {
                 testTrigger->tag = "box";
                 testTrigger->isTrigger = true;
                 testTrigger->Create(box.get());
+                testTrigger->calculateFromMesh(mesh);
+
                 testTrigger->_color.x = 0.5;
                 testTrigger->_color.y = 1.0;
                 testTrigger->_color.z = 1.0;
@@ -452,6 +447,7 @@ void Level::calculateHitboxes() {
                 testTrigger->tag = "battery";
                 testTrigger->isTrigger = true;
                 testTrigger->Create(battery.get());
+                testTrigger->calculateFromMesh(mesh);
                 testTrigger->_color.x = 0.5;
                 testTrigger->_color.y = 1.0;
                 testTrigger->_color.z = 1.0;
