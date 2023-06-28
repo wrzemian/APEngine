@@ -127,6 +127,7 @@ namespace Game {
         inputSystem.InputInit();
         inputSystem.monitorKey(GLFW_KEY_SPACE);
         inputSystem.monitorKey(GLFW_KEY_P);
+        inputSystem.monitorKey(GLFW_KEY_M);
         inputSystem.monitorKey(GLFW_KEY_N);
         inputSystem.monitorKey(GLFW_KEY_KP_1);
 
@@ -380,7 +381,7 @@ namespace Game {
             onWin();
             }
 
-            if (ended == true && inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)) {
+            if (ended == true && inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A) || inputSystem.GetKeyDown(GLFW_KEY_M)) {
             menu.isVisible = true;
             UITips[3].isVisible = false;
                 slowdown = false;
