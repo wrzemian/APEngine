@@ -134,9 +134,9 @@ void Menu::initMenu(const char *filePath) {
     glBindVertexArray(0);
 
     if (!isPause) {
-        mark[0].initRenderData("res/UI/start.png");
-        mark[1].initRenderData("res/UI/load.png");
-        mark[2].initRenderData("res/UI/exit.png");
+        mark[0].initRenderData("res/UI/new/start.png");
+        mark[1].initRenderData("res/UI/new/Load1.png");
+        mark[2].initRenderData("res/UI/new/Exit11.png");
     }
     else if(isPause){
         mark[0].initRenderData("res/UI/new/continue1.png");
@@ -189,13 +189,13 @@ Menu::Menu(const Shader &shader) : shader(shader) {
         mark[i] = mark1;
     }
     spdlog::info("test2");
-    markPos[0] = glm::vec3(10.f,44.f,1.f);
+    markPos[0] = glm::vec3(45.f,44.f,1.f);
     markPos[1] = glm::vec3(323.f,44.f,1.f);
-    markPos[2] = glm::vec3(611.f,44.f,1.f);
+    markPos[2] = glm::vec3(607.f,44.f,1.f);
     
-    markScale[0]=glm::vec2(250,54);
-    markScale[1]= glm::vec2 (167,54);
-    markScale[2]= glm::vec2 (120,54);
+    markScale[0]=glm::vec2(172,51);
+    markScale[1]= glm::vec2 (159,54);
+    markScale[2]= glm::vec2 (123.48,54);
 
     spdlog::info("test3");
     isPause = false;

@@ -102,6 +102,9 @@ namespace Game {
     float bgSpeed = -50.0f;
     bool slowdown = false;
 
+    float waitTime = 1.0f;
+    float waitTimer = 0.0f;
+    bool nextLevel = false;
 
     void Start() {
         spdlog::info("init engine");
@@ -196,7 +199,7 @@ namespace Game {
 //        spdlog::info("menu1 after constructor");
         menu = menu1;
 //        spdlog::info("before init1");
-        menu.initMenu("../../res/UI/menu_screen.png");
+        menu.initMenu("res/UI/new/menu_screen_new.png");
 //        spdlog::info("after init1");
 
         spdlog::info("menu2");
@@ -223,6 +226,7 @@ namespace Game {
         Engine::LoopStart();
 
         if(menu.isVisible1()){
+            ImGui();
             inputSystem.update();
             menu.processInput(&inputSystem);
             menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,600.f),0.f);
@@ -270,6 +274,57 @@ namespace Game {
                 UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
                                                                             glm::vec2(250.f, 220.f),0);
                 }
+            if(nextLevel)
+            {
+                waitTimer += Engine::deltaTime;
+                if(waitTimer > waitTime)
+                {
+                    nextLevel = false;
+                    waitTimer = 0;
+                    if(LevelManager::getInstance().nextLevel())
+                    {
+
+                        playerGrabber.DropBattery();
+                        playerJumper.DropBattery();
+                        playerGrabber.levelId = LevelManager::getInstance().currentLevel;
+                        playerJumper.levelId = LevelManager::getInstance().currentLevel;
+                        grabber.levelId = LevelManager::getInstance().currentLevel;
+
+                        playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+                        playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
+
+                        Engine::camera->MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
+                        if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty())
+                        {
+                            playerJumper.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
+                            playerGrabber.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
+                        }
+                        spdlog::info("Player has won the level!");
+                    }
+                    else
+                    {
+                        spdlog::info("Player has won the game!");
+                        Engine::camera->MoveToTarget( glm::vec3(90, 10.6, 17.3));
+                        AudioManager::GetInstance()->MuteAll();
+                        UITips[3].isVisible = true;
+                        slowdown = true;
+
+                    }
+                    if(LevelManager::getInstance().currentLevel==1){
+                        UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/grabHint.png");
+                    }
+                    if(LevelManager::getInstance().currentLevel==2){
+                        UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/ability.png");
+                    }
+                    if(LevelManager::getInstance().currentLevel>=3) {
+                        for (int i = 0; i < 3; i++) {
+                            UITips[i].isVisible = false;
+
+                        }
+                    }
+                }
+            }
+
 
             Engine::renderHitboxes(projection * view);
 
@@ -280,46 +335,9 @@ namespace Game {
     }
 
     void onWin() {
-        if(LevelManager::getInstance().nextLevel())
+        if(!nextLevel)
         {
-
-            playerGrabber.DropBattery();
-            playerJumper.DropBattery();
-            playerGrabber.levelId = LevelManager::getInstance().currentLevel;
-            playerJumper.levelId = LevelManager::getInstance().currentLevel;
-            grabber.levelId = LevelManager::getInstance().currentLevel;
-
-            playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
-            playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
-
-            Engine::camera->MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
-            if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty())
-            {
-                playerJumper.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
-                playerGrabber.battery = LevelManager::getInstance().getCurrentLevel()->batteries.at(0).get();
-            }
-            spdlog::info("Player has won the level!");
-        }
-        else
-        {
-            spdlog::info("Player has won the game!");
-            Engine::camera->MoveToTarget( glm::vec3(90, 10.6, 17.3));
-            AudioManager::GetInstance()->MuteAll();
-            UITips[3].isVisible = true;
-            slowdown = true;
-
-        }
-        if(LevelManager::getInstance().currentLevel==1){
-            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/grabHint.png");
-        }
-        if(LevelManager::getInstance().currentLevel==2){
-            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/ability.png");
-        }
-        if(LevelManager::getInstance().currentLevel>=3) {
-            for (int i = 0; i < 3; i++) {
-                UITips[i].isVisible = false;
-
-            }
+            nextLevel = true;
         }
     }
 
