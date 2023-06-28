@@ -187,7 +187,7 @@ namespace Game {
         for(int i = 0; i< 3; i++){
             UITips[i] = SpriteRenderer(imageShader);
         }
-        UITips[0].initRenderData("res/UI/jumping_hint.png");
+        UITips[0].initRenderData("res/UI/new/jumpHint.png");
 
 //        spdlog::info("menu1 before constructor");
         Menu menu1(imageShader);
@@ -254,8 +254,8 @@ namespace Game {
 
             background.Move(-50 * Engine::deltaTime);
 
-            UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(300.f, 300.f, 1.f),
-                                                                        glm::vec2(250.f, 300.f), 0);
+                UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
+                                                                            glm::vec2(250.f, 200.f),0);
 
             Engine::renderHitboxes(projection * view);
 
@@ -292,10 +292,10 @@ namespace Game {
             spdlog::info("Player has won the game!");
         }
         if(LevelManager::getInstance().currentLevel==1){
-            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/walking_with_chest.png");
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/grabHint.png");
         }
         if(LevelManager::getInstance().currentLevel==2){
-            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/skills.png");
+            UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/ability.png");
         }
         if(LevelManager::getInstance().currentLevel>=3) {
             for (int i = 0; i < 3; i++) {

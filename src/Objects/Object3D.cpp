@@ -173,3 +173,13 @@ void Object3D::unusualCollision(Object3D *other) {
 void Object3D::SwitchGravity(bool state) {
 
 }
+
+float Object3D::UpdateTimer() {
+    if (animationTimer < 1) {
+        animationTimer += 2*Engine::deltaTime;
+        return animationTimer;
+    }
+    else if(animationTimer + Engine::deltaTime > 1) {
+        return 1.0;
+    }
+}

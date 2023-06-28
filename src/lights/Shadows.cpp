@@ -66,11 +66,10 @@ void Shadows::initShaders(Camera& camera) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     cameraPosition = camera.Position;
     shader.use();
-    shader.setInt("diffuseTexture", 0);
     shader.setInt("material.diffuse", 0);
     shader.setInt("normalMap", 1);
-    shader.setInt("emissiveMap", 2);
-    shader.setInt("material.specular", 3);
+    shader.setInt("material.specular", 2);
+    shader.setInt("emissiveMap", 3);
     shader.setFloat("material.shininess", 32.0f);
     shader.setInt("shadowMap", 31);
 
