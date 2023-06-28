@@ -250,14 +250,15 @@ void PlayerGrabber::switchAnimationStand() {
 void PlayerGrabber::switchAnimationGrab() {
 //        this->loadAnimation("res/models/Players/Cr4nk/REST_CRANK_HOOKING.dae");
 //    this->grabber->loadAnimation("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
-    this->grabber->currentAnimation = this->grabber->hookingA;
+    this->grabber->currentAnimation = hookingP;
     if(this->walking == 1) {
         this->grabber->previousAnimation = this->grabber->walkA;
     } else {
         this->grabber->previousAnimation = this->grabber->stamdA;
     }
+    animationTimer = 0;
     this->grabber->animationTimer = 0;
-    this->grabber->animator.PlayAnimation(&this->grabber->hookingA);
+    this->grabber->animator.PlayAnimation(&hookingP);
 }
 
 
