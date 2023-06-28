@@ -1,7 +1,7 @@
 # Blender 3.6.0 MTL File: 'None'
 # www.blender.org
 
-newmtl lok
+newmtl lok.003
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -13,7 +13,7 @@ map_Ns pociagRoughness.png
 map_refl pociagMetallic.png
 map_Bump -bm 1.000000 pociagNormal.png
 
-newmtl okn
+newmtl okn.003
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
