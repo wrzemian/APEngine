@@ -60,14 +60,6 @@ Camera::Camera(const std::string& fileName) {
         spdlog::error("no JSON file found");
 }
 
-void Camera::SetViewport(int loc_x, int loc_y, int width, int height) {
-    viewport_x = loc_x;
-    viewport_y = loc_y;
-    window_width = width;
-    window_height = height;
-    //need to use doubles division here, it will not work otherwise and it is possible to get a zero aspect ratio with integer rounding
-    aspect = double(width) / double(height);
-}
 
 void Camera::Update(float deltaTime) {
 

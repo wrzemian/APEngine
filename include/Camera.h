@@ -177,7 +177,6 @@ public:
     }
 
     void Update(float deltaTime);
-    void SetViewport(int loc_x, int loc_y, int width, int height);
     float speed = 1.0f;
     float t;
     bool moveToTarget = false;
