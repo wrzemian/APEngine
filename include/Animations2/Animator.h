@@ -45,7 +45,6 @@ public:
         glm::mat4 nodeTransform = node->transformation;
 
         Bone* Bone = m_CurrentAnimation->FindBone(nodeName);
-
         if (Bone)
         {
             Bone->Update(m_CurrentTime);
@@ -53,7 +52,6 @@ public:
         }
 
         glm::mat4 globalTransformation = parentTransform * nodeTransform;
-
         auto boneInfoMap = m_CurrentAnimation->GetBoneIDMap();
         if (boneInfoMap.find(nodeName) != boneInfoMap.end())
         {
@@ -73,27 +71,29 @@ public:
 
     void BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime)
     {
-//        m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * deltaTime;
-//        m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
-        // Speed multipliers to correctly transition from one animation to another
-        float a = 1.0f;
-        float b = pBaseAnimation->GetDuration() / pLayeredAnimation->GetDuration();
-        const float animSpeedMultiplierUp = (1.0f - blendFactor) * a + b * blendFactor; // Lerp
+        m_DeltaTime = deltaTime;
+        if (m_CurrentAnimation) {
+            float a = 1.0f;
+            float b = pBaseAnimation->GetDuration() / pLayeredAnimation->GetDuration();
+            const float animSpeedMultiplierUp = (1.0f - blendFactor) * a + b * blendFactor; // Lerp
 
-        a = pLayeredAnimation->GetDuration() / pBaseAnimation->GetDuration();
-        b = 1.0f;
-        const float animSpeedMultiplierDown = (1.0f - blendFactor) * a + b * blendFactor; // Lerp
+            a = pLayeredAnimation->GetDuration() / pBaseAnimation->GetDuration();
+            b = 1.0f;
+            const float animSpeedMultiplierDown = (1.0f - blendFactor) * a + b * blendFactor; // Lerp
 
-        // Current time of each animation, "scaled" by the above speed multiplier variables
-        static float currentTimeBase = 0.0f;
-        currentTimeBase += pBaseAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierUp;
-        currentTimeBase = fmod(currentTimeBase, pBaseAnimation->GetDuration());
+            // Current time of each animation, "scaled" by the above speed multiplier variables
+            static float currentTimeBase = 0.0f;
+            currentTimeBase += pBaseAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierUp;
+            currentTimeBase = fmod(currentTimeBase, pBaseAnimation->GetDuration());
 
-        static float currentTimeLayered = 0.0f;
-        currentTimeLayered += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown;
-        currentTimeLayered = fmod(currentTimeLayered, pLayeredAnimation->GetDuration());
+            static float currentTimeLayered = 0.0f;
+            currentTimeLayered += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown;
+            currentTimeLayered = fmod(currentTimeLayered, pLayeredAnimation->GetDuration());
 
-        CalculateBlendedBoneTransform(pBaseAnimation, &pBaseAnimation->GetRootNode(), pLayeredAnimation, &pLayeredAnimation->GetRootNode(), currentTimeBase, currentTimeLayered, glm::mat4(1.0f), blendFactor);
+            CalculateBlendedBoneTransform(pBaseAnimation, &pBaseAnimation->GetRootNode(), pLayeredAnimation,
+                                          &pLayeredAnimation->GetRootNode(), currentTimeBase, currentTimeLayered,
+                                          glm::mat4(1.0f), blendFactor);
+        }
     }
 
 
@@ -106,8 +106,8 @@ public:
             const float blendFactor)
     {
         const std::string& nodeName = node->name;
-
         glm::mat4 nodeTransform = node->transformation;
+
         Bone* pBone = pAnimationBase->FindBone(nodeName);
         if (pBone)
         {
@@ -128,6 +128,9 @@ public:
         const glm::quat rot1 = glm::quat_cast(layeredNodeTransform);
         const glm::quat finalRot = glm::slerp(rot0, rot1, blendFactor);
         glm::mat4 blendedMat = glm::mat4_cast(finalRot);
+        blendedMat[0] = (1.0f - blendFactor) * nodeTransform[0] + layeredNodeTransform[0] * blendFactor;
+        blendedMat[1] = (1.0f - blendFactor) * nodeTransform[1] + layeredNodeTransform[1] * blendFactor;
+        blendedMat[2] = (1.0f - blendFactor) * nodeTransform[2] + layeredNodeTransform[2] * blendFactor;
         blendedMat[3] = (1.0f - blendFactor) * nodeTransform[3] + layeredNodeTransform[3] * blendFactor;
 
         glm::mat4 globalTransformation = parentTransform * blendedMat;
