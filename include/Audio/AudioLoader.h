@@ -14,7 +14,6 @@ class AudioLoader {
 public:
     ~AudioLoader();
 
-
     AudioLoader();
 
     void LoadAudioFile(const char* path, AudioType type, ALuint bufferId);

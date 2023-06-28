@@ -24,31 +24,12 @@ void AudioManager::InitializeAudio() {
     alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
     alDisable(AL_STOP_SOURCES_ON_DISCONNECT_SOFT);
 
-    spdlog::info("Successfully initialized OpenAL-Soft on " +
+    spdlog::info("OpenAl init successful on " +
                  (std::string)alcGetString(audioDevice, ALC_ALL_DEVICES_SPECIFIER));
 
     deviceChanger = std::jthread(CheckAudioDevice, &audioDevice);
 }
 
-
-
-void AudioManager::CheckAudioDevices() {
-    // Get the list of available audio devices
-    const ALCchar* deviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
-    if (deviceList == nullptr) {
-        spdlog::error("Failed to retrieve audio device list.");
-        return;
-    }
-
-    spdlog::info("Available audio devices:");
-
-    // Iterate over the device list until finding a null terminator
-    while (*deviceList != '\0') {
-        spdlog::info("- {}", deviceList);
-        // Move the pointer to the next device name
-        deviceList += strlen(deviceList) + 1;
-    }
-}
 
 void AudioManager::CreateAll(Camera camera, Object3D player) {
     auto listener = std::make_shared<AudioListener>(camera, 0);
@@ -148,6 +129,7 @@ void AudioManager::Free() {
 
     for (auto&& source: audioSources) {
         source.second->Free();
+        source.second->OnDestroy();
     }
 
     audioSources.clear();

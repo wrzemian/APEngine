@@ -42,7 +42,6 @@ public:
     void Free();
 
     void InitializeAudio();
-    void CheckAudioDevices();
     void CreateAll(Camera camera, Object3D player);
     void PlaySound(Audio name);
     void PauseSound(Audio name);

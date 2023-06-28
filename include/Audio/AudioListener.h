@@ -28,7 +28,6 @@ public:
 
     void SetGain(float val);
 
-    const float GetGain() const;
 };
 
 

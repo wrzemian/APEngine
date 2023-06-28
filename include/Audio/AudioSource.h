@@ -55,19 +55,15 @@ public:
     void LoadAudioData(const char* path, AudioType type);
 
     void PlaySound() const;
-    void ForcePlaySound() const;
     void PauseSound() const;
     void StopSound() const;
     void SetPositionOffset(glm::vec3 offset);
     void SetDistanceMode(AudioDistanceMode mode);
     void SetGain(float val);
-    void SetPitch(float val) const;
-    void SetVelocity(glm::vec3 velocity) const;
     void SetMaxDistance(float val);
     void IsLooping(bool state);
     void IsMoving(bool state);
     void SetCone(glm::vec3 direction, glm::vec2 cone) const;
-    const float GetGain() const;
 };
 
 
