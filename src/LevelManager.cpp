@@ -97,36 +97,6 @@ std::shared_ptr<Level> LevelManager::getCurrentLevel() {
     return nullptr;
 }
 
-void LevelManager::ImGui() {
-    ImGui::Begin(getWindowName().c_str());
-
-    ImGui::SetWindowSize(ImVec2(300, 500));
-
-    if (ImGui::TreeNode("Loaded Levels")) {
-        for (const auto& path : successfulPaths) {
-            ImGui::Text("%s", path.c_str());
-        }
-        ImGui::TreePop();
-    }
-
-    if (ImGui::TreeNode("Failed Levels")) {
-        for (const auto& path : failedPaths) {
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%s", path.c_str());
-        }
-        ImGui::TreePop();
-    }
-
-    if (!levels.empty()) {
-        ImGui::SliderInt("Current Level", &currentLevel, 0, levels.size() - 1);
-    }
-
-    for(auto& level: levels) {
-        level->HideImgui();
-    }
-    getCurrentLevel()->ShowImgui();
-
-    ImGui::End();
-}
 
 bool LevelManager::nextLevel() {
     if (currentLevel < levels.size() - 1) { // Check if there are more levels
@@ -140,7 +110,6 @@ bool LevelManager::nextLevel() {
 }
 
 LevelManager::LevelManager() {
-    setWindowName("Level Manager");
 }
 
 LevelManager::~LevelManager() {

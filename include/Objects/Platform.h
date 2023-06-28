@@ -31,7 +31,6 @@ public:
 
     void logFields();
 
-    void ImGui() override;
 };
 
 

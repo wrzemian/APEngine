@@ -56,7 +56,7 @@
 namespace Game {
     void processInput();
 
-    void ImGui();
+//    void ImGui();
 
     void renderScene(Shader shader, Camera camera);
 
@@ -111,7 +111,7 @@ namespace Game {
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
-        LevelManager::getInstance().ShowImgui();
+//        LevelManager::getInstance().ShowImgui();
 
         shadows.initShaders(*Engine::camera);
         spdlog::info("shader");
@@ -142,10 +142,10 @@ namespace Game {
         p1Hitbox.tag = "player";
         p2Hitbox.tag = "player";
 
-        p1Hitbox.ShowImgui();
-        p2Hitbox.ShowImgui();
+//        p1Hitbox.ShowImgui();
+//        p2Hitbox.ShowImgui();
 
-        Engine::camera->ShowImgui();
+//        Engine::camera->ShowImgui();
 
         playerGrabber.grabber = &grabber;
         grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
@@ -189,28 +189,21 @@ namespace Game {
         }
         UITips[0].initRenderData("res/UI/jumping_hint.png");
 
-//        spdlog::info("menu1 before constructor");
         Menu menu1(imageShader);
-//        spdlog::info("menu1 after constructor");
         menu = menu1;
-//        spdlog::info("before init1");
         menu.initMenu("../../res/UI/menu_screen.png");
-//        spdlog::info("after init1");
 
-        spdlog::info("menu2");
         Menu menu2(imageShader,true);
         menuPause = menu2;
         menuPause.initMenu("../../res/UI/pause_screen1.png");
 
-        spdlog::info("before finished loading");
         Engine::finishedLoading();
-        spdlog::info("after");
 
-        spdlog::info("ImGui");
-        ImGui();
         spdlog::info("ResolveCollisions");
         Engine::resolveCollisions();
         spdlog::info("loop");
+
+        Engine::camera->SetViewport(0, 0, (GLsizei)Engine::SCR_WIDTH, (GLsizei)Engine::SCR_HEIGHT);
 
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
@@ -235,7 +228,7 @@ namespace Game {
             AudioManager::GetInstance()->Update();
             AudioManager::GetInstance()->PlaySound(Audio::TRAIN_AMBIENT);
 
-            ImGui();
+//            ImGui();
             inputSystem.update();
             processInput();
             playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
@@ -245,6 +238,8 @@ namespace Game {
             Engine::moveObjects();
 
             shadows.renderShadows(*Engine::camera);
+
+
             Engine::camera->Update(Engine::deltaTime);
             glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom),
                                                     (float) Engine::SCR_WIDTH / (float) Engine::SCR_HEIGHT, 0.1f,
@@ -319,17 +314,17 @@ namespace Game {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         {
-            Engine::renderImgui();
-            Engine::ImGui();
+//            Engine::renderImgui();
+//            Engine::ImGui();
         }
 
-        ImGui::Begin("DevTools");
-        ImGui::SetWindowSize(ImVec2(250, 100));
-        if (ImGui::Button("Next Level"))
-            onWin();
-        if (ImGui::Button("Reset Level"))
-            ResetLevel();
-        ImGui::End();
+//        ImGui::Begin("DevTools");
+//        ImGui::SetWindowSize(ImVec2(250, 100));
+//        if (ImGui::Button("Next Level"))
+//            onWin();
+//        if (ImGui::Button("Reset Level"))
+//            ResetLevel();
+//        ImGui::End();
 
         ImGui::Render();
     }

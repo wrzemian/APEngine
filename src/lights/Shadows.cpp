@@ -6,7 +6,6 @@
 #include "../../include/Engine.h"
 
 Shadows::Shadows() {
-    IGui::setWindowName("shadows");
     position = glm::vec3(-5.0f, 11.370, 15.130f);
     orthoHor = glm::vec2(-10.0f, 10.0f);
     orthoVer = glm::vec2(-10.0f, 10.0f);
@@ -23,7 +22,6 @@ Shadows::Shadows(std::string fileName) {
     spdlog::info("shadows JSON constructor");
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
-    IGui::setWindowName("shadows");
 
     if(type == "shadows") {
         position = glm::vec3(d["posX"].GetFloat(), d["posY"].GetFloat(), d["posZ"].GetFloat());
@@ -72,35 +70,9 @@ void Shadows::initShaders(Camera& camera) {
     shader.setInt("emissiveMap", 3);
     shader.setFloat("material.shininess", 32.0f);
     shader.setInt("shadowMap", 31);
-
+    spdlog::info("SHADOWS CORRECT INIT IG");
 }
 
-void Shadows::ImGui()  {
-    ImGui::Begin(getWindowName().c_str());
-    ImGui::SetWindowSize(ImVec2(250, 430));
-
-    ImGui::SliderFloat("lightX", &position.x, -50.0f, 50.0f);
-    ImGui::SliderFloat("lightY", &position.y, -50.0f, 50.0f);
-    ImGui::SliderFloat("lightZ", &position.z, -50.0f, 50.0f);
-    ImGui::SliderFloat("idkX", &idk.x, -50.0f, 50.0f);
-    ImGui::SliderFloat("idkY", &idk.y, -50.0f, 50.0f);
-    ImGui::SliderFloat("idkZ", &idk.z, -50.0f, 50.0f);
-    ImGui::SliderFloat("lookAtX", &lookAt.x, -50.0f, 50.0f);
-    ImGui::SliderFloat("lookAtY", &lookAt.y, -50.0f, 50.0f);
-    ImGui::SliderFloat("lookAtZ", &lookAt.z, -50.0f, 50.0f);
-    ImGui::SliderFloat("nearPlane", &near_plane, -50.0f, 50.0f);
-    ImGui::SliderFloat("farPlane", &far_plane, -50.0f, 50.0f);
-    ImGui::SliderFloat("orthoHorX", &orthoHor.x, -50.0f, 50.0f);
-    ImGui::SliderFloat("orthoHorY", &orthoHor.y, -50.0f, 50.0f);
-    ImGui::SliderFloat("orthoVerX", &orthoVer.x, -50.0f, 50.0f);
-    ImGui::SliderFloat("orthoVerY", &orthoVer.y, -50.0f, 50.0f);
-
-    if (ImGui::Button("SAVE SHADOWS")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/shadows");
-    }
-    ImGui::End();
-
-}
 
 rapidjson::Document Shadows::ParseToJSON() {
     rapidjson::Document d;
@@ -139,14 +111,17 @@ void Shadows::renderShadows(Camera& camera) {
     // render scene from light's point of view
     simpleDepthShader.use();
     simpleDepthShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+//    spdlog::info("SHADOWS RENDERED SHADOWMAP");
 
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
     glClear(GL_DEPTH_BUFFER_BIT);
+//    spdlog::info("SHADOWS TRYING TO RENDER SHADOWMAP");
     Engine::drawObjects(simpleDepthShader, camera);
+//    spdlog::info("SHADOWS RENDERED SHADOWMAP");
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     // reset viewport
-    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    glViewport(0, 0, Engine::SCR_WIDTH, Engine::SCR_HEIGHT);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.use();

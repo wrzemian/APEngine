@@ -6,7 +6,6 @@
 
 Box::Box() {
  //   _transform._position = glm::vec3(0,0,0);
-    IGui::setWindowName("box");
 
     tag = "box";
     id = 5;

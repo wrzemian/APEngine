@@ -17,7 +17,7 @@
 bool isVisable = false;
 
 
-class HUD : public IGui{
+class HUD {
 public:
     struct Character {
         GLuint textureID;

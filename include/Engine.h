@@ -14,7 +14,6 @@
 #include <vector>
 #include <iostream>
 
-#include "IGui.h"
 #include "Objects/Hitbox.h"
 #include "Objects/MovingObject.h"
 #include "Objects/Object3D.h"
@@ -43,7 +42,6 @@ namespace Engine {
     int getMovingObjectIndex(MovingObject* obj);
 
     void addStaticHitbox(Hitbox* hitbox);
-    void addImgui(IGui* imgui);
     void addMovingObject(MovingObject* object);
     void addObject(Object3D* object);
     void addDirLight(DirectionalLight* dirLight);
@@ -60,7 +58,6 @@ namespace Engine {
     void removeAnt(Ant* ant);
 
     void removeStaticHitbox(Hitbox* hitbox);
-    void removeImgui(IGui* igui);
     void removeMovingObject(MovingObject* object);
     void removeObject(Object3D* object);
     void removeDirLight(DirectionalLight* dirLight);

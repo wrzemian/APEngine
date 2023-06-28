@@ -6,14 +6,13 @@
 #define APENGINE_SHADOWS_H
 
 
-#include "../IGui.h"
 #include "document.h"
 #include "glm/vec3.hpp"
 #include "glm/vec2.hpp"
 #include "../Shader.h"
 #include "../Camera.h"
 
-class Shadows : public IGui {
+class Shadows {
 public:
     glm::vec3 position;
     glm::vec2 orthoHor;
@@ -36,7 +35,6 @@ public:
     void initShaders(Camera& camera);
     void renderShadows(Camera& camera);
 
-    void ImGui() override;
     rapidjson::Document ParseToJSON();
 };
 

@@ -28,7 +28,6 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		User/InputSystem.cpp ../include/User/InputSystem.h
 		Parser.cpp ../include/Parser.h
 		../include/User/HUD.h
-		../include/IGui.h IGui.cpp
         Objects/Level.cpp ../include/Objects/Level.h
 		User/Animation.cpp
         ../include/User/HudAnimation.h

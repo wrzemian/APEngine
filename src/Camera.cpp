@@ -67,7 +67,6 @@ Camera::Camera(const std::string& fileName) {
     spdlog::info("camera JSON constructor");
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
-    IGui::setWindowName("camera");
 
     if(type == "camera") {
         Position = glm::vec3(d["posX"].GetFloat(), d["posY"].GetFloat(), d["posZ"].GetFloat());
@@ -84,7 +83,17 @@ Camera::Camera(const std::string& fileName) {
         spdlog::error("no JSON file found");
 }
 
+void Camera::SetViewport(int loc_x, int loc_y, int width, int height) {
+    viewport_x = loc_x;
+    viewport_y = loc_y;
+    window_width = width;
+    window_height = height;
+    //need to use doubles division here, it will not work otherwise and it is possible to get a zero aspect ratio with integer rounding
+    aspect = double(width) / double(height);
+}
+
 void Camera::Update(float deltaTime) {
+
     if (moveToTarget) {
         t += deltaTime * speed;
         if (t >= 1.0f) {

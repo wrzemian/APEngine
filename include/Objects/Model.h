@@ -312,7 +312,7 @@ public:
                 texture.type = typeName;
                 texture.path = str.C_Str();
                 textures.push_back(texture);
-                spdlog::info("loaded texture {} from {}", typeName, str.C_Str());
+//                spdlog::info("loaded texture {} from {}", typeName, str.C_Str());
 
                 textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
             }

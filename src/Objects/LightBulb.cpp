@@ -14,7 +14,6 @@ LightBulb::LightBulb() {
     _shader = &temp;
     ChangeColor(glm::vec3(0,0,1));
 
-    IGui::setWindowName("Light Bulb ");
 }
 
 void LightBulb::ChangeColor(glm::vec3 color) {

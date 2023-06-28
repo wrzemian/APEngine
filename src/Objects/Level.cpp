@@ -4,7 +4,6 @@
 #include "../../include/Objects/Box.h"
 
 Level::Level() {
-    IGui::setWindowName("Level");
 }
 
 Level::~Level() {
@@ -547,38 +546,6 @@ void Level::logHitboxes() {
     }
 }
 
-void Level::ImGui() {
-    ImGui::Begin(getWindowName().c_str());
-    Object3D::ImGui();
-
-    ImGui::SetWindowSize(ImVec2(300, 500));
-
-    ImGui::Checkbox("Buttons imgui", &buttonsImgui);
-    for (const auto& button : buttons) {
-        button->setImgui(buttonsImgui);
-    }
-
-    ImGui::Checkbox("Platforms imgui", &platformsImgui);
-    for (const auto& platform : movingPlatforms) {
-        platform->setImgui(platformsImgui);
-    }
-
-    ImGui::Checkbox("Boxes imgui", &boxesImgui);
-    for (const auto& box : boxes) {
-        box->setImgui(boxesImgui);
-    }
-
-    ImGui::Checkbox("Batteries imgui", &batteriesImgui);
-    for (const auto& battery : batteries) {
-        battery->setImgui(batteriesImgui);
-    }
-
-    if (ImGui::Button("SAVE WALLS")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/walls");
-    }
-
-    ImGui::End();
-}
 
 void Level::onCollision(Object3D* other) {
     // Implement collision handling logic for walls

@@ -59,7 +59,6 @@ void WinArea::Win() {
 }
 
 WinArea::WinArea() {
-    IGui::setWindowName("Win area");
 }
 
 void WinArea::OnActivate() {

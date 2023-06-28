@@ -38,7 +38,6 @@ namespace Engine {
     std::vector<Hitbox*> staticHitboxes;
     std::vector<Hitbox*> dynamicHitboxes;
 
-    std::vector<IGui*> allImgui;
     std::vector<Object3D*> allObjects;
     std::vector<MovingObject*> allMovingObjects;
     std::vector<DirectionalLight*> allDirLights;
@@ -136,15 +135,6 @@ namespace Engine {
         std::erase(dynamicHitboxes, hitbox);
     }
 
-    void addImgui(IGui* imgui) {
-        //spdlog::warn("imgui object added, {}", imgui->_windowName);
-        allImgui.push_back(imgui);
-    }
-
-    void removeImgui(IGui* igui) {
-        //spdlog::error("removing igui, _windowName = {}", igui->_windowName);
-        std::erase(allImgui, igui);
-    }
 
     void addMovingObject(MovingObject* object) {
         //spdlog::warn("moving object added, {}", object->_windowName);
@@ -232,9 +222,6 @@ namespace Engine {
         }
     }
 
-    int getImguiIndex() {
-        return allImgui.size();
-    }
 
     void moveObjects(){
         if(deltaTime > 0.05) {
@@ -258,7 +245,7 @@ namespace Engine {
                 continue;
             }
             if(object->_model == nullptr) {
-                spdlog::error("object {}/{} has null model", object->tag, object->getWindowName());
+                spdlog::error("object {} has null model", object->tag);
             }
             shader.setBool("animated", object->animated);
             if(object->animated) {
@@ -269,7 +256,7 @@ namespace Engine {
 
                 object->animator.BlendTwoAnimations(&object->previousAnimation,
                                                     &object->currentAnimation,
-                                                    object->UpdateTimer(), Engine::deltaTime/2);
+                                                    object->UpdateBlendFactor(), Engine::deltaTime / 2);
             }
             shader.setBool("emissive", object->emissive);
 
@@ -381,15 +368,6 @@ namespace Engine {
     }
 
 
-
-    void renderImgui() {
-        for(IGui* gui: allImgui) {
-            if(gui->isShownImgui()) {
-                gui->ImGui();
-            }
-        }
-    }
-
     void renderHitboxes(const glm::mat4& projectionView) {
         for(auto hitbox: staticHitboxes) {
             hitbox->Draw(projectionView);
@@ -441,16 +419,16 @@ namespace Engine {
     void LoopEnd() {
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+//        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     void terminate() {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+//        ImGui_ImplOpenGL3_Shutdown();
+//        ImGui_ImplGlfw_Shutdown();
+//        ImGui::DestroyContext();
 
         // glfw: terminate, clearing all previously allocated GLFW resources.
         // ------------------------------------------------------------------
@@ -484,6 +462,7 @@ namespace Engine {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -511,17 +490,16 @@ namespace Engine {
             return -1;
         }
         glEnable(GL_DEPTH_TEST);
-
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO();
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
-#ifdef __APPLE__
-        ImGui_ImplOpenGL3_Init("#version 330");
-#else
-        ImGui_ImplOpenGL3_Init("#version 430");
-#endif
-        ImGui::StyleColorsClassic();
+//        IMGUI_CHECKVERSION();
+//        ImGui::CreateContext();
+//        ImGuiIO& io = ImGui::GetIO();
+//        ImGui_ImplGlfw_InitForOpenGL(window, true);
+//#ifdef __APPLE__
+//        ImGui_ImplOpenGL3_Init("#version 330");
+//#else
+//        ImGui_ImplOpenGL3_Init("#version 430");
+//#endif
+//        ImGui::StyleColorsClassic();
 
         return 0;
     }

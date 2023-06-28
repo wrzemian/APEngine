@@ -6,7 +6,6 @@
 #define APENGINE_DIRECTIONALLIGHT_H
 
 #include "AmbientLight.h"
-#include "../IGui.h"
 
 
 class DirectionalLight : public AmbientLight{
@@ -36,7 +35,6 @@ public:
 
     DirectionalLight();
 
-    void ImGui();
 };
 
 

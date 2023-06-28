@@ -41,7 +41,6 @@ public:
     void calculateHitboxes();
     void logHitboxes();
     void logNewObjects();
-    void ImGui() override;
 
     void onCollision(Object3D* other) override;
 

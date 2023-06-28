@@ -6,12 +6,11 @@
 #include "Transform.h"
 #include "Model.h"
 #include "../Shader.h"
-#include "../IGui.h"
 #include "document.h"
 #include "../Animations2/Animation.h"
 #include "../Animations2/Animator.h"
 
-class Object3D : public IGui {
+class Object3D {
 public:
     int levelId = -1;
     Object3D();
@@ -61,8 +60,8 @@ public:
 
     bool canBePickedUp = true;
 
-    float animationTimer = 0;
-    float UpdateTimer();
+    float blendFactor = 0;
+    float UpdateBlendFactor();
 
     void calculateBoundingBox();
 

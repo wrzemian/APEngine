@@ -8,7 +8,6 @@
 #include "../../include/AssetManager.h"
 
 Object3D::Object3D() {
-    IGui::setWindowName("object 3d");
 
     Engine::addObject(this);
 }
@@ -72,40 +71,7 @@ void Object3D::calculateBoundingBox() {
     size = modelData.size;
 }
 
-void Object3D::ImGui() {
-    ImGui::Begin(getWindowName().c_str());
 
-    ImGui::SetWindowSize(ImVec2(300, 330));
-
-    ImGui::SliderFloat("scale X", &_transform._scale.x, 0.0f, 2.0f);
-    ImGui::SliderFloat("scale Y", &_transform._scale.y, 0.0f, 2.0f);
-    ImGui::SliderFloat("scale Z", &_transform._scale.z, 0.0f, 2.0f);
-
-    ImGui::SliderFloat("rotation X", &_transform._rotation.x, -6.5, 6.5f);
-    ImGui::SliderFloat("rotation Y", &_transform._rotation.y, -6.5, 6.5f);
-    ImGui::SliderFloat("rotation Z", &_transform._rotation.z, -6.5, 6.5f);
-
-    ImGui::SliderFloat("position X", &_transform._position.x, -30.0f, 30.0f);
-    ImGui::SliderFloat("position Y", &_transform._position.y, -30.0f, 30.0f);
-    ImGui::SliderFloat("position Z", &_transform._position.z, -30.0f, 30.0f);
-
-    if (ImGui::Button("Reset Scale")) {
-        _transform._scale = glm::vec3(1,1,1);
-    }
-
-    if (ImGui::Button("Reset Position")) {
-        _transform._position = glm::vec3(0,0,0);
-    }
-    if (ImGui::Button("Reset Rotation")) {
-        _transform._rotation = glm::vec3(0,0,0);
-    }
-    if (ImGui::Button("SAVE OBJ3D")) {
-
-        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/object3D_" + std::to_string(Engine::getObject3DIndex(this)));
-    }
-
-    ImGui::End();
-}
 
 rapidjson::Document Object3D::ParseToJSON() {
     rapidjson::Document d;
@@ -174,12 +140,12 @@ void Object3D::SwitchGravity(bool state) {
 
 }
 
-float Object3D::UpdateTimer() {
-    if (animationTimer < 1) {
-        animationTimer += 2*Engine::deltaTime;
-        return animationTimer;
+float Object3D::UpdateBlendFactor() {
+    if (blendFactor < 1) {
+        blendFactor += 2 * Engine::deltaTime;
+        return blendFactor;
     }
-    else if(animationTimer + Engine::deltaTime > 1) {
+    else if(blendFactor + Engine::deltaTime > 1) {
         return 1.0;
     }
 }
