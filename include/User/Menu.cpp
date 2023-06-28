@@ -15,7 +15,7 @@ void Menu::pickMenu(int chosen) {
             break;
 
         case 1:
-            if(isPause == true){
+            if(isPause){
                 Game::ResetLevel();
                 isVisible = false;
             }
@@ -139,9 +139,9 @@ void Menu::initMenu(const char *filePath) {
         mark[2].initRenderData("res/UI/exit.png");
     }
     else if(isPause){
-        mark[0].initRenderData("res/UI/resume.png");
-        mark[1].initRenderData("res/UI/reset.png");
-        mark[2].initRenderData("res/UI/exit.png");
+        mark[0].initRenderData("res/UI/new/continue1.png");
+        mark[1].initRenderData("res/UI/new/reset1.png");
+        mark[2].initRenderData("res/UI/new/exit1.png");
     }
 }
 
@@ -152,7 +152,7 @@ void Menu::drawMenu(glm::vec3 position,
             mark[abs(counter % 3)].DrawSprite(markPosHelper, glm::vec2(250.f, 130.f), 0.f);
         }
         else{
-            mark[abs(counter % 3)].DrawSprite(markPosHelper, glm::vec2(250.f, 155.f), 0.f);
+            mark[abs(counter % 3)].DrawSprite(markPos[abs(counter%3)], markScale[abs(counter%3)], 0.f);
         }
             shader.use();
 
@@ -189,9 +189,9 @@ Menu::Menu(const Shader &shader) : shader(shader) {
         mark[i] = mark1;
     }
     spdlog::info("test2");
-    markPos[0] = glm::vec3(20.f,20.f,1.f);
-    markPos[1] = glm::vec3(275.f,20.f,1.f);
-    markPos[2] = glm::vec3(520.f,20.f,1.f);
+    markPos[0] = glm::vec3(20.f,20.f,1.01f);
+    markPos[1] = glm::vec3(275.f,20.f,1.01f);
+    markPos[2] = glm::vec3(520.f,20.f,1.01f);
     markPosHelper = markPos[0];
     spdlog::info("test3");
     isPause = false;
@@ -214,10 +214,17 @@ this->counter  = 999;
         SpriteRenderer mark1(this->shader);
         mark[i] = mark1;
     }
-    markPos[0] = glm::vec3(20.f,20.f,1.f);
-    markPos[1] = glm::vec3(270.f,20.f,1.f);
-    markPos[2] = glm::vec3(530.f,20.f,1.f);
+    markPos[0] = glm::vec3(10.f,44.f,1.f);
+    markPos[1] = glm::vec3(323.f,44.f,1.f);
+    markPos[2] = glm::vec3(611.f,44.f,1.f);
     markPosHelper = markPos[0];
+    markScale[0]=glm::vec2(250,54);
+    markScale[1]= glm::vec2 (167,54);
+    markScale[2]= glm::vec2 (120,54);
+
+
     isPause = true;
     isVisible = false;
 }
+
+
