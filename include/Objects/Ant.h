@@ -26,7 +26,6 @@ public:
     float maxMoveTime;
     bool isMoving;
 
-    void ImGui() override;
     void Move(float deltaTime) override;
 
     void Escape(Object3D* other);

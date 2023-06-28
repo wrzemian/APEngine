@@ -3,8 +3,6 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "imgui_impl/imgui_impl_glfw.h"
-#include "imgui_impl/imgui_impl_opengl3.h"
 #include "spdlog/spdlog.h"
 
 #include <vector>
@@ -38,7 +36,6 @@ namespace Engine {
     std::vector<Hitbox*> staticHitboxes;
     std::vector<Hitbox*> dynamicHitboxes;
 
-    std::vector<IGui*> allImgui;
     std::vector<Object3D*> allObjects;
     std::vector<MovingObject*> allMovingObjects;
     std::vector<DirectionalLight*> allDirLights;
@@ -57,7 +54,7 @@ namespace Engine {
     std::shared_ptr<Camera> camera = std::make_shared<Camera>("camera");
 
     int Init() {
-        if (initGLandImGui() == -1) {
+        if (initGL() == -1) {
             return -1;
         }
         frameStart = glfwGetTime();
@@ -136,15 +133,6 @@ namespace Engine {
         std::erase(dynamicHitboxes, hitbox);
     }
 
-    void addImgui(IGui* imgui) {
-        //spdlog::warn("imgui object added, {}", imgui->_windowName);
-        allImgui.push_back(imgui);
-    }
-
-    void removeImgui(IGui* igui) {
-        //spdlog::error("removing igui, _windowName = {}", igui->_windowName);
-        std::erase(allImgui, igui);
-    }
 
     void addMovingObject(MovingObject* object) {
         //spdlog::warn("moving object added, {}", object->_windowName);
@@ -232,9 +220,6 @@ namespace Engine {
         }
     }
 
-    int getImguiIndex() {
-        return allImgui.size();
-    }
 
     void moveObjects(){
         if(deltaTime > 0.05) {
@@ -258,7 +243,7 @@ namespace Engine {
                 continue;
             }
             if(object->_model == nullptr) {
-                spdlog::error("object {}/{} has null model", object->tag, object->getWindowName());
+                spdlog::error("object {} has null model", object->tag);
             }
             shader.setBool("animated", object->animated);
             if(object->animated) {
@@ -321,38 +306,7 @@ namespace Engine {
     }
 
 
-    void ImGui() {
-        ImGui::Begin("Engine");
-        ImGui::SetWindowSize(ImVec2(250, 300));
-        //spdlog::info("deltaTime: ", Engine::deltaTime);
 
-        ImGui::Text("deltaTime: %f", Engine::deltaTime);
-        ImGui::Text("FPS: %f", 1.0f / Engine::deltaTime);
-        ImGui::Text("displayed: %d", displayCounter);
-        ImGui::Text("total: %d", totalCounter);
-        ImGui::Checkbox("FRUSTUM", &frustum);
-
-        ImGui::SliderInt("Static", &renderedStatic, -1, (int)staticHitboxes.size() - 1);
-        ImGui::SliderInt("Dynamic", &renderedDynamic, -1, (int)dynamicHitboxes.size() - 1);
-
-        ImGui::Checkbox("Show static hitboxes", &renderStatic);
-        ImGui::Checkbox("Show dynamic hitboxes", &renderDynamic);
-
-        for (const auto& hitbox : staticHitboxes) {
-            hitbox->draw = renderStatic;
-        }
-        for (const auto& hitbox : dynamicHitboxes) {
-            hitbox->draw = renderDynamic;
-        }
-
-        if(renderedStatic >= 0)
-            staticHitboxes.at(renderedStatic)->draw = true;
-
-        if(renderedDynamic >= 0)
-            dynamicHitboxes.at(renderedDynamic)->draw = true;
-
-        ImGui::End();
-    }
 
 
     void LoopStart() {
@@ -380,15 +334,6 @@ namespace Engine {
 //        glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     }
 
-
-
-    void renderImgui() {
-        for(IGui* gui: allImgui) {
-            if(gui->isShownImgui()) {
-                gui->ImGui();
-            }
-        }
-    }
 
     void renderHitboxes(const glm::mat4& projectionView) {
         for(auto hitbox: staticHitboxes) {
@@ -441,16 +386,16 @@ namespace Engine {
     void LoopEnd() {
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+//        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     void terminate() {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+//        ImGui_ImplOpenGL3_Shutdown();
+//        ImGui_ImplGlfw_Shutdown();
+//        ImGui::DestroyContext();
 
         // glfw: terminate, clearing all previously allocated GLFW resources.
         // ------------------------------------------------------------------
@@ -477,13 +422,14 @@ namespace Engine {
         glViewport(0, 0, width, height);
     }
 
-    int initGLandImGui() {
+    int initGL() {
         // glfw: initialize and configure
         // ------------------------------
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -514,17 +460,16 @@ namespace Engine {
             return -1;
         }
         glEnable(GL_DEPTH_TEST);
-
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO();
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
-#ifdef __APPLE__
-        ImGui_ImplOpenGL3_Init("#version 330");
-#else
-        ImGui_ImplOpenGL3_Init("#version 430");
-#endif
-        ImGui::StyleColorsClassic();
+//        IMGUI_CHECKVERSION();
+//        ImGui::CreateContext();
+//        ImGuiIO& io = ImGui::GetIO();
+//        ImGui_ImplGlfw_InitForOpenGL(window, true);
+//#ifdef __APPLE__
+//        ImGui_ImplOpenGL3_Init("#version 330");
+//#else
+//        ImGui_ImplOpenGL3_Init("#version 430");
+//#endif
+//        ImGui::StyleColorsClassic();
 
         return 0;
     }

@@ -1,5 +1,4 @@
 #include "../../include/lights/DirectionalLight.h"
-#include "imgui_impl/imgui_impl_glfw.h"
 #include "../include/Engine.h"
 
 DirectionalLight::DirectionalLight(const glm::vec3 &ambient, const glm::vec3 &diffuse, const glm::vec3 &specular,
@@ -45,21 +44,7 @@ void DirectionalLight::setSpecular(const glm::vec3 &specular) {
     AmbientLight::setSpecular(specular);
 }
 
-void DirectionalLight::ImGui() {
-    ImGui::Begin("Dir Lignt");
-    ImGui::SetWindowSize(ImVec2(250, 150));
 
-    ImGui::SliderFloat3("ambient", &ambient.x, -1.0f, 1.0f);
-    ImGui::SliderFloat3("diffuse", &diffuse.x, -1.0f, 1.0f);
-    ImGui::SliderFloat3("specular", &specular.x, -1.0f, 1.0f);
-    ImGui::SliderFloat3("direction", &direction.x, -1.0f, 1.0f);
-
-    if (ImGui::Button("SAVE")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "lights/dirLight");
-    }
-
-    ImGui::End();
-}
 
 rapidjson::Document DirectionalLight::ParseToJSON() {
     rapidjson::Document d;

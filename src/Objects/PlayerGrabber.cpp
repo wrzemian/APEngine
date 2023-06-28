@@ -178,7 +178,6 @@ void PlayerGrabber::onCollisionExit(Object3D *other) {
 }
 
 PlayerGrabber::PlayerGrabber() {
-    IGui::setWindowName("player grabber");
     //TODO: fix this xddd
     _transform._scale.x = 0.02f;
     _transform._scale.y = 0.02f;

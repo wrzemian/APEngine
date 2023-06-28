@@ -17,7 +17,6 @@ void Background::initBackground(int tilesAmount, float maxLeft, float shiftAmoun
         // xPosition = i * interval;
         //create new tiles here
         BackgroundTile *bTile = new BackgroundTile();
-        bTile->HideImgui();
         backgroundTiles.push_back(bTile);
         backgroundTiles[i+1]->_transform._position.x += interval * i;
         backgroundTiles[i+1]->initBackgroundTile();

@@ -8,13 +8,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "imgui_impl/imgui_impl_glfw.h"
-#include "imgui_impl/imgui_impl_opengl3.h"
+
 
 #include <vector>
 #include <iostream>
 
-#include "IGui.h"
 #include "Objects/Hitbox.h"
 #include "Objects/MovingObject.h"
 #include "Objects/Object3D.h"
@@ -31,19 +29,16 @@ namespace Engine {
     extern bool frustum;
     extern std::shared_ptr<Camera> camera;
 
-    void ImGui();
     int Init();
     void LoopStart();
     void LoopEnd();
 
     int getHitboxIndex();
-    int getImguiIndex();
     int getObject3DIndex(Object3D* obj);
     Object3D* getObject3DById(int id);
     int getMovingObjectIndex(MovingObject* obj);
 
     void addStaticHitbox(Hitbox* hitbox);
-    void addImgui(IGui* imgui);
     void addMovingObject(MovingObject* object);
     void addObject(Object3D* object);
     void addDirLight(DirectionalLight* dirLight);
@@ -60,7 +55,6 @@ namespace Engine {
     void removeAnt(Ant* ant);
 
     void removeStaticHitbox(Hitbox* hitbox);
-    void removeImgui(IGui* igui);
     void removeMovingObject(MovingObject* object);
     void removeObject(Object3D* object);
     void removeDirLight(DirectionalLight* dirLight);
@@ -69,7 +63,6 @@ namespace Engine {
 
 
     void renderHitboxes(const glm::mat4& projectionView);
-    void renderImgui();
     void renderLights(Shader shader, Camera& camera);
     void renderDirLights(Shader shader);
     void renderPointLights(Shader shader);
@@ -84,7 +77,7 @@ namespace Engine {
     void resolveCollisions();
 
 
-    int initGLandImGui();
+    int initGL();
 
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -97,8 +90,6 @@ namespace Engine {
     // glfw: whenever the window size changed (by OS or user resize) this callback function executes
     // ---------------------------------------------------------------------------------------------
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
-    int initGLandImGui();
 
     GLFWwindow* getWindow();
 

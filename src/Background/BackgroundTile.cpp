@@ -54,7 +54,6 @@ void BackgroundTile::GenerateRandomObjects()
     {
         //Cactus cactus;
         Cactus *cactus = new Cactus();
-        cactus->HideImgui();
         cactuses.push_back(cactus);
         cactuses[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
         cactuses[i]->_transform._position.z = _transform._position.z + Random::get<Random::common>(minBoundaryZ, maxBoundaryZ);
@@ -66,7 +65,6 @@ void BackgroundTile::GenerateRandomObjects()
     for(int i = 0 ;i < rocksAmount;i++)
     {
         Rock *rock = new Rock();
-        rock->HideImgui();
         rock->initRock();
         rocks.push_back(rock);
         rocks[i]->_transform._position.x = _transform._position.x + Random::get<Random::common>(minBoundaryX, maxBoundaryX);
@@ -107,5 +105,4 @@ BackgroundTile::~BackgroundTile() {
 }
 
 BackgroundTile::BackgroundTile() {
-    IGui::setWindowName("Background tile");
 }

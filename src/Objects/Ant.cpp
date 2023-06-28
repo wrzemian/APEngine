@@ -5,7 +5,6 @@ using Random = effolkronium::random_static;
 
 Ant::Ant() {
     //_windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
-    IGui::setWindowName("ant");
     //spdlog::warn("moving object constructor");
     timer = 0;
     minSpeed = Random::get(3.0f, 0.5f);
@@ -93,9 +92,3 @@ void Ant::onCollisionZ(Object3D *other) {
     }
 }
 
-void Ant::ImGui() {
-    super::ImGui();
-
-    ImGui::Begin(getWindowName().c_str());
-    ImGui::End();
-}

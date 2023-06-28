@@ -6,12 +6,11 @@
 #include "Transform.h"
 #include "Model.h"
 #include "../Shader.h"
-#include "../IGui.h"
 #include "document.h"
 #include "../Animations2/Animation.h"
 #include "../Animations2/Animator.h"
 
-class Object3D : public IGui {
+class Object3D {
 public:
     int levelId = -1;
     Object3D();
@@ -33,7 +32,6 @@ public:
 
     virtual void Draw(Shader &shader);
 
-    void ImGui();
     void loadModel(const std::string& path);
 
     void loadAnimation(const std::string& daePath);

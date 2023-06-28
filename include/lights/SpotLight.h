@@ -7,7 +7,6 @@
 
 #include "PointLight.h"
 #include "glm/vec3.hpp"
-#include "../IGui.h"
 class SpotLight : public PointLight{
 protected:
     glm::vec3 direction;
@@ -48,8 +47,6 @@ public:
     void setQuadratic(float quadratic);
 
     void SendToShader(Shader shader, std::string type) override;
-
-    void ImGui();
 
     SpotLight();
 

@@ -56,7 +56,7 @@
 namespace Game {
     void processInput();
 
-    void ImGui();
+//    void ImGui();
 
     void renderScene(Shader shader, Camera camera);
 
@@ -116,7 +116,7 @@ namespace Game {
 
         LevelManager::getInstance().loadAllLevels("../../res/models/Levels/levelList");
         LevelManager::getInstance().loadAllLevelsData("../../res/jsons/levels/levelList");
-        LevelManager::getInstance().ShowImgui();
+//        LevelManager::getInstance().ShowImgui();
 
         shadows.initShaders(*Engine::camera);
         spdlog::info("shader");
@@ -147,10 +147,10 @@ namespace Game {
         p1Hitbox.tag = "player";
         p2Hitbox.tag = "player";
 
-        p1Hitbox.ShowImgui();
-        p2Hitbox.ShowImgui();
+//        p1Hitbox.ShowImgui();
+//        p2Hitbox.ShowImgui();
 
-        Engine::camera->ShowImgui();
+//        Engine::camera->ShowImgui();
 
         playerGrabber.grabber = &grabber;
         grabber.loadModel("res/models/Players/Cr4nk/RIGHT_HAND_CRANK_HOOKING.dae");
@@ -198,20 +198,17 @@ namespace Game {
         menu = menu1;
         menu.initMenu("res/UI/new/menu_screen_new.png");
 
+
         Menu menu2(imageShader,true);
         menuPause = menu2;
         menuPause.initMenu("res/UI/new/pause_screen_new.png");
 
-        spdlog::info("before finished loading");
         Engine::finishedLoading();
-        spdlog::info("after");
 
-        spdlog::info("ImGui");
-        ImGui();
         spdlog::info("ResolveCollisions");
         Engine::resolveCollisions();
         spdlog::info("loop");
-
+        
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }
@@ -246,7 +243,8 @@ namespace Game {
             AudioManager::GetInstance()->Update();
             AudioManager::GetInstance()->PlaySound(Audio::TRAIN_AMBIENT);
 
-            ImGui();
+
+            inputSystem.update();
             processInput();
             playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
             playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
@@ -256,8 +254,6 @@ namespace Game {
 
             shadows.renderShadows(*Engine::camera);
 
-
-            inputSystem.update();
 
             Engine::camera->Update(Engine::deltaTime);
             glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom),
@@ -354,43 +350,6 @@ namespace Game {
         playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
         playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
         LevelManager::getInstance().getCurrentLevel()->ResetPositions();
-    }
-
-
-    void ImGui() {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        {
-            Engine::renderImgui();
-            Engine::ImGui();
-        }
-
-        ImGui::Begin("DevTools");
-        ImGui::SetWindowSize(ImVec2(250, 100));
-        if (ImGui::Button("Next Level"))
-            onWin();
-        if (ImGui::Button("Reset Level"))
-            ResetLevel();
-        ImGui::End();
-
-        ImGui::Begin("Napisy w menu");
-        ImGui::SetWindowSize(ImVec2(1000, 400));
-
-        ImGui::SliderFloat("continue x", &menu.markPos[0].x, 0.f, 300.0f);
-        ImGui::SliderFloat("scale X", &menu.markScale[0].x, 0.0f, 480.0f);
-        ImGui::SliderFloat("scale Y", &menu.markScale[0].y, 0.0f, 480.0f);
-        ImGui::SliderFloat("continue x", &menu.markPos[1].x, 300.f, 600.0f);
-        ImGui::SliderFloat("scale X", &menu.markScale[1].x, 0.0f, 480.0f);
-        ImGui::SliderFloat("scale Y", &menu.markScale[1].y, 0.0f, 480.0f);
-        ImGui::SliderFloat("continue x", &menu.markPos[2].x, 500.f, 700.0f);
-        ImGui::SliderFloat("scale X", &menu.markScale[2].x, 0.0f, 480.0f);
-        ImGui::SliderFloat("scale Y", &menu.markScale[2].y, 0.0f, 480.0f);
-
-
-        ImGui::End();
-
-        ImGui::Render();
     }
 
 

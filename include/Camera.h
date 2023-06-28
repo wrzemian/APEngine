@@ -4,7 +4,6 @@
 #include "glad/glad.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "imgui.h"
 #include "Objects/MovingObject.h"
 #include <vector>
 
@@ -30,7 +29,7 @@ extern bool isBlocked;
 extern bool isFound;
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
-class Camera : public IGui
+class Camera
 {
 
 
@@ -53,6 +52,13 @@ public:
     float Zoom;
     float degX;
     float degY;
+    int viewport_x;
+    int viewport_y;
+
+    int window_width;
+    int window_height;
+
+    double aspect;
 
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
@@ -111,7 +117,6 @@ public:
         updateCameraVectors();
     }
 
-    void ImGui();
 
     rapidjson::Document ParseToJSON();
 

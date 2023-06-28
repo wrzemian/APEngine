@@ -11,7 +11,6 @@ Platform::Platform(glm::vec3 pOrigin,glm::vec3 pTarget, float s) {
     this->speed = s;
     _transform._position = pOrigin;
 
-    setWindowName("Platform");
     //logFields();
 }
 
@@ -61,16 +60,6 @@ void Platform::logFields() {
     spdlog::info("");
 }
 
-void Platform::ImGui() {
-    ImGui::Begin(getWindowName().c_str());
-    Object3D::ImGui();
-    ImGui::SetWindowSize(ImVec2(300, 400));
 
-    ImGui::Checkbox("move to origin", &moveToOrigin);
-    ImGui::Checkbox("move to target", &moveToTarget);
-
-
-    ImGui::End();
-}
 
 

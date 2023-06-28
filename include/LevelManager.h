@@ -7,7 +7,7 @@
 #include "spdlog/spdlog.h"
 #include "Engine.h"
 
-class LevelManager : public IGui {
+class LevelManager {
 public:
     typedef std::shared_ptr<Level> LevelPtr;
     typedef std::shared_ptr<Hitbox> HitboxPtr;
@@ -19,7 +19,6 @@ public:
     std::vector<LevelPtr>& getLevels();
     void clearLevels();
     std::shared_ptr<Level> getCurrentLevel();
-    void ImGui() override;
     bool nextLevel();
 
     int currentLevel = 0;

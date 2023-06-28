@@ -28,29 +28,6 @@ rapidjson::Document Camera::ParseToJSON() {
     return d;
 }
 
-void Camera::ImGui(){
-
-    ImGui::Begin("Camera");
-    ImGui::SetWindowSize(ImVec2(300, 400));
-
-    ImGui::SliderFloat("position X", &Position.x, -100.0f, 100.0f);
-    ImGui::SliderFloat("position Y", &Position.y, -100.0f, 100.0f);
-    ImGui::SliderFloat("position Z", &Position.z, -100.0f, 100.f);
-    ImGui::SliderFloat("zoom", &Zoom, 0.0f, 100.f);
-    ImGui::SliderFloat("rotate X", &degX, -180.0f, 180.0f);
-    ImGui::SliderFloat("rotate Y", &degY, -180.0f, 180.0f);
-    rotate(degX, degY);
-    ImGui::Checkbox("Lock target point", &isBlocked);
-    if (ImGui::Button("SAVE CAM")) {
-        Engine::parser.SaveJSON(this->ParseToJSON(), "camera");
-    }
-    if(ImGui::Button("Calculate Lock target Point")) {
-        Look = Look - Position;
-    }
-    ImGui::Checkbox("Follow object / reset kamery", &isFound);
-
-    ImGui::End();
-}
 
 Camera::Camera(glm::vec3 position, float yaw, float pitch, float zoom)
 : Front(glm::vec3(0.0f, 0.0f, -1.0f)), Yaw(yaw), Pitch(pitch), Zoom(zoom) {
@@ -67,7 +44,6 @@ Camera::Camera(const std::string& fileName) {
     spdlog::info("camera JSON constructor");
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
-    IGui::setWindowName("camera");
 
     if(type == "camera") {
         Position = glm::vec3(d["posX"].GetFloat(), d["posY"].GetFloat(), d["posZ"].GetFloat());
@@ -84,7 +60,9 @@ Camera::Camera(const std::string& fileName) {
         spdlog::error("no JSON file found");
 }
 
+
 void Camera::Update(float deltaTime) {
+    rotate(degX, degY);
     if (moveToTarget) {
         t += deltaTime * speed;
         if (t >= 1.0f) {

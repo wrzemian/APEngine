@@ -28,7 +28,6 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		User/InputSystem.cpp ../include/User/InputSystem.h
 		Parser.cpp ../include/Parser.h
 		../include/User/HUD.h
-		../include/IGui.h IGui.cpp
         Objects/Level.cpp ../include/Objects/Level.h
 		User/Animation.cpp
         ../include/User/HudAnimation.h
@@ -39,8 +38,25 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		../include/Background/Rock.h Background/Rock.cpp
 		Background/Background.cpp ../include/Background/Background.h
 		Background/BackgroundTile.cpp ../include/Background/BackgroundTile.h
-		Background/Cactus.cpp ../include/Background/Cactus.h ../include/AssetManager.h AssetManager.cpp Objects/Ant.cpp ../include/Objects/Ant.h
-		Objects/Platform.cpp ../include/Objects/Platform.h ../include/Objects/Platform.h Objects/Battery.cpp ../include/Objects/Battery.h ../include/Objects/Battery.h Objects/Button.cpp ../include/Objects/Button.h ../include/Objects/Button.h Objects/PlayerJumper.cpp ../include/Objects/PlayerJumper.h ../include/Objects/PlayerJumper.h Objects/SimpleHitbox.cpp ../include/Objects/SimpleHitbox.h Objects/PlayerGrabber.cpp ../include/Objects/PlayerGrabber.h ../include/Objects/PlayerGrabber.h Objects/Grabber.cpp ../include/Objects/Grabber.h ../include/Objects/Grabber.h Objects/Box.cpp ../include/Objects/Box.h ../include/Objects/Box.h ../include/Animations2/Bone.cpp ../include/Animations2/Bone.h ../include/Animations2/AssimpGLMHelpers.h ../include/Animations2/Animation.cpp ../include/Animations2/Animation.h ../include/Animations2/Animator.cpp ../include/Animations2/Animator.h lights/Shadows.cpp ../include/lights/Shadows.h Objects/WinArea.cpp ../include/Objects/WinArea.h ../include/Objects/WinArea.h LevelManager.cpp ../include/LevelManager.h Audio/AudioLoader.cpp ../include/Audio/AudioLoader.h Audio/AudioListener.cpp ../include/Audio/AudioListener.h Audio/AudioSource.cpp ../include/Audio/AudioSource.h Audio/AudioManager.cpp ../include/Audio/AudioManager.h Audio/AudioSource.cpp ../include/Audio/AudioSource.h Audio/AudioListener.cpp ../include/Audio/AudioListener.h Objects/LightBulb.cpp ../include/Objects/LightBulb.h ../include/Objects/LightBulb.h Objects/LightBulb.cpp Objects/Cable.cpp ../include/Objects/Cable.h User/SpriteRenderer.cpp ../include/User/SpriteRenderer.h ../include/User/Menu.cpp ../include/User/Menu.h)
+		Background/Cactus.cpp ../include/Background/Cactus.h ../include/AssetManager.h
+		AssetManager.cpp Objects/Ant.cpp ../include/Objects/Ant.h
+		Objects/Platform.cpp ../include/Objects/Platform.h ../include/Objects/Platform.h Objects/Battery.cpp
+		../include/Objects/Battery.h ../include/Objects/Battery.h Objects/Button.cpp ../include/Objects/Button.h
+		../include/Objects/Button.h Objects/PlayerJumper.cpp ../include/Objects/PlayerJumper.h
+		../include/Objects/PlayerJumper.h Objects/SimpleHitbox.cpp ../include/Objects/SimpleHitbox.h
+		Objects/PlayerGrabber.cpp ../include/Objects/PlayerGrabber.h ../include/Objects/PlayerGrabber.h
+		Objects/Grabber.cpp ../include/Objects/Grabber.h ../include/Objects/Grabber.h Objects/Box.cpp
+		../include/Objects/Box.h ../include/Objects/Box.h ../include/Animations2/Bone.cpp ../include/Animations2/Bone.h
+		../include/Animations2/AssimpGLMHelpers.h ../include/Animations2/Animation.cpp
+		../include/Animations2/Animation.h ../include/Animations2/Animator.cpp ../include/Animations2/Animator.h
+		lights/Shadows.cpp ../include/lights/Shadows.h Objects/WinArea.cpp ../include/Objects/WinArea.h
+		../include/Objects/WinArea.h LevelManager.cpp ../include/LevelManager.h Audio/AudioLoader.cpp
+		../include/Audio/AudioLoader.h Audio/AudioListener.cpp ../include/Audio/AudioListener.h Audio/AudioSource.cpp
+		../include/Audio/AudioSource.h Audio/AudioManager.cpp ../include/Audio/AudioManager.h Audio/AudioSource.cpp
+		../include/Audio/AudioSource.h Audio/AudioListener.cpp ../include/Audio/AudioListener.h Objects/LightBulb.cpp
+		../include/Objects/LightBulb.h ../include/Objects/LightBulb.h Objects/LightBulb.cpp Objects/Cable.cpp
+		../include/Objects/Cable.h User/SpriteRenderer.cpp ../include/User/SpriteRenderer.h ../include/User/Menu.cpp
+		../include/User/Menu.h)
 
 
 
@@ -57,7 +73,6 @@ target_link_libraries(${PROJECT_NAME} glad)
 target_link_libraries(${PROJECT_NAME} stb_image)
 target_link_libraries(${PROJECT_NAME} assimp)
 target_link_libraries(${PROJECT_NAME} glfw)
-target_link_libraries(${PROJECT_NAME} imgui)
 target_link_libraries(${PROJECT_NAME} spdlog)
 target_link_libraries(${PROJECT_NAME} glm::glm)
 target_link_libraries(${PROJECT_NAME} rapidjson)

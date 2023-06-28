@@ -15,10 +15,6 @@ class Level : public Object3D {
 public:
     Level();
     virtual ~Level();
-    bool buttonsImgui = false;
-    bool platformsImgui = false;
-    bool batteriesImgui = false;
-    bool boxesImgui = false;
 
     std::vector<std::shared_ptr<Hitbox>> hitboxes;
     std::vector<std::shared_ptr<Platform>> movingPlatforms;
@@ -41,7 +37,6 @@ public:
     void calculateHitboxes();
     void logHitboxes();
     void logNewObjects();
-    void ImGui() override;
 
     void onCollision(Object3D* other) override;
 

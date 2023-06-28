@@ -4,8 +4,7 @@
 
 #include "../include/Objects/Hitbox.h"
 
-#include "../imgui_impl/imgui_impl_glfw.h"
-#include "../imgui_impl/imgui_impl_opengl3.h"
+
 #include "../../include/Engine.h"
 #include "../../include/Objects/Hitbox.h"
 
@@ -15,7 +14,6 @@ Hitbox::Hitbox(HitboxType type) {
 
     //spdlog::info("hitbox constructor");
 
-    IGui::setWindowName("hitbox");
 
     _type = type;
    //spdlog::warn("HITBOX CONCTRUCTOR, window name = {}, tag = {}, type = {}", getWindowName(), tag, _type);
@@ -33,7 +31,6 @@ Hitbox::Hitbox(std::string fileName) {
     spdlog::info("hitbox JSON constructor");
     rapidjson::Document d = Engine::parser.openJSON(fileName);
     std::string type = d["type"].GetString();
-    IGui::setWindowName("hitbox");
 
     if(type == "hitbox") {
         if (d["_type"].GetInt() == 0){
@@ -103,43 +100,6 @@ void Hitbox::Draw(glm::mat4 projectionView) const {
     DebugShape::DrawCube(_min, _max);
 }
 
-void Hitbox::ImGui()  {
-    ImGui::Begin(getWindowName().c_str());
-    ImGui::SetWindowSize(ImVec2(300, 420));
-
-    ImGui::SliderFloat("min X", &_min.x, -2.0f, 2.0f);
-    ImGui::SliderFloat("min Y", &_min.y, -2.0f, 2.0f);
-    ImGui::SliderFloat("min Z", &_min.z, -2.0f, 2.0f);
-
-    ImGui::SliderFloat("max X", &_max.x, -2.0f, 2.0f);
-    ImGui::SliderFloat("max Y", &_max.y, -2.0f, 2.0f);
-    ImGui::SliderFloat("max Z", &_max.z, -2.0f, 2.0f);
-
-    ImGui::SliderFloat("offset X", &_offset.x, -2, 2);
-    ImGui::SliderFloat("offset Y", &_offset.y, -2, 2);
-    ImGui::SliderFloat("offset Z", &_offset.z, -2, 2);
-
-    ImGui::SliderFloat("R", &_color.x, 0, 1);
-    ImGui::SliderFloat("G", &_color.y, 0, 1);
-    ImGui::SliderFloat("B", &_color.z, 0, 1);
-
-    if (ImGui::Button("Reset Offset")) {
-        _offset = glm::vec3(0,0,0);
-    }
-    if (ImGui::Button("SAVE HITBOX")) {
-
-        Engine::parser.SaveJSON(this->ParseToJSON(), "hitboxes/hitbox_" + std::to_string(Engine::getObject3DIndex(_object)));
-    }
-    if (ImGui::Button("Calculate hitbox")) {
-        _min = glm::vec3(-0.001, -0.001, -0.001);
-        _max = glm::vec3(0.001, 0.001, 0.001);
-
-        calculateFromModel(*_object->_model);
-    }
-    ImGui::Checkbox("Draw: ", &draw);
-    ImGui::End();
-
-}
 
 rapidjson::Document Hitbox::ParseToJSON() {
     rapidjson::Document d;

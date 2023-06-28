@@ -23,7 +23,6 @@ void Cactus::randomizeRotation()
 }
 
 Cactus::Cactus() {
-    IGui::setWindowName("cactus object");
 }
 
 Cactus::~Cactus() {

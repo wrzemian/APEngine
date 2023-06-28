@@ -4,12 +4,10 @@
 
 #include "../../include/Engine.h"
 #include "../include/Objects/MovingObject.h"
-#include "../imgui_impl/imgui_impl_glfw.h"
-#include "../imgui_impl/imgui_impl_opengl3.h"
+
 
 MovingObject::MovingObject() {
     //_windowName = fmt::format("Moving object #{}", Engine::getImguiIndex());
-    IGui::setWindowName("moving object");
 //    spdlog::info("moving object constructor");
 
     Engine::addMovingObject(this);
@@ -36,26 +34,6 @@ void MovingObject::StopMoving() {
     _velocity.z = 0;
 }
 
-void MovingObject::ImGui() {
-    super::ImGui();
-
-    ImGui::Begin(getWindowName().c_str());
-    ImGui::SetWindowSize(ImVec2(300, 440));
-
-    ImGui::SliderFloat("velocity X", &_velocity.x, -10.0f, 10.0f);
-    ImGui::SliderFloat("velocity Y", &_velocity.y, -10.0f, 10.0f);
-    ImGui::SliderFloat("velocity Z", &_velocity.z, -10.0f, 10.0f);
-
-    if (ImGui::Button("Stop")) {
-        this->StopMoving();
-    }
-
-    if (ImGui::Button("SAVE MOV OBJ")) {
-
-        Engine::parser.SaveJSON(this->ParseToJSON(), "objects/movingObj_" + std::to_string(Engine::getMovingObjectIndex(this)));
-    }
-    ImGui::End();
-}
 
 void MovingObject::Move(float deltaTime) {
     auto actualGravity = _gravity;

@@ -26,5 +26,4 @@ void Rock::randomizeRotation()
 }
 
 Rock::Rock() {
-    IGui::setWindowName("rock object");
 }

@@ -7,10 +7,9 @@
 
 #include "Transform.h"
 #include "DebugShape.h"
-#include "../IGui.h"
 #include "Object3D.h"
 
-class Hitbox : public IGui {
+class Hitbox {
 
 enum Axis {
     X, Y, Z, NONE
@@ -50,7 +49,6 @@ public:
 
     void Create(Object3D* object, glm::vec3 offset = glm::vec3(0));
     void Draw(glm::mat4 projectionView) const;
-    void ImGui() override;
 
     void calculateFromMesh(const Mesh& mesh);
     void calculateFromModel(const Model &model);
