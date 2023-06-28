@@ -194,15 +194,10 @@ namespace Game {
         UITips[0].initRenderData("res/UI/new/jumpHint.png");
         UITips[3].initRenderData("res/UI/new/end_screen.png");
 
-//        spdlog::info("menu1 before constructor");
         Menu menu1(imageShader);
-//        spdlog::info("menu1 after constructor");
         menu = menu1;
-//        spdlog::info("before init1");
         menu.initMenu("res/UI/new/menu_screen_new.png");
-//        spdlog::info("after init1");
 
-        spdlog::info("menu2");
         Menu menu2(imageShader,true);
         menuPause = menu2;
         menuPause.initMenu("res/UI/new/pause_screen_new.png");
@@ -239,12 +234,19 @@ namespace Game {
             menuPause.processInput(&inputSystem);
             menuPause.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
         }
+        else if(menu.isVisible) {
+
+            inputSystem.update();
+            menu.processInput(&inputSystem);
+            menu.drawMenu(glm::vec3(0, 0, 1.f), glm::vec2(800.f, 600.f), 0.f);
+//                Engine::camera->Position = glm::vec3(-30, 10.6, 17.3);
+
+        }
         else {
             AudioManager::GetInstance()->Update();
             AudioManager::GetInstance()->PlaySound(Audio::TRAIN_AMBIENT);
 
             ImGui();
-            inputSystem.update();
             processInput();
             playerJumper.UpdatePlayer(&inputSystem, movementSpeed);
             playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
@@ -253,6 +255,10 @@ namespace Game {
             Engine::moveObjects();
 
             shadows.renderShadows(*Engine::camera);
+
+
+            inputSystem.update();
+
             Engine::camera->Update(Engine::deltaTime);
             glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom),
                                                     (float) Engine::SCR_WIDTH / (float) Engine::SCR_HEIGHT, 0.1f,
@@ -325,12 +331,7 @@ namespace Game {
                 }
             }
 
-            if(menu.isVisible) {
 
-                inputSystem.update();
-                menu.processInput(&inputSystem);
-                menu.drawMenu(glm::vec3(0, 0, 1.f), glm::vec2(800.f, 600.f), 0.f);
-            }
 
             Engine::renderHitboxes(projection * view);
 
