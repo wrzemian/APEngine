@@ -21,13 +21,13 @@ private:
     int walking;
     int recentlyMoved;
 
-    glm::vec3 batteryOffset = glm::vec3(-0.25f, 1.0f, 0.0f);
+    glm::vec3 batteryOffset = glm::vec3(-0.45f, 0.7f, 0.0f);
+    glm::vec3 boxOffset = glm::vec3(0.5f, 0.25f, 0.0f);
     glm::vec3 direction =  glm::vec3(0.0f, 0.0f, 0.0f);
     float padJoystickTolerance = 0.2f;
 public:
     Object3D* lastTouchedBox;
     bool pickedUpBox = false;
-    glm::vec3 lastTouchedBoxOffset = {};
 
     Animation walkP, standP, jumpP, hookingP;
     PlayerGrabber();
