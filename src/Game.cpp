@@ -64,13 +64,12 @@ namespace Game {
     Shader debugDepthQuad;
     Shader spriteShader;
 
-    SpriteRenderer jumpUI;
-
     HUD hud;
     HUD hud2;
+
     Menu menu;
     Menu menuPause;
-    SpriteRenderer endingScreen;
+
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
@@ -175,8 +174,7 @@ namespace Game {
         HudAnimation animation1(animationShader);
         animation = animation1;
         animation.initAnimation();
-
-        Shader UIShader("include/User/spriteShader.vert","include/User/spriteShader.frag");
+        
 
         Constant constant1(animationShader);
         constant = constant1;
@@ -203,7 +201,7 @@ namespace Game {
         spdlog::info("menu2");
         Menu menu2(imageShader,true);
         menuPause = menu2;
-        menuPause.initMenu("../../res/UI/pause_screen1.png");
+        menuPause.initMenu("res/UI/new/pause_screen_new.png");
 
         spdlog::info("before finished loading");
         Engine::finishedLoading();
@@ -230,9 +228,11 @@ namespace Game {
 
         }
         else if(menuPause.isVisible1()){
+            ImGui();
+//            menuPause.ImGui();
             inputSystem.update();
             menuPause.processInput(&inputSystem);
-            menuPause.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,700.f),0.f);
+            menuPause.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
         }
         else {
             AudioManager::GetInstance()->Update();
@@ -264,8 +264,8 @@ namespace Game {
                 spdlog::info("ENDCREEN");
             }
 
-            UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
-                                                                            glm::vec2(250.f, 200.f),0);
+                UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
+                                                                            glm::vec2(250.f, 220.f),0);
 
             Engine::renderHitboxes(projection * view);
 
@@ -340,6 +340,16 @@ namespace Game {
             onWin();
         if (ImGui::Button("Reset Level"))
             ResetLevel();
+        ImGui::End();
+
+        ImGui::Begin("Napisy w menu");
+        ImGui::SetWindowSize(ImVec2(1000, 400));
+
+        ImGui::SliderFloat("continue x", &menuPause.markPos[2].x, 500.f, 700.0f);
+        ImGui::SliderFloat("scale X", &menuPause.markScale[2].x, 0.0f, 480.0f);
+        ImGui::SliderFloat("scale Y", &menuPause.markScale[2].y, 0.0f, 480.0f);
+
+
         ImGui::End();
 
         ImGui::Render();
