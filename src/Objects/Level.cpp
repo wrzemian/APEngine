@@ -1,7 +1,9 @@
 #include "../include/Objects/Level.h"
 #include "spdlog/spdlog.h"
 #include "../../include/Engine.h"
-#include "../../include/Objects/Box.h"
+#include "../../include/LevelHitboxes.h"
+
+bool recalculateHitboxes = true;
 
 Level::Level() {
     IGui::setWindowName("Level");
@@ -60,7 +62,7 @@ void Level::calculateHitboxes() {
         switch(type) {
             case 'D': { // Door
                 if(winArea == nullptr) {
-                    spdlog::info("created door object");
+//                    spdlog::info("created door object");
                     winArea = std::make_shared<WinArea>();
                     winArea->tag = "winArea";
                     //winArea->ShowImgui();
@@ -73,7 +75,6 @@ void Level::calculateHitboxes() {
                 winArea->calculateBoundingBox();
 
                 auto areaTriggerHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
-                areaTriggerHitbox->calculateFromMesh(mesh);
                 areaTriggerHitbox->Create(winArea.get());
                 areaTriggerHitbox->tag = "winArea";
                 areaTriggerHitbox->_offset.x = -0.1f;
@@ -90,13 +91,29 @@ void Level::calculateHitboxes() {
                 hitboxes.push_back(areaTriggerHitbox);
 
                 auto doorHitbox = std::make_shared<Hitbox>(Hitbox::STATIC);
+
+                if(recalculateHitboxes) {
+                    doorHitbox->calculateFromMesh(mesh);
+                    std::ostringstream oss;
+                    oss << "{\"" << mesh._name
+                    << "\", {glm::vec3("
+                    << doorHitbox->_min.x << ", " << doorHitbox->_min.y << ", " << doorHitbox->_min.z
+                    << "), glm::vec3("
+                    << doorHitbox->_max.x << ", " << doorHitbox->_max.y << ", " << doorHitbox->._max.z << ")}}";
+                    spdlog::info("{}", oss.str());
+                } else {
+                    LevelHitboxes::HitboxData hitboxData = LevelHitboxes::getInstance().getHitbox(mesh._name, _path);
+                    doorHitbox->_min = hitboxData.min;
+                    doorHitbox->_max = hitboxData.max;
+                }
+
                 doorHitbox->tag = "winArea";
-                doorHitbox->calculateFromMesh(mesh);
+
                 doorHitbox->Create(winArea.get());
                 hitboxes.push_back(doorHitbox);
 
                 //staticModel.meshes.push_back(mesh);
-                spdlog::info("Door created {}", mesh._name);
+//                spdlog::info("Door created {}", mesh._name);
 
                 break;
             }
@@ -109,7 +126,7 @@ void Level::calculateHitboxes() {
                 staticModel.meshes.push_back(mesh);
                 hitbox->tag = "floor";
 
-                spdlog::info("Floor created {}", mesh._name);
+//                spdlog::info("Floor created {}", mesh._name);
 
                 break;
             }
@@ -133,7 +150,7 @@ void Level::calculateHitboxes() {
                 staticModel.meshes.push_back(mesh);
                 hitbox->tag = "wall";
 
-                spdlog::info("Wall created {}", mesh._name);
+//                spdlog::info("Wall created {}", mesh._name);
 
                 break;
             }
@@ -156,7 +173,7 @@ void Level::calculateHitboxes() {
 
                 staticModel.meshes.push_back(mesh);
                 hitbox->tag = "wall";
-                spdlog::info("Wall (pręt) created {}", mesh._name);
+//                spdlog::info("Wall (pręt) created {}", mesh._name);
 
                 break;
             }
@@ -169,7 +186,7 @@ void Level::calculateHitboxes() {
 //                hitbox->tag = "roof";
                 staticModel.meshes.push_back(mesh);
 
-                spdlog::info("Roof created {}", mesh._name);
+//                spdlog::info("Roof created {}", mesh._name);
 
                 break;
             }
@@ -197,19 +214,19 @@ void Level::calculateHitboxes() {
                 buttonHitbox->Create(button.get());
                 buttonHitbox->isTrigger = true;
 
-                spdlog::info("Button created {}", mesh._name);
+//                spdlog::info("Button created {}", mesh._name);
                 break;
             }
 
             case 'C': { // Decoration around button
-                spdlog::info("Decoration around button {}", mesh._name);
+//                spdlog::info("Decoration around button {}", mesh._name);
 
                 staticModel.meshes.push_back(mesh);
                 break;
             }
 
             case 'X': { // Decoration
-                spdlog::info("Other decoration {}", mesh._name);
+//                spdlog::info("Other decoration {}", mesh._name);
 
                 staticModel.meshes.push_back(mesh);
                 break;
@@ -224,7 +241,7 @@ void Level::calculateHitboxes() {
 
                 hitbox->tag = "static platform";
 
-                spdlog::info("Platform created {}", mesh._name);
+//                spdlog::info("Platform created {}", mesh._name);
 
                 break;
             }
@@ -234,7 +251,7 @@ void Level::calculateHitboxes() {
                 platformHitbox->tag = "moving platform";
                 hitboxes.push_back(platformHitbox);
 
-                spdlog::info("Moving platform position {}, {}, {}", _transform._position.x,_transform._position.y,_transform._position.z);
+//                spdlog::info("Moving platform position {}, {}, {}", _transform._position.x,_transform._position.y,_transform._position.z);
 
                 auto platform = std::make_shared<Platform>(_transform._position, glm::vec3(0), 0);
                 platform->levelId = levelId;
@@ -255,14 +272,14 @@ void Level::calculateHitboxes() {
                 platformHitbox->calculateFromMesh(mesh);
                 platformHitbox->Create(platform.get());
 
-                spdlog::info("Moving platform created {}", mesh._name);
+//                spdlog::info("Moving platform created {}", mesh._name);
                 break;
             }
 
             case 'T': { // Target of moving platform
                 auto middle = (mesh.vertices.at(0).Position + mesh.vertices.at(0).Position) * 0.5f;
 
-                spdlog::info("Target position {} = {}, {}, {}", mesh._name, middle.x, middle.y, middle.z);
+//                spdlog::info("Target position {} = {}, {}, {}", mesh._name, middle.x, middle.y, middle.z);
 
                 targetPositions[totalId] = middle;
 
@@ -284,8 +301,8 @@ void Level::calculateHitboxes() {
                 box->_model->meshes.push_back(mesh); // Add the current mesh to the platform's model
 
                 auto middle = box->modelMiddle;
-                spdlog::warn("box middle at {}, {}, {}", middle.x, middle.y, middle.z);
-                spdlog::warn("box vertices: {}", box->_model->meshes.at(0).vertices.size());
+//                spdlog::warn("box middle at {}, {}, {}", middle.x, middle.y, middle.z);
+//                spdlog::warn("box vertices: {}", box->_model->meshes.at(0).vertices.size());
 
                 box->changeVertexPositions(-middle);
                 box->calculateBoundingBox();
@@ -320,7 +337,7 @@ void Level::calculateHitboxes() {
 
                 boxPositions.push_back(box->_transform._position);
 
-                spdlog::info("Box created from {}", mesh._name);
+//                spdlog::info("Box created from {}", mesh._name);
 
                 break;
             }
@@ -366,7 +383,7 @@ void Level::calculateHitboxes() {
                 batteryPositions.push_back(battery->_transform._position);
 
 
-                spdlog::info("Battery created from {}", mesh._name);
+                //spdlog::info("Battery created from {}", mesh._name);
 
                 break;
             }
@@ -392,7 +409,7 @@ void Level::calculateHitboxes() {
                 buttonHitbox->Create(doorButton.get());
                 buttonHitbox->isTrigger = true;
 
-                spdlog::info("Door button created {}", mesh._name);
+                //spdlog::info("Door button created {}", mesh._name);
                 break;
             }
 
@@ -411,7 +428,7 @@ void Level::calculateHitboxes() {
                 cable->id = totalId;
                 cables.push_back(cable);
 
-                spdlog::info("Cable created {}", mesh._name);
+                //::info("Cable created {}", mesh._name);
                 break;
             }
 
