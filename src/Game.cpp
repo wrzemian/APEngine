@@ -371,7 +371,7 @@ namespace Game {
                 playerGrabber.Jump();
 
             }
-            if(inputSystem.GetKeyDown(GLFW_KEY_P) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START)){
+            if(inputSystem.GetKeyDown(GLFW_KEY_P) || inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_START) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_START)){
                 menuPause.isVisible = true;
             }
 
@@ -379,7 +379,7 @@ namespace Game {
             onWin();
             }
 
-            if (ended == true && inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A) || inputSystem.GetKeyDown(GLFW_KEY_M)) {
+            if (ended == true && (inputSystem.GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A) || inputSystem.GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A) || inputSystem.GetKeyDown(GLFW_KEY_M))) {
             menu.isVisible = true;
             UITips[3].isVisible = false;
                 bgSpeed = -50.0f;

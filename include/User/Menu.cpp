@@ -40,21 +40,22 @@ void Menu::processInput(InputSystem* inputSystem) {
     if(counter == 0){
         counter = 9999;
     }
-    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X)  < -0.2|| inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_LEFT)){
-        if(joystickMoved == false) {
+    if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X)  < -0.2|| inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_LEFT) ||
+            inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X)  < -0.2|| inputSystem->GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_DPAD_LEFT)){
+        if(joystickMoved == false && joystickMoved2 == false) {
             this->counter--;
             joystickMoved = true;
         }
         i = abs(counter%3);
         markPosHelper = markPos[i];
     }
-    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X) > 0.2 || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_RIGHT)){
-        if(joystickMoved == false) {
+    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_X) > 0.2 || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_DPAD_RIGHT) ||
+            inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_X)  > 0.2|| inputSystem->GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_DPAD_LEFT)){
+        if(joystickMoved == false && joystickMoved2 == false) {
             this->counter++;
             joystickMoved = true;
         }
         i = abs(counter%3);
-        markPosHelper = markPos[i];
     }
     else if (inputSystem->GetKeyDown(GLFW_KEY_LEFT)) {
         this->counter--;
@@ -66,11 +67,11 @@ void Menu::processInput(InputSystem* inputSystem) {
         i = abs(counter%3);
         markPosHelper = markPos[i];
     }
-    else if(inputSystem->GetKeyDown(GLFW_KEY_SPACE) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A)){
+    else if(inputSystem->GetKeyDown(GLFW_KEY_SPACE) || inputSystem->GetGamepadButtonDown(0, GLFW_GAMEPAD_BUTTON_A) || inputSystem->GetGamepadButtonDown(1, GLFW_GAMEPAD_BUTTON_A)){
 
          this->pickMenu(abs(counter%3));
     }
-    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) < 0.2 && inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)> -0.2 )
+    else if(inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y) < 0.2 && inputSystem->getJoystickAxis(0, GLFW_GAMEPAD_AXIS_LEFT_Y)> -0.2 && inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y) < 0.2 && inputSystem->getJoystickAxis(1, GLFW_GAMEPAD_AXIS_LEFT_Y)> -0.2 )
     {
         joystickMoved = false;
     }

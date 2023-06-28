@@ -16,6 +16,7 @@ private:
     SpriteRenderer mark[3];
     glm::vec3 markPosHelper;
     bool joystickMoved = false;
+    bool joystickMoved2 = false;
     bool isPause = false;
     bool isEnd = false;
     int counter;
