@@ -43,6 +43,7 @@ public:
 
     void InitializeAudio();
     void CreateAll(Camera camera, Object3D player);
+    void MuteAll();
     void PlaySound(Audio name);
     void PauseSound(Audio name);
     void Update();

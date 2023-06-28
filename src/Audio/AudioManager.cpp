@@ -175,3 +175,9 @@ void AudioManager::CheckAudioDevice(const std::stop_token& token, ALCdevice** de
         std::this_thread::sleep_for(500ms);
     }
 }
+
+void AudioManager::MuteAll() {
+    for (auto&& source: audioSources) {
+        source.second->SetGain(0.0f);
+    }
+}
