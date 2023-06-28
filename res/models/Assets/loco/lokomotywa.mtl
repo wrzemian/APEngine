@@ -9,9 +9,9 @@ d 1.000000
 illum 2
 map_Kd ../wagonTextures/wagonPusty_floorMaterial_BaseColor.png
 map_Ns ../wagonTextures/wagonPusty_floorMaterial_Roughness.png
-map_refl ../wagonTextures/wagonPusty_floorMaterial_Metallic.png
+map_Pm ../wagonTextures/wagonPusty_floorMaterial_Metallic.png
 map_Ke ../wagonTextures/wagonPusty_floorMaterial_Emissive.png
-map_Bump -bm 1.000000 ../wagonTextures/wagonPusty_floorMaterial_Normal.png
+map_bump -bm 1.000000 ../wagonTextures/wagonPusty_floorMaterial_Normal.png
 
 newmtl pociag
 Ka 1.000000 1.000000 1.000000
@@ -22,5 +22,5 @@ d 1.000000
 illum 2
 map_Kd pociag_BaseColor.png
 map_Ns pociag_Roughness.png
-map_refl pociag_Metallic.png
-map_Bump -bm 1.000000 pociag_Normal.png
+map_Pm pociag_Metallic.png
+map_bump -bm 1.000000 pociag_Normal.png

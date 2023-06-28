@@ -14,9 +14,6 @@ void AudioSource::Start() {
 }
 
 void AudioSource::Update() {
-#ifdef DEBUG
-    ZoneScopedNC("Audio source", 0x800080);
-#endif
     if (isMovingTarget) {
         position = parent->_transform._position + positionOffset;
         alSource3f(sourceId, AL_POSITION, position.x, position.y, position.z);
@@ -74,39 +71,18 @@ void AudioSource::PlaySound() const {
     }
 }
 
-/**
- * @annotation
- * Plays the sound despite its current status.
- */
-void AudioSource::ForcePlaySound() const {
-    alSourcePlay(sourceId);
-}
-
-/**
- * @annotation
- * Pauses the sound.
- */
 void AudioSource::PauseSound() const {
     if (currentState == AL_PLAYING) {
         alSourcePause(sourceId);
     }
 }
 
-/**
- * @annotation
- * Stops the sound.
- */
 void AudioSource::StopSound() const {
     if (currentState == AL_PLAYING) {
         alSourceStop(sourceId);
     }
 }
 
-/**
- * @annotation
- * Sets position offset.
- * @param offset - vector3 added to position, default {0}
- */
 void AudioSource::SetPositionOffset(glm::vec3 offset) {
     positionOffset = offset;
     position += positionOffset;
@@ -117,20 +93,6 @@ void AudioSource::SetDistanceMode(AudioDistanceMode mode) {
     distanceMode = mode;
 }
 
-/**
- * @annotation
- * Sets audio pitch.
- * @param val - [0.5 - 2.0], default 1.0
- */
-void AudioSource::SetPitch(float val) const {
-    alSourcef(sourceId, AL_PITCH, val);
-}
-
-/**
- * @annotation
- * Sets audio gain. Each division/multiply by 2 results in -6/+6 dB.
- * @param val - [0.0 - x], default 1.0.
- */
 void AudioSource::SetGain(float val) {
     if (val < 0.0f) {
         gain = 0.0f;
@@ -141,21 +103,6 @@ void AudioSource::SetGain(float val) {
     alSourcef(sourceId, AL_GAIN, val);
 }
 
-/**
- * @annotation
- * Sets audio velocity. Used in calculating doppler shift (moving objects emitting sound).
- * @param velocity - vector3, default {0}
- */
-void AudioSource::SetVelocity(glm::vec3 velocity) const {
-    alSource3f(sourceId, AL_VELOCITY, velocity.x, velocity.y, velocity.z);
-}
-
-/**
- * @annotation
- * Sets max distance for playing audio. Audio volume will be adjusted to better suit new distance
- * for more realistic effect.
- * @param val - [0.0f - x], default 0.0f
- */
 void AudioSource::SetMaxDistance(float val) {
     maxDistance = val;
 
@@ -169,31 +116,14 @@ void AudioSource::SetMaxDistance(float val) {
     }
 }
 
-/**
- * @annotation
- * Sets audio looping state.
- * @param state - true or false, default false
- */
 void AudioSource::IsLooping(bool state) {
     alSourcei(sourceId, AL_LOOPING, state);
 }
 
-/**
- * @annotation
- * Sets the target moving state. If set to true, then the position will be updated every time target moves.
- * @param state - true or false, default false
- */
-// Sets if the target will be moving. If set to true, then the position
 void AudioSource::IsMoving(bool state) {
     isMovingTarget = state;
 }
 
-/**
- * @annotation
- * Sets audio cone settings.
- * @param direction - vector3, sound direction
- * @param cone - vector2, inner angle and outer angle
- */
 void AudioSource::SetCone(glm::vec3 direction, glm::vec2 cone) const {
     alSource3f(sourceId, AL_DIRECTION, direction.x, direction.y, direction.z);
     alSourcef(sourceId, AL_CONE_INNER_ANGLE, cone.x);

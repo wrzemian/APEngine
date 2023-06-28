@@ -488,11 +488,14 @@ namespace Engine {
 #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+
+        // glfw window creation
+        // --------------------
+
         const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         SCR_WIDTH = mode->width;
         SCR_HEIGHT = mode->height;
-        // glfw window creation
-        // --------------------
+
         window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Iron Outlaws", glfwGetPrimaryMonitor(), NULL);
         if (window == NULL)
         {

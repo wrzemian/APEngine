@@ -64,13 +64,12 @@ namespace Game {
     Shader debugDepthQuad;
     Shader spriteShader;
 
-    SpriteRenderer jumpUI;
-
     HUD hud;
     HUD hud2;
+
     Menu menu;
     Menu menuPause;
-    SpriteRenderer endingScreen;
+
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
@@ -175,8 +174,7 @@ namespace Game {
         HudAnimation animation1(animationShader);
         animation = animation1;
         animation.initAnimation();
-
-        Shader UIShader("include/User/spriteShader.vert","include/User/spriteShader.frag");
+        
 
         Constant constant1(animationShader);
         constant = constant1;
@@ -263,7 +261,7 @@ namespace Game {
 //                spdlog::info("{}", bgSpeed);
             }
             if (slowdown && bgSpeed >= 0.0) {
-                spdlog::info("ENDCREEN");
+//                spdlog::info("ENDCREEN");
             }
 
                 UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
@@ -302,6 +300,7 @@ namespace Game {
         {
             spdlog::info("Player has won the game!");
             Engine::camera->MoveToTarget( glm::vec3(90, 10.6, 17.3));
+            AudioManager::GetInstance()->MuteAll();
             slowdown = true;
         }
         if(LevelManager::getInstance().currentLevel==1){
