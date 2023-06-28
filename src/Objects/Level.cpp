@@ -395,7 +395,7 @@ void Level::calculateHitboxes() {
                 testTrigger->_min.x  -= 0.5f;
                 testTrigger->_min.z  -= 0.5f;
                 hitboxes.push_back(testTrigger);
-                testTrigger->draw = true;
+//                testTrigger->draw = true;
 
 
                 auto boxHitbox = std::make_shared<Hitbox>(Hitbox::DYNAMIC);

@@ -45,7 +45,6 @@ void LevelManager::loadLocomotive() {
     spdlog::info("loading locomotive");
     locomotive = std::make_shared<Object3D>();
     locomotive->loadModel("../../res/models/Assets/loco/lokomotywa.obj"); // TODO: make sure this path is valid
-    locomotive->ShowImgui();
     locomotive->_transform._position = {-7.039, 4.693, 4.022};
     //    locomotive->_transform._position = defaultPosition;
 //    locomotive->_transform._position.x = levels.at(levels.size()-1)->modelMaxVertex.x;

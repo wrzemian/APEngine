@@ -225,8 +225,6 @@ namespace Game {
 //
 //        }
         if(menuPause.isVisible1()){
-            ImGui();
-//            menuPause.ImGui();
             inputSystem.update();
             menuPause.processInput(&inputSystem);
             menuPause.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
