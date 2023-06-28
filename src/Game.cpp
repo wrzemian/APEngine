@@ -64,13 +64,12 @@ namespace Game {
     Shader debugDepthQuad;
     Shader spriteShader;
 
-    SpriteRenderer jumpUI;
-
     HUD hud;
     HUD hud2;
+
     Menu menu;
     Menu menuPause;
-    SpriteRenderer endingScreen;
+
     Shader shader;
     HudAnimation animation;
     Shadows shadows("lights/shadows");
@@ -175,8 +174,7 @@ namespace Game {
         HudAnimation animation1(animationShader);
         animation = animation1;
         animation.initAnimation();
-
-        Shader UIShader("include/User/spriteShader.vert","include/User/spriteShader.frag");
+        
 
         Constant constant1(animationShader);
         constant = constant1;
