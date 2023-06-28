@@ -8,10 +8,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd untitled_floorMaterial.004_BaseColor.png
-map_Ns untitled_floorMaterial.004_Roughness.png
-map_refl untitled_floorMaterial.004_Metallic.png
-map_Bump -bm 1.000000 untitled_floorMaterial.004_Normal.png
+map_Kd pociagBaseColor.png
+map_Ns pociagRoughness.png
+map_refl pociagMetallic.png
+map_Bump -bm 1.000000 pociagNormal.png
 
 newmtl okn
 Ka 1.000000 1.000000 1.000000
@@ -20,7 +20,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd untitled_decoboxMaterial.005_BaseColor.png
-map_Ns untitled_decoboxMaterial.005_Roughness.png
-map_refl untitled_decoboxMaterial.005_Metallic.png
-map_Bump -bm 1.000000 untitled_decoboxMaterial.005_Normal.png
+map_Kd oknoBaseColor.png
+map_Ns oknoRoughness.png
+map_refl oknoMetallic.png
+map_Bump -bm 1.000000 oknoNormal.png
