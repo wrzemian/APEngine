@@ -202,9 +202,7 @@ namespace Game {
         spdlog::info("ResolveCollisions");
         Engine::resolveCollisions();
         spdlog::info("loop");
-
-        Engine::camera->SetViewport(0, 0, (GLsizei)Engine::SCR_WIDTH, (GLsizei)Engine::SCR_HEIGHT);
-
+        
         while (!glfwWindowShouldClose(Engine::getWindow())) {
             Update();
         }

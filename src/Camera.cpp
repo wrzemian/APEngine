@@ -62,7 +62,7 @@ Camera::Camera(const std::string& fileName) {
 
 
 void Camera::Update(float deltaTime) {
-
+    rotate(degX, degY);
     if (moveToTarget) {
         t += deltaTime * speed;
         if (t >= 1.0f) {
