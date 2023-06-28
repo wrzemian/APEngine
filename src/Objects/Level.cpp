@@ -394,7 +394,6 @@ void Level::calculateHitboxes() {
                 testTrigger->_max.y  += 0.5f;
                 testTrigger->_max.z  += 0.5f;
                 testTrigger->_min.x  -= 0.5f;
-                testTrigger->_min.y  -= 0.5f;
                 testTrigger->_min.z  -= 0.5f;
                 hitboxes.push_back(testTrigger);
                 testTrigger->draw = true;
