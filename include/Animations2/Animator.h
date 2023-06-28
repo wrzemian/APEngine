@@ -73,6 +73,8 @@ public:
 
     void BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime)
     {
+//        m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * deltaTime;
+//        m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
         // Speed multipliers to correctly transition from one animation to another
         float a = 1.0f;
         float b = pBaseAnimation->GetDuration() / pLayeredAnimation->GetDuration();

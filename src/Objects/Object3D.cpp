@@ -176,7 +176,10 @@ void Object3D::SwitchGravity(bool state) {
 
 float Object3D::UpdateTimer() {
     if (animationTimer < 1) {
-        animationTimer += 3*Engine::deltaTime;
+        animationTimer += 2*Engine::deltaTime;
+        return animationTimer;
     }
-    return animationTimer;
+    else if(animationTimer + Engine::deltaTime > 1) {
+        return 1.0;
+    }
 }

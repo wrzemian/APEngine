@@ -269,7 +269,7 @@ namespace Engine {
 
                 object->animator.BlendTwoAnimations(&object->previousAnimation,
                                                     &object->currentAnimation,
-                                                    object->UpdateTimer(), deltaTime);
+                                                    object->UpdateTimer(), Engine::deltaTime/2);
             }
             shader.setBool("emissive", object->emissive);
 
