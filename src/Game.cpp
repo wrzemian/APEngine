@@ -196,7 +196,7 @@ namespace Game {
 //        spdlog::info("menu1 after constructor");
         menu = menu1;
 //        spdlog::info("before init1");
-        menu.initMenu("../../res/UI/menu_screen.png");
+        menu.initMenu("res/UI/new/menu_screen_new.png");
 //        spdlog::info("after init1");
 
         spdlog::info("menu2");
@@ -223,6 +223,7 @@ namespace Game {
         Engine::LoopStart();
 
         if(menu.isVisible1()){
+            ImGui();
             inputSystem.update();
             menu.processInput(&inputSystem);
             menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,600.f),0.f);
