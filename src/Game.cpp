@@ -100,6 +100,9 @@ namespace Game {
 
     Background background;
 
+    float bgSpeed = -50.0f;
+    bool slowdown = false;
+
 
     void Start() {
         spdlog::info("init engine");
@@ -252,7 +255,10 @@ namespace Game {
             glm::mat4 view = Engine::camera->GetViewMatrix();
 
 
-            background.Move(-50 * Engine::deltaTime);
+            background.Move(bgSpeed * Engine::deltaTime);
+            if (slowdown && bgSpeed < 0) {
+                bgSpeed += 0.05;
+            }
 
                 UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
                                                                             glm::vec2(250.f, 200.f),0);
@@ -278,7 +284,6 @@ namespace Game {
             playerGrabber._transform._position = LevelManager::getInstance().getCurrentLevel()->playerGrabberStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
             playerJumper._transform._position = LevelManager::getInstance().getCurrentLevel()->playerJumperStartingPos; //+ LevelManager::getInstance().getCurrentLevel()->_transform._position;
 
-
             Engine::camera->MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
             if(!LevelManager::getInstance().getCurrentLevel()->batteries.empty())
             {
@@ -290,6 +295,8 @@ namespace Game {
         else
         {
             spdlog::info("Player has won the game!");
+            Engine::camera->MoveToTarget( glm::vec3(90, 10.6, 17.3));
+            slowdown = true;
         }
         if(LevelManager::getInstance().currentLevel==1){
             UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/grabHint.png");
