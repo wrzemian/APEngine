@@ -189,7 +189,7 @@ namespace Game {
             UITips[i] = SpriteRenderer(imageShader);
         }
         UITips[0].initRenderData("res/UI/new/jumpHint.png");
-        UITips[3].initRenderData("res/UI/new/dog.png");
+        UITips[3].initRenderData("res/UI/new/end_screen.png");
 
 //        spdlog::info("menu1 before constructor");
         Menu menu1(imageShader);
@@ -262,7 +262,7 @@ namespace Game {
 //                spdlog::info("{}", bgSpeed);
             }
             if (slowdown && bgSpeed >= 0.0) {
-                
+
 //                spdlog::info("ENDCREEN");
                 UITips[3].DrawSprite(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
             }
