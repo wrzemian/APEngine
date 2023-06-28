@@ -89,7 +89,7 @@ namespace Game {
 
     GLfloat movementSpeed = 3.0f;
 
-    SpriteRenderer  UITips[3];
+    SpriteRenderer  UITips[4];
 
     DirectionalLight dirLight;
 
@@ -174,7 +174,7 @@ namespace Game {
         HudAnimation animation1(animationShader);
         animation = animation1;
         animation.initAnimation();
-        
+
 
         Constant constant1(animationShader);
         constant = constant1;
@@ -185,10 +185,11 @@ namespace Game {
         hud = hud1;
         hud.initImage("res/textures/tlo.png");
 
-        for(int i = 0; i< 3; i++){
+        for(int i = 0; i< 4; i++){
             UITips[i] = SpriteRenderer(imageShader);
         }
         UITips[0].initRenderData("res/UI/new/jumpHint.png");
+        UITips[3].initRenderData("res/UI/new/dog.png");
 
 //        spdlog::info("menu1 before constructor");
         Menu menu1(imageShader);
@@ -261,11 +262,14 @@ namespace Game {
 //                spdlog::info("{}", bgSpeed);
             }
             if (slowdown && bgSpeed >= 0.0) {
+                
 //                spdlog::info("ENDCREEN");
+                UITips[3].DrawSprite(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
             }
-
+            if(LevelManager::getInstance().currentLevel<3){
                 UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
                                                                             glm::vec2(250.f, 220.f),0);
+                }
 
             Engine::renderHitboxes(projection * view);
 
@@ -301,7 +305,9 @@ namespace Game {
             spdlog::info("Player has won the game!");
             Engine::camera->MoveToTarget( glm::vec3(90, 10.6, 17.3));
             AudioManager::GetInstance()->MuteAll();
+            UITips[3].isVisible = true;
             slowdown = true;
+
         }
         if(LevelManager::getInstance().currentLevel==1){
             UITips[LevelManager::getInstance().currentLevel].initRenderData("res/UI/new/grabHint.png");
@@ -346,9 +352,15 @@ namespace Game {
         ImGui::Begin("Napisy w menu");
         ImGui::SetWindowSize(ImVec2(1000, 400));
 
-        ImGui::SliderFloat("continue x", &menuPause.markPos[2].x, 500.f, 700.0f);
-        ImGui::SliderFloat("scale X", &menuPause.markScale[2].x, 0.0f, 480.0f);
-        ImGui::SliderFloat("scale Y", &menuPause.markScale[2].y, 0.0f, 480.0f);
+        ImGui::SliderFloat("continue x", &menu.markPos[0].x, 0.f, 300.0f);
+        ImGui::SliderFloat("scale X", &menu.markScale[0].x, 0.0f, 480.0f);
+        ImGui::SliderFloat("scale Y", &menu.markScale[0].y, 0.0f, 480.0f);
+        ImGui::SliderFloat("continue x", &menu.markPos[1].x, 300.f, 600.0f);
+        ImGui::SliderFloat("scale X", &menu.markScale[1].x, 0.0f, 480.0f);
+        ImGui::SliderFloat("scale Y", &menu.markScale[1].y, 0.0f, 480.0f);
+        ImGui::SliderFloat("continue x", &menu.markPos[2].x, 500.f, 700.0f);
+        ImGui::SliderFloat("scale X", &menu.markScale[2].x, 0.0f, 480.0f);
+        ImGui::SliderFloat("scale Y", &menu.markScale[2].y, 0.0f, 480.0f);
 
 
         ImGui::End();
