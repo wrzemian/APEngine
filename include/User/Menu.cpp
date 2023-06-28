@@ -7,11 +7,13 @@
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "InputSystem.h"
+#include "../LevelManager.h"
 
 void Menu::pickMenu(int chosen) {
     switch (chosen) {
         case 0:
             isVisible = false;
+            Engine::camera->MoveToTarget(glm::vec3(-3.91, 10.6, 17.3));
             break;
 
         case 1:
@@ -21,6 +23,7 @@ void Menu::pickMenu(int chosen) {
             }
             else {
                 isVisible = false;
+                Engine::camera->MoveToTarget( LevelManager::getInstance().getCurrentLevel()->cameraOffset);
             }
             break;
 

@@ -224,20 +224,40 @@ namespace Game {
 //            menu.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,600.f),0.f);
 //
 //        }
-        if(menuPause.isVisible1()){
-            inputSystem.update();
-            menuPause.processInput(&inputSystem);
-            menuPause.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
-        }
-        else if(menu.isVisible) {
+
+
+        Engine::moveObjects();
+
+        shadows.renderShadows(*Engine::camera);
+
+
+        Engine::camera->Update(Engine::deltaTime);
+        glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom),
+                                                (float) Engine::SCR_WIDTH / (float) Engine::SCR_HEIGHT, 0.1f,
+                                                100.0f);
+        glm::mat4 view = Engine::camera->GetViewMatrix();
+
+        background.Move(bgSpeed * Engine::deltaTime);
+
+        Engine::renderHitboxes(projection * view);
+
+        Engine::resolveCollisions();
+
+       if(menu.isVisible) {
 
             inputSystem.update();
             menu.processInput(&inputSystem);
             menu.drawMenu(glm::vec3(0, 0, 1.f), glm::vec2(800.f, 600.f), 0.f);
-//                Engine::camera->Position = glm::vec3(-30, 10.6, 17.3);
+                Engine::camera->Position = glm::vec3(-30, 10.6, 17.3);
 
         }
+        else if(menuPause.isVisible1()){
+            inputSystem.update();
+            menuPause.processInput(&inputSystem);
+            menuPause.drawMenu(glm::vec3(0,0,1.f),glm::vec2(800.f,620.f),0.f);
+        }
         else {
+
             AudioManager::GetInstance()->Update();
             AudioManager::GetInstance()->PlaySound(Audio::TRAIN_AMBIENT);
 
@@ -248,19 +268,10 @@ namespace Game {
             playerGrabber.UpdatePlayer(&inputSystem, movementSpeed);
 
 
-            Engine::moveObjects();
-
-            shadows.renderShadows(*Engine::camera);
 
 
-            Engine::camera->Update(Engine::deltaTime);
-            glm::mat4 projection = glm::perspective(glm::radians(Engine::camera->Zoom),
-                                                    (float) Engine::SCR_WIDTH / (float) Engine::SCR_HEIGHT, 0.1f,
-                                                    100.0f);
-            glm::mat4 view = Engine::camera->GetViewMatrix();
 
 
-            background.Move(bgSpeed * Engine::deltaTime);
             if (slowdown && bgSpeed <= 0) {
                 bgSpeed += 0.05;
 //                spdlog::info("{}", bgSpeed);
@@ -327,9 +338,7 @@ namespace Game {
 
 
 
-            Engine::renderHitboxes(projection * view);
 
-            Engine::resolveCollisions();
         }
 
         Engine::LoopEnd();
