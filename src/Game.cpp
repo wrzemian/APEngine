@@ -256,11 +256,15 @@ namespace Game {
 
 
             background.Move(bgSpeed * Engine::deltaTime);
-            if (slowdown && bgSpeed < 0) {
+            if (slowdown && bgSpeed <= 0) {
                 bgSpeed += 0.05;
+//                spdlog::info("{}", bgSpeed);
+            }
+            if (slowdown && bgSpeed >= 0.0) {
+                spdlog::info("ENDCREEN");
             }
 
-                UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
+            UITips[LevelManager::getInstance().currentLevel].DrawSprite(glm::vec3(550.f, 1.f, 1.f),
                                                                             glm::vec2(250.f, 200.f),0);
 
             Engine::renderHitboxes(projection * view);
