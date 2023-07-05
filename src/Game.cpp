@@ -383,6 +383,9 @@ namespace Game {
             menu.isVisible = true;
             UITips[3].isVisible = false;
                 bgSpeed = -50.0f;
+                for(int i = 0 ; i < 3; i++){
+                    UITips[i].isVisible=true;
+                }
                 slowdown = false;
                 ended = false;
                 AudioManager::GetInstance()->SetAllGain(1.0);
